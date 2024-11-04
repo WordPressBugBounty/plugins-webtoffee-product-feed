@@ -4,340 +4,271 @@ if (!defined('WPINC')) {
     exit;
 }
 
-if (!class_exists('Webtoffee_Product_Feed_Sync_Leguide_Export')) {
+if (!class_exists('Webtoffee_Product_Feed_Sync_Yandex_Export')) {
 
-    class Webtoffee_Product_Feed_Sync_Leguide_Export extends Webtoffee_Product_Feed_Product {
+    class Webtoffee_Product_Feed_Sync_Yandex_Export extends Webtoffee_Product_Feed_Product {
 
         public $parent_module = null;
         public $product;
         public $current_product_id;
         public $form_data;
+        public $yandex_xml_keys = array();
 
         public function __construct($parent_object) {
 
             $this->parent_module = $parent_object;
+            
+            $this->yandex_xml_keys = array(
+
+                'link' => 'URL',
+                'image_link' => 'IMGURL',
+                'image_link_alternate' => 'IMGURL_ALTERNATIVE',
+                //'video_url' => 'VIDEO_URL',
+                'price_with_tax' => 'PRICE_VAT',
+                'sku_id' => 'PRODUCTNO',
+                'ean' => 'EAN',
+                'brand' => 'MANUFACTURER',
+                'category' => 'CATEGORYTEXT',
+                'item_group_id' => 'ITEMGROUP_ID',
+            );
         }
 
         public function prepare_header() {
 
             $export_columns = $this->parent_module->get_selected_column_names();
 
+            foreach ($export_columns as $key => $value) {
+                if(isset($this->yandex_xml_keys[$key])){
+                    $export_columns[$key] = $this->yandex_xml_keys[$key];                    
+                }
+            }
+            
             return apply_filters('wt_pf_alter_product_feed_csv_columns', $export_columns);
         }
 
         /**
          * Prepare data that will be exported.
          */
-        public function prepare_data_to_export($form_data, $batch_offset, $step) {
+        public function prepare_data_to_export($form_data, $batch_offset,$step) {
 
-            $this->form_data = $form_data;
+	$this->form_data = $form_data;
+		
+        $include_products = !empty($form_data['filter_form_data']['wt_pf_product']) ? $form_data['filter_form_data']['wt_pf_product'] : '';
+        $exclude_products = !empty($form_data['filter_form_data']['wt_pf_exclude_product']) ? $form_data['filter_form_data']['wt_pf_exclude_product'] : '';
+	$exp_stock_status = !empty($form_data['filter_form_data']['wt_pf_stock_status']) ? $form_data['filter_form_data']['wt_pf_stock_status'] : '';
+		
+        $prod_exc_categories = !empty($form_data['post_type_form_data']['item_exc_cat']) ? $form_data['post_type_form_data']['item_exc_cat'] : array();            
+        $prod_inc_categories = !empty($form_data['post_type_form_data']['item_inc_cat']) ? $form_data['post_type_form_data']['item_inc_cat'] : array();
 
-            
-            $include_variations_type = !empty($form_data['post_type_form_data']['wt_pf_include_variations_type']) ? $form_data['post_type_form_data']['wt_pf_include_variations_type'] : '';
-            
-            $exc_stock_status = !empty($form_data['post_type_form_data']['item_outofstock']) ? $form_data['post_type_form_data']['item_outofstock'] : '';
-            
-            if('' === $exc_stock_status){
-                $exc_stock_status = !empty($form_data['post_type_form_data']['wt_pf_exclude_outofstock']) ? $form_data['post_type_form_data']['wt_pf_exclude_outofstock'] : '';
-            }
-            
-            $item_parentonly = !empty($form_data['post_type_form_data']['item_parentonly']) ? $form_data['post_type_form_data']['item_parentonly'] : '';
+        $cat_filter_type = !empty($form_data['post_type_form_data']['cat_filter_type']) ? $form_data['post_type_form_data']['cat_filter_type'] : '';
+        if( '' === $cat_filter_type ){
+            $cat_filter_type = !empty($form_data['post_type_form_data']['wt_pf_export_cat_filter_type']) ? $form_data['post_type_form_data']['wt_pf_export_cat_filter_type'] : 'include_cat';
+        }
 
-            if( '' === $item_parentonly ){
-                $item_parentonly = !empty($form_data['post_type_form_data']['wt_pf_include_parent_only']) ? $form_data['post_type_form_data']['wt_pf_include_parent_only'] : '';                
-            }
-             if( '' !== $item_parentonly ){
-                 $include_variations_type = 'default';
-             }
-            
-            $prod_exc_categories = !empty($form_data['post_type_form_data']['item_exc_cat']) ? $form_data['post_type_form_data']['item_exc_cat'] : array();            
-            $prod_inc_categories = !empty($form_data['post_type_form_data']['item_inc_cat']) ? $form_data['post_type_form_data']['item_inc_cat'] : array();
+        $inc_exc_category = !empty($form_data['post_type_form_data']['inc_exc_cat']) ? $form_data['post_type_form_data']['inc_exc_cat'] : array();
+        if( empty($inc_exc_category) ){
+            $inc_exc_category = !empty($form_data['post_type_form_data']['wt_pf_inc_exc_category']) ? $form_data['post_type_form_data']['wt_pf_inc_exc_category'] : array();
+        }
 
-            $cat_filter_type = !empty($form_data['post_type_form_data']['cat_filter_type']) ? $form_data['post_type_form_data']['cat_filter_type'] : '';
-            if( '' === $cat_filter_type ){
-                $cat_filter_type = !empty($form_data['post_type_form_data']['wt_pf_export_cat_filter_type']) ? $form_data['post_type_form_data']['wt_pf_export_cat_filter_type'] : 'include_cat';
-            }
-            
-            $inc_exc_category = !empty($form_data['post_type_form_data']['inc_exc_cat']) ? $form_data['post_type_form_data']['inc_exc_cat'] : array();
-            if( empty($inc_exc_category) ){
-                $inc_exc_category = !empty($form_data['post_type_form_data']['wt_pf_inc_exc_category']) ? $form_data['post_type_form_data']['wt_pf_inc_exc_category'] : array();
-            }
-            
-            
-            if ('include_cat' === $cat_filter_type) {
-                $prod_inc_categories = $inc_exc_category;
-            } else {
-                $prod_exc_categories = $inc_exc_category;
-            }
+        if ('include_cat' === $cat_filter_type) {
+            $prod_inc_categories = $inc_exc_category;
+        } else {
+            $prod_exc_categories = $inc_exc_category;
+        }
+        
+        $prod_tags = !empty($form_data['filter_form_data']['wt_pf_product_tags']) ? $form_data['filter_form_data']['wt_pf_product_tags'] : array();
+        $prod_types = !empty($form_data['filter_form_data']['wt_pf_product_types']) ? $form_data['filter_form_data']['wt_pf_product_types'] : array();
+        $prod_status = !empty($form_data['filter_form_data']['wt_pf_product_status']) ? $form_data['filter_form_data']['wt_pf_product_status'] : array();
+        
+        $export_sortby = !empty($form_data['filter_form_data']['wt_pf_sort_columns']) ? $form_data['filter_form_data']['wt_pf_sort_columns'] : 'ID';
+        $export_sort_order = !empty($form_data['filter_form_data']['wt_pf_order_by']) ? $form_data['filter_form_data']['wt_pf_order_by'] : 'ASC';
 
-            
-            $brand_filter_type = !empty($form_data['post_type_form_data']['wt_pf_export_brand_filter_type']) ? $form_data['post_type_form_data']['wt_pf_export_brand_filter_type'] : 'include_brand';
-            $inc_exc_brand = !empty($form_data['post_type_form_data']['wt_pf_inc_exc_brand']) ? $form_data['post_type_form_data']['wt_pf_inc_exc_brand'] : array();
+        $export_limit = !empty($form_data['filter_form_data']['wt_pf_limit']) ? intval($form_data['filter_form_data']['wt_pf_limit']) : 999999999; //user limit
+        $current_offset = !empty($form_data['filter_form_data']['wt_pf_offset']) ? intval($form_data['filter_form_data']['wt_pf_offset']) : 0; //user offset
 
-            if ('include_brand' === $brand_filter_type) {
-                $prod_inc_brands = $inc_exc_brand;
-            } else {
-                $prod_exc_brands = $inc_exc_brand;
-            }            
+        $batch_count = !empty($form_data['advanced_form_data']['wt_pf_batch_count']) ? $form_data['advanced_form_data']['wt_pf_batch_count'] : Webtoffee_Product_Feed_Sync_Common_Helper::get_advanced_settings('default_export_batch');
+        $batch_count = apply_filters('wt_woocommerce_csv_export_limit_per_request', $batch_count); //ajax batch limit
 
-            $prod_exc = !empty($form_data['post_type_form_data']['item_exc_prd']) ? $form_data['post_type_form_data']['item_exc_prd'] : array();
-
-            if( empty($prod_exc) ){
-                $prod_exc = !empty($form_data['post_type_form_data']['wt_pf_exclude_products']) ? $form_data['post_type_form_data']['wt_pf_exclude_products'] : array();
-            }
-            
-            $tag_filter_type = !empty($form_data['post_type_form_data']['wt_pf_export_tag_filter_type']) ? $form_data['post_type_form_data']['wt_pf_export_tag_filter_type'] : 'include_tag';
-            $inc_exc_tag = !empty($form_data['post_type_form_data']['wt_pf_inc_exc_tag']) ? $form_data['post_type_form_data']['wt_pf_inc_exc_tag'] : array();
-            /* WPML
-             * 
-             */
-            $item_post_lang = !empty($form_data['post_type_form_data']['wt_pf_export_post_language']) ? $form_data['post_type_form_data']['wt_pf_export_post_language'] : '';
-            
-            $prod_types = !empty($form_data['post_type_form_data']['item_product_type']) ? $form_data['post_type_form_data']['item_product_type'] : array();
-            
-            if( empty( $prod_types ) ){
-                $prod_types = !empty($form_data['post_type_form_data']['wt_pf_product_types']) ? $form_data['post_type_form_data']['wt_pf_product_types'] : array();
-            }
-            
-            $prod_status = !empty($form_data['filter_form_data']['wt_pf_product_status']) ? $form_data['filter_form_data']['wt_pf_product_status'] : array();
-
-            $export_sortby = !empty($form_data['filter_form_data']['wt_pf_sort_columns']) ? $form_data['filter_form_data']['wt_pf_sort_columns'] : 'ID';
-            $export_sort_order = !empty($form_data['filter_form_data']['wt_pf_order_by']) ? $form_data['filter_form_data']['wt_pf_order_by'] : 'ASC';
-
-            $export_limit = !empty($form_data['filter_form_data']['wt_pf_limit']) ? intval($form_data['filter_form_data']['wt_pf_limit']) : 999999999; //user limit
-            $current_offset = !empty($form_data['filter_form_data']['wt_pf_offset']) ? intval($form_data['filter_form_data']['wt_pf_offset']) : 0; //user offset
-
-            $batch_count = !empty($form_data['advanced_form_data']['wt_pf_batch_count']) ? $form_data['advanced_form_data']['wt_pf_batch_count'] : Webtoffee_Product_Feed_Sync_Common_Helper::get_advanced_settings('default_export_batch');
-            $batch_count = apply_filters('wt_product_feed_limit_per_request', $batch_count); //ajax batch limit
-
-            $real_offset = ($current_offset + $batch_offset);
-
-            if ($batch_count <= $export_limit) {
-                if (($batch_offset + $batch_count) > $export_limit) { //last offset
-                    $limit = $export_limit - $batch_offset;
-                } else {
-                    $limit = $batch_count;
-                }
-            } else {
-                $limit = $export_limit;
-            }
-
-            $product_array = array();
-            $total_products = 0;
-            if ($batch_offset < $export_limit) {
-                $args = array(
-                    'status' => array('publish'),
-                    'type' => array_keys(wc_get_product_types()),
-                    'limit' => $limit,
-                    'offset' => $real_offset,
-                    'orderby' => $export_sortby,
-                    'order' => $export_sort_order,
-                    'return' => 'ids',
-                    'paginate' => true,
-                );
-
-                if (!empty($prod_status)) {
-                    $args['status'] = $prod_status;
-                }
-
-                if (!empty($prod_types)) {
-                    $args['type'] = $prod_types;
-                }
-
-                if ( '' === $include_variations_type ) {
-                    array_push($args['type'], 'variation');
-                }                
                 
-                if (!empty($prod_exc_categories)) {
-                    $args['exclude_category'] = $prod_exc_categories;
-                }
+        $real_offset = ($current_offset + $batch_offset);
+
+        if($batch_count<=$export_limit)
+        {
+            if(($batch_offset+$batch_count)>$export_limit) //last offset
+            {
+                $limit=$export_limit-$batch_offset;
+            }else
+            {
+                $limit=$batch_count;
+            }
+        }else
+        {
+            $limit=$export_limit;
+        }
+        
+        $product_array = array();
+	$total_products = 0;
+        if ($batch_offset < $export_limit)
+        {
+            $args = array(
+                'status' => array('publish'),
+                'type' => array('simple','grouped','external', 'variable'),
+                'limit' => $limit,
+                'offset' => $real_offset,
+                'orderby' => $export_sortby,
+                'order' => $export_sort_order,                                
+                'return' => 'ids',
+                'paginate' => true,
+            );
+
+            if (!empty($prod_status)) {
+                $args['status'] = $prod_status;
+            } 
                 
-                if( 'include_tag' === $tag_filter_type && !empty($inc_exc_tag) ){
-                    $args['tag'] = $inc_exc_tag;
-                }                
-                if( 'exclude_tag' === $tag_filter_type && !empty($inc_exc_tag) ){
-                    $args['exclude_tag'] = $inc_exc_tag;
-                }                
+            if (!empty($prod_types)) {
+                $args['type'] = $prod_types;
+            }
 
-                if (!empty($prod_inc_brands)) {
-                    $args['include_brands'] = $prod_inc_brands;
-                }
-                if (!empty($prod_exc_brands)) {
-                    $args['exclude_brands'] = $prod_exc_brands;
-                }                
-                
-                if (!empty($prod_inc_categories)) {
-                    $args['category'] = $prod_inc_categories;
-                }
+            if (!empty($prod_exc_categories)) {
+                $args['exclude_category'] = $prod_exc_categories;
+            }
 
-                if (!empty($prod_exc)) {
-                    $args['exclude'] = $prod_exc;
-                }
+            if (!empty($prod_tags)) {
+                $args['tag'] = $prod_tags;
+            }
 
-                if (!empty($exc_stock_status)) {
-                    $args['stock_status'] = 'instock';
-                }
+            if (!empty($include_products)) {
+                $args['include'] = $include_products;
+            }
+            if ( !empty( $prod_inc_categories ) ) {
+                $args['category'] = $prod_inc_categories;
+            }else{
+                array_push($args['type'], 'variation');
+            }
+            
+            
+            if (!empty($exclude_products)) {
+                $args['exclude'] = $exclude_products;
+            }
+			
+            if (!empty($exp_stock_status)) {
+                $args['stock_status'] = $exp_stock_status;
+            }
+			
+            // Export all language products if WPML is active and the language selected is all.
+            if ( function_exists('icl_object_id') && isset( $_SERVER["HTTP_REFERER"] ) && strpos($_SERVER["HTTP_REFERER"], 'lang=all') !== false ) {
+                     $args['suppress_filters'] = true;
+            }
+            
+            $args['exclude_discarded'] = '_wt_feed_discard'; // To exclude individual excluded from product fetching.
+			
+            $args = apply_filters("woocommerce_csv_product_export_args", $args);
 
-                // Export all language products if WPML is active and the language selected is all.
-                if (function_exists('icl_object_id') && isset($_SERVER["HTTP_REFERER"]) && strpos($_SERVER["HTTP_REFERER"], 'lang=all') !== false) {
-                    $args['suppress_filters'] = true;
-                }
+            $products = wc_get_products($args); 
+
+            $total_products=0;
+            if( 0 == $batch_offset ) //first batch
+            {
+                $total_item_args=$args;
+                $total_item_args['limit']=$export_limit; //user given limit
+                $total_item_args['offset']=$current_offset; //user given offset
+                $total_products_count = wc_get_products($total_item_args);
+                $total_products=count($total_products_count->products);
+            }
 
 
-                $args['exclude_discarded'] = '_wt_feed_discard'; // To exclude individual excluded from product fetching.
+            $products_ids = $products->products;
 
-                $args = apply_filters("wt_feed_product_catalog_args", $args);
-
-
-                $advanced_filter_options = array();
-                
-                $wt_pf_adv_filter_fields = !empty($form_data['post_type_form_data']['wt_pf_adv_filter_if[]']) ? (array)$form_data['post_type_form_data']['wt_pf_adv_filter_if[]'] : array();
-                $wt_pf_adv_filter_condition = !empty($form_data['post_type_form_data']['wt_pf_adv_filter_condition[]']) ? (array)$form_data['post_type_form_data']['wt_pf_adv_filter_condition[]'] : array();
-                $wt_pf_adv_filter_val = !empty($form_data['post_type_form_data']['wt_pf_adv_filter_val[]']) ? (array)$form_data['post_type_form_data']['wt_pf_adv_filter_val[]'] : array();
-                $wt_pf_adv_filter_then = !empty($form_data['post_type_form_data']['wt_pf_adv_filter_then[]']) ? (array)$form_data['post_type_form_data']['wt_pf_adv_filter_then[]'] : array();
-                      
-                if( !empty($wt_pf_adv_filter_fields) ){
-                    $advanced_filter_options['fields'] = $wt_pf_adv_filter_fields;
-                    $advanced_filter_options['condition'] = $wt_pf_adv_filter_condition;
-                    $advanced_filter_options['val'] = $wt_pf_adv_filter_val;
-                    $advanced_filter_options['then'] = $wt_pf_adv_filter_then;       
-                }
-
-                /*
-                 * WPML - Swicth language to selected language for temparory export
-                 */
-                if (class_exists('SitePress') && !empty($item_post_lang)) {
-                    //$args['suppress_filters'] = true;
-                    global $sitepress;
-                    $current_lang = $sitepress->get_current_language(); // Take the current language to a variable to swicthback later.
-                    $default_language = $sitepress->get_default_language();
-                    $sitepress->switch_lang($item_post_lang);
-                }
-
-                $products = wc_get_products($args);
-
-                $total_products = 0;
-                if (0 == $batch_offset) { //first batch
-                    $total_item_args = $args;
-                    $total_item_args['limit'] = $export_limit; //user given limit
-                    $total_item_args['offset'] = $current_offset; //user given offset
-                    $total_products_count = wc_get_products($total_item_args);
-                    $total_products = count($total_products_count->products);
-                }
-
-                /*
-                 * WPML - Swicth language back to the previous site language after the batch reading.
-                 */
-                if (class_exists('SitePress') && !empty($item_post_lang)) {
-                    //$args['suppress_filters'] = true;
-                    global $sitepress;
-                    $sitepress->switch_lang($current_lang); // Current language is previously stored
-                }
-
-                $products_ids = $products->products;
-
-                // If include category is selected and variable products are under those category, the variations will not be returned by the WC query
-                if (!empty($prod_inc_categories)) {
+            // If include category is selected and variable products are under those category, the variations will not be returned by the WC query
+            if (!empty($prod_inc_categories)) {
                     $temp_prod_ids = $products_ids;
                     foreach ($temp_prod_ids as $key => $product_id) {
-                        $product = wc_get_product($product_id);
-                        if ($product->is_type('variable')) {
-                            $variations = $product->get_available_variations();
-                            $variations_ids = wp_list_pluck($variations, 'variation_id');
-                            foreach ($variations_ids as $variations_id) {
-                                $products_ids[] = $variations_id;
+                            $product = wc_get_product($product_id);
+                            if ($product->is_type('variable')) {
+                                    $variations = $product->get_available_variations();
+                                    $variations_ids = wp_list_pluck($variations, 'variation_id');
+                                    foreach ($variations_ids as $variations_id){
+                                            $products_ids[] = $variations_id;
+                                    }
+                            }
+                    }
+            }
+            foreach ($products_ids as $key => $product_id) {  
+                $product = wc_get_product($product_id); 
+
+                // Skip variations that belongs to a specific categories that is excluded in filter
+                if ($product->is_type('variation') && !empty($prod_exc_categories)) {
+
+                    $parent_id = $product->get_parent_id();
+                    if( has_term( $prod_exc_categories, 'product_cat', $parent_id ) ){
+                            continue;
+                    }
+
+                }
+                
+                if( $product->is_type( 'variation' ) ){
+                    $parent_id = $product->get_parent_id();
+                    $parent_post = get_post( $parent_id );
+                    if( !is_object( $parent_post ) || ( is_object( $parent_post ) && ( 'draft' == $parent_post->post_status || 'private' == $parent_post->post_status || 'pending' == $parent_post->post_status ) ) ){
+                        continue;
+                    }
+                }
+
+                if( $product->is_type( 'variation' ) ){
+                    $to_exclude = get_post_meta( $product_id, '_wt_feed_discard', true);
+                    if('yes' === $to_exclude ){
+                        continue;
+                    }
+                }
+                
+                $this->parent_product = $product;
+                $this->current_product_id = $product->get_id();
+                $this->product = $product;
+
+                if ($product->is_type('variable')) {
+                        continue;
+                }
+
+                $product_array[] = $this->generate_row_data_wc_lower($product);
+                if (($product->is_type('variable') || $product->has_child()) ) {
+                    $children_ids = $product->get_children();
+                    if (!empty($children_ids)) {
+                        foreach ($children_ids as $id) {                                
+                            if(!in_array($id, $products_ids)){  // skipping if alredy processed in $products_ids                                                                                                                               
+                                $variation = wc_get_product($id);  
+                                $this->parent_product = $product;
+                                $this->product = $variation;
+                                                                    $this->current_product_id = $variation->get_id();
+                                if(is_object($variation)){
+                                    $product_array[] = $this->generate_row_data_wc_lower($variation);
+                                }
+
                             }
                         }
-                    }
+                    }                        
                 }
 
-                foreach ($products_ids as $key => $product_id) {
-                    $product = wc_get_product($product_id);
 
-                    // Skip variations that belongs to a specific categories that is excluded in filter
-                    if ($product->is_type('variation') && !empty($prod_exc_categories)) {
-                        $parent_id = $product->get_parent_id();
-                        if (has_term($prod_exc_categories, 'product_cat', $parent_id)) {
-                            continue;
-                        }
-                    }
-                    
-                    //Skip variation other than default when Only include default product variation is checked.
-                    if ($product->is_type('variation') && 'default' === $include_variations_type ) {
-                        continue;
-                    }                    
-
-                    if ($product->is_type('variable') && 'default' === $include_variations_type ) {
-                        $default_variation_id = $this->get_default_variation($product);
-                        if ($default_variation_id) {
-                            $product = wc_get_product($default_variation_id);
-                        }
-                    }
-                    if ($product->is_type('variable') && 'lowest' === $include_variations_type ) {
-                        $lowest_variation_id = $this->get_lowest_priced_variation_id($product);
-                        if ($lowest_variation_id) {
-                            $product = wc_get_product($lowest_variation_id);
-                        }
-                    }                                        
-                    
-                    if ($product->is_type('variable') && '' === $include_variations_type ) {
-                        continue;
-                    }
-                    if( $product->is_type( 'variation' ) ){
-                        $parent_id = $product->get_parent_id();
-                        $parent_post = get_post( $parent_id );
-                        if( !is_object( $parent_post ) || ( is_object( $parent_post ) && ( 'draft' == $parent_post->post_status || 'private' == $parent_post->post_status || 'pending' == $parent_post->post_status ) ) ){
-                            continue;
-                        }
-                    }
-                    $this->parent_product = $product;
-                    $this->product = $product;
-                    $this->current_product_id = $product->get_id();
-                 
-                    
-                    $product_array[] = $this->generate_row_data_wc_lower($product);
-                }
             }
+            
+        }         
 
-            $return_products = array(
-                'total' => $total_products,
-                'data' => $product_array,
-            );
-            if (0 == $batch_offset && 0 == $total_products) {
-                $return_products['no_post'] = __('Nothing to export under the selected criteria. Please try adjusting the filters.', 'webtoffee-product-feed');
-            }
-            return $return_products;
-        }
+        $return_products =  array(
+            'total' => $total_products,
+            'data' => $product_array,
+        );
+		if( 0 == $batch_offset && 0 == $total_products ){
+				$return_products['no_post'] = __( 'Nothing to export under the selected criteria. Please try adjusting the filters.' );
+		}
+		return $return_products;
 
-        public function get_default_variation($product) {
-
-            $variation_id = false;
-
-            foreach ($product->get_available_variations() as $variation_values) {
-                foreach ($variation_values['attributes'] as $key => $attribute_value) {
-                    $attribute_name = str_replace('attribute_', '', $key);
-                    $default_value = $product->get_variation_default_attribute($attribute_name);
-                    if ($default_value == $attribute_value) {
-                        $is_default_variation = true;
-                    } else {
-                        $is_default_variation = false;
-                        break; // Stop this loop to start next main lopp
-                    }
-                }
-
-                if ($is_default_variation) {
-                    $variation_id = $variation_values['variation_id'];
-                    break; // Stop the main loop
-                }
-            }
-            return $variation_id;
-        }
+    }
 
         protected function generate_row_data_wc_lower($product_object) {
 
             $export_columns = $this->parent_module->get_selected_column_names();
 
-            $product_id = $product_object->get_id();
+            $product_id = $product_object->get_id();            
 
             $csv_columns = $export_columns;
 
@@ -347,7 +278,12 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Leguide_Export')) {
 
             foreach ($export_columns as $key => $value) {
                 if (method_exists($this, $value)) {
-                    $row[$key] = $this->$value($key, $value, $export_columns);
+                    $column_data = $this->$value($key, $value, $export_columns);
+                    if(isset($this->yandex_xml_keys[$value])){
+                        $row[$this->yandex_xml_keys[$value]] = $column_data;
+                    }else{
+                        $row[$key] = $column_data;
+                    }
                 }elseif (strpos($value, 'meta:') !== false) {
                     $mkey = str_replace('meta:', '', $value);
                     $row[$key] = get_post_meta($product_id, $mkey, true);
@@ -381,15 +317,44 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Leguide_Export')) {
                                 $value = str_replace('|', ',', $value);
 			}
                     $row[$key] = $value;
-                } elseif (strpos($value, 'wt_static_map_vl:') !== false) {
+                } elseif (strpos($value, 'wt_static_map_vl:') !== false) { // Static value.
                     $static_feed_value = str_replace('wt_static_map_vl:', '', $value);
                     $row[$key] = $static_feed_value;
+                } elseif (strpos($value, 'wt_compute_map_vl:') !== false) { // Computed value.
+                    $compute_feed_value = str_replace('wt_compute_map_vl:', '', $value);
+                    $compute_feed_value = trim($compute_feed_value);
+                    $mode = substr($compute_feed_value, 0, 3);
+                    $do_arithmatic = true;
+                    if ($mode === '(+)') {                        
+                        $amount = substr($compute_feed_value, 3);
+                        $row[$key] = $this->wt_pf_product_field_calc($key, $amount, 'increase', $product_object);
+                        $do_arithmatic = false;
+                    }
+                    if ($mode === '(-)') {
+                        $amount = substr($compute_feed_value, 3);
+                        $row[$key] = $this->wt_pf_product_field_calc($key, $amount, 'decrease', $product_object);
+                        $do_arithmatic = false;
+                    }
+                    if ($mode === '(*)') {                        
+                        $amount = substr($compute_feed_value, 3);
+                        $row[$key] = $this->wt_pf_product_field_calc($key, $amount, 'multiply', $product_object);
+                        $do_arithmatic = false;
+                    }                    
+                    if($do_arithmatic){
+                        $row[$key] = $this->do_arithmetic($compute_feed_value);
+                    }
+
+                    if(isset($this->yandex_xml_keys[$key])){
+                        $row[$this->yandex_xml_keys[$key]] = $row[$key];
+                        unset($row[$key]);
+                    }
                 }else {
                     $row[$key] = '';
                 }
+                
             }
 
-
+            $row = array( 'offer' => array( '@attributes' => array( 'id' => $product_object->get_id() ), '' => $row ) ) ;
 
             return apply_filters("wt_batch_product_export_row_data_{$this->parent_module->module_base}", $row, $product_object);
         }
@@ -422,6 +387,42 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Leguide_Export')) {
 
             return apply_filters('wt_feed_filter_product_parent_title', $title, $this->product);
         }
+        
+        /**
+         * Get product name.
+         *
+         * @return mixed|void
+         */
+        public function name($catalog_attr, $product_attr, $export_columns) {
+
+            $title = $this->product->get_name();
+
+            // Add all available variation attributes to variation title.
+            if ($this->product->is_type('variation') && !empty($this->product->get_attributes())) {
+                $title = $this->parent_product->get_name();
+                $attributes = [];
+                foreach ($this->product->get_attributes() as $slug => $value) {
+                    $attribute = $this->product->get_attribute($slug);
+                    if (!empty($attribute)) {
+                        $attributes[$slug] = $attribute;
+                    }
+                }
+
+                // set variation attributes with separator
+                $separator = ',';
+
+                $variation_attributes = implode($separator, $attributes);
+
+                //get product title with variation attribute
+                $get_with_var_attributes = apply_filters("wt_feed_get_product_title_with_variation_attribute", true, $this->product);
+
+                if ($get_with_var_attributes) {
+                    $title .= " - " . $variation_attributes;
+                }
+            }
+            
+            return apply_filters("wt_feed_yandex_product_title", $title, $this->product);
+        }        
 
         /**
          * Get product description with HTML tags.
@@ -459,7 +460,7 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Leguide_Export')) {
             $description = wp_check_invalid_utf8(wp_specialchars_decode($description), true);
 
             return apply_filters('wt_feed_filter_product_description_with_html', $description, $this->product);
-        }
+        }        
 
         /**
          * Get product primary category.
@@ -497,6 +498,7 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Leguide_Export')) {
             return apply_filters('wt_feed_filter_product_primary_category_id', $parent_category_id, $this->product);
         }
 
+        
         /**
          * Get product child category.
          *
@@ -513,6 +515,69 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Leguide_Export')) {
 
             return apply_filters('wt_feed_filter_product_child_category', $child_category, $this->product);
         }
+
+        
+       /**
+         * Get product primary category id.
+         *
+         * @return mixed|void
+         */
+        public function categoryId($catalog_attr, $product_attr, $export_columns) {
+
+            $parent_category_id = "";
+            $separator = apply_filters('wt_feed_product_type_separator', ' > ');
+            $full_category = $this->product_type($catalog_attr, $product_attr, $export_columns);
+            if (!empty($full_category)) {
+                $full_category_array = explode($separator, $full_category);
+                $main_cat = apply_filters('wt_feed_yandex_product_currency_id', 'child');
+                
+                if( 'child' !== $main_cat ){                    
+                    $parent_category_obj = get_term_by('name', $full_category_array[0], 'product_cat');
+                }else{
+                    $parent_category_obj = get_term_by('name', end($full_category_array), 'product_cat');
+                }
+                                
+                $parent_category_id = isset($parent_category_obj->term_id) ? $parent_category_obj->term_id : "";
+            }
+
+            return apply_filters('wt_feed_yandex_product_primary_category_id', $parent_category_id, $this->product);
+        } 
+        public function currencyId($catalog_attr, $product_attr, $export_columns){
+            
+            $currency_id = get_woocommerce_currency();
+            return apply_filters('wt_feed_yandex_product_currency_id', $currency_id, $this->product);
+            
+        }
+        
+        public function dimensions($catalog_attr, $product_attr, $export_columns){
+            
+            $heigt = $this->product->get_height();
+            $width = $this->product->get_width();
+            $length = $this->product->get_length();
+            
+            $dimension = "$heigt/$width/$length";
+            return apply_filters('wt_feed_yandex_product_dimension', $dimension, $this->product);
+        }
+        
+        public function params($catalog_attr, $product_attr, $export_columns){
+            
+            $params = array();
+                        
+            if($this->product->is_type('variation')){
+                $attributes = $this->product->get_attributes();
+                foreach ($attributes as $attribute_name => $attribute_value) {
+                    $params['param'][] = array(
+                        '@attributes' => array( 'name' => $attribute_name ,
+                        'value' => $attribute_value
+                    ) );
+
+                }     
+            }
+
+            return apply_filters('wt_feed_yandex_product_params', $params, $this->product);
+            
+        }
+
 
         public function get_shipping() {
 
@@ -539,8 +604,31 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Leguide_Export')) {
             }
 
             return apply_filters('wt_feed_filter_product_child_category_id', $child_category_id, $this->product);
-        }
-              
+        }        
+        
+        /**
+         * Get product type.
+         *
+         * @return mixed|void
+         */
+        public function category($catalog_attr, $product_attr, $export_columns) {
+
+            $id = ( $this->product->is_type('variation') ? $this->product->get_parent_id() : $this->product->get_id() );
+
+            $separator = apply_filters('wt_feed_product_type_separator', ' > ');
+            $product_categories = '';
+            $term_list = get_the_terms($id, 'product_cat');
+
+            if (is_array($term_list)) {
+                $col = array_column($term_list, "term_id");
+                array_multisort($col, SORT_ASC, $term_list);
+                $term_list = array_column($term_list, "name");                
+                $product_categories = implode(' > ', $term_list);
+            }
+
+
+            return apply_filters('wt_feed_filter_product_local_category', $product_categories, $this->product);
+        }        
 
         /**
          * Get product full category.
@@ -558,16 +646,16 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Leguide_Export')) {
             return apply_filters('wt_feed_filter_product_local_category', $product_type, $this->product);
         }
 
-	/**
-	 * Get product URL.
-	 *
-	 * @return mixed|void
-	 */
-	public function link($catalog_attr, $product_attr, $export_columns) {
-		$link = $this->product->get_permalink();
-		
-		return apply_filters( 'wt_feed_leguide_product_link', $link, $this->product );
-	}        
+        /**
+         * Get product URL.
+         *
+         * @return mixed|void
+         */
+        public function url($catalog_attr, $product_attr, $export_columns) {
+            $link = $this->product->get_permalink();
+
+            return apply_filters('wt_feed_filter_product_link', $link, $this->product);
+        }
         
         /**
          * Get product parent URL.
@@ -707,15 +795,46 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Leguide_Export')) {
 
             return $imgUrls;
         }
-
+        
+        /**
+         * Image alternate link
+         * 
+         * @param type $catalog_attr
+         * @param type $product_attr
+         * @param type $export_columns
+         */
+        public function image_link_alternate($catalog_attr, $product_attr, $export_columns){
+            $image_alternate = $this->imageUrls($catalog_attr, $product_attr, $export_columns, 1);
+            return apply_filters('wt_feed_yandex_product_alternate_image', $image_alternate, $this->product);
+        }
+        /**
+         * EAN
+         * 
+         * @param type $catalog_attr
+         * @param type $product_attr
+         * @param type $export_columns
+         * @return type
+         */
+	public function ean($catalog_attr, $product_attr, $export_columns){
+		
+            $custom_ean = get_post_meta($this->product->get_id(), '_wt_feed_ean', true);
+            if( ! $custom_ean ){
+                $custom_ean = get_post_meta($this->product->get_id(), '_wt_feed_gtin', true);
+            }                        
+            $ean = ('' == $custom_ean) ? '' : $custom_ean;
+            return apply_filters('wt_feed_yandex_product_ean', $ean, $this->product);
+	}        
+        
+        
+        
         /**
          * Get product images (comma separated URLs).
          *
          * @return mixed|void
          */
-        public function images($catalog_attr, $product_attr, $export_columns, $additionalImg = '') {
+        public function imageUrls($catalog_attr, $product_attr, $export_columns, $additionalImg = '') {
             $imgUrls = self::get_product_gallery($this->product);
-            $separator = apply_filters('wt_feed_filter_category_separator', ' > ', $this->product);
+            $separator = apply_filters('wt_feed_filter_category_separator', ' , ', $this->product);
 
             // Return Specific Additional Image URL
             if ('' !== $additionalImg) {
@@ -730,46 +849,6 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Leguide_Export')) {
             }
 
             return apply_filters('wt_feed_filter_product_images', $images, $this->product);
-        }
-
-        public function wtimages_1($catalog_attr, $product_attr, $export_columns) {
-            return $this->images($catalog_attr, $product_attr, $export_columns, 1);
-        }
-
-        public function wtimages_2($catalog_attr, $product_attr, $export_columns) {
-            return $this->images($catalog_attr, $product_attr, $export_columns, 2);
-        }
-
-        public function wtimages_3($catalog_attr, $product_attr, $export_columns) {
-            return $this->images($catalog_attr, $product_attr, $export_columns, 3);
-        }
-
-        public function wtimages_4($catalog_attr, $product_attr, $export_columns) {
-            return $this->images($catalog_attr, $product_attr, $export_columns, 4);
-        }
-
-        public function wtimages_5($catalog_attr, $product_attr, $export_columns) {
-            return $this->images($catalog_attr, $product_attr, $export_columns, 5);
-        }
-
-        public function wtimages_6($catalog_attr, $product_attr, $export_columns) {
-            return $this->images($catalog_attr, $product_attr, $export_columns, 6);
-        }
-
-        public function wtimages_7($catalog_attr, $product_attr, $export_columns) {
-            return $this->images($catalog_attr, $product_attr, $export_columns, 7);
-        }
-
-        public function wtimages_8($catalog_attr, $product_attr, $export_columns) {
-            return $this->images($catalog_attr, $product_attr, $export_columns, 8);
-        }
-
-        public function wtimages_9($catalog_attr, $product_attr, $export_columns) {
-            return $this->images($catalog_attr, $product_attr, $export_columns, 9);
-        }
-
-        public function wtimages_10($catalog_attr, $product_attr, $export_columns) {
-            return $this->images($catalog_attr, $product_attr, $export_columns, 10);
         }
 
         public function condition($catalog_attr, $product_attr, $export_columns) {
@@ -830,7 +909,7 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Leguide_Export')) {
             return apply_filters('wt_feed_product_google_unit_pricing_base_measure', $unit_pricing_base_measure, $this->product);
         }
 
-        public function energy_efficiency_class($catalog_attr, $product_attr, $export_columns) {
+        public function eec($catalog_attr, $product_attr, $export_columns) {
 
             $energy_efficiency_class = get_post_meta($this->product->get_id(), '_wt_feed_energy_efficiency_class', true);
             if ('' == $energy_efficiency_class) {
@@ -926,6 +1005,19 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Leguide_Export')) {
             }
             $mpn = ('' == $custom_mpn) ? '' : $custom_mpn;
             return apply_filters('wt_feed_product_mpn', $mpn, $this->product);
+        }
+        public function hans($catalog_attr, $product_attr, $export_columns) {
+
+            $han_value = get_post_meta($this->product->get_id(), '_wt_feed_han', true);
+
+            return apply_filters('wt_feed_product_han', $han_value, $this->product);
+        }
+                
+        public function eans($catalog_attr, $product_attr, $export_columns) {
+
+            $ean_value = get_post_meta($this->product->get_id(), '_wt_feed_ean', true);
+
+            return apply_filters('wt_feed_product_ean', $ean_value, $this->product);
         }
 
         public function identifier_exists($catalog_attr, $product_attr, $export_columns) {
@@ -1098,6 +1190,19 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Leguide_Export')) {
 
                 $quantity = array_sum($qty);
             }
+            if ($this->product->is_type('variation')) {
+                $parent_variations_qty = !empty($this->form_data['post_type_form_data']['wt_pf_parent_qty']) ? $this->form_data['post_type_form_data']['wt_pf_parent_qty'] : '';
+                if( 'sumof_variation_qty' == $parent_variations_qty ){   
+                    $parent_product = wc_get_product($this->product->get_parent_id());
+                    $visible_children = $parent_product->get_visible_children();
+                    $qty = array();
+                    foreach ($visible_children as $child) {
+                        $childQty = get_post_meta($child, '_stock', true);
+                        $qty[] = (int) $childQty;
+                    }
+                    $quantity = array_sum($qty);
+                }     
+            }
 
             return apply_filters('wt_feed_filter_product_quantity', $quantity, $this->product);
         }
@@ -1111,6 +1216,9 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Leguide_Export')) {
 
             $currency = get_option('woocommerce_currency');
 
+            if ( ( class_exists('WCML_Multi_Currency') || class_exists('WOOCS') || class_exists('WOOMULTI_CURRENCY_F') || class_exists('WC_Aelia_CurrencySwitcher') ) && !empty( $this->form_data['post_type_form_data']['wt_pf_export_post_currency'] ) ) {
+                $currency = $this->form_data['post_type_form_data']['wt_pf_export_post_currency'];
+            }
 
             return apply_filters('wt_feed_filter_product_currency', $currency, $this->product);
         }
@@ -1158,17 +1266,55 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Leguide_Export')) {
 
             return apply_filters('wt_feed_filter_product_first_variation_price', $price, $this->product);
         }
-        
+
+        public function get_converted_price($price, $selected_currency) {
+
+            if ($selected_currency !== get_woocommerce_currency() && $price > 0) {
+
+                if( class_exists('WC_Aelia_CurrencySwitcher') ){
+                    $settings_controller = WC_Aelia_CurrencySwitcher::settings();
+                    $aelia_currencies = $settings_controller->get_exchange_rates();
+                    foreach ($aelia_currencies as $currency_code => $currency_rate) {
+                        $currencies[$currency_code]['rate'] = $currency_rate;
+                    }
+                }                
+                if ( class_exists('WOOMULTI_CURRENCY_F') ) {
+                    $wcf_settings = WOOMULTI_CURRENCY_F_Data::get_ins();
+                    $currencies = $wcf_settings->get_list_currencies();
+                }                  
+                if( class_exists('WOOCS') ){
+                    global $WOOCS;
+                    $currencies = $WOOCS->get_currencies();
+                }
+                if( class_exists('WCML_Multi_Currency') ){
+                    $wcml_mc = new WCML_Multi_Currency();
+                    $currencies = $wcml_mc->get_currencies(true);
+                }                
+
+                $woo_currencies = get_woocommerce_currencies();
+
+                if (!empty($woo_currencies[$selected_currency]) && !empty($currencies[$selected_currency])) {
+                    $price = $price * $currencies[$selected_currency]['rate'];
+                }
+            }
+            return $price;
+        }
 
         public function price($catalog_attr, $product_attr, $export_columns) {
             $price = $this->product->get_regular_price();
-
+            
             if ($this->product->is_type('variable')) {
                 $price = $this->first_variation_price();
             }
-            
+
+            $selected_currency = get_woocommerce_currency();
+            if ( ( class_exists('WCML_Multi_Currency') || class_exists('WOOCS') || class_exists('WOOMULTI_CURRENCY_F') || class_exists('WC_Aelia_CurrencySwitcher') ) && !empty( $this->form_data['post_type_form_data']['wt_pf_export_post_currency'] ) ) {
+                $selected_currency = $this->form_data['post_type_form_data']['wt_pf_export_post_currency'];
+                $price = $this->get_converted_price($price, $selected_currency);
+            }
+
             if ($price > 0) {
-                $price = $price . ' ' . get_woocommerce_currency();
+                $price = $price ;//. ' ' . $selected_currency;
             }
             return apply_filters('wt_feed_filter_product_price', $price, $this->product);
         }
@@ -1176,12 +1322,30 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Leguide_Export')) {
         public function current_price($catalog_attr, $product_attr, $export_columns) {
             $price = $this->product->get_price();
 
+            $selected_currency = get_woocommerce_currency();
+            if ( ( class_exists('WCML_Multi_Currency') || class_exists('WOOCS') || class_exists('WOOMULTI_CURRENCY_F') || class_exists('WC_Aelia_CurrencySwitcher') ) && !empty( $this->form_data['post_type_form_data']['wt_pf_export_post_currency'] ) ) {
+                $selected_currency = $this->form_data['post_type_form_data']['wt_pf_export_post_currency'];
+                $price = $this->get_converted_price($price, $selected_currency);
+            }
+
+            if ($price > 0) {
+                $price = $price . ' ' . $selected_currency;
+            }
             return apply_filters('wt_feed_filter_product_current_price', $price, $this->product);
         }
 
         public function sale_price($catalog_attr, $product_attr, $export_columns) {
             $price = $this->product->get_sale_price();
 
+            $selected_currency = get_woocommerce_currency();
+            if ( ( class_exists('WCML_Multi_Currency') || class_exists('WOOCS') || class_exists('WOOMULTI_CURRENCY_F') || class_exists('WC_Aelia_CurrencySwitcher') ) && !empty( $this->form_data['post_type_form_data']['wt_pf_export_post_currency'] ) ) {
+                $selected_currency = $this->form_data['post_type_form_data']['wt_pf_export_post_currency'];
+                $price = $this->get_converted_price($price, $selected_currency);
+            }
+
+            if ($price > 0) {
+                $price = $price . ' ' . $selected_currency;
+            }
             return apply_filters('wt_feed_filter_product_sale_price', $price, $this->product);
         }
 
@@ -1213,6 +1377,94 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Leguide_Export')) {
             return apply_filters('wt_feed_filter_product_sale_price_with_tax', $price, $this->product);
         }
 
+        
+        
+       public function colour($catalog_attr, $product_attr, $export_columns) {
+
+            $color = get_post_meta($this->product->get_id(), '_wt_feed_color', true);
+
+            if ('' == $color and $this->product->is_type('variation')) {
+
+
+                $attributes = $this->product->get_variation_attributes();
+
+                if (!$attributes) {
+                    return apply_filters("wt_feed_{$this->parent_module->module_base}_product_color", $color, $this->product);
+                }
+
+                $variant_names = array_keys($attributes);
+
+                foreach ($variant_names as $original_variant_name) {
+
+                    $label = wc_attribute_label($original_variant_name, $this->product);
+
+                    $new_name = str_replace('custom_data:', '', self::sanitize_variant_name($original_variant_name));
+                    if ('color' === $new_name || 'farbe' === $new_name || 'farben' === $new_name) {
+                        if ($options = $this->get_variant_option_name($this->product->get_id(), $label, $attributes[$original_variant_name])) {
+
+                            if (is_array($options)) {
+
+                                $option_values = array_values($options);
+                            } else {
+
+                                $option_values = [$options];
+
+                                if (count($option_values) === 1 && empty($option_values[0])) {
+                                    $option_values[0] = 'any';
+                                }
+                            }
+
+                            switch ($new_name) {
+
+                                case 'color':
+                                case 'farbe':
+                                case 'farben':
+                                    $color = $option_values[0];
+
+                                    break;
+
+                                default:
+                                    break;
+                            }
+                        }
+                    }
+                }
+                if ('' == $color) {
+                    $parent = wc_get_product($this->product->get_parent_id());
+                    $product_attributes = $parent->get_attributes();
+                    if (isset($product_attributes['color'])) {
+                        $color = $product_attributes['color']['options']['0'];
+                    }
+                    if (isset($product_attributes['farbe'])) {
+                        $color = $product_attributes['farbe']['options']['0'];
+                    }
+                    if (isset($product_attributes['farben'])) {
+                        $color = $product_attributes['farben']['options']['0'];
+                    }
+                    if (isset($product_attributes['Farbe'])) {
+                        $color = $product_attributes['Farbe']['options']['0'];
+                    }
+                }
+                return apply_filters("wt_feed_{$this->parent_module->module_base}_product_color", $color, $this->product);
+            } elseif ('' == $color) {
+                $product_attributes = $this->product->get_attributes();
+                if (isset($product_attributes['color'])) {
+                    $color = $product_attributes['color']['options']['0'];
+                }
+                if (isset($product_attributes['farbe'])) {
+                    $color = $product_attributes['farbe']['options']['0'];
+                }
+                if (isset($product_attributes['farben'])) {
+                    $color = $product_attributes['farben']['options']['0'];
+                }
+                if (isset($product_attributes['Farbe'])) {
+                    $color = $product_attributes['Farbe']['options']['0'];
+                }
+            }
+            return apply_filters("wt_feed_{$this->parent_module->module_base}_product_color", $color, $this->product);
+        } 
+        
+        
         /**
          * Get Product Weight.
          *
@@ -1377,28 +1629,6 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Leguide_Export')) {
         }
 
         /**
-         * Get author name.
-         *
-         * @return string
-         */
-        public function author_name($catalog_attr, $product_attr, $export_columns) {
-            $post = get_post($this->product->get_id());
-
-            return get_the_author_meta('user_login', $post->post_author);
-        }
-
-        /**
-         * Get Author Email.
-         *
-         * @return string
-         */
-        public function author_email($catalog_attr, $product_attr, $export_columns) {
-            $post = get_post($this->product->get_id());
-
-            return get_the_author_meta('user_email', $post->post_author);
-        }
-
-        /**
          * Get Date Created.
          *
          * @return mixed|void
@@ -1445,7 +1675,108 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Leguide_Export')) {
         public function tax_status($catalog_attr, $product_attr, $export_columns) {
             return apply_filters('wt_feed_filter_product_tax_status', $this->product->get_tax_status(), $this->product);
         }
+        
+        
+        /**
+         * Get attributes for variation.
+         *
+         * @return mixed|void
+         */
+        public function variant_attribute_option() {
+
+            if ( !$this->product->is_type( 'variation' ) ) {
+				return '';
+			}
+
+			$attributes = $this->product->get_variation_attributes();
+
+
+			if ( !$attributes ) {
+				return [];
+			}
+                        $product_data = [];
+			$variant_names	 = array_keys( $attributes );
+			$variant_data	 = [];
+
+			foreach ( $variant_names as $original_variant_name ) {
+
+
+				$label = wc_attribute_label( $original_variant_name, $this->product );
+
+				$new_name = str_replace( 'custom_data:', '', self::sanitize_variant_name( $original_variant_name ) );
+
+
+				if ( $options = $this->get_variant_option_name( $this->product->get_id(), $label, $attributes[ $original_variant_name ] ) ) {
+
+					if ( is_array( $options ) ) {
+
+						$option_values = array_values( $options );
+					} else {
+
+						$option_values = [ $options ];
+
+						if ( count( $option_values ) === 1 && empty( $option_values[ 0 ] ) ) {
+							$option_values[ 0 ]				 = 'any';
+							$product_data[ 'checkout_url' ]	 = $product_data[ 'url' ];
+						}
+					}
+
+					if ( 'gender' === $new_name ) {
+
+						$product_data[ $new_name ] = $option_values[ 0 ];
+					}
+
+					switch ( $new_name ) {
+
+						case 'pattern':
+
+							$variant_data[] = [
+								'product_field'	 => $new_name,
+								'label'			 => $label,
+								'options'		 => $option_values,
+							];
+
+							$product_data[ $new_name ] = $option_values[ 0 ];
+
+							break;
+
+						case 'gender':
+
+							if ( $product_data[ $new_name ] ) {
+
+								$variant_data[] = [
+									'product_field'	 => $new_name,
+									'label'			 => $label,
+									'options'		 => $option_values,
+								];
+							}
+
+							break;
+
+						default:
+
+                                                        if(!isset($product_data)){
+                                                            $product_data = [];
+                                                        }
+                                                        $variant_details = array(
+                                                            'label' => ucwords( $new_name ) ,
+                                                            'value' => urldecode( $option_values[ 0 ] ),
+                                                        );
+                                                        
+                                                        array_push($product_data, $variant_details);//							
+							break;
+					}
+                                    } else {
+
+					continue;
+				}
+			}
+                        
+
+            return apply_filters("wt_feed_yandex_variant_attributes", $product_data, $this->product);
+        }        
+        
 
     }
-    
+
 }

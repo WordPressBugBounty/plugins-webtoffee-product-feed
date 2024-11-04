@@ -70,7 +70,7 @@ class Webtoffee_Product_Feed_Sync_Export
 			 */
 			'mapping'=>array(
 				'title'=>__('Attribute mapping'),
-				'description'=>__('Map the attributes of catalog feed corresponding to woocommerce.'),
+				'description'=>__('Map the attributes of product feed corresponding to woocommerce fields. Required fields are already mapped.'),
 			),
 			'category_mapping'=>array(
 				'title'=>__('Category mapping'),
@@ -217,7 +217,7 @@ class Webtoffee_Product_Feed_Sync_Export
 				'label'=>__("Google local product inventory store code"),
 				'type'=>'text',
 				'value'=> '',
-				'placeholder' => 'eg:- Store123',
+				'placeholder' => 'eg:- DemoStore',
 				'field_name'=>'glpi_store_code',
 				'help_text'=> __('The [store_code] attribute is case-sensitive and must match the store code entered in your Business Profiles.'),
 				'validation_rule'=>array('type'=>'text'),
@@ -229,21 +229,9 @@ class Webtoffee_Product_Feed_Sync_Export
 			'value' => 0,
 			'field_name' => 'all_shipping_zone',
 			'css_class'=> 'wt_pf_checkbox_toggler wt_pf_toggler_blue',
-			'help_text'=>__( 'Disabling the option will add the shipping cost of only the specified country to the feed.' ),
+			'help_text'=>__( 'Enabling this option will add the shipping costs of all zone/countries to the feed.' ),
 			'validation_rule'=>array('type'=>'absint'),
-		);
-                
-               $fb_catalogs = get_option(WT_Fb_Catalog_Manager_Settings::OPTION_FB_CATALOG_ID, array());
-               if (!empty($fb_catalogs)) {
-                   $fields['wt_pf_default_catalog'] = array(
-                       'label' => __('Default catalog'),
-                       'field_name' => 'default_catalog',
-                       'sele_vals' => $fb_catalogs,
-                       'help_text' => __('This catalog ID will be used to delete product from facebook when a product is trashed.'),
-                       'type' => 'select',
-                       'validation_rule' => array('type' => 'text_arr')
-                   );
-               }                
+		);                                               
               
 		return $fields;
 	}
@@ -390,7 +378,7 @@ class Webtoffee_Product_Feed_Sync_Export
                                 'merge_right'=>true,
 				'value'=>$this->default_batch_count,
 				'field_name'=>'batch_count',
-				'help_text'=>sprintf(__('The number of records that the server will process for every iteration within the configured timeout interval. If the process fails due to timeout you can lower this number accordingly and try again. Defaulted to %d records.'), 30),
+				'help_text'=>sprintf(__('The number of records that the server will process for every iteration within the configured timeout interval. If the process fails due to timeout you can lower this number accordingly and try again. Defaulted to %d records.'), 10),
 				'validation_rule'=>array('type'=>'absint'),
 			),
 			'file_as'=>array(

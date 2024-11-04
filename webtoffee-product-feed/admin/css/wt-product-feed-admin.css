@@ -1420,7 +1420,11 @@ ul.wt-profeed-newfeat li {
 
 .wt-feed-why-premium{
     padding: 15px 15px 0px 15px;
-        font-weight: 500;
+    font-weight: 500;
+    background-color: #F3FBFF;
+    display: flex;
+    justify-content: space-between; /* Even spacing between elements */
+    align-items: center; /* Align items vertically */    
 }
 .wt-feed-cs-rating-money-back{
     background-color: #fff;
@@ -1561,3 +1565,15 @@ ul.wt-profeed-newfeat li {
 	left: 0;
 }
 .wt-wc-enhanced-search{min-width: 300px;}
+
+.why-premium-inner-box{
+    
+            padding: 0px 10px 10px 10px;
+            text-align: center;
+}
+
+
+.wp-submenu li span.wt-pf-go-premium {
+  font-weight: 700;
+  color: #28e499;
+}

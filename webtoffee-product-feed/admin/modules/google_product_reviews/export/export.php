@@ -384,7 +384,7 @@ if (!class_exists('Webtoffee_Product_Feed_Google_ProductReviewsExport')) {
             $product = wc_get_product($this->current_product_id);
 
             if ($product instanceof WC_Product) {
-                $reviewe_product['product'] = array(
+                $prd_ids_details = array(
                     'product_ids' => array(
                         'gtins' => array( 'gtin' => $this->product_gtin() ),
                         'mpns' => array( 'mpn' => $this->product_mpn() ),
@@ -392,6 +392,13 @@ if (!class_exists('Webtoffee_Product_Feed_Google_ProductReviewsExport')) {
                         'brands' => array( 'brand' => $this->product_brand() ),
                     )
                 );
+                
+                // If all identifiers are false, map Product name+Brand to the MPN field
+                if( ''=== $prd_ids_details['product_ids']['gtins']['gtin'] && ''=== $prd_ids_details['product_ids']['mpns']['mpn'] && ''=== $prd_ids_details['product_ids']['skus']['sku'] ){
+                    $prd_ids_details['product_ids']['mpns']['mpn'] = $product->get_name()  . ' ' . $this->product_brand();
+                }                
+                
+                $reviewe_product['product'] = $prd_ids_details;
                 $reviewe_product['product']['product_name'] = $product->get_name();
                 $reviewe_product['product']['product_url'] = $product->get_permalink();
             }

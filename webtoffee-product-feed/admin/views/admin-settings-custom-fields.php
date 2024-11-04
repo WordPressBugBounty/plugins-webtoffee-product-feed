@@ -127,7 +127,7 @@ if (!defined('WPINC')) {
     }
 </style>
 <div class="wt-pfd-tab-content" data-id="<?php echo esc_attr($target_id); ?>">
-    <h3><span><?php esc_html_e(' Product additional fields for feed' ); ?> </span></h3>
+    <h3><span><?php esc_html_e(' Manage product additional fields for feed' ); ?> </span></h3>
     <form method="post" action="<?php echo esc_url($_SERVER["REQUEST_URI"]); ?>" id="wt_pf_settings_custom_fields_form" class="wt_pf_settings_custom_fields_form">			
         <?php
         // Set nonce:

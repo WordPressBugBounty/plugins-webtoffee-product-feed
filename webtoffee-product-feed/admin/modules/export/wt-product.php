@@ -197,6 +197,33 @@ if (!class_exists('Webtoffee_Product_Feed_Product')) {
 
             return apply_filters('wt_feed_filter_product_short_description', $short_description, $this->product);
         }
+        
+        
+/**
+         * Get product type.
+         *
+         * @return mixed|void
+         */
+        public function product_type($catalog_attr, $product_attr, $export_columns) {
+            $id = $this->product->get_id();
+            if ($this->product->is_type('variation')) {
+                $id = $this->product->get_parent_id();
+            }                      
+            
+            $separator = apply_filters('wt_feed_product_type_separator', ' > ');
+            $product_categories = '';
+            $term_list = get_the_terms($id, 'product_cat');
+
+            if (is_array($term_list)) {
+                $col = array_column($term_list, "term_id");
+                array_multisort($col, SORT_ASC, $term_list);
+                $term_list = array_column($term_list, "name");                
+                $product_categories = implode($separator, $term_list);
+            }
+
+
+            return apply_filters("wt_feed_{$this->parent_module->module_base}_product_local_category", $product_categories, $this->product);
+        }        
 
         /**
          * Get product primary category.
@@ -361,8 +388,38 @@ if (!class_exists('Webtoffee_Product_Feed_Product')) {
             return apply_filters("wt_feed_{$this->parent_module->module_base}_product_weight", $width, $this->product);
         }        
         
-        
-        
+        /**
+         * Get Product tax.
+         *
+         * @return mixed|void
+         */
+        public function vat($catalog_attr, $product_attr, $export_columns) {
+
+            $tax_value = 0;
+            // Tax rate for a product
+            $tax_rates = WC_Tax::get_rates();
+            if (!empty($tax_rates)) {
+                // Getting the first rate percentage
+                $tax_rate = reset($tax_rates);
+                $tax_value = $tax_rate['rate']; // Returns the tax rate percentage
+            }
+
+            $tax_value = '::'.$tax_value;
+            
+            /*
+             *  Tax amount for a product
+              if( is_object( $this->product ) ){
+              $price_excl_tax = wc_get_price_excluding_tax($this->product);
+              $price_incl_tax = wc_get_price_including_tax($this->product);
+              $tax_amount = $price_incl_tax - $price_excl_tax;
+              $tax_value =  $tax_amount;
+              }
+             * 
+             */
+
+            return apply_filters("wt_feed_{$this->parent_module->module_base}_product_tax", $tax_value, $this->product);
+        }
+
         /**
          * Get additional attributes for variation other than color, size, gender and pattern.
          *

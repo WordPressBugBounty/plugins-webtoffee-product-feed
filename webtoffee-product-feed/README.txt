@@ -4,12 +4,12 @@ Donate link: https://www.webtoffee.com/product/woocommerce-product-feed/
 Tags: woocommerce product feed, google shopping, google merchant center, facebook catalog, instagram feed
 Requires at least: 4.0
 Tested up to: 6.6
-Stable tag: 2.2.3
+Stable tag: 2.2.4
 Requires PHP: 5.6
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Create WooCommerce product feeds for Google Product feed, Facebook data feed, Pinterest feed, TikTok feed, Snapchat feed, Bing shopping feed, Fruugo feed, etc.
+Create WooCommerce product feeds containing unlimited number of products. Supports Google Product feed, Facebook feed, Instagram, Bing & many more.
 
 == Description ==
 
@@ -34,6 +34,10 @@ For Google Shopping, the plugin lets you connect your WooCommerce store with the
 
 - **Channels** - Supports 20+ channels.
 
+- **Unlimited products** - No product count restriction.
+
+- **Unlimited feeds** - Create unlimited product feeds.
+
 - **Easy setup** - Easily connect your WooCommerce store to Google, Facebook, and Instagram, TikTok, Snapchat, Bing and more using its simple interface. <strong> Takes only a few minutes to <a rel="nofollow" href="https://www.webtoffee.com/webtoffee-product-feed-sync-setup-guide/"> set up. </a> </strong>
 
 - **Facebook sync** - Sync your WooCommerce products directly with your Facebook business page to set up the Facebook shop or Facebook dynamic ads and showcase your products.
@@ -54,7 +58,7 @@ For Google Shopping, the plugin lets you connect your WooCommerce store with the
 
 - **Manage generated feeds** - View and manage generated product feed data.
 
-&#9989; Tested OK with WooCommerce 9.3.2
+&#9989; Tested OK with WooCommerce 9.3.3
 
 == Why Choose Us? ==
 The most simple product feed plugin for WooCommerce. This plugin is made to eliminate any complexities in generating WooCommerce product feeds. We offer complete support and regular updates for our plugins. 
@@ -65,7 +69,7 @@ The most simple product feed plugin for WooCommerce. This plugin is made to elim
 > I was having a problem with Discounted Items (which I used a plugin for) and the support was very quick to provide a solution. thank you!
 
 > **charismchl (@charismchl)** ⭐⭐⭐⭐⭐
-> After trying many plugins i can say this is the best and working fine. Very easy to upload your products…!!!
+> After trying many plugins i can say this is the best and working fine. Very easy to upload your products...!!!
 
 > **miata2 (@miata2)** ⭐⭐⭐⭐⭐
 > Keep up the great work! Your plugin is way better than the Facebook for WooCommerce by Facebook, which was very buggy and caused conflicts with other plugins.
@@ -84,7 +88,7 @@ The premium version of the Product Feed for WooCommerce plugin gives you advance
 &#9989; Select which product variations to include in the feed: all variations, the default variation, or the lowest priced variation </li>
 &#9989; Compatibility with Perfect brands and WooCommerce brands plugins for WooCommerce </li>
 &#9989; Multi-vendor compatibility for Dokan plugin </li>
-&#9989; Compatibility with Aelia currency switcher, Fox, and Curcy Currency switcher plugins </li>
+&#9989; Compatibility with Aelia currency switcher, <a rel="dofollow" href="https://wordpress.org/plugins/woocommerce-currency-switcher/"> Fox Currency Switcher </a>, and Curcy Currency Switcher plugins </li>
 
 
 == 👉 Supports 20+ Sales Channels ==
@@ -113,7 +117,8 @@ The premium version of the Product Feed for WooCommerce plugin gives you advance
 - Fruugo
 - Vivino
 - OnBuy
-- Yandex (Premium)
+- Yandex
+- X(Twitter)
 - Custom Feed (Premium)
 
 Please visit <a rel="nofollow" href="https://www.webtoffee.com/product/woocommerce-product-feed/">WooCommerce Product Feed Plugin </a> for more details.
@@ -231,6 +236,13 @@ function wt_modify_product_description_mode( $mode ) {
 
 
 == Changelog ==
+
+= 2.2.4  2024-11-04 =
+*[Add] - X(Twitter) channel support.
+*[Add] - Yandex channel support.
+*[Enhancement] - Removed option - Trash product from FB catalog.
+*[Enhancement] - Google product review feed improvement.
+*[Compatibility] - Tested OK with WooCommerce 9.3.3
 
 = 2.2.3  2024-09-24 =
 *[Add] - OnBuy channel support.
@@ -456,9 +468,9 @@ function wt_modify_product_description_mode( $mode ) {
 
 == Upgrade Notice ==
 
-= 2.2.3 =
-*[Add] - OnBuy channel support.
-*[Add] - Missing fields added in Idealo feed.
-*[Fix] - Private and  draft variations are included in the feed.
-*[Enhancement] - Feed processing performance improvements.
-*[Compatibility] - Tested OK with WooCommerce 9.3.2
+= 2.2.4 =
+*[Add] - X(Twitter) channel support.
+*[Add] - Yandex channel support.
+*[Enhancement] - Removed option - Trash product from FB catalog.
+*[Enhancement] - Google product review feed improvement.
+*[Compatibility] - Tested OK with WooCommerce 9.3.3

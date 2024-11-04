@@ -624,7 +624,11 @@
 }
 .wt-feed-why-premium{
     padding: 15px 15px 0px 15px;
-        font-weight: 500;
+    font-weight: 500;
+    background-color: #F3FBFF;
+    display: flex;
+    justify-content: space-between; /* Even spacing between elements */
+    align-items: center; /* Align items vertically */
 }
 .wt-feed-cs-rating-money-back{
     background-color: #fff;
@@ -657,4 +661,10 @@
 .wt-profeed-allfeat-subul li:before{
     content:'';
     background: none;
+}
+
+
+.wp-submenu li span.wt-pf-go-premium {
+  font-weight: 700;
+  color: #28e499;
 }

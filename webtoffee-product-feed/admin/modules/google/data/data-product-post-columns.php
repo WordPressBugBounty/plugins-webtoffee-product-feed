@@ -28,5 +28,3 @@ $post_columns = array(
 );
 
 return apply_filters('wt_pf_google_product_post_columns',$post_columns);
-
-

@@ -82,7 +82,7 @@ class Webtoffee_Product_Feed_Sync {
 		if ( defined( 'WEBTOFFEE_PRODUCT_FEED_SYNC_VERSION' ) ) {
 			$this->version = WEBTOFFEE_PRODUCT_FEED_SYNC_VERSION;
 		} else {
-			$this->version = '2.2.3';
+			$this->version = '2.2.4';
 		}
 		$this->plugin_name = 'webtoffee-product-feed';
 		$this->plugin_base_name	 = WT_PRODUCT_FEED_BASE_NAME;
@@ -220,8 +220,18 @@ class Webtoffee_Product_Feed_Sync {
 		$this->loader->add_action( 'wp_ajax_wt_fbfeed_ajax_save_category', $plugin_admin, 'wt_fbfeed_ajax_save_category' );
 		$this->loader->add_filter( 'plugin_action_links_' . $this->get_plugin_base_name(), $plugin_admin, 'add_productfeed_action_links' );
                 
-                $this->loader->add_action( 'woocommerce_before_delete_product_variation', $plugin_admin, 'delete_product_from_fb', 10, 1 );
-                $this->loader->add_action( 'wp_trash_post', $plugin_admin, 'delete_product_from_fb', 10, 1 );
+                
+		/**
+		 * Includes the Black Friday and Cyber Monday CTA banners for 2024
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/modules/banner/class-wt-bfcm-twenty-twenty-four.php';                
+                /**
+		 *  Set screens to show promotional banner 
+		 * 
+		 *  @since 2.3.4
+		 */
+		$this->loader->add_filter( 'wt_bfcm_banner_screens', $plugin_admin, "wt_bfcm_banner_screens" );
+                
 	}
 
 	/**

@@ -13,7 +13,7 @@ $wf_img_path=WT_PRODUCT_FEED_PLUGIN_URL.'images/';
         <?php
         $tab_head_arr=array(
             'wt-advanced'=>__('General'),
-            'wt-custom-fields' => __('Custom Fields'),             
+            'wt-custom-fields' => __('Additional Fields'),             
             'wt-pro-upgrade'=>__('Free vs Premium'),           
             'wt-other-solutions' => __('Other Solutions')
         );

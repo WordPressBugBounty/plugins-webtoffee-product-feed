@@ -777,7 +777,7 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Pinterest_Rss_Export')) {
             $id = ( $this->product->is_type('variation') ? $this->product->get_parent_id() : $this->product->get_id() );
 
             $getImage = wp_get_attachment_image_src(get_post_thumbnail_id($id), 'single-post-thumbnail');
-            $image = isset($getImage[0]) ? wt_feed_get_formatted_url($getImage[0]) : '';
+            $image = isset($getImage[0]) ? self::wt_feed_get_formatted_url($getImage[0]) : '';
 
             return apply_filters('wt_feed_filter_product_feature_image', $image, $this->product);
         }

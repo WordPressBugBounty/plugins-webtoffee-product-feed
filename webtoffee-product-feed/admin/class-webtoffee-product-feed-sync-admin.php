@@ -684,6 +684,7 @@ class Webtoffee_Product_Feed_Sync_Admin {
 							<div style="float:right;border: 1px solid #ccc;width:25%">
 							<?php 
 							$fb_sync_tab = true;
+                                                        $utm_source = 'free_plugin_sidebar_sync';
 							include plugin_dir_path(WT_PRODUCT_FEED_PLUGIN_FILENAME).'admin/views/market.php'; 							
 							?>
 							</div>
@@ -1426,7 +1427,7 @@ class Webtoffee_Product_Feed_Sync_Admin {
 			'submenu',
 			$parent_menu_key,
 			__( 'Facebook/Instagram Catalog Sync', 'webtoffee-product-feed' ),
-			__( 'Facebook/Instagram Catalog Sync', 'webtoffee-product-feed' ), 
+			__( 'FB/Insta Catalog', 'webtoffee-product-feed' ), 
 			apply_filters('wt_import_export_allowed_capability', 'import'),
 			WT_Fb_Catalog_Manager_Settings::PAGE_ID,
 			array($this, 'render')
@@ -1446,11 +1447,22 @@ class Webtoffee_Product_Feed_Sync_Admin {
 				}
 			}
 		}
+                
+                add_submenu_page($parent_menu_key, esc_html__('Pro upgrade'), '<span class="wt-pf-go-premium">' . esc_html__('Pro upgrade') . '</span>', 'import', WEBTOFFEE_PRODUCT_FEED_ID . '#wt-pro-upgrade', array($this, 'admin_upgrade_premium_settings'));
+                
 		if(function_exists('remove_submenu_page')){
 			//remove_submenu_page(WT_PIEW_POST_TYPE, WT_PIEW_POST_TYPE);
 		}
 	}
 	
+        
+	public function admin_upgrade_premium_settings()
+	{
+
+		wp_safe_redirect(admin_url('admin.php?page=webtoffee_product_feed#wt-pro-upgrade'));
+		exit();
+	}
+        
 	public function wt_menu_order_changer( &$arr, $index_arr ) {
 			$arr_t = array();
 			foreach ( $index_arr as $i => $v ) {
@@ -1678,7 +1690,9 @@ class Webtoffee_Product_Feed_Sync_Admin {
                     'google_product_reviews' => 'webtoffee-product-feed',
                     'leguide' => 'webtoffee-product-feed',
                     'vivino' => 'webtoffee-product-feed',
-                    'onbuy' => 'webtoffee-product-feed'
+                    'onbuy' => 'webtoffee-product-feed',
+                    'twitter' => 'webtoffee-product-feed',
+                    'yandex' => 'webtoffee-product-feed'
                 );
 
                 foreach ($addon_modules_basic as $module_key => $module_path)
@@ -1699,94 +1713,22 @@ class Webtoffee_Product_Feed_Sync_Admin {
 	public static function module_exists($module)
 	{
 		return in_array($module, self::$existing_modules);
-	}
-                
+	}      
         
         /**
-         * Delete products from FB
-         * 
-         * @param int $postid
-         */
-        public function delete_product_from_fb($postid) {
+	 *  Screens to show Black Friday and Cyber Monday Banner
+	 * 
+	 *  @since 2.3.4
+	 */
+	public function wt_bfcm_banner_screens( $screen_ids ) {
 
-            $wt_pf_default_catalog = Webtoffee_Product_Feed_Sync_Common_Helper::get_advanced_settings('default_catalog');
-
-            if ($wt_pf_default_catalog) {
-                $access_token = get_option(WT_Fb_Catalog_Manager_Settings::OPTION_ACCESS_TOKEN, '');
-
-                $product = wc_get_product($postid);
-                if ($product) {
-                    $url = "https://graph.facebook.com/v17.0/{$wt_pf_default_catalog}/items_batch?access_token=" . $access_token;
-
-                    $request_body = array();
-
-                    if ('variable' === $product->get_type()) {
-                        $fb_retailer_id = $product->get_sku() ? $product->get_sku() . '_' . $postid : 'wc_post_id_' . $postid;
-                        $request_body[] = array(
-                            'method' => 'DELETE',
-                            'data' => array(
-                                'id' => $fb_retailer_id,
-                            ),
-                        );
-                        $all_variations = $product->get_children();
-                        foreach ($all_variations as $variant_id) {
-                            $variant_product = wc_get_product($variant_id);
-                            $fb_retailer_id = $variant_product->get_sku() ? $variant_product->get_sku() . '_' . $variant_id : 'wc_post_id_' . $variant_id;
-                            $request_body[] = array(
-                                'method' => 'DELETE',
-                                'data' => array(
-                                    'id' => $fb_retailer_id,
-                                ),
-                            );
-                        }
-                    } else {
-
-                        $fb_retailer_id = $product->get_sku() ? $product->get_sku() . '_' . $postid : 'wc_post_id_' . $postid;
-                        $request_body = array(
-                            array(
-                                'method' => 'DELETE',
-                                'data' => array(
-                                    'id' => $fb_retailer_id,
-                                ),
-                            ),
-                        );
-                    }
-
-                    $body = array(
-                        'access_token' => $access_token,
-                        'item_type' => 'PRODUCT_ITEM',
-                        'requests' => $request_body,
-                    );
-
-                    $args = array(
-                        'method' => 'POST',
-                        'headers' => array(
-                            'Content-Type' => 'application/json',
-                        ),
-                        'body' => wp_json_encode($body),
-                    );
-
-                    $response = wp_remote_request($url, $args);
-
-                    if (is_wp_error($response)) {
-                         
-                        $this->wt_log_data_change('wt-feed-upload', 'Failed to process the requests. Error: '.$response->get_error_message() .' ID='. $postid );                        
-                    } else {
-                        $body = wp_remote_retrieve_body($response);
-                        $result = json_decode($body);
-
-                        if (isset($result->success)) {
-                            $this->wt_log_data_change('wt-feed-upload', 'Requests processed successfully. ID='.$postid );                        
-                        } elseif (isset($result->errors)) {
-                            $this->wt_log_data_change('wt-feed-upload', 'Failed to process the requests. Error: ' . $body .' ID='. $postid );                        
-                        } else {
-                            $this->wt_log_data_change('wt-feed-upload', 'Unexpected response: ' . $body .' ID='. $postid );                        
-                        }
-                    }
-                }
-            }
-
-        }
+		$screen_ids[] = 'toplevel_page_webtoffee_product_feed_main_export';
+                $screen_ids[] = 'webtoffee-product-feed_page_webtoffee_product_feed_main_history';
+                $screen_ids[] = 'webtoffee-product-feed_page_webtoffee_product_feed_main_cron';
+                $screen_ids[] = 'webtoffee-product-feed_page_webtoffee_product_feed';
+                $screen_ids[] = 'webtoffee-product-feed_page_webtoffee-product-feed';
+		return $screen_ids;
+	}        
 
     }
 }

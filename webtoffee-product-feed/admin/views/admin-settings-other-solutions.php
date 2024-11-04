@@ -234,7 +234,7 @@ $plugins=array(
         'basic_plugin' => 'wp-migration-duplicator/wp-migration-duplicator.php',
     ),
     'gdpr_cookie_consent_plugin' => array(
-        'title'         => __('GDPR Cookie Consent Plugin (CCPA Ready)', 'webtoffee-product-feed'),
+        'title'         => __('CookieYes – Cookie Banner for Cookie Consent (Easy to setup GDPR/CCPA Compliant Cookie Notice)', 'webtoffee-product-feed'),
         'description'   => __('The plugin helps you get compliant with GDPR, CCPA, and other major cookie laws. You can create and manage cookie consent banners, scan website cookies, and generate cookie policies with this plugin.','webtoffee-product-feed'),
         'image_url'     => 'gdpr-cookie-concent-plugin.png',
         'premium_url'   => 'https://www.webtoffee.com/product/gdpr-cookie-consent/?utm_source=other_solution_page&utm_medium=_free_plugin_&utm_campaign=GDPR',

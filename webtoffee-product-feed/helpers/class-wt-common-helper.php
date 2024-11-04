@@ -280,6 +280,7 @@ class Webtoffee_Product_Feed_Sync_Common_Helper
                         $attribute_dropdown['link_template'] = __('Link template' );
                         $attribute_dropdown['mobile_link_template'] = __('Mobile Link template' );
                         $attribute_dropdown['store_code'] = __('Store code' );
+                        $attribute_dropdown['vat'] = __('VAT' );
                         
                         
                         
@@ -615,7 +616,7 @@ class Webtoffee_Product_Feed_Sync_Common_Helper
     }
     
     public static function wt_allowed_screens(){
-        $screens=array('webtoffee_product_feed_main_export', 'webtoffee_product_feed_main_history', 'webtoffee_product_feed', 'webtoffee-product-feed', 'wt_import_export_for_woo_basic','wt_import_export_for_woo_basic_export','wt_import_export_for_woo_basic_import','wt_import_export_for_woo_basic_history','wt_import_export_for_woo_basic_history_log');
+        $screens=array('webtoffee_product_feed_main_export', 'webtoffee_product_feed_main_history', 'webtoffee_product_feed', 'webtoffee-product-feed');
         return apply_filters('wt_pf_allowed_screens_basic', $screens);
 
     }
@@ -651,6 +652,23 @@ public static function wt_strtotimetz($str)
 	}
 	return $strtotime;
 }
+
+    /**
+     * To Check if the current date is on or between the start and end date of black friday and cyber monday banner for 2024.
+     * @since 4.7.0
+     */
+    public static function is_bfcm_season() {
+        $start_date = new DateTime( '25-NOV-2024, 12:00 AM', new DateTimeZone( 'Asia/Kolkata' ) ); // Start date.
+        $current_date = new DateTime( 'now', new DateTimeZone( 'Asia/Kolkata' ) ); // Current date.
+        $end_date = new DateTime( '02-DEC-2024, 11:59 PM', new DateTimeZone( 'Asia/Kolkata' ) ); // End date.
+        /**
+         * check if the date is on or between the start and end date of black friday and cyber monday banner for 2024.
+         */
+        if ( $current_date < $start_date  || $current_date >= $end_date) {
+            return false;
+        }
+        return true;
+    }
 	
 }
 }

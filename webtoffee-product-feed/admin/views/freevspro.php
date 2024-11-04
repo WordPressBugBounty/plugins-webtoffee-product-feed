@@ -65,9 +65,9 @@ if (!defined('WPINC')) {
 	<div class="wt-feed-freevspro" style="width:70%;float: left;">
 		<table class="wp-list-table fold-table-free-pro" style="line-height:20px;">
 			<thead>
-			<th style="width:40%;"><?php esc_html_e('Features', 'webtoffee-product-feed'); ?></th>
-			<th style="width:30%;"><?php esc_html_e('Free', 'webtoffee-product-feed'); ?></th>
-			<th style="width:30%;"><?php esc_html_e('Premium', 'webtoffee-product-feed'); ?></th>
+			<th style="width:50%;"><?php esc_html_e('Features', 'webtoffee-product-feed'); ?></th>
+			<th style="width:20%;"><?php esc_html_e('Free', 'webtoffee-product-feed'); ?></th>
+			<th style="width:20%;"><?php esc_html_e('Premium', 'webtoffee-product-feed'); ?></th>
 			</thead>
 			<tbody>
 			<tbody>
@@ -77,32 +77,12 @@ if (!defined('WPINC')) {
 					<td><span class="dashicons dashicons-yes-alt" style="color:#18c01d;margin-top: 3px;margin-bottom: 13px;"></span></td>
 				</tr>
 				<tr>
-					<td><?php esc_html_e('Attribute mapping', 'webtoffee-product-feed'); ?></td>
-					<td><span class="dashicons dashicons-yes-alt" style="color:#18c01d;margin-top: 3px;margin-bottom: 13px;"></span></td>
-					<td><span class="dashicons dashicons-yes-alt" style="color:#18c01d;margin-top: 3px;margin-bottom: 13px;"></span></td>
-				</tr>
-				<tr>
-					<td><?php esc_html_e('Custom attribute support', 'webtoffee-product-feed'); ?></td>
-					<td><span class="dashicons dashicons-yes-alt" style="color:#18c01d;margin-top: 3px;margin-bottom: 13px;"></span></td>
-					<td><span class="dashicons dashicons-yes-alt" style="color:#18c01d;margin-top: 3px;margin-bottom: 13px;"></span></td>
-				</tr>
-				<tr>
 					<td><?php esc_html_e('Custom fields support', 'webtoffee-product-feed'); ?></td>
 					<td><span class="dashicons dashicons-yes-alt" style="color:#18c01d;margin-top: 3px;margin-bottom: 13px;"></span></td>
 					<td><span class="dashicons dashicons-yes-alt" style="color:#18c01d;margin-top: 3px;margin-bottom: 13px;"></span></td>					
-				</tr>
-				<tr>
-					<td><?php esc_html_e('Product meta & Taxonomies support', 'webtoffee-product-feed'); ?></td>
-					<td><span class="dashicons dashicons-yes-alt" style="color:#18c01d;margin-top: 3px;margin-bottom: 13px;"></span></td>
-					<td><span class="dashicons dashicons-yes-alt" style="color:#18c01d;margin-top: 3px;margin-bottom: 13px;"></span></td>
-				</tr>				
+				</tr>			
 				<tr>
 					<td><?php esc_html_e('Supports any WooCommerce product types', 'webtoffee-product-feed'); ?></td>
-					<td><span class="dashicons dashicons-yes-alt" style="color:#18c01d;margin-top: 3px;margin-bottom: 13px;"></span></td>
-					<td><span class="dashicons dashicons-yes-alt" style="color:#18c01d;margin-top: 3px;margin-bottom: 13px;"></span></td>					
-				</tr>
-				<tr>
-					<td><?php esc_html_e('Multiple file type support', 'webtoffee-product-feed'); ?></td>
 					<td><span class="dashicons dashicons-yes-alt" style="color:#18c01d;margin-top: 3px;margin-bottom: 13px;"></span></td>
 					<td><span class="dashicons dashicons-yes-alt" style="color:#18c01d;margin-top: 3px;margin-bottom: 13px;"></span></td>					
 				</tr>
@@ -112,12 +92,12 @@ if (!defined('WPINC')) {
 					<td><span class="dashicons dashicons-yes-alt" style="color:#18c01d;margin-top: 3px;margin-bottom: 13px;"></span></td>					
 				</tr>
 				<tr>
-					<td><?php esc_html_e('Additional fields to products (GTIN, MPN, Material, etc)', 'webtoffee-product-feed'); ?></td>
+					<td><?php esc_html_e('Additional fields to products ( GTIN, MPN, Color, Size, Material, etc )', 'webtoffee-product-feed'); ?></td>
 					<td><span class="dashicons dashicons-yes-alt" style="color:#18c01d;margin-top: 3px;margin-bottom: 13px;"></span></td>
 					<td><span class="dashicons dashicons-yes-alt" style="color:#18c01d;margin-top: 3px;margin-bottom: 13px;"></span></td>					
 				</tr>
 				<tr>
-					<td><?php esc_html_e('Compatibility with SEO plugins', 'webtoffee-product-feed'); ?></td>
+					<td><?php esc_html_e('Compatibility with SEO plugins ( Yoast, RankMath, All in one SEO )', 'webtoffee-product-feed'); ?></td>
 					<td><span class="dashicons dashicons-yes-alt" style="color:#18c01d;margin-top: 3px;margin-bottom: 13px;"></span></td>
 					<td><span class="dashicons dashicons-yes-alt" style="color:#18c01d;margin-top: 3px;margin-bottom: 13px;"></span></td>					
 				</tr>
@@ -131,23 +111,23 @@ if (!defined('WPINC')) {
 					<td><span class="dashicons dashicons-yes-alt" style="color:#18c01d;margin-top: 3px;margin-bottom: 13px;"></span></td>
 					<td><span class="dashicons dashicons-yes-alt" style="color:#18c01d;margin-top: 3px;margin-bottom: 13px;"></span></td>					
 				</tr>
+                                <tr>
+					<td><?php esc_html_e('Advanced product filters', 'webtoffee-product-feed'); ?></td>
+					<td><span class="dashicons dashicons-dismiss" style="color:#ea1515;margin-top: 3px;margin-bottom: 13px;"></span></td>
+					<td><span class="dashicons dashicons-yes-alt" style="color:#18c01d;margin-top: 3px;margin-bottom: 13px;"></span></td>					
+				</tr>                                
 				<tr>
 					<td><?php esc_html_e('Dynamic price & feed update', 'webtoffee-product-feed'); ?></td>
 					<td><span class="dashicons dashicons-dismiss" style="color:#ea1515;margin-top: 3px;margin-bottom: 13px;"></span></td>
 					<td><span class="dashicons dashicons-yes-alt" style="color:#18c01d;margin-top: 3px;margin-bottom: 13px;"></span></td>					
 				</tr>
 				<tr>
-					<td><?php esc_html_e('Choose from lowest priced/default variation', 'webtoffee-product-feed'); ?></td>
+					<td><?php esc_html_e('Choose from lowest priced/highest priced/default/all variations', 'webtoffee-product-feed'); ?></td>
 					<td><span class="dashicons dashicons-dismiss" style="color:#ea1515;margin-top: 3px;margin-bottom: 13px;"></span></td>
 					<td><span class="dashicons dashicons-yes-alt" style="color:#18c01d;margin-top: 3px;margin-bottom: 13px;"></span></td>					
 				</tr>
                                 <tr>
 					<td><?php esc_html_e('Custom template/feed support', 'webtoffee-product-feed'); ?></td>
-					<td><span class="dashicons dashicons-dismiss" style="color:#ea1515;margin-top: 3px;margin-bottom: 13px;"></span></td>
-					<td><span class="dashicons dashicons-yes-alt" style="color:#18c01d;margin-top: 3px;margin-bottom: 13px;"></span></td>					
-				</tr>
-                                <tr>
-					<td><?php esc_html_e('Advanced product filters', 'webtoffee-product-feed'); ?></td>
 					<td><span class="dashicons dashicons-dismiss" style="color:#ea1515;margin-top: 3px;margin-bottom: 13px;"></span></td>
 					<td><span class="dashicons dashicons-yes-alt" style="color:#18c01d;margin-top: 3px;margin-bottom: 13px;"></span></td>					
 				</tr>
@@ -175,21 +155,11 @@ if (!defined('WPINC')) {
 					<td><?php esc_html_e('Server cron support for feed auto refresh', 'webtoffee-product-feed'); ?></td>
 					<td><span class="dashicons dashicons-dismiss" style="color:#ea1515;margin-top: 3px;margin-bottom: 13px;"></span></td>
 					<td><span class="dashicons dashicons-yes-alt" style="color:#18c01d;margin-top: 3px;margin-bottom: 13px;"></span></td>					
-				</tr> 
-                                <tr>
-					<td><?php esc_html_e('Leguide Feed', 'webtoffee-product-feed'); ?></td>
-					<td><span class="dashicons dashicons-dismiss" style="color:#ea1515;margin-top: 3px;margin-bottom: 13px;"></span></td>
-					<td><span class="dashicons dashicons-yes-alt" style="color:#18c01d;margin-top: 3px;margin-bottom: 13px;"></span></td>					
-				</tr> 
-                                <tr>
-					<td><?php esc_html_e('Google product review feed', 'webtoffee-product-feed'); ?></td>
-					<td><span class="dashicons dashicons-dismiss" style="color:#ea1515;margin-top: 3px;margin-bottom: 13px;"></span></td>
-					<td><span class="dashicons dashicons-yes-alt" style="color:#18c01d;margin-top: 3px;margin-bottom: 13px;"></span></td>					
 				</tr>                                 
 			</tbody>
 		</table>
 	</div>
-	<div class="wt-profeed-header" style="float:right;width:25%;">
+	<div class="wt-profeed-header" style="float:right;width:28%;">
 		<div class="wt-profeed-name">
 			<div style="float: left"><img src="<?php echo esc_url( WT_PRODUCT_FEED_PLUGIN_URL ); ?>assets/images/gopro/product-feed.svg" alt="featured img" width="36" height="36"></div>
 			<div style="float: right">
@@ -234,13 +204,12 @@ if (!defined('WPINC')) {
 						
 						<li><?php esc_html_e('Dynamic price & feed update', 'webtoffee-product-feed'); ?></li>
 						<li><?php esc_html_e('Advanced product filters', 'webtoffee-product-feed'); ?></li>            
-						<li><?php esc_html_e('Choose from lowest priced/default/all variations', 'webtoffee-product-feed'); ?></li>
+						<li><?php esc_html_e('Choose from lowest priced/highest priced/default/all variations', 'webtoffee-product-feed'); ?></li>
 						<li><?php esc_html_e('WPML multilanguage support', 'webtoffee-product-feed'); ?></li>
                                                 <li><?php esc_html_e('Compatibility with popular brand plugins', 'webtoffee-product-feed'); ?></li>
 						<li><?php esc_html_e('Compatibility with Multicurrency plugins', 'webtoffee-product-feed'); ?></li>
 						<li><?php esc_html_e('Compatibility with Dokan Multivendor plugin', 'webtoffee-product-feed'); ?></li>
-                                                <li><?php esc_html_e('Server cron support for feed auto refresh', 'webtoffee-product-feed'); ?></li>
-                                                <li><?php esc_html_e('Leguide, Google product review feeds', 'webtoffee-product-feed'); ?></li>
+                                                <li><?php esc_html_e('Server cron support for feed auto refresh', 'webtoffee-product-feed'); ?></li>                                                
 					</ul> 
 				</div>				
 			</div>
