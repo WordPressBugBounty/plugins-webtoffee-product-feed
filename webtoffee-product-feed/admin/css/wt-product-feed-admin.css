@@ -732,7 +732,8 @@ img.tips {
 }
 .wt-profeed-blue-btn-new, .wt-profeed-blue-btn-new:visited{
   background: #1DA5F8;
-  padding: 15px 0px;
+  padding: 15px 4px;
+  margin-bottom: 29px;
   display: inline-block;
   font-style: normal;
   font-weight: bold;
@@ -743,7 +744,7 @@ img.tips {
   transition: all .2s ease;
   position: relative;
   border: none;
-  width:100%;
+  width:70%;
 }
 .wt-profeed-blue-btn-new:hover{
   box-shadow: 0px 4px 13px rgba(46, 80, 242, 0.5);

@@ -421,15 +421,19 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Fruugo_Export')) {
 
             foreach ($export_columns as $key => $value) {
                 if (method_exists($this, $value)) {
-                    $column_data = $this->$value($key, $value, $export_columns);
-                    if(isset($this->fruugo_feed_keys[$value])){
-                        $row[$this->fruugo_feed_keys[$value]] = $column_data;
+                    $column_data = $this->$value($key, $value, $export_columns);                    
+                    if(isset($this->fruugo_feed_keys[$key])){
+                        $row[$this->fruugo_feed_keys[$key]] = $column_data;
                     }else{
                         $row[$key] = $column_data;
                     }
                 }elseif (strpos($value, 'meta:') !== false) {
                     $mkey = str_replace('meta:', '', $value);
-                    $row[$key] = get_post_meta($product_id, $mkey, true);
+                    if(isset($this->fruugo_feed_keys[$key])){
+                        $row[$this->fruugo_feed_keys[$key]] = get_post_meta($product_id, $mkey, true);
+                    }else{
+                        $row[$key] = get_post_meta($product_id, $mkey, true);
+                    }
                     // TODO
                     // wt_image_ function can be replaced with key exist check
                 }elseif (strpos($value, 'wt_pf_pa_') !== false) {
@@ -545,6 +549,7 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Fruugo_Export')) {
 			$ean = ('' == $custom_ean) ? '' : $custom_ean;
 			return apply_filters('wt_feed_product_ean', $ean, $this->product);
 	}
+        
 	public function isbn($catalog_attr, $product_attr, $export_columns){
 		
 			$custom_isbn = get_post_meta($this->product->get_id(), '_wt_feed_isbn', true);

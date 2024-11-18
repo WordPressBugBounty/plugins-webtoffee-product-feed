@@ -32,12 +32,13 @@ if (!defined('ABSPATH')) {
 					<li><?php esc_html_e( 'Add fields like condition, color, gender, material, etc., to products.', 'webtoffee-product-feed' ); ?></li>
 					<li><?php esc_html_e( 'Exclude out-of-stock products from syncing', 'webtoffee-product-feed' ); ?></li>
                                         <li><?php esc_html_e( 'Exclude specific products/variations from the sync.', 'webtoffee-product-feed' ); ?></li>            
-					<?php else: ?>                                         
+					<?php else: ?>     
+                                        <li><span><b style="font-weight: 800;"><?php esc_html_e( 'Priority support:' ); ?></b>&nbsp;<?php esc_html_e( 'Make feeds live faster', 'webtoffee-product-feed' ); ?></span></li>
                                         <li><span><b style="font-weight: 800;"><?php esc_html_e( 'Filter') ;?></b>&nbsp;<?php esc_html_e( 'unwanted (out of stock, price missing, description missing, etc.) products from your feed for better ad performance', 'webtoffee-product-feed' ); ?></span></li>
                                         <li><span><b style="font-weight: 800;"><?php esc_html_e( 'Variations:', 'webtoffee-product-feed' ); ?></b>&nbsp;<?php esc_html_e( 'Option to choose lowest priced/highest priced/default variant', 'webtoffee-product-feed' ); ?></span></li>
                                         <li><span><b style="font-weight: 800;"><?php esc_html_e( 'WPML' ); ?></b>&nbsp;<?php esc_html_e( 'Multilingual & Multicurrency support', 'webtoffee-product-feed' ); ?></span></li>
                                         <li><span><?php esc_html_e( 'Aelia, Curcy, Fox');?>&nbsp;<b style="font-weight: 800;"><?php esc_html_e( 'currency switcher'); ?></b>&nbsp;<?php esc_html_e( 'plugin compatibility', 'webtoffee-product-feed' ); ?></span></li>  
-                                        <li><span><b style="font-weight: 800;"><?php esc_html_e( 'Bulk update price'); ?></b>&nbsp;<?php esc_html_e( 'in the feed without changing it in your store', 'webtoffee-product-feed' ); ?></span></li>                                    															                                        
+                                        <li><span><b style="font-weight: 800;"><?php esc_html_e( 'Bulk update price'); ?></b>&nbsp;<?php esc_html_e( 'in the feed (without changing it in the store), allow channel wise ' );?><b style="font-weight: 800;"><?php esc_html_e( 'discount'); ?></b><?php esc_html_e(', etc.', 'webtoffee-product-feed' ); ?></span></li>                                    															                                        
                                         <li><span><b style="font-weight: 800;"><?php esc_html_e( 'Multi-vendor');?></b>&nbsp;<?php esc_html_e( 'compatibility', 'webtoffee-product-feed' ); ?></span></li>                                        
                                         <li><span><?php esc_html_e( 'Supports'); ?>&nbsp;<b style="font-weight: 800;"><?php esc_html_e( 'WooCommerce Brands'); ?></b> <?php esc_html_e( '& Perfect Brands for WooCommerce plugins', 'webtoffee-product-feed' ); ?><span></li>
                                         <?php endif; ?>
@@ -45,9 +46,9 @@ if (!defined('ABSPATH')) {
 			</div>
 				<div class="wt-profeed-btn-wrapper">
 					<?php if( isset( $utm_source ) ){ ?>
-					<a href="<?php echo esc_url( 'https://www.webtoffee.com/product/woocommerce-product-feed/?utm_source='.$utm_source.'&utm_medium=feed_basic&utm_campaign=WooCommerce_Product_Feed&utm_content=' . WEBTOFFEE_PRODUCT_FEED_SYNC_VERSION); ?>" class="wt-profeed-blue-btn-new" target="_blank"><?php esc_html_e( 'Check out premium', 'webtoffee-product-feed' ); ?> <span class="dashicons dashicons-arrow-right-alt"></span></a>
+					<a href="<?php echo esc_url( 'https://www.webtoffee.com/product/woocommerce-product-feed/?utm_source='.$utm_source.'&utm_medium=feed_basic&utm_campaign=WooCommerce_Product_Feed&utm_content=' . WEBTOFFEE_PRODUCT_FEED_SYNC_VERSION); ?>" class="wt-profeed-blue-btn-new" target="_blank"><?php esc_html_e( 'Unlock Pro features', 'webtoffee-product-feed' ); ?> <span class="dashicons dashicons-arrow-right-alt"></span></a>
 					<?php }else { ?>
-						<a href="<?php echo esc_url("https://www.webtoffee.com/product/woocommerce-product-feed/?utm_source=product_feed_page&utm_medium=feed_basic&utm_campaign=WooCommerce_Product_Feed&utm_content=" . WEBTOFFEE_PRODUCT_FEED_SYNC_VERSION); ?>" class="wt-profeed-blue-btn-new" target="_blank"><?php esc_html_e( 'Check out premium', 'webtoffee-product-feed' ); ?> <span class="dashicons dashicons-arrow-right-alt"></span></a>
+						<a href="<?php echo esc_url("https://www.webtoffee.com/product/woocommerce-product-feed/?utm_source=product_feed_page&utm_medium=feed_basic&utm_campaign=WooCommerce_Product_Feed&utm_content=" . WEBTOFFEE_PRODUCT_FEED_SYNC_VERSION); ?>" class="wt-profeed-blue-btn-new" target="_blank"><?php esc_html_e( 'Unlock Pro features', 'webtoffee-product-feed' ); ?> <span class="dashicons dashicons-arrow-right-alt"></span></a>
 					<?php } ?>                    
                 </div>               			
 		</div>	

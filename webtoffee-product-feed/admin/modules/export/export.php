@@ -805,6 +805,12 @@ class Webtoffee_Product_Feed_Sync_Export
 			if( !empty( $export_data['body_data']) ){
                             $writer->write_to_file($export_data, $offset, $is_last_offset, $this->to_export);
                         }
+                        
+                        // XML header and foter missing in some cases when body data is empty and in last offset.
+                        // Restrict specific to XML if any issue with other file formats like - 'xml' === $file_as
+                        if( empty( $export_data['body_data']) && $is_last_offset ){
+                            $writer->write_to_file($export_data, $offset, $is_last_offset, $this->to_export);
+                        }                       
 		}
 		
 		/* updating output parameters */

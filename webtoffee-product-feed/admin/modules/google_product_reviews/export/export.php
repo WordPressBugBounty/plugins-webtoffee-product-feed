@@ -378,6 +378,14 @@ if (!class_exists('Webtoffee_Product_Feed_Google_ProductReviewsExport')) {
             }
         }
 
+        public static function clean_string($string) {
+            $string = do_shortcode($string);
+            $string = str_replace(array('&amp%3B', '&amp;'), '&', $string);
+            $string = str_replace(array("\r", '&nbsp;', "\t"), ' ', $string);
+            $string = wp_strip_all_tags($string, false); // true == remove line breaks
+            return $string;
+        }        
+        
         public function review_product_details($catalog_attr, $product_attr, $export_columns) {
             $reviewe_product = array();
 

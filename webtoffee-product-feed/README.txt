@@ -3,8 +3,8 @@ Contributors: webtoffee
 Donate link: https://www.webtoffee.com/product/woocommerce-product-feed/
 Tags: woocommerce product feed, google shopping, google merchant center, facebook catalog, instagram feed
 Requires at least: 4.0
-Tested up to: 6.6
-Stable tag: 2.2.4
+Tested up to: 6.7
+Stable tag: 2.2.5
 Requires PHP: 5.6
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -58,7 +58,7 @@ For Google Shopping, the plugin lets you connect your WooCommerce store with the
 
 - **Manage generated feeds** - View and manage generated product feed data.
 
-&#9989; Tested OK with WooCommerce 9.3.3
+&#9989; Tested OK with WooCommerce 9.4.1
 
 == Why Choose Us? ==
 The most simple product feed plugin for WooCommerce. This plugin is made to eliminate any complexities in generating WooCommerce product feeds. We offer complete support and regular updates for our plugins. 
@@ -236,6 +236,12 @@ function wt_modify_product_description_mode( $mode ) {
 
 
 == Changelog ==
+
+= 2.2.5  2024-11-18 =
+*[Enhancement] - Fruugo feed improvement.
+*[Enhancement] - Google product review feed improvement.
+*[Compatibility] - Tested OK with WordPress 6.7
+*[Compatibility] - Tested OK with WooCommerce 9.4.1
 
 = 2.2.4  2024-11-04 =
 *[Add] - X(Twitter) channel support.
@@ -468,9 +474,8 @@ function wt_modify_product_description_mode( $mode ) {
 
 == Upgrade Notice ==
 
-= 2.2.4 =
-*[Add] - X(Twitter) channel support.
-*[Add] - Yandex channel support.
-*[Enhancement] - Removed option - Trash product from FB catalog.
+= 2.2.5 =
+*[Enhancement] - Fruugo feed improvement.
 *[Enhancement] - Google product review feed improvement.
-*[Compatibility] - Tested OK with WooCommerce 9.3.3
+*[Compatibility] - Tested OK with WordPress 6.7
+*[Compatibility] - Tested OK with WooCommerce 9.4.1
