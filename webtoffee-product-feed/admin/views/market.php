@@ -10,7 +10,7 @@ if (!defined('ABSPATH')) {
 		<div class="wt-profeed-header">
                     <div class="wt-feed-why-premium">
                         <div class="why-premium-inner-box" style="padding-right: 0px;">
-                            <img style="width:50px;" src="<?php echo esc_url( WT_PRODUCT_FEED_PLUGIN_URL ); ?>admin/modules/banner/assets/images/crown.svg" alt="alt"/>
+                            <img style="width:50px;" src="<?php echo esc_url( WT_PRODUCT_FEED_PLUGIN_URL ); ?>/images/crown.svg" alt="alt"/>
                         </div>
 			<div class="why-premium-inner-box" style="padding-left: 0px;">	
                             <?php if( isset( $fb_sync_tab ) ){ ?>
@@ -20,9 +20,6 @@ if (!defined('ABSPATH')) {
 				<?php } ?>
                         </div>
                         <div class="why-premium-inner-box">
-                            <?php if(Webtoffee_Product_Feed_Sync_Common_Helper::is_bfcm_season()){ ?>
-                                <img src="<?php echo esc_url( WT_PRODUCT_FEED_PLUGIN_URL ); ?>admin/modules/banner/assets/images/bfcm-30-off-coupon.svg" alt="alt"/>
-                            <?php } ?>
                         </div>
 			</div>
 			<div class="wt-profeed wt-profeed_review wt-profeed_tags wt-profeed_categories wt-profeed-gopro-cta wt-profeed-features">
@@ -48,7 +45,7 @@ if (!defined('ABSPATH')) {
 					<?php if( isset( $utm_source ) ){ ?>
 					<a href="<?php echo esc_url( 'https://www.webtoffee.com/product/woocommerce-product-feed/?utm_source='.$utm_source.'&utm_medium=feed_basic&utm_campaign=WooCommerce_Product_Feed&utm_content=' . WEBTOFFEE_PRODUCT_FEED_SYNC_VERSION); ?>" class="wt-profeed-blue-btn-new" target="_blank"><?php esc_html_e( 'Unlock Pro features', 'webtoffee-product-feed' ); ?> <span class="dashicons dashicons-arrow-right-alt"></span></a>
 					<?php }else { ?>
-						<a href="<?php echo esc_url("https://www.webtoffee.com/product/woocommerce-product-feed/?utm_source=product_feed_page&utm_medium=feed_basic&utm_campaign=WooCommerce_Product_Feed&utm_content=" . WEBTOFFEE_PRODUCT_FEED_SYNC_VERSION); ?>" class="wt-profeed-blue-btn-new" target="_blank"><?php esc_html_e( 'Unlock Pro features', 'webtoffee-product-feed' ); ?> <span class="dashicons dashicons-arrow-right-alt"></span></a>
+						<a href="<?php echo esc_url("https://www.webtoffee.com/product/woocommerce-product-feed/?utm_source=free_plugin_new_feed&utm_medium=feed_basic&utm_campaign=WooCommerce_Product_Feed&utm_content=" . WEBTOFFEE_PRODUCT_FEED_SYNC_VERSION); ?>" class="wt-profeed-blue-btn-new" target="_blank"><?php esc_html_e( 'Unlock Pro features', 'webtoffee-product-feed' ); ?> <span class="dashicons dashicons-arrow-right-alt"></span></a>
 					<?php } ?>                    
                 </div>               			
 		</div>	

@@ -16,14 +16,14 @@
  * Plugin Name:       WebToffee WooCommerce Product Feed & Sync Manager
  * Plugin URI:        https://wordpress.org/plugins/webtoffee-product-feed
  * Description:       Integrate your WooCommerce store with popular sale channels including Google Merchant Center, Facebook/Instagram ads&shops, TikTok ads and much more.
- * Version:           2.2.5
+ * Version:           2.2.6
  * Author:            WebToffee
  * Author URI:        https://www.webtoffee.com
  * License:           GPL-3.0+
  * License URI:       http://www.gnu.org/licenses/gpl-3.0.txt
  * Text Domain:       webtoffee-product-feed
  * Domain Path:       /languages
- * WC tested up to:   9.4.1
+ * WC tested up to:   9.4.3
  */
 // If this file is called directly, abort.
 if ( !defined( 'WPINC' ) ) {
@@ -35,7 +35,7 @@ if ( !defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'WEBTOFFEE_PRODUCT_FEED_SYNC_VERSION', '2.2.5' );
+define( 'WEBTOFFEE_PRODUCT_FEED_SYNC_VERSION', '2.2.6' );
 define( 'WEBTOFFEE_PRODUCT_FEED_ID', 'webtoffee_product_feed' );
 define( 'WT_PRODUCT_FEED_PLUGIN_URL', plugin_dir_url(__FILE__));
 define( 'WT_PRODUCT_FEED_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
@@ -103,6 +103,53 @@ if ( !function_exists( 'wt_feed_basic_check_for_woocommerce' ) ) {
 
 		}
 	}
+}
+
+
+
+add_action('in_plugin_update_message-webtoffee-product-feed/webtoffee-product-feed.php', 'wt_pf_update_message', 10, 2 );
+
+/**
+ *  @since 2.2.6
+ *  Changelog in plugins page
+ */
+function wt_pf_update_message( $data, $response )
+{
+    if ( isset( $data['upgrade_notice'] ) )
+    {
+        add_action('admin_print_footer_scripts', 'wt_pf_plugin_screen_update_notice_js');
+        $msg = str_replace(array( '<p>', '</p>' ), array( '<div>', '</div>' ), $data['upgrade_notice']);
+        echo '<style type="text/css">
+        #webtoffee-product-feed-update .update-message p:last-child{ display:none;}     
+        #webtoffee-product-feed-update ul{ list-style:disc; margin-left:30px;}
+        .wt_pf_update_message{ padding-left:20px;}
+        </style>
+        <div class="update-message wt_pf_update_message">' . wp_kses_post( wpautop( $msg ) ) . '</div>';
+    }
+}
+
+/**
+ *  @since 1.3.9
+ *  Javascript code for changelog in plugins page
+ */
+function wt_pf_plugin_screen_update_notice_js() 
+{   
+    global $pagenow;
+    if('plugins.php' != $pagenow)
+    {
+        return;
+    }
+    ?>
+    <script>
+        ( function( $ ){
+            var update_dv=$('#webtoffee-product-feed-update');
+            update_dv.find('.wt_pf_update_message').next('p').remove();
+            update_dv.find('a.update-link:eq(0)').on('click', function(){
+                $('.wt_pf_update_message').remove();
+            });
+        })( jQuery );
+    </script>
+    <?php
 }
 
 

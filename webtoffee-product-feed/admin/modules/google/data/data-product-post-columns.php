@@ -25,6 +25,7 @@ $post_columns = array(
             'wtimages_9'                     => 'Additional Image 9 [additional_image_link]',
             'wtimages_10'                    => 'Additional Image 10 [additional_image_link]',
             'condition'                    => 'Condition[condition]',
+            'checkout_link_template'       => 'checkout_link_template'
 );
 
 return apply_filters('wt_pf_google_product_post_columns',$post_columns);

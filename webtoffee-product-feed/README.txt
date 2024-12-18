@@ -4,7 +4,7 @@ Donate link: https://www.webtoffee.com/product/woocommerce-product-feed/
 Tags: woocommerce product feed, google shopping, google merchant center, facebook catalog, instagram feed
 Requires at least: 4.0
 Tested up to: 6.7
-Stable tag: 2.2.5
+Stable tag: 2.2.6
 Requires PHP: 5.6
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -58,7 +58,7 @@ For Google Shopping, the plugin lets you connect your WooCommerce store with the
 
 - **Manage generated feeds** - View and manage generated product feed data.
 
-&#9989; Tested OK with WooCommerce 9.4.1
+&#9989; Tested OK with WooCommerce 9.4.3
 
 == Why Choose Us? ==
 The most simple product feed plugin for WooCommerce. This plugin is made to eliminate any complexities in generating WooCommerce product feeds. We offer complete support and regular updates for our plugins. 
@@ -86,12 +86,13 @@ The premium version of the Product Feed for WooCommerce plugin gives you advance
 &#9989; Server cron for managed hosting </li>
 &#9989; Auto-catalog sync for Facebook catalog </li>
 &#9989; Select which product variations to include in the feed: all variations, the default variation, or the lowest priced variation </li>
-&#9989; Compatibility with Perfect brands and WooCommerce brands plugins for WooCommerce </li>
-&#9989; Multi-vendor compatibility for Dokan plugin </li>
-&#9989; Compatibility with Aelia currency switcher, <a rel="dofollow" href="https://wordpress.org/plugins/woocommerce-currency-switcher/"> Fox Currency Switcher </a>, and Curcy Currency Switcher plugins </li>
+&#9989; Compatibility with Perfect brands and WooCommerce brands plugins for WooCommerce</li>
+&#9989; Multi-vendor compatibility for Dokan plugin and WC Vendors – WooCommerce Multivendor</li>
+&#9989; Compatibility with Aelia currency switcher, <a rel="dofollow" href="https://wordpress.org/plugins/woocommerce-currency-switcher/"> Fox Currency Switcher </a>, Curcy Currency Switcher plugins, 
+Translate Multilingual sites – TranslatePress, Discount Rules for WooCommerce and YITH WooCommerce Dynamic Pricing & Discounts </li>
 
 
-== 👉 Supports 20+ Sales Channels ==
+== 👉 Supports 25+ Sales Channels ==
 - Google Shopping Feed
 - Meta feed for Facebook/Instagram
 - Google Local Product Inventory
@@ -103,7 +104,7 @@ The premium version of the Product Feed for WooCommerce plugin gives you advance
 - Pinterest RSS feed
 - Snapchat Feed
 - Idealo Product Feed
-- Bing Shopping Feed
+- Bing Shopping Feed(Microsoft Ads)
 - PriceSpy Feed
 - PriceRunner Feed
 - Skroutz Data Feed
@@ -119,7 +120,8 @@ The premium version of the Product Feed for WooCommerce plugin gives you advance
 - OnBuy
 - Yandex
 - X(Twitter)
-- Custom Feed (Premium)
+- Google Manufacturer Center(Premium)
+- Custom Feed(Premium)
 
 Please visit <a rel="nofollow" href="https://www.webtoffee.com/product/woocommerce-product-feed/">WooCommerce Product Feed Plugin </a> for more details.
 
@@ -236,6 +238,13 @@ function wt_modify_product_description_mode( $mode ) {
 
 
 == Changelog ==
+
+= 2.2.6  2024-12-18 =
+*[Add] - Missing field checkout_link_template in Google Shop feed.
+*[Enhancement] - Remove additional unwanted attributes from the variation title.
+*[Enhancement] - Translation(.pot) file update.
+*[Fix] - Translation loading notice by WordPress 6.7.
+*[Compatibility] - Tested OK with WooCommerce 9.4.3
 
 = 2.2.5  2024-11-18 =
 *[Enhancement] - Fruugo feed improvement.
@@ -474,8 +483,9 @@ function wt_modify_product_description_mode( $mode ) {
 
 == Upgrade Notice ==
 
-= 2.2.5 =
-*[Enhancement] - Fruugo feed improvement.
-*[Enhancement] - Google product review feed improvement.
-*[Compatibility] - Tested OK with WordPress 6.7
-*[Compatibility] - Tested OK with WooCommerce 9.4.1
+= 2.2.6 =
+*[Add] - Missing field checkout_link_template in Google Shop feed.
+*[Enhancement] - Remove additional unwanted attributes from the variation title.
+*[Enhancement] - Translation(.pot) file update.
+*[Fix] - Translation loading notice by WordPress 6.7.
+*[Compatibility] - Tested OK with WooCommerce 9.4.3

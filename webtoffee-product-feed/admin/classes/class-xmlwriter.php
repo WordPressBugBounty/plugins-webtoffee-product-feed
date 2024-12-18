@@ -297,7 +297,7 @@ if ('product' === $this->to_export) {
             }else
             {
                 //wrap element in CDATA tag if it contain illegal characters
-                if( ( false !== strpos($element_value, '<') || false !== strpos($element_value, '>') || apply_filters('wt_iew_xml_node_wrap_cdata', false, $element_value) ) &&  'ratings' !== $element_key )
+                if( ( null !== $element_value && !empty($element_value) && false !== strpos($element_value, '<') || false !== strpos($element_value, '>') || apply_filters('wt_iew_xml_node_wrap_cdata', false, $element_value) ) &&  'ratings' !== $element_key )
                 { 
                     $arr = explode(':', $element_key); 
                     if(isset($arr[1]))

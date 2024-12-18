@@ -82,6 +82,10 @@ if (!class_exists('ProductFeed_Uninstall_Feedback')) :
                                 </li>
                             <?php } ?>
                         </ul>
+                        <div class="wt-uninstall-feedback-privacy-policy">
+                            <?php _e('We do not collect any personal data when you submit this form. It\'s your feedback that we value.', 'webtoffee-product-feed'); ?>
+                            <a href="https://www.webtoffee.com/privacy-policy/" target="_blank"><?php _e('Privacy Policy', 'webtoffee-product-feed'); ?></a>
+                        </div>                        
                     </div>
                     <div class="productfeed-modal-footer">
                         <a href="#" class="dont-bother-me"><?php esc_html_e('I rather wouldn\'t say', 'webtoffee-product-feed'); ?></a>

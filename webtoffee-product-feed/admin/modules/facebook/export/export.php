@@ -306,44 +306,7 @@ class Webtoffee_Product_Feed_Sync_Facebook_Export extends Webtoffee_Product_Feed
 		$fb_retailer_id = apply_filters( 'wt_feed_filter_product_id', $fb_retailer_id, $this->product );
                 return apply_filters( "wt_feed_{$this->parent_module->module_base}_product_id", $fb_retailer_id, $this->product, $this->form_data );
                 
-	}
-	
-	/**
-	 * Get product name.
-	 *
-	 * @return mixed|void
-	 */
-	public function title($catalog_attr, $product_attr, $export_columns) {
-		
-		$title =  $this->product->get_name( );
-		
-		// Add all available variation attributes to variation title.
-		if ( $this->product->is_type( 'variation' ) && ! empty( $this->product->get_attributes() ) ) {
-			$title      = $this->parent_product->get_name();
-			$attributes = [];
-			foreach ( $this->product->get_attributes() as $slug => $value ) {
-				$attribute = $this->product->get_attribute( $slug );
-				if ( ! empty( $attribute ) ) {
-					$attributes[ $slug ] = $attribute;
-				}
-			}
-			
-			// set variation attributes with separator
-			$separator = ',';
-
-			$variation_attributes = implode( $separator, $attributes );
-			
-			//get product title with variation attribute
-			$get_with_var_attributes = apply_filters( "wt_feed_get_product_title_with_variation_attribute", true, $this->product );
-			
-			if ( $get_with_var_attributes ) {
-				$title .= " - " . $variation_attributes;
-			}
-		}
-		
-		$title = apply_filters( 'wt_feed_filter_product_title', $title, $this->product );
-                return apply_filters( "wt_feed_{$this->parent_module->module_base}_product_title", $title, $this->product, $this->form_data );
-	}
+	}	
 	
 	/**
 	 * Get parent product title for variation.
@@ -1204,7 +1167,7 @@ class Webtoffee_Product_Feed_Sync_Facebook_Export extends Webtoffee_Product_Feed
                 }
             }
             $color = apply_filters('wt_feed_facebook_product_color', $color, $this->product);
-            return apply_filters( "wt_feed_{$this->parent_module->module_base}_productcolor", $size, $this->product, $this->form_data);
+            return apply_filters( "wt_feed_{$this->parent_module->module_base}_productcolor", $color, $this->product, $this->form_data);
         }
         
         public function get_variant_option_name( $product_id, $label, $default_value ) {

@@ -243,7 +243,31 @@ class Webtoffee_Product_Feed_Sync_Admin {
 	return array_merge( $plugin_links, $links );
 }
 
-	
+
+        /**
+         * Change the admin footer text on feed admin pages.
+         *
+         * @since  2.2.6
+         *
+         * @param  string $footer_text The footer text.
+         *
+         * @return string
+         */
+        public function admin_footer_text( $footer_text ) {
+
+            if ( ! current_user_can( 'manage_woocommerce' ) || ! Webtoffee_Product_Feed_Sync_Common_Helper::wt_is_screen_allowed() ) {
+                return $footer_text;
+            }
+            // Change the footer text.
+            $footer_text = sprintf(
+            /* translators: 1: Product Feed 2:: five stars */
+                __( 'If you like %1$s please leave us a %2$s rating. A huge thanks in advance!', 'webtoffee-product-feed' ),
+                sprintf( '<strong>%s</strong>', esc_html__( 'Product Feed for WooCommerce', 'webtoffee-product-feed' ) ),
+                '<a href="https://wordpress.org/support/plugin/webtoffee-product-feed/reviews#new-post" target="_blank" class="wt-rating-link" data-rated="' . esc_attr__( 'Thanks :)', 'webtoffee-product-feed' ) . '">&#9733;&#9733;&#9733;&#9733;&#9733;</a>'
+            );
+
+            return $footer_text;
+        }
 	
 	
 	
@@ -1713,22 +1737,7 @@ class Webtoffee_Product_Feed_Sync_Admin {
 	public static function module_exists($module)
 	{
 		return in_array($module, self::$existing_modules);
-	}      
-        
-        /**
-	 *  Screens to show Black Friday and Cyber Monday Banner
-	 * 
-	 *  @since 2.3.4
-	 */
-	public function wt_bfcm_banner_screens( $screen_ids ) {
-
-		$screen_ids[] = 'toplevel_page_webtoffee_product_feed_main_export';
-                $screen_ids[] = 'webtoffee-product-feed_page_webtoffee_product_feed_main_history';
-                $screen_ids[] = 'webtoffee-product-feed_page_webtoffee_product_feed_main_cron';
-                $screen_ids[] = 'webtoffee-product-feed_page_webtoffee_product_feed';
-                $screen_ids[] = 'webtoffee-product-feed_page_webtoffee-product-feed';
-		return $screen_ids;
-	}        
+	}                    
 
     }
 }

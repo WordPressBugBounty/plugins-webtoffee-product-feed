@@ -925,7 +925,7 @@ var wt_pf_basic_export=(function( $ ) {
 			{
                                 $('.wc-enhanced-select').select2();
                                                                 
-                                $('#wt_pf_channel_selected').text(this.capitalizeFirstLetter(this.to_export));
+                                $('#wt_pf_channel_selected').text(this.capitalizeFirstLetter(this.to_export_title));
 				this.enable_sortable();
 				this.mapping_box_accordian();
 				this.reg_mapping_field_bulk_action();

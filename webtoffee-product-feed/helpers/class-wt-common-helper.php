@@ -137,6 +137,7 @@ class Webtoffee_Product_Feed_Sync_Common_Helper
                                 'Category' => 'Product Categories[Category] ',
                                 'ImageUrl' => 'Main Image[ImageUrl]',
                                 'Condition' => 'Condition[condition]',
+                                'checkout_link_template' => 'checkout_link_template',
                                 'Price' => 'Price[Price]',
                                 'ShippingCost' => 'ShippingCost[ShippingCost]',
                                 'StockStatus' => 'StockStatus[StockStatus]',
@@ -652,23 +653,6 @@ public static function wt_strtotimetz($str)
 	}
 	return $strtotime;
 }
-
-    /**
-     * To Check if the current date is on or between the start and end date of black friday and cyber monday banner for 2024.
-     * @since 4.7.0
-     */
-    public static function is_bfcm_season() {
-        $start_date = new DateTime( '25-NOV-2024, 12:00 AM', new DateTimeZone( 'Asia/Kolkata' ) ); // Start date.
-        $current_date = new DateTime( 'now', new DateTimeZone( 'Asia/Kolkata' ) ); // Current date.
-        $end_date = new DateTime( '02-DEC-2024, 11:59 PM', new DateTimeZone( 'Asia/Kolkata' ) ); // End date.
-        /**
-         * check if the date is on or between the start and end date of black friday and cyber monday banner for 2024.
-         */
-        if ( $current_date < $start_date  || $current_date >= $end_date) {
-            return false;
-        }
-        return true;
-    }
 	
 }
 }

@@ -214,9 +214,12 @@ class Webtoffee_Product_Feed_Sync_Google_Export extends Webtoffee_Product_Feed_P
                         foreach ($children_ids as $id) {                                
                             if(!in_array($id, $products_ids)){  // skipping if alredy processed in $products_ids                                                                                                                               
                                 $variation = wc_get_product($id);  
+                                if( !is_object($variation)){
+                                    continue;
+                                }
                                 $this->parent_product = $product;
                                 $this->product = $variation;
-                                                                    $this->current_product_id = $variation->get_id();
+                                $this->current_product_id = $variation->get_id();
                                 if(is_object($variation)){
                                     $product_array[] = $this->generate_row_data_wc_lower($variation);
                                 }
@@ -312,42 +315,7 @@ class Webtoffee_Product_Feed_Sync_Google_Export extends Webtoffee_Product_Feed_P
 	public function id($catalog_attr, $product_attr, $export_columns) {
 		return apply_filters( 'wt_feed_filter_product_id', $this->product->get_id(), $this->product );
 	}
-	
-	/**
-	 * Get product name.
-	 *
-	 * @return mixed|void
-	 */
-	public function title($catalog_attr, $product_attr, $export_columns) {
 		
-		$title =  $this->product->get_name( );
-		
-		// Add all available variation attributes to variation title.
-		if ( $this->product->is_type( 'variation' ) && ! empty( $this->product->get_attributes() ) ) {
-			$title      = $this->parent_product->get_name();
-			$attributes = [];
-			foreach ( $this->product->get_attributes() as $slug => $value ) {
-				$attribute = $this->product->get_attribute( $slug );
-				if ( ! empty( $attribute ) ) {
-					$attributes[ $slug ] = $attribute;
-				}
-			}
-			
-			// set variation attributes with separator
-			$separator = ',';
-
-			$variation_attributes = implode( $separator, $attributes );
-			
-			//get product title with variation attribute
-			$get_with_var_attributes = apply_filters( "wt_feed_get_product_title_with_variation_attribute", true, $this->product );
-			
-			if ( $get_with_var_attributes ) {
-				$title .= " - " . $variation_attributes;
-			}
-		}
-		
-		return apply_filters( 'wt_feed_filter_product_title', $title, $this->product );
-	}
 	
 	/**
 	 * Get parent product title for variation.
@@ -1726,6 +1694,15 @@ class Webtoffee_Product_Feed_Sync_Google_Export extends Webtoffee_Product_Feed_P
 	public function tax_status($catalog_attr, $product_attr, $export_columns) {
 		return apply_filters( 'wt_feed_filter_product_tax_status', $this->product->get_tax_status(), $this->product );
 	}
+        
+        public function checkout_link_template($catalog_attr, $product_attr, $export_columns) {                                                
+            
+            $id = $this->product->get_id();
+            $checkout_url = trailingslashit( wc_get_checkout_url() ).'?add-to-cart='.$id;            
+
+            return apply_filters("wt_feed_{$this->parent_module->module_base}_product_checkout_link", $checkout_url, $this->product);
+            
+        }        
 	
     /**
      * Format the data if required
