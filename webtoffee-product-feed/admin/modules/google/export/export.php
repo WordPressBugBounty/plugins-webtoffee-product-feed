@@ -261,8 +261,14 @@ class Webtoffee_Product_Feed_Sync_Google_Export extends Webtoffee_Product_Feed_P
                 if (method_exists($this, $value)) {
                     $row[$key] = $this->$value($key, $value, $export_columns);
                 }elseif (strpos($value, 'meta:') !== false) {
-                    $mkey = str_replace('meta:', '', $value);
-                    $row[$key] = get_post_meta($product_id, $mkey, true);
+					$mkey = str_replace('meta:', '', $value);
+                    if($product_object->is_type('variation')){
+                        $product_id = $product_object->get_parent_id();
+                    }
+                    if ( (strpos($value, 'global_unique_id') !== false) || (strpos($value, 'alg_ean') !== false) ){
+                        $product_id = $product_object->get_id();
+                    }
+                    $row[$key] = wp_strip_all_tags( get_post_meta($product_id, $mkey, true) );
                     // TODO
                     // wt_image_ function can be replaced with key exist check
                 }elseif (strpos($value, 'wt_pf_pa_') !== false) {
@@ -872,6 +878,9 @@ class Webtoffee_Product_Feed_Sync_Google_Export extends Webtoffee_Product_Feed_P
 		return apply_filters( 'wt_feed_filter_product_sku_id', $sku_id, $this->product );
 	}
 	
+	public function promotion_id($catalog_attr, $product_attr, $export_columns) {
+		return apply_filters('wt_feed_filter_product_promotion_id', $this->product->get_id(), $this->product, $this->form_data);
+	}
 	
 	public function brand($catalog_attr, $product_attr, $export_columns) {
 		
@@ -930,9 +939,12 @@ class Webtoffee_Product_Feed_Sync_Google_Export extends Webtoffee_Product_Feed_P
 	public function gtin($catalog_attr, $product_attr, $export_columns){
 		
 			$custom_gtin = get_post_meta($this->product->get_id(), '_wt_feed_gtin', true);
-                        if( !$custom_gtin ){
-                            $custom_gtin = get_post_meta($this->product->get_id(), '_wt_google_gtin', true);
-                        }                        
+			if( !$custom_gtin ){
+				$custom_gtin = get_post_meta($this->product->get_id(), '_wt_google_gtin', true);
+			}
+			if(!$custom_gtin){
+				$custom_gtin = get_post_meta($this->product->get_id(), '_global_unique_id', true);
+			}
 			$gtin = ( $custom_gtin) ? $custom_gtin : '';
 			return apply_filters('wt_feed_product_gtin', $gtin, $this->product);
 	}
@@ -1698,7 +1710,7 @@ class Webtoffee_Product_Feed_Sync_Google_Export extends Webtoffee_Product_Feed_P
         public function checkout_link_template($catalog_attr, $product_attr, $export_columns) {                                                
             
             $id = $this->product->get_id();
-            $checkout_url = trailingslashit( wc_get_checkout_url() ).'?add-to-cart='.$id;            
+            $checkout_url = trailingslashit( wc_get_checkout_url() ).'?&add-to-cart='.$id;            
 
             return apply_filters("wt_feed_{$this->parent_module->module_base}_product_checkout_link", $checkout_url, $this->product);
             

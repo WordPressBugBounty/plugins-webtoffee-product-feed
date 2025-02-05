@@ -1039,6 +1039,9 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Snapchat_Export')) {
             if ('' == $custom_gtin) {
                 $custom_gtin = get_post_meta($this->product->get_id(), '_wt_google_gtin', true);
             }
+            if(!$custom_gtin){
+                $custom_gtin = get_post_meta($this->product->get_id(), '_global_unique_id', true);
+            }
             $gtin = ('' == $custom_gtin) ? '' : $custom_gtin;
             return apply_filters('wt_feed_product_gtin', $gtin, $this->product);
         }

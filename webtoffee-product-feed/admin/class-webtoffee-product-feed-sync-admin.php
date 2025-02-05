@@ -1704,19 +1704,20 @@ class Webtoffee_Product_Feed_Sync_Admin {
                     'google_local_product_inventory' => 'webtoffee-product-feed',
                     'google_local_inventory_ads' => 'webtoffee-product-feed',
                     'google_promotions' => 'webtoffee-product-feed',
-                    'buyon_google' => 'webtoffee-product-feed',                            
+                    'buyon_google' => 'webtoffee-product-feed',
+					'google_product_reviews' => 'webtoffee-product-feed',                            
                     'pricespy' => 'webtoffee-product-feed',
                     'pricerunner' => 'webtoffee-product-feed',
                     'skroutz' => 'webtoffee-product-feed',
                     'shopzilla' => 'webtoffee-product-feed',
                     'fruugo' => 'webtoffee-product-feed',
                     'heureka' => 'webtoffee-product-feed',
-                    'google_product_reviews' => 'webtoffee-product-feed',
                     'leguide' => 'webtoffee-product-feed',
                     'vivino' => 'webtoffee-product-feed',
                     'onbuy' => 'webtoffee-product-feed',
                     'twitter' => 'webtoffee-product-feed',
-                    'yandex' => 'webtoffee-product-feed'
+                    'yandex' => 'webtoffee-product-feed',
+                    'rakuten' => 'webtoffee-product-feed'
                 );
 
                 foreach ($addon_modules_basic as $module_key => $module_path)

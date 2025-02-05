@@ -962,30 +962,48 @@ class Webtoffee_Product_Feed_Sync_Export
 					{
 						$file_path=self::$export_dir.'/'.$file_name;
 						if(file_exists($file_path) && is_file($file_path)) /* check existence of file */
-						{	
-							header('Pragma: public');
-						    header('Expires: 0');
-						    header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-						    header('Cache-Control: private', false);
-						    header('Content-Transfer-Encoding: binary');
-						    header('Content-Disposition: attachment; filename="'.$file_name.'";');
-						    header('Content-Description: File Transfer');
-						    header('Content-Type: application/octet-stream');
-						    //header('Content-Length: '.filesize($file_path));
+                                                {   
+                                                    // Disable error display and logging
+                                                    ini_set('display_errors', 0);
+                                                    ini_set('error_reporting', 0);
 
-						    $chunk_size=1024 * 1024;
-						    $handle=@fopen($file_path, 'rb');
-						    while(!feof($handle))
-						    {
-						        $buffer = fread($handle, $chunk_size);
-						        echo $buffer;
-						        ob_flush();
-						        flush();
-						    }
-						    fclose($handle);
-						    exit();
+                                                    // Clean ALL output buffers
+                                                    while (ob_get_level()) {
+                                                        ob_end_clean();
+                                                    }
 
-						}
+                                                    // Start fresh output buffer
+                                                    ob_start();
+
+                                                    // Set headers
+                                                    header('Pragma: public');
+                                                    header('Expires: 0');
+                                                    header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+                                                    header('Cache-Control: private', false);
+                                                    header('Content-Transfer-Encoding: binary');
+                                                    header('Content-Disposition: attachment; filename="'.$file_name.'";');
+                                                    header('Content-Description: File Transfer');
+                                                    header('Content-Type: application/octet-stream');
+                                                    header('Content-Length: ' . filesize($file_path));
+
+                                                    // Clean buffer again before file output
+                                                    ob_clean();
+                                                    flush();
+
+                                                    // Read file in binary mode
+                                                    if(readfile($file_path) === false) {
+                                                        // Fallback to chunked reading if readfile fails
+                                                        $handle = fopen($file_path, 'rb');
+                                                        while (!feof($handle)) {
+                                                            echo fread($handle, 8192);
+                                                            ob_flush();
+                                                            flush();
+                                                        }
+                                                        fclose($handle);
+                                                    }
+
+                                                    exit();
+                                                }
 					}
 				}	
 			}

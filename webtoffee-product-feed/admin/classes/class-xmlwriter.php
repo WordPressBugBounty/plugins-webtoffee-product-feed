@@ -296,6 +296,9 @@ if ('product' === $this->to_export) {
                 $xml_writer->text($element_value);
             }else
             {
+                if(empty($element_value) || null === $element_value ){
+                    return;
+                }
                 //wrap element in CDATA tag if it contain illegal characters
                 if( ( null !== $element_value && !empty($element_value) && false !== strpos($element_value, '<') || false !== strpos($element_value, '>') || apply_filters('wt_iew_xml_node_wrap_cdata', false, $element_value) ) &&  'ratings' !== $element_key )
                 { 

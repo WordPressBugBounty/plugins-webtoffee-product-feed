@@ -4,20 +4,20 @@
  *
  * @link          
  *
- * @package  Webtoffee_Product_Feed_Sync_Bing 
+ * @package  Webtoffee_Product_Feed_Sync_Rakuten 
  */
 if (!defined('ABSPATH')) {
 	exit;
 }
 
-if (!class_exists('Webtoffee_Product_Feed_Sync_Bing')) {
+if (!class_exists('Webtoffee_Product_Feed_Sync_Rakuten')) {
 
-	class Webtoffee_Product_Feed_Sync_Bing {
+	class Webtoffee_Product_Feed_Sync_Rakuten {
 
 		public $module_id = '';
 		public static $module_id_static = '';
-		public $module_base = 'bing';
-		public $module_name = 'Webtoffee Product Feed Catlaog for Bing';
+		public $module_base = 'rakuten';
+		public $module_name = 'Webtoffee Product Feed Catlaog for Rakuten';
 		public $min_base_version = '1.0.0'; /* Minimum `Import export plugin` required to run this add on plugin */
 		private $importer = null;
 		private $exporter = null;
@@ -63,57 +63,9 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Bing')) {
 			add_filter('wt_pf_exporter_do_export_basic', array($this, 'exporter_do_export'), 10, 7);
 
 			add_filter('wt_pf_feed_category_mapping', array($this, 'map_google_category'), 10, 1);
-
-                        add_filter('wt_feed_product_attributes_dropdown', array($this, 'product_attributes_dropdown'), 10, 3);
 				
 		}
 
-		
-		
-		
-		
-		public function wt_fbfeed_category_form_fields_pro( $category ) {
-
-
-	$fb_category_id = '';
-	if ( current_filter() == 'product_cat_edit_form_fields' ) {
-		$fb_category_id = get_term_meta( $category->term_id, 'wt_google_category', true );
-	}
-	?>
-
-		<tr class="form-field">
-			<th scope="row" valign="top"><label for="wt_google_category">Google Category</label></th>
-			<td>
-                            <select name="wt_google_category" class="wc-enhanced-select">
-		<?php echo wt_google_category_dropdown( $fb_category_id ); ?>
-				</select>
-
-				<p class="description"><?php esc_html_e('The Google Category corresponding to this category in the website.')?>
-				</p>
-			</td>
-		</tr>
-		<input type="hidden" name="wt_category_edit_nonce" value="<?php echo wp_create_nonce( 'wt_category_edit_nonce' ); ?>" />
-
-		<?php
-	}
-	
-	public function wt_fbfeed_category_form_save_pro( $term_id ) {
-
-
-	if ( isset( $_POST[ 'wt_google_category' ] ) ) {
-		if(! wp_verify_nonce( $_POST['wt_category_edit_nonce'], 'wt_category_edit_nonce' )){
-			return false;
-		}
-
-		$wt_google_category = absint( $_POST[ 'wt_google_category' ] );
-		if(0 == $wt_google_category){
-			delete_term_meta($term_id, 'wt_google_category');
-		}else{
-			update_term_meta( $term_id, 'wt_google_category', $wt_google_category );
-		}
-	}
-}
-		
 		public function map_google_category($form_data) {
 
 			if ( ( isset($form_data['post_type_form_data']['item_type']) &&  $form_data['post_type_form_data']['item_type'] != $this->module_base ) || ( isset($form_data['post_type_form_data']['wt_pf_export_post_type']) &&  $form_data['post_type_form_data']['wt_pf_export_post_type'] != $this->module_base )) {
@@ -142,13 +94,13 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Bing')) {
 
                         include WT_PRODUCT_FEED_PLUGIN_PATH . '/admin/modules/export/wt-product.php';
 			include plugin_dir_path(__FILE__) . 'export/export.php';
-			$export = new Webtoffee_Product_Feed_Sync_Bing_Export($this);
+			$export = new Webtoffee_Product_Feed_Sync_Rakuten_Export($this);
 
-			$header_row = $export->prepare_header($form_data);
+			$header_row = $export->prepare_header();
 
 			$data_row = $export->prepare_data_to_export($form_data, $batch_offset, $step);
 
-			$export_data = array(
+                        $export_data = array(
 				'head_data' => $header_row,
 				'body_data' => $data_row['data'],
 				'total' => $data_row['total'],
@@ -168,7 +120,7 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Bing')) {
 		 */
 		public function wt_pf_exporter_post_types_basic($arr) {
 
-			$arr['bing'] = __('Bing Shopping', 'webtoffee-product-feed');
+			$arr['rakuten'] = __('Rakuten Shop', 'webtoffee-product-feed-pro');
 			return $arr;
 		}
 
@@ -178,7 +130,7 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Bing')) {
 		 * @return array
 		 */
 		public static function get_category_array() {
-			// Get All Google Taxonomies
+			// Get All Rakuten Taxonomies
 					
 			$taxonomy = wp_cache_get('wt_iew_feed_google_categories');
 
@@ -249,19 +201,14 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Bing')) {
 		}
 
 		public function exporter_alter_mapping_enabled_fields($mapping_enabled_fields, $base, $form_data_mapping_enabled_fields) {
-			if ($base == $this->module_base) {
+			if ($base === $this->module_base) {
 				$mapping_enabled_fields = array();
 				$mapping_enabled_fields['availability_price'] = array(__('Availability & Price'), 1);
 				$mapping_enabled_fields['unique_product_identifiers'] = array(__('Unique Product Identifiers'), 1);
 				$mapping_enabled_fields['detailed_product_attributes'] = array(__('Detailed Product Attributes'), 1);
-				$mapping_enabled_fields['tax_shipping'] = array(__('Shipping'), 1);
-				$mapping_enabled_fields['product_combinations'] = array(__('Product Combinations'), 1);
-				$mapping_enabled_fields['adult_products'] = array(__('Adult Products'), 1);
-				$mapping_enabled_fields['ads_attributes'] = array(__('Ads Attributes'), 1);
+				$mapping_enabled_fields['tax_shipping'] = array(__('Tax & Shipping'), 1);
 				$mapping_enabled_fields['custom_label_identifiers'] = array(__('Custom Label Attributes'), 1);
-				$mapping_enabled_fields['additional_attributes'] = array(__('Additional Attributes'), 1);				
-				$mapping_enabled_fields['unit_prices_eu_ch'] = array(__('Unit Prices (EU Countries and Switzerland Only)'), 1);
-				$mapping_enabled_fields['energy_labels'] = array(__('Energy Labels'), 1);								
+			
 			}
 			return $mapping_enabled_fields;
 		}
@@ -273,7 +220,8 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Bing')) {
 			foreach ($fields as $key => $value) {
 				switch ($key) {
 					case 'availability_price':
-						$fields[$key]['fields']['availability'] = 'Stock Status[availability]';						
+						$fields[$key]['fields']['availability'] = 'Stock Status[availability]';
+						$fields[$key]['fields']['availability_date'] = 'Availability Date[availability_date]';
 						$fields[$key]['fields']['price'] = 'Regular Price[price]';
 						$fields[$key]['fields']['sale_price'] = 'Sale Price[sale_price]';
 						$fields[$key]['fields']['sale_price_effective_date'] = 'Sale Price Effective Date[sale_price_effective_date]';
@@ -284,13 +232,12 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Bing')) {
 						$fields[$key]['fields']['brand'] = 'Manufacturer[brand]';
 						$fields[$key]['fields']['gtin'] = 'GTIN[gtin]';
 						$fields[$key]['fields']['mpn'] = 'MPN[mpn]';
-						$fields[$key]['fields']['identifier_exists'] = 'Identifier Exist[identifier_exists]';
 						break;
 
 					case 'detailed_product_attributes':
 
-						$fields[$key]['fields']['item_group_id'] = 'Item Group Id[item_group_id]';	
-						$fields[$key]['fields']['promotion_id'] = 'Promotion Id[promotion_id]';
+						$fields[$key]['fields']['item_group_id'] = 'Item Group Id[item_group_id]';
+						$fields[$key]['fields']['external_seller_id'] = 'External seller ID[external_seller_id]';
 						$fields[$key]['fields']['color'] = 'Color[color]';
 						$fields[$key]['fields']['gender'] = 'Gender[gender]';
 						$fields[$key]['fields']['age_group'] = 'Age Group[age_group]';
@@ -298,24 +245,34 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Bing')) {
 						$fields[$key]['fields']['pattern'] = 'Pattern[pattern]';
 						$fields[$key]['fields']['size'] = 'Size of the item[size]';
 						$fields[$key]['fields']['size_type'] = 'Size Type[size_type]';
-						$fields[$key]['fields']['size_system'] = 'Size System[size_system]';						
-                                                $fields[$key]['fields']['quantity'] = 'Quantity [quantity]';
+						$fields[$key]['fields']['size_system'] = 'Size System[size_system]';
+						$fields[$key]['fields']['product_length'] = 'Product Length[product_length]';
+						$fields[$key]['fields']['product_width'] = 'Product Width[product_width]';
+						$fields[$key]['fields']['product_height'] = 'Product Height[product_height]';
+						$fields[$key]['fields']['product_weight'] = 'Product Weight[product_weight]';						
+                        $fields[$key]['fields']['quantity'] = 'Quantity [quantity]';
+						$fields[$key]['fields']['multipack'] = 'Multipack[multipack]';
+						$fields[$key]['fields']['adult'] = 'Adult[adult]';
 						break;
 
 					case 'tax_shipping':
+						$fields[$key]['fields']['tax'] = 'Tax[tax]';
+						$fields[$key]['fields']['tax_country'] = 'Tax Country[tax_country]';
+						$fields[$key]['fields']['tax_region'] = 'Tax Region[tax_region]';
+						$fields[$key]['fields']['tax_rate'] = 'Tax Rate[tax_rate]';
+						$fields[$key]['fields']['tax_ship'] = 'Tax Ship[tax_ship]';
+						$fields[$key]['fields']['tax_category'] = 'Tax[tax_category]';
 						$fields[$key]['fields']['shipping'] = 'Shipping';
-						break;
-
-					case 'product_combinations':
-						$fields[$key]['fields']['multipack'] = 'Multipack[multipack]';
-						$fields[$key]['fields']['is_bundle'] = 'Is Bundle[is_bundle]';
-						break;
-
-					case 'adult_products':
-						$fields[$key]['fields']['adult'] = 'Adult[adult]';
-						break;
-					case 'ads_attributes':
-						$fields[$key]['fields']['ads_redirect'] = 'Ads Redirect[ads_redirect]';
+						//$fields[$key]['fields']['shipping_class'] = 'Shipping Class';
+						$fields[$key]['fields']['weight'] = 'Shipping Weight[shipping_weight]';
+						$fields[$key]['fields']['length'] = 'Shipping Length[shipping_length]';
+						$fields[$key]['fields']['width'] = 'Shipping Width[shipping_width]';
+						$fields[$key]['fields']['height'] = 'Shipping Height[shipping_height]';
+						$fields[$key]['fields']['ships_from_country'] = 'Shipping Country[ships_from_country]';
+						$fields[$key]['fields']['shipping_label'] = 'Shipping Label[shipping_label]';
+						$fields[$key]['fields']['material_1'] = 'The primary material';
+						$fields[$key]['fields']['material_2'] = 'The secondary material';
+						$fields[$key]['fields']['material_3'] = 'The tertiary material';
 						break;
 
 					case 'custom_label_identifiers':
@@ -326,23 +283,6 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Bing')) {
 						$fields[$key]['fields']['custom_label_4'] = 'Custom label 4 [custom_label_4]';
 						break;
 
-					case 'additional_attributes':						
-						$fields[$key]['fields']['shopping_ads_excluded_country'] = 'Shopping Ads Excluded Country[shopping_ads_excluded_country]';						
-						$fields[$key]['fields']['expiration_date'] = 'Expiration Date [expiration_date]';						
-						break;
-					case 'unit_prices_eu_ch':
-						$fields[$key]['fields']['unit_pricing_measure'] = 'Unit Pricing Measure[unit_pricing_measure]';
-						$fields[$key]['fields']['unit_pricing_base_measure'] = 'Unit Pricing Base Measure[unit_pricing_base_measure]';						
-						$fields[$key]['fields']['installment'] = 'Installment Month & Amount [installment]';
-						break;
-
-					case 'energy_labels':
-
-						$fields[$key]['fields']['energy_efficiency_class'] = 'Energy Efficiency Class[energy_efficiency_class]';
-						$fields[$key]['fields']['min_energy_efficiency_class'] = 'Min Energy Efficiency Class[energy_efficiency_class]';
-						$fields[$key]['fields']['max_energy_efficiency_class'] = 'Max Energy Efficiency Class[energy_efficiency_class]';
-						break;
-                                            
 					default:
 						break;
 				}
@@ -404,15 +344,19 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Bing')) {
 			foreach ($fields as $fieldk => $fieldv) {
 				$out[$fieldk] = $fieldv;
 			}
-                        $out['file_as']['sele_vals'] = array(
-                            'xml'=>__('XML'),                            
-                            'txt'=>__('TXT')
-                        );
-                        $out['delimiter']['sele_vals'] = array(
-                            'tab' => array('value' => __('Tab'), 'val' => "\t"),
-                            'comma' => array('value' => __('Comma'), 'val' => ",")                            
-                        );
+                        if ('rakuten' === $base) {
 
+                            $out['file_as']['sele_vals'] = array(
+                                'xml'=>__('XML'), 
+                                'tsv'=>__('TSV'),
+                                'txt'=>__('TXT'),
+                                'csv'=>__('CSV')                                
+                            );
+                            $out['delimiter']['sele_vals'] = array(
+                                'tab' => array('value' => __('Tab'), 'val' => "\t"),
+                                'comma' => array('value' => __('Comma'), 'val' => ",")
+                            );
+                        }
 
 			return $out;
 		}
@@ -498,59 +442,39 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Bing')) {
 			);
 
 			return $fields;
-		}	
-                
-               public function product_attributes_dropdown($attribute_dropdown, $export_channel, $selected=''){
-                    
-                    
-                    if( 'bing' === $export_channel ){
-                        
-                        $attribute_dropdown .= sprintf( '<option value="%s">%s</option>', 'shipping_cp', 'shipping(country:price)' );
-                        $attribute_dropdown .= sprintf( '<option value="%s">%s</option>', 'shipping_csp', 'shipping(country:service:price)' );                                              
-                                            
-                        
-                        if( $selected && strpos($selected, 'wt_static_map_vl:') !== false ){
-                            $selected = 'wt-static-map-vl';
-                        }
-                        if ( $selected && strpos( $attribute_dropdown, 'value="' . $selected . '"' ) !== false ) {
-                                $attribute_dropdown = str_replace( 'value="' . $selected . '"', 'value="' . $selected . '"' . ' selected', $attribute_dropdown );
-                        }
-                    }
-
-                        
-                    return $attribute_dropdown;
-                }                
+		}		
 		
 		
 
-                public static function wt_feed_get_product_conditions() {
-                        $conditions = array(
-                                'new'           => _x( 'New', 'product condition', 'webtoffee-product-feed' ),
-                                'refurbished'   => _x( 'Refurbished', 'product condition', 'webtoffee-product-feed' ),
-                                'used'          => _x( 'Used', 'product condition', 'webtoffee-product-feed' ),
-                        );
+public static function wt_feed_get_product_conditions() {
+	$conditions = array(
+		'new'           => _x( 'New', 'product condition', 'webtoffee-product-feed-pro' ),
+		'refurbished'   => _x( 'Refurbished', 'product condition', 'webtoffee-product-feed-pro' ),
+		'used'          => _x( 'Used', 'product condition', 'webtoffee-product-feed-pro' ),
+	);
 
-                        return apply_filters( 'wt_feed_google_product_conditions', $conditions );
-                }	
+	return apply_filters( 'wt_feed_google_product_conditions', $conditions );
+}	
 
-                public static function get_age_group() {
-                                $google_age_group = array(
-                                        'adult' => __('Adult', 'webtoffee-product-feed'),
-                                        'kids' => __('Kids', 'webtoffee-product-feed'),
-                                        'toddler' => __('Toddler', 'webtoffee-product-feed'),
-                                        'infant' => __('Infant', 'webtoffee-product-feed'),
-                                        'newborn' => __('Newborn', 'webtoffee-product-feed')
-                                );
-                                return apply_filters( 'wt_feed_google_product_agegroup', $google_age_group );
+	public static function get_age_group() {
+			$google_age_group = array(
+				'adult' => __('Adult', 'webtoffee-product-feed-pro'),
+				'kids' => __('Kids', 'webtoffee-product-feed-pro'),
+				'toddler' => __('Toddler', 'webtoffee-product-feed-pro'),
+				'infant' => __('Infant', 'webtoffee-product-feed-pro'),
+				'newborn' => __('Newborn', 'webtoffee-product-feed-pro')
+			);
+			return apply_filters( 'wt_feed_google_product_agegroup', $google_age_group );
 
-                }
-				
+	}
+		
+		
 
 	}
 
 }
 
-new Webtoffee_Product_Feed_Sync_Bing();
+new Webtoffee_Product_Feed_Sync_Rakuten();
 
                         // FB Category dropdown caching
 			if (!function_exists('wt_google_category_dropdown')) {
@@ -560,7 +484,7 @@ new Webtoffee_Product_Feed_Sync_Bing();
 					$category_dropdown = wp_cache_get('wt_googlefeed_dropdown_product_categories');
 
 					if (false === $category_dropdown) {
-						$categories = Webtoffee_Product_Feed_Sync_Bing::get_category_array();
+						$categories = Webtoffee_Product_Feed_Sync_Rakuten::get_category_array();
 
 						# Primary Attributes
 						$category_dropdown = '';

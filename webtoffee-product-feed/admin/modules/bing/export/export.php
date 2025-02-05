@@ -434,6 +434,9 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Bing_Export')) {
             return apply_filters('wt_feed_filter_product_id', $this->product->get_id(), $this->product);
         }
 
+        public function promotion_id($catalog_attr, $product_attr, $export_columns) {
+            return apply_filters('wt_feed_filter_product_promotion_id', $this->product->get_id(), $this->product, $this->form_data);
+        }
 
         /**
          * Get parent product title for variation.
@@ -1065,6 +1068,9 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Bing_Export')) {
             $custom_gtin = get_post_meta($this->product->get_id(), '_wt_feed_gtin', true);
             if ('' == $custom_gtin) {
                 $custom_gtin = get_post_meta($this->product->get_id(), '_wt_google_gtin', true);
+            }
+            if(!$custom_gtin){
+                $custom_gtin = get_post_meta($this->product->get_id(), '_global_unique_id', true);
             }
             $gtin = ('' == $custom_gtin) ? '' : $custom_gtin;
             return apply_filters('wt_feed_product_gtin', $gtin, $this->product);

@@ -250,7 +250,13 @@ class Webtoffee_Product_Feed_Sync_Facebook_Export extends Webtoffee_Product_Feed
                 $row[$key] = $this->$value($key, $value, $export_columns);
             }elseif (strpos($value, 'meta:') !== false) {
                 $mkey = str_replace('meta:', '', $value);
-                $row[$key] = get_post_meta($product_id, $mkey, true);
+				if($product_object->is_type('variation')){
+					$product_id = $product_object->get_parent_id();
+				}
+				if ( (strpos($value, 'global_unique_id') !== false) || (strpos($value, 'alg_ean') !== false) ){
+					$product_id = $product_object->get_id();
+				}
+				$row[$key] = wp_strip_all_tags( get_post_meta($product_id, $mkey, true) );
                 // TODO
                 // wt_image_ function can be replaced with key exist check
             }elseif (strpos($value, 'wt_pf_pa_') !== false) {
@@ -1150,7 +1156,7 @@ class Webtoffee_Product_Feed_Sync_Facebook_Export extends Webtoffee_Product_Feed
                     }
                 }
                 $color = apply_filters('wt_feed_facebook_product_color', $color, $this->product);
-                return apply_filters( "wt_feed_{$this->parent_module->module_base}_productcolor", $size, $this->product, $this->form_data);
+                return apply_filters( "wt_feed_{$this->parent_module->module_base}_productcolor", $color, $this->product, $this->form_data);
             } elseif ('' == $color) {
                 $product_attributes = $this->product->get_attributes();
                 if (isset($product_attributes['color'])) {
@@ -1204,6 +1210,9 @@ class Webtoffee_Product_Feed_Sync_Facebook_Export extends Webtoffee_Product_Feed
             $custom_gtin = get_post_meta($this->product->get_id(), '_wt_feed_gtin', true);
             if ( !$custom_gtin ) {
                 $custom_gtin = get_post_meta($this->product->get_id(), '_wt_facebook_gtin', true);
+            }
+            if(!$custom_gtin){
+                $custom_gtin = get_post_meta($this->product->get_id(), '_global_unique_id', true);
             }
             $gtin = ('' == $custom_gtin) ? '' : $custom_gtin;
             $gtin = apply_filters('wt_feed_product_gtin', $gtin, $this->product);

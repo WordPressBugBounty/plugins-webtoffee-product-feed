@@ -337,6 +337,7 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Google')) {
 
 						$fields[$key]['fields']['item_group_id'] = 'Item Group Id[item_group_id]';
 						$fields[$key]['fields']['external_seller_id'] = 'External seller ID[external_seller_id]';
+						$fields[$key]['fields']['promotion_id'] = 'Promotion Id[promotion_id]';
 						$fields[$key]['fields']['color'] = 'Color[color]';
 						$fields[$key]['fields']['gender'] = 'Gender[gender]';
 						$fields[$key]['fields']['age_group'] = 'Age Group[age_group]';

@@ -125,7 +125,7 @@ class Webtoffee_Product_Feed_Sync_Common_Helper
 				'date_created'              => esc_attr__( 'Date Created' ),
 				'date_updated'              => esc_attr__( 'Date Updated' ),
 				'identifier_exists'         => esc_attr__( 'Identifier Exists' ),
-                                'promotion_id'              => esc_attr__( 'Product Id' ),
+                                'promotion_id'              => esc_attr__( 'Product Id / Promotion Id' ),
                                 'long_title'                => esc_attr__( 'Product Title' ),
                                 'promotion_effective_dates' => esc_attr__( 'Promotion effective dates' ), 
                             
