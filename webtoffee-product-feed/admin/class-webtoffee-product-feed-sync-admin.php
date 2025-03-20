@@ -234,7 +234,7 @@ class Webtoffee_Product_Feed_Sync_Admin {
 		'<a href="' . esc_url( admin_url( 'admin.php?page=webtoffee-product-feed' ) ) . '">' . __( 'FB Sync', 'webtoffee-product-feed' ) . '</a>',
 		'<a target="_blank" href="https://wordpress.org/support/plugin/webtoffee-product-feed/">' . __( 'Support', 'webtoffee-product-feed' ) . '</a>',
 		'<a target="_blank" href="https://www.webtoffee.com/webtoffee-product-feed-user-guide/">' . __( 'Documentation', 'webtoffee-product-feed' ) . '</a>',
-		'<a target="_blank" href="https://wordpress.org/support/plugin/webtoffee-product-feed/reviews#new-post">' . __( 'Review', 'webtoffee-product-feed' ) . '</a>',
+		'<a target="_blank" style="color:#f909ff;" href="https://wordpress.org/support/plugin/webtoffee-product-feed/reviews#new-post">' . __( 'Review', 'webtoffee-product-feed' ) . '</a>',
 		'<a target="_blank" href="'. esc_url("https://www.webtoffee.com/product/woocommerce-product-feed/?utm_source=free_plugin_listing&utm_medium=feed_basic&utm_campaign=WooCommerce_Product_Feed&utm_content=" . WEBTOFFEE_PRODUCT_FEED_SYNC_VERSION).'" style="color:#3db634;">' . __( 'Upgrade', 'webtoffee-product-feed' ) . '</a>',
 	);
 	if ( array_key_exists( 'deactivate', $links ) ) {
@@ -1717,7 +1717,8 @@ class Webtoffee_Product_Feed_Sync_Admin {
                     'onbuy' => 'webtoffee-product-feed',
                     'twitter' => 'webtoffee-product-feed',
                     'yandex' => 'webtoffee-product-feed',
-                    'rakuten' => 'webtoffee-product-feed'
+                    'rakuten' => 'webtoffee-product-feed',
+                    'shopmania' => 'webtoffee-product-feed'
                 );
 
                 foreach ($addon_modules_basic as $module_key => $module_path)

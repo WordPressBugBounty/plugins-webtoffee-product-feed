@@ -1716,6 +1716,11 @@ class Webtoffee_Product_Feed_Sync_Facebook_Export extends Webtoffee_Product_Feed
                 break;
         }
     }
+	public function fb_override($catalog_attr, $product_attr, $export_columns) {
+
+		$override_country = $this->form_data['post_type_form_data']['item_country'];
+		return apply_filters('wt_feed_filter_product_fb_override', $override_country, $this->product, $this->form_data);
+	}
 
     public static function format_data($data) {
         if (!is_array($data))            

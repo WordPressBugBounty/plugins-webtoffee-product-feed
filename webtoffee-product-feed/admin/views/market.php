@@ -37,7 +37,7 @@ if (!defined('ABSPATH')) {
                                         <li><span><?php esc_html_e( 'Aelia, Curcy, Fox');?>&nbsp;<b style="font-weight: 800;"><?php esc_html_e( 'currency switcher'); ?></b>&nbsp;<?php esc_html_e( 'plugin compatibility', 'webtoffee-product-feed' ); ?></span></li>  
                                         <li><span><b style="font-weight: 800;"><?php esc_html_e( 'Bulk update price'); ?></b>&nbsp;<?php esc_html_e( 'in the feed (without changing it in the store), allow channel wise ' );?><b style="font-weight: 800;"><?php esc_html_e( 'discount'); ?></b><?php esc_html_e(', etc.', 'webtoffee-product-feed' ); ?></span></li>                                    															                                        
                                         <li><span><b style="font-weight: 800;"><?php esc_html_e( 'Multi-vendor');?></b>&nbsp;<?php esc_html_e( 'compatibility', 'webtoffee-product-feed' ); ?></span></li>                                        
-                                        <li><span><?php esc_html_e( 'Supports'); ?>&nbsp;<b style="font-weight: 800;"><?php esc_html_e( 'WooCommerce Brands'); ?></b> <?php esc_html_e( '& Perfect Brands for WooCommerce plugins', 'webtoffee-product-feed' ); ?><span></li>
+                                        <li><span><?php esc_html_e( 'Supports'); ?>&nbsp;<b style="font-weight: 800;"><?php esc_html_e( 'WooCommerce Brands'); ?></b> <?php esc_html_e( ', YITH WooCommerce Brands Add-on & Perfect Brands for WooCommerce plugins', 'webtoffee-product-feed' ); ?><span></li>
                                         <?php endif; ?>
 				</ul>			
 			</div>

@@ -120,7 +120,7 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Rakuten')) {
 		 */
 		public function wt_pf_exporter_post_types_basic($arr) {
 
-			$arr['rakuten'] = __('Rakuten Shop', 'webtoffee-product-feed-pro');
+			$arr['rakuten'] = __('Rakuten', 'webtoffee-product-feed');
 			return $arr;
 		}
 
@@ -475,35 +475,3 @@ public static function wt_feed_get_product_conditions() {
 }
 
 new Webtoffee_Product_Feed_Sync_Rakuten();
-
-                        // FB Category dropdown caching
-			if (!function_exists('wt_google_category_dropdown')) {
-
-				function wt_google_category_dropdown($selected = '') {
-
-					$category_dropdown = wp_cache_get('wt_googlefeed_dropdown_product_categories');
-
-					if (false === $category_dropdown) {
-						$categories = Webtoffee_Product_Feed_Sync_Rakuten::get_category_array();
-
-						# Primary Attributes
-						$category_dropdown = '';
-
-						foreach ($categories as $key => $value) {
-							$category_dropdown .= sprintf('<option value="%s">%s</option>', $key, $value);
-						}
-
-						wp_cache_set('wt_googlefeed_dropdown_product_categories', $category_dropdown, '', WEEK_IN_SECONDS);
-					}
-
-
-					if ($selected && strpos($category_dropdown, 'value="' . $selected . '"') !== false) {
-						$category_dropdown = str_replace('value="' . $selected . '"', 'value="' . $selected . '"' . ' selected', $category_dropdown);
-					}
-
-
-
-					return $category_dropdown;
-				}
-
-			}

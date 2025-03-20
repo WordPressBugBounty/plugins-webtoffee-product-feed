@@ -157,6 +157,8 @@ class Webtoffee_Product_Feed_Sync_Common_Helper
                                 'Gender' => 'Gender[Gender]',
                                 'Material' => 'Material[Material]',
                                 'GroupId' => 'GroupId[GroupId]',
+								'fb_override' => 'Facebook Override',
+
 			);
 			$images     = array(
 				'image_link'    => esc_attr__( 'Main Image' ),
@@ -195,32 +197,40 @@ class Webtoffee_Product_Feed_Sync_Common_Helper
 				$attribute_dropdown .= '</optgroup>';
 			}
 			
-			
-			$product_metas = self::get_product_metakeys();
-			if ( is_array( $product_metas ) && ! empty( $product_metas ) ) {
-				$attribute_dropdown .= sprintf( '<optgroup label="%s">', esc_attr__( 'Custom Fields/Post Meta' ) );
-				foreach ( $product_metas as $key => $value ) {
-					$attribute_dropdown .= sprintf( '<option value="%s">%s</option>', $key, $value );
+			$meta_in_mapping = apply_filters('wt_pf_allow_meta_in_mapping', true);
+			if($meta_in_mapping){
+				$product_metas = self::get_product_metakeys();
+				if ( is_array( $product_metas ) && ! empty( $product_metas ) ) {
+					$attribute_dropdown .= sprintf( '<optgroup label="%s">', esc_attr__( 'Custom Fields/Post Meta' ) );
+					foreach ( $product_metas as $key => $value ) {
+						$attribute_dropdown .= sprintf( '<option value="%s">%s</option>', $key, $value );
+					}
+					$attribute_dropdown .= '</optgroup>';
 				}
-				$attribute_dropdown .= '</optgroup>';
 			}
 			
-			$product_global_attrs = self::get_global_attributes();
-			if ( is_array( $product_global_attrs ) && ! empty( $product_global_attrs ) ) {
-				$attribute_dropdown .= sprintf( '<optgroup label="%s">', esc_attr__( 'Product Attributes' ) );
-				foreach ( $product_global_attrs as $key => $value ) {
-					$attribute_dropdown .= sprintf( '<option value="%s">%s</option>', $key, $value );
+			$global_in_mapping = apply_filters('wt_pf_allow_global_attr_in_mapping', true);
+			if($global_in_mapping){
+				$product_global_attrs = self::get_global_attributes();
+				if ( is_array( $product_global_attrs ) && ! empty( $product_global_attrs ) ) {
+					$attribute_dropdown .= sprintf( '<optgroup label="%s">', esc_attr__( 'Product Attributes' ) );
+					foreach ( $product_global_attrs as $key => $value ) {
+						$attribute_dropdown .= sprintf( '<option value="%s">%s</option>', $key, $value );
+					}
+					$attribute_dropdown .= '</optgroup>';
 				}
-				$attribute_dropdown .= '</optgroup>';
 			}
                         
-			$product_local_attrs = self::get_local_attributes();
-			if ( is_array( $product_local_attrs ) && ! empty( $product_local_attrs ) ) {
-				$attribute_dropdown .= sprintf( '<optgroup label="%s">', esc_attr__( 'Product Custom Attributes' ) );
-				foreach ( $product_local_attrs as $key => $value ) {
-					$attribute_dropdown .= sprintf( '<option value="%s">%s</option>', $key, $value );
+			$local_in_mapping = apply_filters('wt_pf_allow_local_attr_in_mapping', true);
+			if($local_in_mapping){			
+				$product_local_attrs = self::get_local_attributes();
+				if ( is_array( $product_local_attrs ) && ! empty( $product_local_attrs ) ) {
+					$attribute_dropdown .= sprintf( '<optgroup label="%s">', esc_attr__( 'Product Custom Attributes' ) );
+					foreach ( $product_local_attrs as $key => $value ) {
+						$attribute_dropdown .= sprintf( '<option value="%s">%s</option>', $key, $value );
+					}
+					$attribute_dropdown .= '</optgroup>';
 				}
-				$attribute_dropdown .= '</optgroup>';
 			}                        
                         
 			wp_cache_add( 'wt_feed_dropdown_product_attributes_v11', $attribute_dropdown, '', WEEK_IN_SECONDS );

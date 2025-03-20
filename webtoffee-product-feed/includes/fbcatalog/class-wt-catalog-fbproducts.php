@@ -61,8 +61,8 @@ if ( !class_exists( 'WT_Facebook_Catalog_Product' ) ) :
 
 			if ( !is_numeric( $sale_price ) ) {
 
-				$sale_start									 = '1970-01-29T00:00+00:00';
-				$sale_end									 = '1970-01-30T23:59+00:00';
+				$sale_start	 = ( $dates_from	 = get_post_meta( $product->get_id(), '_sale_price_dates_from', true ) ) ? date_i18n( 'Y-m-d', $dates_from ) . 'T00:00+00:00' : '1970-01-29T00:00+00:00';
+				$sale_end	 = ( $dates_to	 = get_post_meta( $product->get_id(), '_sale_price_dates_to', true ) ) ? date_i18n( 'Y-m-d', $dates_to ) . 'T23:59+00:00' : '2032-01-17T23:59+00:00';
 				
 				//$product_data[ 'sale_price_start_date' ] = '1970-01-29T00:00+00:00';
 				//$product_data[ 'sale_price_end_date' ]	 = '1970-01-30T23:59+00:00';
@@ -74,7 +74,7 @@ if ( !class_exists( 'WT_Facebook_Catalog_Product' ) ) :
 				$sale_price = $this->get_price_plus_tax( $sale_price, $product ) . ' ' . get_woocommerce_currency();
 
 				$sale_start	 = ( $dates_from	 = get_post_meta( $product->get_id(), '_sale_price_dates_from', true ) ) ? date_i18n( 'Y-m-d', $dates_from ) . 'T00:00+00:00' : '1970-01-29T00:00+00:00';
-				$sale_end	 = ( $dates_to	 = get_post_meta( $product->get_id(), '_sale_price_dates_to', true ) ) ? date_i18n( 'Y-m-d', $dates_to ) . 'T23:59+00:00' : '2022-01-17T23:59+00:00';
+				$sale_end	 = ( $dates_to	 = get_post_meta( $product->get_id(), '_sale_price_dates_to', true ) ) ? date_i18n( 'Y-m-d', $dates_to ) . 'T23:59+00:00' : '2032-01-17T23:59+00:00';
 
 				//$product_data[ 'sale_price_start_date' ] = $sale_start;
 				//$product_data[ 'sale_price_end_date' ]	 = $sale_end;

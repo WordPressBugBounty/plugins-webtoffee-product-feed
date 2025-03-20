@@ -16,14 +16,14 @@
  * Plugin Name:       WebToffee WooCommerce Product Feed & Sync Manager
  * Plugin URI:        https://wordpress.org/plugins/webtoffee-product-feed
  * Description:       Integrate your WooCommerce store with popular sale channels including Google Merchant Center, Facebook/Instagram ads&shops, TikTok ads and much more.
- * Version:           2.2.7
+ * Version:           2.2.8
  * Author:            WebToffee
  * Author URI:        https://www.webtoffee.com
  * License:           GPL-3.0+
  * License URI:       http://www.gnu.org/licenses/gpl-3.0.txt
  * Text Domain:       webtoffee-product-feed
  * Domain Path:       /languages
- * WC tested up to:   9.6.1
+ * WC tested up to:   9.7.1
  */
 // If this file is called directly, abort.
 if ( !defined( 'WPINC' ) ) {
@@ -35,7 +35,7 @@ if ( !defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'WEBTOFFEE_PRODUCT_FEED_SYNC_VERSION', '2.2.7' );
+define( 'WEBTOFFEE_PRODUCT_FEED_SYNC_VERSION', '2.2.8' );
 define( 'WEBTOFFEE_PRODUCT_FEED_ID', 'webtoffee_product_feed' );
 define( 'WT_PRODUCT_FEED_PLUGIN_URL', plugin_dir_url(__FILE__));
 define( 'WT_PRODUCT_FEED_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );

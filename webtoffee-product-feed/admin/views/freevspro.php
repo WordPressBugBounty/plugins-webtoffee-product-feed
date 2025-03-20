@@ -111,7 +111,12 @@ if (!defined('WPINC')) {
 					<td><span class="dashicons dashicons-yes-alt" style="color:#18c01d;margin-top: 3px;margin-bottom: 13px;"></span></td>
 					<td><span class="dashicons dashicons-yes-alt" style="color:#18c01d;margin-top: 3px;margin-bottom: 13px;"></span></td>					
 				</tr>
-                                <tr>
+				<tr>
+					<td><?php esc_html_e('Computed price, stock, availability, etc.', 'webtoffee-product-feed'); ?></td>
+					<td><span class="dashicons dashicons-dismiss" style="color:#ea1515;margin-top: 3px;margin-bottom: 13px;"></span></td>
+					<td><span class="dashicons dashicons-yes-alt" style="color:#18c01d;margin-top: 3px;margin-bottom: 13px;"></span></td>					
+				</tr>
+                <tr>
 					<td><?php esc_html_e('Advanced product filters', 'webtoffee-product-feed'); ?></td>
 					<td><span class="dashicons dashicons-dismiss" style="color:#ea1515;margin-top: 3px;margin-bottom: 13px;"></span></td>
 					<td><span class="dashicons dashicons-yes-alt" style="color:#18c01d;margin-top: 3px;margin-bottom: 13px;"></span></td>					
@@ -163,7 +168,7 @@ if (!defined('WPINC')) {
 		<div class="wt-profeed-name">
 			<div style="float: left"><img src="<?php echo esc_url( WT_PRODUCT_FEED_PLUGIN_URL ); ?>assets/images/gopro/product-feed.svg" alt="featured img" width="36" height="36"></div>
 			<div style="float: right">
-				<h4 class="wt-profeed-name"><?php esc_html_e('WebToffee WooCommerce Product Feed & Sync Manager(Pro)', 'webtoffee-product-feed'); ?></h4>				
+				<h4 class="wt-profeed-name"><?php esc_html_e('WooCommerce Product Feed & Sync Manager(Pro)', 'webtoffee-product-feed'); ?></h4>				
 			</div>
 		</div>
 		<div class="wt-profeed-mainfeatures">
@@ -183,7 +188,7 @@ if (!defined('WPINC')) {
 			<div class="wt-profeed-name-bottom">
 				<div style="float: left"><img src="<?php echo esc_url( WT_PRODUCT_FEED_PLUGIN_URL ); ?>assets/images/gopro/product-feed.svg" alt="featured img" width="36" height="36"></div>
 				<div style="float: right">
-					<h4 class="wt-profeed-name-bottom"><?php esc_html_e('WebToffee WooCommerce Product Feed & Sync Manager(Pro)', 'webtoffee-product-feed'); ?></h4>				
+					<h4 class="wt-profeed-name-bottom"><?php esc_html_e('WooCommerce Product Feed & Sync Manager(Pro)', 'webtoffee-product-feed'); ?></h4>				
 				</div>
 			</div>
 			<div class="wt-profeed-mainfeatures-bottom">

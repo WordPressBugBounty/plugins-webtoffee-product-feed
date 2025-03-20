@@ -41,7 +41,7 @@ $wt_admin_img_path = WT_PRODUCT_FEED_PLUGIN_URL . 'assets/images/other_solutions
 /* Plugin lists array */
 $plugins=array(
     'product_feed_sync' => array(
-        'title'         => __('WebToffee WooCommerce Product Feed & Sync Manager', 'webtoffee-product-feed'),
+        'title'         => __('WooCommerce Product Feed & Sync Manager', 'webtoffee-product-feed'),
         'description'   => __('Generate WooCommerce product feeds for Google Merchant Center and Facebook Business Manager. Use the Facebook catalog sync manager to sync WooCommerce products with Facebook and Instagram shops.', 'webtoffee-product-feed'),
         'image_url'     => 'product-feed-sync.png',
         'premium_url'   => 'https://www.webtoffee.com/product/product-catalog-sync-for-facebook/?utm_source=other_solution_page&utm_medium=free_plugin&utm_campaign=WooCommerce_Product_Feed',
@@ -50,7 +50,7 @@ $plugins=array(
         'basic_plugin'  => 'webtoffee-product-feed/webtoffee-product-feed.php',
     ),
     'request_quote' => array(
-        'title'         => __('WebToffee Woocommerce Request a Quote', 'webtoffee-product-feed'),
+        'title'         => __('Woocommerce Request a Quote', 'webtoffee-product-feed'),
         'description'   => __('Configure a fully optimized WooCommerce quote request set up in your store. Allow customers to request quotes and store managers to respond to them. Hide product prices, set up email alerts, and more.', 'webtoffee-product-feed'),
         'image_url'     => 'request-quote.png',
         'premium_url'   => 'https://www.webtoffee.com/product/woocommerce-request-a-quote/?utm_source=other_solution_page&utm_medium=free_plugin&utm_campaign=Request_Quote',
@@ -59,7 +59,7 @@ $plugins=array(
         'basic_plugin'  => '',
     ),
     'giftcards_plugin' => array(
-        'title'         => __('WebToffee WooCommerce Gift Cards', 'webtoffee-product-feed'),
+        'title'         => __('WooCommerce Gift Cards', 'webtoffee-product-feed'),
         'description'   => __('Create and manage advanced gift cards for WooCommerce stores. Enable your customers to buy, redeem, and share gift cards from your store.', 'webtoffee-product-feed'),
         'image_url'     => 'giftcards_plugin.png',
         'premium_url'   => 'https://www.webtoffee.com/product/woocommerce-gift-cards/?utm_source=other_solution_page&utm_medium=free_plugin&utm_campaign=WooCommerce_Gift_Cards',
@@ -225,7 +225,7 @@ $plugins=array(
         'basic_plugin'  => '',
     ),	
     'backup_and_migration_plugin' => array(
-        'title' => __('WebToffee WP Backup and Migration', 'webtoffee-product-feed'),
+        'title' => __('WordPress Backup and Migration', 'webtoffee-product-feed'),
         'description' => __('A complete WordPress backup and migration plugin to easily back up and migrate your WordPress website and database. This fast and flexible backup solution makes creating and restoring backups easy.', 'webtoffee-product-feed'),
         'image_url' => 'WordPress-backup-and-migration-plugin.png',
         'premium_url' => '',
