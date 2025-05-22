@@ -377,10 +377,10 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Google')) {
 						$fields[$key]['fields']['max_handling_time'] = 'Max Handling Time[max_handling_time]';
 						$fields[$key]['fields']['min_transit_time'] = 'Min Transit Time[min_transit_time]';
 						$fields[$key]['fields']['max_transit_time'] = 'Max Transit Time[max_transit_time]';
-						$fields[$key]['fields']['weight'] = 'Shipping Weight[shipping_weight]';
-						$fields[$key]['fields']['length'] = 'Shipping Length[shipping_length]';
-						$fields[$key]['fields']['width'] = 'Shipping Width[shipping_width]';
-						$fields[$key]['fields']['height'] = 'Shipping Height[shipping_height]';
+						$fields[$key]['fields']['shipping_weight'] = 'Shipping Weight[shipping_weight]';
+						$fields[$key]['fields']['shipping_length'] = 'Shipping Length[shipping_length]';
+						$fields[$key]['fields']['shipping_width'] = 'Shipping Width[shipping_width]';
+						$fields[$key]['fields']['shipping_height'] = 'Shipping Height[shipping_height]';
 						$fields[$key]['fields']['ships_from_country'] = 'Shipping Country[ships_from_country]';
 						$fields[$key]['fields']['shipping_label'] = 'Shipping Label[shipping_label]';
 						$fields[$key]['fields']['material_1'] = 'The primary material';

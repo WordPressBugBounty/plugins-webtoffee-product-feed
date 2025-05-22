@@ -1007,7 +1007,14 @@ class Webtoffee_Product_Feed_Sync_Admin {
 	 * @return void
 	 */
 	function wt_fbfeed_ajax_upload() {
-
+		// Verify user has proper capabilities
+		if (!Wt_Pf_Sh::check_role_access(WEBTOFFEE_PRODUCT_FEED_ID)) {
+			wp_send_json_error(array(
+				'status' => 0,
+				'msg' => __('You do not have sufficient permissions to access this feature.', 'webtoffee-product-feed')
+			));
+			exit();
+		}
 
 		parse_str( $_POST[ 'form' ], $form );
 
@@ -1335,6 +1342,14 @@ class Webtoffee_Product_Feed_Sync_Admin {
 	}
 
 	public function wt_fbfeed_batch_status() {
+		// Verify user has proper capabilities
+		if (!Wt_Pf_Sh::check_role_access(WEBTOFFEE_PRODUCT_FEED_ID)) {
+			wp_send_json_error(array(
+				'status' => 0,
+				'msg' => __('You do not have sufficient permissions to access this feature.', 'webtoffee-product-feed')
+			));
+			exit();
+		}
 
 		if ( !empty( $_POST[ 'batch_handle' ] ) ) {
 			$nonce = (isset($_POST['_wpnonce']) ? sanitize_text_field($_POST['_wpnonce']) : '');

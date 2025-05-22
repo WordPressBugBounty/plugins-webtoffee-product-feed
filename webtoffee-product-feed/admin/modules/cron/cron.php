@@ -42,14 +42,6 @@ class Webtoffee_Product_Feed_Sync_Cron
 			'uploading'=>4, //uploading exported file
 			'downloading'=>5, //downloading the file to import
 		);
-		self::$status_label_arr=array(
-			0=>__('Not started', 'webtoffee-product-feed'),
-			1=>__('Finished', 'webtoffee-product-feed'),
-			2=>__('Disabled', 'webtoffee-product-feed'),
-			3=>__('Running', 'webtoffee-product-feed'),
-			4=>__('Uploading', 'webtoffee-product-feed'),
-			5=>__('Downloading', 'webtoffee-product-feed'),
-		);
 		self::$status_color_arr=array(
 			0=>'#337ab7', //dark blue
 			1=>'#5cb85c', //green
@@ -58,6 +50,10 @@ class Webtoffee_Product_Feed_Sync_Cron
 			4=>'#5bc0de', //light blue
 			5=>'#5bc0de', //light blue
 		);		
+
+		/* Register late translation */
+		add_action('init', array($this, 'translate_labels'));
+
 		add_action('admin_enqueue_scripts',array($this, 'enqueue_assets'),10,1);
 		
 		/* altering footer buttons */
@@ -80,10 +76,8 @@ class Webtoffee_Product_Feed_Sync_Cron
 
 		/* schedule main ajax hook */
 		add_action('wp_ajax_pf_schedule_ajax', array($this, 'ajax_main'));
-		
 		add_action('wp_ajax_pf_schedule_refresh', array($this, 'refresh_catalog'));
-                add_action('wp_ajax_pf_feed_duplicate', array($this, 'duplicate_feed'));        
-
+		add_action('wp_ajax_pf_feed_duplicate', array($this, 'duplicate_feed'));
 
 		/* add interval time for cron */
 		add_filter('cron_schedules', array($this, 'set_cron_interval'));
@@ -107,16 +101,29 @@ class Webtoffee_Product_Feed_Sync_Cron
 
 	}
 
+	public function translate_labels() {
+		self::$status_label_arr = array(
+			0 => __('Not started', 'webtoffee-product-feed'),
+			1 => __('Finished', 'webtoffee-product-feed'),
+			2 => __('Disabled', 'webtoffee-product-feed'),
+			3 => __('Running', 'webtoffee-product-feed'),
+			4 => __('Uploading', 'webtoffee-product-feed'),
+			5 => __('Downloading', 'webtoffee-product-feed'),
+		);
+	}
 	
 	public function refresh_catalog() {
 		$cron_id = (isset($_POST['cron_id']) ? absint($_POST['cron_id']) : 0);
 		if ($cron_id > 0) {
-			$this->do_cron('export', $cron_id);
+			if(Wt_Pf_Sh::check_write_access(WEBTOFFEE_PRODUCT_FEED_ID)){
 
-			$out = array(
-				'status' => 1,
-				'msg' => __('Catalog refresh has been initiated and processing in the background', 'webtoffee-product-feed'),
-			);
+				$this->do_cron('export', $cron_id);
+
+				$out = array(
+					'status' => 1,
+					'msg' => __('Catalog refresh has been initiated and processing in the background', 'webtoffee-product-feed'),
+				);
+			}
 			echo json_encode($out);
 			exit();
 		}
@@ -126,23 +133,25 @@ class Webtoffee_Product_Feed_Sync_Cron
 		// The process is based on history_id
 		$cron_id = (isset($_POST['cron_id']) ? absint($_POST['cron_id']) : 0);
 		if ($cron_id > 0) {			
+			if(Wt_Pf_Sh::check_write_access(WEBTOFFEE_PRODUCT_FEED_ID)){
 
-                        $history_row = Webtoffee_Product_Feed_Sync_History::get_history_entry_by_id($cron_id);
-                        
-                        $form_data = maybe_unserialize( $history_row['data'] );
-                        
-                        $file_name = $form_data['post_type_form_data']['item_filename'].'-copy.'.$form_data['advanced_form_data']['wt_pf_file_as'];
-                        $action = $history_row['template_type'];
-                        $to_process = $history_row['item_type'];                       
-                        
-                        $form_data['post_type_form_data']['item_filename'] = $form_data['post_type_form_data']['item_filename'].'-copy';
-                                                
-                        Webtoffee_Product_Feed_Sync_History::create_history_entry($file_name, $form_data, $to_process, $action);
-                        
-                        $out = array(
-				'status' => 1,
-				'msg' => __('Feed duplicated', 'webtoffee-product-feed'),
-			);
+				$history_row = Webtoffee_Product_Feed_Sync_History::get_history_entry_by_id($cron_id);
+				
+				$form_data = maybe_unserialize( $history_row['data'] );
+				
+				$file_name = $form_data['post_type_form_data']['item_filename'].'-copy.'.$form_data['advanced_form_data']['wt_pf_file_as'];
+				$action = $history_row['template_type'];
+				$to_process = $history_row['item_type'];                       
+				
+				$form_data['post_type_form_data']['item_filename'] = $form_data['post_type_form_data']['item_filename'].'-copy';
+										
+				Webtoffee_Product_Feed_Sync_History::create_history_entry($file_name, $form_data, $to_process, $action);
+				
+				$out = array(
+					'status' => 1,
+					'msg' => __('Feed duplicated', 'webtoffee-product-feed'),
+				);
+			}
 			echo json_encode($out);
 			exit();
 		}

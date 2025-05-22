@@ -186,13 +186,18 @@ if(!class_exists('Wt_Pf_Sh'))
     		$nonce = (is_array($nonce) ? $nonce[0] : $nonce); //in some cases multiple nonces are declared
     		$nonce_id = ($nonce_id == "" ? $plugin_id : $nonce_id); //if nonce id not provided then uses plugin id as nonce id
     		
-    		if(!(wp_verify_nonce($nonce, $nonce_id))) //verifying nonce
-		    {
-		    	return false;
-		    }else
-		    {
-		    	return true;
-		    }
+    		if (!$nonce || !(wp_verify_nonce($nonce, $nonce_id))) { //verifying nonce
+				if (defined('DOING_AJAX') && DOING_AJAX) {
+					wp_send_json_error([
+						'status' => 0,
+						'msg' => __('Access denied.', 'webtoffee-product-feed')
+					], 403);
+				} else {
+					wp_die(__('Access denied.', 'webtoffee-product-feed'), '', ['response' => 403]);
+				}
+            	exit;
+			}
+		    return true;
 		}
 
 
@@ -216,6 +221,18 @@ if(!class_exists('Wt_Pf_Sh'))
 	    			$is_allowed = true;
 	    			break;
 	    		}
+	    	}
+
+			if (!$is_allowed) {
+				if (defined('DOING_AJAX') && DOING_AJAX) {
+					wp_send_json_error(array(
+						'status' => 0,
+						'msg' => __('You do not have sufficient permissions to perform this operation.', 'webtoffee-product-feed')
+					), 403);
+				} else {
+					wp_die(__('You do not have sufficient permissions to perform this operation.', 'webtoffee-product-feed'), '', ['response' => 403]);
+				}
+	    		exit;
 	    	}
 	    	return $is_allowed;
 		}

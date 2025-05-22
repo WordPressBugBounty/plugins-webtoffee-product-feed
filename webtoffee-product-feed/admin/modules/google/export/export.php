@@ -1554,6 +1554,18 @@ class Webtoffee_Product_Feed_Sync_Google_Export extends Webtoffee_Product_Feed_P
 		return apply_filters( 'wt_feed_filter_product_length', $this->product->get_length(), $this->product );
 	}
 	
+	public function shipping_weight($catalog_attr, $product_attr, $export_columns) {
+		return apply_filters( 'wt_feed_filter_product_shipping_weight', $this->product->get_weight().' '.get_option( 'woocommerce_weight_unit' ), $this->product );
+	}
+
+	public function shipping_height($catalog_attr, $product_attr, $export_columns) {
+		return apply_filters( 'wt_feed_filter_product_shipping_height', $this->product->get_height().' '.get_option( 'woocommerce_dimension_unit' ), $this->product );
+	}
+
+	public function shipping_width($catalog_attr, $product_attr, $export_columns) {
+		return apply_filters( 'wt_feed_filter_product_shipping_width', $this->product->get_width().' '.get_option( 'woocommerce_dimension_unit' ), $this->product );
+	}
+
 /** 
 	 * Google Formatted Shipping info
 	 * @param array $catalog_attr

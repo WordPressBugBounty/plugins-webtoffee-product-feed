@@ -460,8 +460,8 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Fruugo_Export')) {
 
                     }
                     if ( ! empty( $value ) ) {
-				$value = trim( $value );
-                                $value = str_replace('|', ',', $value);
+				        $value = trim( $value );
+                        $value = str_replace('|', ',', $value);
 			}
                     $row[$key] = $value;
                 } elseif (strpos($value, 'wt_static_map_vl:') !== false) {
@@ -503,23 +503,42 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Fruugo_Export')) {
             return apply_filters('wt_feed_filter_product_price_without_vat', $price_excl_tax, $this->product);
         }
         /**
-         * Price vat rate
+         * Get VAT rate for the product
+         * 
+         * @param string $catalog_attr The catalog attribute
+         * @param string $product_attr The product attribute
+         * @param array $export_columns Export columns configuration
+         * @return string Numeric VAT rate without % symbol, 0 for non-EU retailers
          */
-        public function vat_rate($catalog_attr, $product_attr, $export_columns){
-            // Get the prices
-            $base_rate = '';
-            //$price_excl_tax = wc_get_price_excluding_tax( $this->product ); // price without VAT
-            //$price_incl_tax = wc_get_price_including_tax( $this->product );  // price with VAT
-            //$tax_amount     = $price_incl_tax - $price_excl_tax; // VAT amount
-            $base_tax_rates = WC_Tax::get_base_tax_rates( $this->product->get_tax_class( 'unfiltered' ) );
-            if(!empty($base_tax_rates)){
-                foreach ($base_tax_rates as $base_tax_rate) {
-                   $base_rate =  $base_tax_rate['rate'];
+        public function vat_rate($catalog_attr, $product_attr, $export_columns) {
+            // Default VAT rate to 0 for non-EU retailers
+            $vat_rate = 0;
+            
+            // List of EU country codes
+            $eu_countries = array('AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'GR', 'HU', 'IE', 'IT', 'LV', 'LT', 'LU', 'MT', 'NL', 'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SE');
+            
+            // Get store base country
+            $store_country = WC()->countries->get_base_country();
+            
+            // Only calculate VAT if store is in EU
+            if (in_array($store_country, $eu_countries)) {
+                // Get the base tax rates for the product's tax class
+                $base_tax_rates = WC_Tax::get_base_tax_rates($this->product->get_tax_class('unfiltered'));
+                
+                if (!empty($base_tax_rates)) {
+                    // Get the first applicable tax rate
+                    $base_rate = reset($base_tax_rates);
+                    if (isset($base_rate['rate'])) {
+                        $vat_rate = floatval($base_rate['rate']);
+                    }
                 }
             }
-
-            return apply_filters('wt_feed_filter_product_price_without_vat', $base_rate, $this->product);
-        }        
+            
+            // Format the VAT rate as a numeric value without % symbol
+            $formatted_vat_rate = number_format($vat_rate, 0, '.', '');
+            
+            return apply_filters('wt_feed_filter_product_vat_rate', $formatted_vat_rate, $this->product);
+        }       
         /**
          * Get product identification_type.
          *
@@ -799,7 +818,7 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Fruugo_Export')) {
          */
         public function primary_category($catalog_attr, $product_attr, $export_columns) {
             $parent_category = "";
-            $separator = apply_filters('wt_feed_product_type_separator', ' > ');
+            $separator = apply_filters('wt_feed_product_type_separator', ' - ');
 
             $full_category = $this->product_type();
             if (!empty($full_category)) {
@@ -817,7 +836,7 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Fruugo_Export')) {
          */
         public function primary_category_id($catalog_attr, $product_attr, $export_columns) {
             $parent_category_id = "";
-            $separator = apply_filters('wt_feed_product_type_separator', ' > ');
+            $separator = apply_filters('wt_feed_product_type_separator', ' - ');
             $full_category = $this->product_type();
             if (!empty($full_category)) {
                 $full_category_array = explode($separator, $full_category);
@@ -835,7 +854,7 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Fruugo_Export')) {
          */
         public function child_category($catalog_attr, $product_attr, $export_columns) {
             $child_category = "";
-            $separator = apply_filters('wt_feed_product_type_separator', ' > ');
+            $separator = apply_filters('wt_feed_product_type_separator', ' - ');
             $full_category = $this->product_type();
             if (!empty($full_category)) {
                 $full_category_array = explode($separator, $full_category);
@@ -861,7 +880,7 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Fruugo_Export')) {
          */
         public function child_category_id($catalog_attr, $product_attr, $export_columns) {
             $child_category_id = "";
-            $separator = apply_filters('wt_feed_product_type_separator', ' > ');
+            $separator = apply_filters('wt_feed_product_type_separator', ' - ');
             $full_category = $this->product_type();
             if (!empty($full_category)) {
                 $full_category_array = explode($separator, $full_category);
@@ -977,6 +996,11 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Fruugo_Export')) {
             if ( !empty( $fruugo_product_category ) ) {
                 $product_category = is_scalar( $fruugo_product_category ) ? explode( ',', $fruugo_product_category ) : $fruugo_product_category;
                 $fruugo_product_category = $product_category[0];
+                $fruugo_product_category = str_replace(
+                    array(' >> ', ' > '),
+                    ' - ',
+                    $fruugo_product_category
+                );
             }
 
             return apply_filters('wt_feed_filter_product_fruugo_category', $fruugo_product_category, $this->product);
@@ -991,7 +1015,7 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Fruugo_Export')) {
 
             $id = ( $this->product->is_type('variation') ? $this->product->get_parent_id() : $this->product->get_id() );
 
-            $separator = apply_filters('wt_feed_product_type_separator', ' > ');
+            $separator = apply_filters('wt_feed_product_type_separator', ' - ');
             $product_categories = '';
             $term_list = get_the_terms($id, 'product_cat');
 
@@ -1015,7 +1039,7 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Fruugo_Export')) {
 
             $id = ( $this->product->is_type('variation') ? $this->product->get_parent_id() : $this->product->get_id() );
 
-            $separator = apply_filters('wt_feed_product_type_separator', ' > ', $this->product);
+            $separator = apply_filters('wt_feed_product_type_separator', ' - ', $this->product);
 
             $product_type = wp_strip_all_tags(wc_get_product_category_list($id, $separator));
 
@@ -1191,7 +1215,17 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Fruugo_Export')) {
             return $this->wt_variation_option($catalog_attr, $product_attr, $export_columns, 6);
         }
         
+        public function Attribute7($catalog_attr, $product_attr, $export_columns) {
+            return $this->wt_variation_option($catalog_attr, $product_attr, $export_columns, 7);
+        }
         
+        public function Attribute8($catalog_attr, $product_attr, $export_columns) {
+            return $this->wt_variation_option($catalog_attr, $product_attr, $export_columns, 8);
+        }
+        
+        public function Attribute9($catalog_attr, $product_attr, $export_columns) {
+            return $this->wt_variation_option($catalog_attr, $product_attr, $export_columns, 9);
+        }
         
         public function AttributeColor($catalog_attr, $product_attr, $export_columns) {
             $color_val = '';
@@ -1707,7 +1741,8 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Fruugo_Export')) {
             if (isset($this->form_data['advanced_form_data']['wt_pf_file_as']) && 'xml' === $this->form_data['advanced_form_data']['wt_pf_file_as']) {
                 $price = array(
                     'Currency' => $this->currency($catalog_attr, $product_attr, $export_columns),
-                    'NormalPriceWithoutVAT' => $this->price_without_vat($catalog_attr, $product_attr, $export_columns)
+                    'NormalPriceWithoutVAT' => $this->price_without_vat($catalog_attr, $product_attr, $export_columns),
+                    'VATRate' => $this->vat_rate($catalog_attr, $product_attr, $export_columns)
                 );
                 if( strpos($this->fruugo_xml_skipfeed_keys['vat_rate'], 'wt_static_map_vl:') !== false) {
                     $price['VATRate'] = str_replace('wt_static_map_vl:', '', $this->fruugo_xml_skipfeed_keys['vat_rate']);

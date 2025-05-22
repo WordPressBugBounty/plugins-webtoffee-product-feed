@@ -118,29 +118,30 @@ class Webtoffee_Product_Feed_Sync_Export
                 
                 
                 
-                add_filter( 'woocommerce_product_data_tabs', array( $this, 'product_data_tabs' ) );
-                add_action( 'woocommerce_product_data_panels', array( $this, 'product_data_panels' ) );
-                add_action( 'woocommerce_process_product_meta', array( $this, 'save_product_data' ), 15 );
+		add_filter( 'woocommerce_product_data_tabs', array( $this, 'product_data_tabs' ) );
+		add_action( 'woocommerce_product_data_panels', array( $this, 'product_data_panels' ) );
+		add_action( 'woocommerce_process_product_meta', array( $this, 'save_product_data' ), 15 );
 
-                add_action( 'woocommerce_product_after_variable_attributes', array( $this, 'wt_feed_variable_custom_meta_fields' ), 10, 3 );
-                add_action( 'woocommerce_save_product_variation', array( $this, 'wt_feed_save_variable_metas' ), 10, 1 );
-                // Style the tab icons.
-                add_action( 'admin_enqueue_scripts', array( $this,'wt_feed_tab_styles'), 11 );
-                
-                
-                add_action('wp_ajax_populate_cat_mapping', array($this, 'populate_cat_mapping'), 11);
+		add_action( 'woocommerce_product_after_variable_attributes', array( $this, 'wt_feed_variable_custom_meta_fields' ), 10, 3 );
+		add_action( 'woocommerce_save_product_variation', array( $this, 'wt_feed_save_variable_metas' ), 10, 1 );
+		// Style the tab icons.
+		add_action( 'admin_enqueue_scripts', array( $this,'wt_feed_tab_styles'), 11 );
+		
+		
+		add_action('wp_ajax_populate_cat_mapping', array($this, 'populate_cat_mapping'), 11);
                 
 	}
         
-        public function populate_cat_mapping(){
-            if(Wt_Pf_Sh::check_write_access(WEBTOFFEE_PRODUCT_FEED_ID)){
-                
-                $mathc_case = isset($_POST['term']) ? sanitize_text_field( wp_unslash( $_POST['term']) ) : '';
-                $channel_type = isset($_POST['to_export']) ? sanitize_text_field( wp_unslash( $_POST['to_export']) ) : 'google';                
-                $category_found = self::get_category_array($channel_type, $mathc_case);
-                wp_send_json( $category_found );
-            }
-        }
+	public function populate_cat_mapping(){
+
+		if(Wt_Pf_Sh::check_write_access(WEBTOFFEE_PRODUCT_FEED_ID)){
+			
+			$mathc_case = isset($_POST['term']) ? sanitize_text_field( wp_unslash( $_POST['term']) ) : '';
+			$channel_type = isset($_POST['to_export']) ? sanitize_text_field( wp_unslash( $_POST['to_export']) ) : 'google';                
+			$category_found = self::get_category_array($channel_type, $mathc_case);
+			wp_send_json( $category_found );
+		}
+	}
         
 	/**
          * Read txt file which contains google/facebook taxonomy list

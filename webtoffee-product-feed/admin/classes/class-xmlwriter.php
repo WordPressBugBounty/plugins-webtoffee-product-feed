@@ -297,7 +297,11 @@ if ('product' === $this->to_export) {
             }else
             {
                 if(empty($element_value) || null === $element_value ){
-                    return;
+                    if($element_key === 'VATRate') {
+                        $element_value = '0'; // Ensure zero is written for empty VATRate
+                    } else {
+                        return;
+                    }
                 }
                 //wrap element in CDATA tag if it contain illegal characters
                 if( ( null !== $element_value && !empty($element_value) && false !== strpos($element_value, '<') || false !== strpos($element_value, '>') || apply_filters('wt_iew_xml_node_wrap_cdata', false, $element_value) ) &&  'ratings' !== $element_key )
