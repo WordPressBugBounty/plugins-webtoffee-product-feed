@@ -63,58 +63,51 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Heureka')) {
 
 			add_filter('wt_pf_feed_category_mapping', array($this, 'map_google_category'), 10, 1);
 
-                        add_filter('wt_pf_exporter_steps_basic', array($this, 'fn_wt_pf_exporter_steps_basic'), 10, 2);
-                        
-                        add_filter('wt_feed_product_attributes_dropdown', array($this, 'product_attributes_dropdown'), 10, 3);
-			                        
+			add_filter('wt_pf_exporter_steps_basic', array($this, 'wt_pf_exporter_steps_basic'), 10, 2);
+			
+			add_filter('wt_feed_product_attributes_dropdown', array($this, 'product_attributes_dropdown'), 10, 3);                  
 				
 		}
-
-		
-		
-		
-		
+	
 		public function wt_fbfeed_category_form_fields_pro( $category ) {
 
+			$fb_category_id = '';
+			if ( current_filter() == 'product_cat_edit_form_fields' ) {
+				$fb_category_id = get_term_meta( $category->term_id, 'wt_google_category', true );
+			}
+		?>
 
-	$fb_category_id = '';
-	if ( current_filter() == 'product_cat_edit_form_fields' ) {
-		$fb_category_id = get_term_meta( $category->term_id, 'wt_google_category', true );
-	}
-	?>
+			<tr class="form-field">
+				<th scope="row" valign="top"><label for="wt_google_category">Google Category</label></th>
+				<td>
+								<select name="wt_google_category" class="wc-enhanced-select">
+			<?php echo wt_google_category_dropdown( $fb_category_id ); ?>
+					</select>
 
-		<tr class="form-field">
-			<th scope="row" valign="top"><label for="wt_google_category">Google Category</label></th>
-			<td>
-                            <select name="wt_google_category" class="wc-enhanced-select">
-		<?php echo wt_google_category_dropdown( $fb_category_id ); ?>
-				</select>
+					<p class="description"><?php esc_html_e('The Google Category corresponding to this category in the website.')?>
+					</p>
+				</td>
+			</tr>
+			<input type="hidden" name="wt_category_edit_nonce" value="<?php echo esc_attr( wp_create_nonce( 'wt_category_edit_nonce' ) ); ?>" />
 
-				<p class="description"><?php esc_html_e('The Google Category corresponding to this category in the website.')?>
-				</p>
-			</td>
-		</tr>
-		<input type="hidden" name="wt_category_edit_nonce" value="<?php echo esc_attr( wp_create_nonce( 'wt_category_edit_nonce' ) ); ?>" />
-
-		<?php
-	}
+			<?php
+		}
 	
-	public function wt_fbfeed_category_form_save_pro( $term_id ) {
+		public function wt_fbfeed_category_form_save_pro( $term_id ) {
 
+			if ( isset( $_POST[ 'wt_google_category' ] ) ) {
+				if(! wp_verify_nonce( $_POST['wt_category_edit_nonce'], 'wt_category_edit_nonce' )){
+					return false;
+				}
 
-	if ( isset( $_POST[ 'wt_google_category' ] ) ) {
-		if(! wp_verify_nonce( $_POST['wt_category_edit_nonce'], 'wt_category_edit_nonce' )){
-			return false;
+				$wt_google_category = absint( $_POST[ 'wt_google_category' ] );
+				if(0 == $wt_google_category){
+					delete_term_meta($term_id, 'wt_google_category');
+				}else{
+					update_term_meta( $term_id, 'wt_google_category', $wt_google_category );
+				}
+			}
 		}
-
-		$wt_google_category = absint( $_POST[ 'wt_google_category' ] );
-		if(0 == $wt_google_category){
-			delete_term_meta($term_id, 'wt_google_category');
-		}else{
-			update_term_meta( $term_id, 'wt_google_category', $wt_google_category );
-		}
-	}
-}
 		
 		public function map_google_category($form_data) {
 
@@ -182,7 +175,7 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Heureka')) {
 		 * @param string $base or aka $to_export product, order etc
 		 * @return array $steps 
 		 */
-		public function fn_wt_pf_exporter_steps_basic($steps, $to_export) {
+		public function wt_pf_exporter_steps_basic($steps, $to_export) {
 
 			if ('heureka' === $to_export) {
 				unset($steps['category_mapping']);

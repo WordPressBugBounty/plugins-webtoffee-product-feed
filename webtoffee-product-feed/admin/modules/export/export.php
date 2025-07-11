@@ -40,48 +40,7 @@ class Webtoffee_Product_Feed_Sync_Export
 		$this->module_id=Webtoffee_Product_Feed_Sync::get_module_id($this->module_base);
 		self::$module_id_static=$this->module_id;
 
-		/* allowed file types */
-		$this->allowed_export_file_type=array(
-			'xml'=>__('XML'),			
-			'csv'=>__('CSV'),
-                        'xlsx'=>__('XLSX'),
-                        'tsv'=>__('TSV'),
-                        'txt'=>__('TXT')
-		);
-
-                $feed_page_heading = isset( $_GET['wt_pf_rerun'] ) ? __('Edit feed') : __('Create new feed');
-		/* default step list */
-		$this->steps=array
-		(
-			'post_type'=>array(
-				'title'=> $feed_page_heading,
-				'description'=>__('Fill the basic feed settings to proceed.'),
-			),
-			/*
-			'method_export'=>array(
-				'title'=>__('Select an export method'),
-				'description'=>__('Choose from the options below to continue with your export: quick export from DB, based on a pre-saved template or a new export with advanced options.'),
-			),
-			'filter'=>array(
-				'title'=>__('Filter data'),
-				'description'=>__('Filter data that needs to be exported as per the below criteria.'),
-			), 
-			 * 
-			 */
-			'mapping'=>array(
-				'title'=>__('Attribute mapping'),
-				'description'=>__('Map the attributes of product feed corresponding to woocommerce fields. Required fields are already mapped.'),
-			),
-			'category_mapping'=>array(
-				'title'=>__('Category mapping'),
-				'description'=>__('Map the categories of catalog feed corresponding to merchant.'),
-			),			
-			'advanced'=>array(
-				'title'=>__('Generate feed'),
-				'description'=> '',
-			),
-		);
-
+		add_action( 'init', array( $this, 'wt_product_feed_load_translations_export' ) );
 
 		$this->validation_rule=array(
 			'post_type'=>array(), /* no validation rule. So default sanitization text */
@@ -92,18 +51,11 @@ class Webtoffee_Product_Feed_Sync_Export
 
 		$this->step_need_validation_filter=array('filter', 'advanced');
 
-
-		$this->export_methods=array(
-			'quick'=>array('title'=>__('Quick export'), 'description'=> __('Exports all the basic fields.')),
-			'template'=>array('title'=>__('Pre-saved template'), 'description'=> __('Exports data as per the specifications(filters,selective column,mapping etc) from the previously saved file.')),
-			'new'=>array('title'=>__('Advanced export'), 'description'=> __('Exports data after a detailed process of filtration, column selection and advanced options. The configured settings can be saved as a template for future exports.')),
-		);
-
 		/* advanced plugin settings */
 		add_filter('wt_pf_advanced_setting_fields_basic', array($this, 'advanced_setting_fields'), 11);
 
 		/* setting default values, this method must be below of advanced setting filter */
-		$this->get_defaults();
+		add_action( 'init', array( $this, 'get_defaults' ) );
 
 		/* main ajax hook. The callback function will decide which is to execute. */
 
@@ -131,7 +83,63 @@ class Webtoffee_Product_Feed_Sync_Export
 		add_action('wp_ajax_populate_cat_mapping', array($this, 'populate_cat_mapping'), 11);
                 
 	}
-        
+     
+	/**
+	 * Load translations
+	 */
+	public function wt_product_feed_load_translations_export() {
+
+		/* allowed file types */
+		$this->allowed_export_file_type=array(
+			'xml'=>__('XML', 'webtoffee-product-feed'),			
+			'csv'=>__('CSV', 'webtoffee-product-feed'),
+			'xlsx'=>__('XLSX', 'webtoffee-product-feed'),
+			'tsv'=>__('TSV', 'webtoffee-product-feed'),
+			'txt'=>__('TXT', 'webtoffee-product-feed')
+		);
+
+        $feed_page_heading = isset( $_GET['wt_pf_rerun'] ) ? __('Edit feed', 'webtoffee-product-feed') : __('Create new feed', 'webtoffee-product-feed');
+		
+		/* default step list */
+		$this->steps=array
+		(
+			'post_type'=>array(
+				'title'=> $feed_page_heading,
+				'description'=>__('Fill the basic feed settings to proceed.', 'webtoffee-product-feed'),
+			),
+			/*
+			'method_export'=>array(
+				'title'=>__('Select an export method', 'webtoffee-product-feed'),
+				'description'=>__('Choose from the options below to continue with your export: quick export from DB, based on a pre-saved template or a new export with advanced options.', 'webtoffee-product-feed'),
+			),
+			'filter'=>array(
+				'title'=>__('Filter data', 'webtoffee-product-feed'),
+				'description'=>__('Filter data that needs to be exported as per the below criteria.', 'webtoffee-product-feed'),
+			), 
+			 * 
+			 */
+			'mapping'=>array(
+				'title'=>__('Attribute mapping', 'webtoffee-product-feed'),
+				'description'=>__('Map the attributes of product feed corresponding to woocommerce fields. Required fields are already mapped.', 'webtoffee-product-feed'),
+			),
+			'category_mapping'=>array(
+				'title'=>__('Category mapping', 'webtoffee-product-feed'),
+				'description'=>__('Map the categories of catalog feed corresponding to merchant.', 'webtoffee-product-feed'),
+			),			
+			'advanced'=>array(
+				'title'=>__('Generate feed', 'webtoffee-product-feed'),
+				'description'=> '',
+			),
+		);
+
+		$this->export_methods=array(
+			'quick'=>array('title'=>__('Quick export', 'webtoffee-product-feed'), 'description'=> __('Exports all the basic fields.', 'webtoffee-product-feed')),
+			'template'=>array('title'=>__('Pre-saved template', 'webtoffee-product-feed'), 'description'=> __('Exports data as per the specifications(filters,selective column,mapping etc) from the previously saved file.', 'webtoffee-product-feed')),
+			'new'=>array('title'=>__('Advanced export', 'webtoffee-product-feed'), 'description'=> __('Exports data after a detailed process of filtration, column selection and advanced options. The configured settings can be saved as a template for future exports.', 'webtoffee-product-feed')),
+		);
+
+	}
+
 	public function populate_cat_mapping(){
 
 		if(Wt_Pf_Sh::check_write_access(WEBTOFFEE_PRODUCT_FEED_ID)){
@@ -144,93 +152,90 @@ class Webtoffee_Product_Feed_Sync_Export
 	}
         
 	/**
-         * Read txt file which contains google/facebook taxonomy list
-         *
-         * @return array
-         */
-        public static function get_category_array($channel_type, $match_cat = false) {
-            // Get All Google||FB Taxonomies
+	 * Read txt file which contains google/facebook taxonomy list
+	 *
+	 * @return array
+	 */
+	public static function get_category_array($channel_type, $match_cat = false) {
+		// Get All Google||FB Taxonomies
 
-            if('facebook' === $channel_type){
-                $fileName = WT_PRODUCT_FEED_PLUGIN_PATH . '/admin/modules/facebook/data/fb_taxonomy.txt';
-                $exploder = ',';
-            }elseif('fruugo' === $channel_type){
-                $fileName = WT_PRODUCT_FEED_PLUGIN_PATH . '/admin/modules/fruugo/data/fruugo_taxonomy.txt';
-                $exploder = ','; 
-            }else{
-                $fileName = WT_PRODUCT_FEED_PLUGIN_PATH . '/admin/modules/google/data/google_taxonomy.txt';
-                $exploder = '-';                
-            }
-            $customTaxonomyFile = fopen($fileName, 'r');  // phpcs:ignore
-            $taxonomy = array();
-            $taxonomy[''] = 'Do not map';
-            if ($customTaxonomyFile) {
-                // First line contains metadata, ignore it
-                fgets($customTaxonomyFile);  // phpcs:ignore
-                $indx = 0;
-                while ($line = fgets($customTaxonomyFile)) {  // phpcs:ignore
-                    if('fruugo' !== $channel_type){
-                        list( $catId, $cat ) = explode($exploder, $line);
-                        $cat_key = absint(trim($catId));
-                        $cat_val = trim($cat);
-                        $taxonomy[$cat_key] = $cat_val;
-                    }else{
-                        $line = trim($line);
-			$taxonomy[$indx] = $line;
-                        $indx++;
-                    }
-                }
-            }
-            
-            $result = preg_grep("/$match_cat/i", $taxonomy);
-            return $result;
-        }
+		if('facebook' === $channel_type){
+			$fileName = WT_PRODUCT_FEED_PLUGIN_PATH . '/admin/modules/facebook/data/fb_taxonomy.txt';
+			$exploder = ',';
+		}elseif('fruugo' === $channel_type){
+			$fileName = WT_PRODUCT_FEED_PLUGIN_PATH . '/admin/modules/fruugo/data/fruugo_taxonomy.txt';
+			$exploder = ','; 
+		}else{
+			$fileName = WT_PRODUCT_FEED_PLUGIN_PATH . '/admin/modules/google/data/google_taxonomy.txt';
+			$exploder = '-';                
+		}
+		$customTaxonomyFile = fopen($fileName, 'r');  // phpcs:ignore
+		$taxonomy = array();
+		$taxonomy[''] = 'Do not map';
+		if ($customTaxonomyFile) {
+			// First line contains metadata, ignore it
+			fgets($customTaxonomyFile);  // phpcs:ignore
+			$indx = 0;
+			while ($line = fgets($customTaxonomyFile)) {  // phpcs:ignore
+				if('fruugo' !== $channel_type){
+					list( $catId, $cat ) = explode($exploder, $line);
+					$cat_key = absint(trim($catId));
+					$cat_val = trim($cat);
+					$taxonomy[$cat_key] = $cat_val;
+				}else{
+					$line = trim($line);
+		$taxonomy[$indx] = $line;
+					$indx++;
+				}
+			}
+		}
+		
+		$result = preg_grep("/$match_cat/i", $taxonomy);
+		return $result;
+	}
 
-        public function get_defaults()
-	{	
+	public function get_defaults() {	
+		
 		$this->default_export_method= Webtoffee_Product_Feed_Sync_Common_Helper::get_advanced_settings('default_export_method');
 		$this->default_batch_count=Webtoffee_Product_Feed_Sync_Common_Helper::get_advanced_settings('default_export_batch');
 		$this->use_bom = (bool)Webtoffee_Product_Feed_Sync_Common_Helper::get_advanced_settings('include_bom');
 	}
 
 
-	
 	/**
-	*	Fields for advanced settings
-	*
-	*/
+	 *	Fields for advanced settings
+	 *
+	 */
 	public function advanced_setting_fields($fields)
 	{
 		$export_methods=array_map(function($vl){ return $vl['title']; }, $this->export_methods);
 		
-		
-		
 		$fields['default_export_batch']=array(
-			'label'=>__("Default feed batch count"),
+			'label'=>__("Default feed batch count", 'webtoffee-product-feed'),
 			'type'=>'number',
-                        'value' =>10,
+            'value' =>10,
 			'field_name'=>'default_export_batch',
-			'help_text'=>__('Provide the default count for the records to be generated in a batch.'),
+			'help_text'=>__('Provide the default count for the records to be generated in a batch.', 'webtoffee-product-feed'),
 			'validation_rule'=>array('type'=>'absint'),
 			'attr' => array('min' => 1, 'max' => 200),
 		);
 		$fields['glpi_store_code'] = array(
-				'label'=>__("Google local product inventory store code"),
+				'label'=>__("Google local product inventory store code", 'webtoffee-product-feed'),
 				'type'=>'text',
 				'value'=> '',
 				'placeholder' => 'eg:- DemoStore',
 				'field_name'=>'glpi_store_code',
-				'help_text'=> __('The [store_code] attribute is case-sensitive and must match the store code entered in your Business Profiles.'),
+				'help_text'=> __('The [store_code] attribute is case-sensitive and must match the store code entered in your Business Profiles.', 'webtoffee-product-feed'),
 				'validation_rule'=>array('type'=>'text'),
 			);                
 		$fields['all_shipping_zone']=array(
-			'label'=>__("Add shipping costs of all countries to the feed"),
+			'label'=>__("Add shipping costs of all countries to the feed", 'webtoffee-product-feed'),
 			'type' => 'checkbox',
 			'checkbox_fields' => array( 1 => '' ),
 			'value' => 0,
 			'field_name' => 'all_shipping_zone',
 			'css_class'=> 'wt_pf_checkbox_toggler wt_pf_toggler_blue',
-			'help_text'=>__( 'Enabling this option will add the shipping costs of all zone/countries to the feed.' ),
+			'help_text'=>__( 'Enabling this option will add the shipping costs of all zone/countries to the feed.', 'webtoffee-product-feed' ),
 			'validation_rule'=>array('type'=>'absint'),
 		);                                               
               
@@ -245,8 +250,8 @@ class Webtoffee_Product_Feed_Sync_Export
 		$menu_temp=array(
 			$this->module_base=>array(
 				'menu',
-				__('Create new feed'),
-				__('WebToffee Product Feed'),
+				__('Create new feed', 'webtoffee-product-feed'),
+				__('WebToffee Product Feed', 'webtoffee-product-feed'),
 				apply_filters('wt_import_export_allowed_capability', 'export'),
 				$this->module_id,
 				array($this,'admin_settings_page'),
@@ -256,8 +261,8 @@ class Webtoffee_Product_Feed_Sync_Export
 			$this->module_base.'-sub'=>array(
 				'submenu',
 				$this->module_id,
-				isset( $_GET['wt_pf_rerun'] ) ? __('Edit feed') : __('Create new feed'),
-				__('Create new feed'), 
+				isset( $_GET['wt_pf_rerun'] ) ? __('Edit feed', 'webtoffee-product-feed') : __('Create new feed', 'webtoffee-product-feed'),
+				__('Create new feed', 'webtoffee-product-feed'), 
 				apply_filters('wt_import_export_allowed_capability', 'export'),
 				$this->module_id,
 				array($this, 'admin_settings_page')
@@ -331,21 +336,21 @@ class Webtoffee_Product_Feed_Sync_Export
 	public function get_filter_screen_fields($filter_form_data) {
             $filter_screen_fields = array(
                 'limit' => array(
-                    'label' => __("Limit"),
+                    'label' => __("Limit", 'webtoffee-product-feed'),
                     'value' => '',
                     'type' => 'number',
                     'field_name' => 'limit',
                     'placeholder' => 'Unlimited',
-                    'help_text' => __('The actual number of records you want to export. e.g. A limit of 500 with an offset 10 will export records from 11th to 510th position.'),
+                    'help_text' => __('The actual number of records you want to export. e.g. A limit of 500 with an offset 10 will export records from 11th to 510th position.', 'webtoffee-product-feed'),
                     'attr' => array('step' => 1, 'min' => 0),
                     'validation_rule' => array('type' => 'absint')
                 ),
                 'offset' => array(
-                    'label' => __("Offset"),
+                    'label' => __("Offset", 'webtoffee-product-feed'),
                     'value' => '',
                     'field_name' => 'offset',
                     'placeholder' => __('0'),
-                    'help_text' => __('Specify the number of records that should be skipped from the beginning of the database. e.g. An offset of 10 skips the first 10 records.'),
+                    'help_text' => __('Specify the number of records that should be skipped from the beginning of the database. e.g. An offset of 10 skips the first 10 records.', 'webtoffee-product-feed'),
                     'type' => 'number',
                     'attr' => array('step' => 1, 'min' => 0),
                     'validation_rule' => array('type' => 'absint')
@@ -374,12 +379,12 @@ class Webtoffee_Product_Feed_Sync_Export
 		$advanced_screen_fields=array(
 
 			'batch_count'=>array(
-				'label'=>__("Process in batches of"),
+				'label'=>__("Process in batches of", 'webtoffee-product-feed'),
 				'type'=>'text',
                                 'merge_right'=>true,
 				'value'=>$this->default_batch_count,
 				'field_name'=>'batch_count',
-				'help_text'=>sprintf(__('The number of records that the server will process for every iteration within the configured timeout interval. If the process fails due to timeout you can lower this number accordingly and try again. Defaulted to %d records.'), 10),
+				'help_text'=>sprintf(__('The number of records that the server will process for every iteration within the configured timeout interval. If the process fails due to timeout you can lower this number accordingly and try again. Defaulted to %d records.', 'webtoffee-product-feed'), 10),
 				'validation_rule'=>array('type'=>'absint'),
 			),
 			'file_as'=>array(
@@ -405,7 +410,7 @@ class Webtoffee_Product_Feed_Sync_Export
 					'id'=>'wt_pf_file_as',
 					'val'=>'csv'
 				),				
-				'help_text'=>__( 'Separator for differentiating the columns in the CSV file. Assumes TAB by default.' ),
+				'help_text'=>__( 'Separator for differentiating the columns in the CSV file. Assumes TAB by default.', 'webtoffee-product-feed'),
 				'validation_rule'=>array('type'=>'skip'),
 				'after_form_field'=>'<input type="text" class="wt_pf_custom_delimiter" name="wt_pf_delimiter" value="'.$delimiter_default.'" maxlength = "1" />',
 			)
@@ -462,11 +467,11 @@ class Webtoffee_Product_Feed_Sync_Export
 					if($form_data && is_array($form_data))
 					{
 						$this->to_export=(isset($form_data['post_type_form_data']) && isset($form_data['post_type_form_data']['item_type']) ? $form_data['post_type_form_data']['item_type'] : '');
-                                                $posted_to_export=(isset($_POST['to_export']) ? Wt_Pf_Sh::sanitize_item($_POST['to_export'], 'text') : '');
-                                                if( ($posted_to_export) && $posted_to_export !== $this->to_export){ // If the channel type changes fro rerun, it should reflect on coming steps.
-                                                    $this->to_export = $posted_to_export;
-                                                }						
-                                                if($this->to_export!="")
+						$posted_to_export=(isset($_POST['to_export']) ? Wt_Pf_Sh::sanitize_item($_POST['to_export'], 'text') : '');
+						if( ($posted_to_export) && $posted_to_export !== $this->to_export){ // If the channel type changes fro rerun, it should reflect on coming steps.
+							$this->to_export = $posted_to_export;
+						}						
+						if($this->to_export!="")
 						{
 							$this->export_method=(isset($form_data['method_export_form_data']) && isset($form_data['method_export_form_data']['method_export']) && $form_data['method_export_form_data']['method_export']!="" ?  $form_data['method_export_form_data']['method_export'] : $this->default_export_method);
 							$this->rerun_id=$rerun_id;
@@ -485,7 +490,7 @@ class Webtoffee_Product_Feed_Sync_Export
 
 	protected function enqueue_assets()
 	{
-            if(Webtoffee_Product_Feed_Sync_Common_Helper::wt_is_screen_allowed()){
+        if(Webtoffee_Product_Feed_Sync_Common_Helper::wt_is_screen_allowed()){
 		wp_enqueue_script($this->module_id, plugin_dir_url(__FILE__).'assets/js/main.js', array('jquery', 'jquery-ui-sortable', 'jquery-ui-datepicker'), WEBTOFFEE_PRODUCT_FEED_SYNC_VERSION);
 		wp_enqueue_style('jquery-ui-datepicker');
 		wp_enqueue_style(WEBTOFFEE_PRODUCT_FEED_ID.'-jquery-ui', WT_PRODUCT_FEED_PLUGIN_URL.'admin/css/jquery-ui.css', array(), WEBTOFFEE_PRODUCT_FEED_SYNC_VERSION, 'all');

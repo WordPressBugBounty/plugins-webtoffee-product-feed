@@ -57,11 +57,11 @@ if (!class_exists('Webtoffee_Product_Feed_Google_Product_Reviews')) {
 
 			add_filter('wt_pf_exporter_do_export_basic', array($this, 'exporter_do_export'), 10, 7);
 
-			add_filter('wt_pf_exporter_steps_basic', array($this, 'fn_wt_pf_exporter_steps_basic'), 10, 2);
+			add_filter('wt_pf_exporter_steps_basic', array($this, 'wt_pf_exporter_steps_basic'), 10, 2);
 			
 			add_filter('wt_pf_exporter_alter_advanced_fields_basic', array($this, 'wt_exporter_set_delimeter_default'), 10, 3);
                         
-                        add_filter('wt_feed_product_attributes_dropdown', array($this, 'product_attributes_dropdown'), 10, 3);
+            add_filter('wt_feed_product_attributes_dropdown', array($this, 'product_attributes_dropdown'), 10, 3);
 			
 			
 		}
@@ -83,7 +83,7 @@ if (!class_exists('Webtoffee_Product_Feed_Google_Product_Reviews')) {
 		 * @param string $base or aka $to_export product, order etc
 		 * @return array $steps 
 		 */
-		public function fn_wt_pf_exporter_steps_basic($steps, $to_export) {
+		public function wt_pf_exporter_steps_basic($steps, $to_export) {
 
 			if ('google_product_reviews' === $to_export) {
 				unset($steps['category_mapping']);

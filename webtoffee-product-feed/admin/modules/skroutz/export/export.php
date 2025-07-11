@@ -583,9 +583,12 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Skroutz_Export')) {
         /**
          * Get product type.
          *
+         * @param array $catalog_attr Catalog attributes.
+         * @param array $product_attr Product attributes.
+         * @param array $export_columns Export columns.
          * @return mixed|void
          */
-        public function product_type() {
+        public function product_type($catalog_attr, $product_attr, $export_columns) {
             $id = $this->product->get_id();
             if ($this->product->is_type('variation')) {
                 $id = $this->product->get_parent_id();

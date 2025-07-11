@@ -49,7 +49,14 @@ class Webtoffee_Product_Feed_Sync_Review_Request
         register_activation_hook(WT_PRODUCT_FEED_PLUGIN_FILENAME, array($this, 'on_activate'));
         register_deactivation_hook(WT_PRODUCT_FEED_PLUGIN_FILENAME, array($this, 'on_deactivate'));
 
+        add_action( 'init', array( $this, 'wt_product_feed_init_review_request' ) );
 
+    }
+
+    /**
+	 * Initialize translations and hooks for review request functionality
+     */
+    public function wt_product_feed_init_review_request() {
         if ($this->check_condition()) /* checks the banner is active now */ {
             $this->banner_message = sprintf(esc_html__("Hey, we at %sWebToffee%s would like to thank you for using our plugin. We would really appreciate if you could take a moment to drop a quick review that will inspire us to keep going.", 'webtoffee-product-feed'), '<b>', '</b>');
 
@@ -62,7 +69,7 @@ class Webtoffee_Product_Feed_Sync_Review_Request
             add_action('admin_notices', array($this, 'show_banner')); /* show banner */
             add_action('admin_print_footer_scripts', array($this, 'add_banner_scripts')); /* add banner scripts */
             add_action('wp_ajax_' . $this->ajax_action_name, array($this, 'process_user_action')); /* process banner user action */
-        }
+        }        
     }
 
     /**

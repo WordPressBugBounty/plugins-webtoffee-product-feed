@@ -142,7 +142,7 @@ class Webtoffee_Product_Feed_Sync_Admin {
 				'success'=>__('Success.', 'webtoffee-product-feed'),
 				'loading'=>__('Loading...', 'webtoffee-product-feed'),
 				'process' => __('Processing Sync...', 'webtoffee-product-feed'),
-                                'sync_completed_success' => __('All the products have been synced successfully.', 'webtoffee-product-feed'),
+                'sync_completed_success' => __('All the products have been synced successfully.', 'webtoffee-product-feed'),
 
 			)
 		);

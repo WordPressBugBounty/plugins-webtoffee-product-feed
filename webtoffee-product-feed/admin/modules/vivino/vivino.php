@@ -55,7 +55,7 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Vivino')) {
 
             add_filter('wt_feed_product_attributes_dropdown', array($this, 'product_attributes_dropdown'), 10, 3);
 
-            add_filter('wt_pf_exporter_steps_basic', array($this, 'fn_wt_pf_exporter_steps_basic'), 10, 2);
+            add_filter('wt_pf_exporter_steps_basic', array($this, 'wt_pf_exporter_steps_basic'), 10, 2);
         }
 
         public function exporter_do_export($export_data, $base, $step, $form_data, $selected_template_data, $method_export, $batch_offset) {
@@ -93,7 +93,7 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Vivino')) {
          * @param string $base or aka $to_export product, order etc
          * @return array $steps 
          */
-        public function fn_wt_pf_exporter_steps_basic($steps, $to_export) {
+        public function wt_pf_exporter_steps_basic($steps, $to_export) {
 
             if ('vivino' === $to_export) {
                 unset($steps['category_mapping']);

@@ -30,18 +30,8 @@ class Webtoffee_Product_Feed_Sync_History
 			'finished'=>1, //completed
 			'failed'=>2, //failed
 		);
-		
-		self::$status_label_arr=array(
-			0=>__('Running/Incomplete'),
-			1=>__('Finished'),
-			2=>__('Failed'),
-		);
 
-		self::$action_label_arr=array(
-			'export'=>__('Export'),
-			'import'=>__('Import'),
-			'export_image'=>__('Image Export'),
-		);
+		add_action( 'init', array( $this, 'wt_product_feed_load_translations_history' ) );
 
 		/* Admin menu for hostory listing */
 		add_filter('wt_pf_admin_menu_basic', array($this, 'add_admin_pages'), 10, 1);
@@ -61,15 +51,31 @@ class Webtoffee_Product_Feed_Sync_History
 	}
 
 	/**
-	* Adding admin menus
-	*/
+	 * Load translations.
+	 */
+	public function wt_product_feed_load_translations_history() {
+		self::$status_label_arr=array(
+			0=>__('Running/Incomplete', 'webtoffee-product-feed'),
+			1=>__('Finished', 'webtoffee-product-feed'),
+			2=>__('Failed', 'webtoffee-product-feed'),
+		);
+
+		self::$action_label_arr=array(
+			'export'=>__('Export', 'webtoffee-product-feed'),
+			'import'=>__('Import', 'webtoffee-product-feed'),
+			'export_image'=>__('Image Export', 'webtoffee-product-feed'),
+		);
+	}
+	/**
+	 * Adding admin menus
+	 */
 	public function add_admin_pages($menus)
 	{
 		$menus[$this->module_base]=array(
 			'submenu',
 			WEBTOFFEE_PRODUCT_FEED_ID,
-			__('Manage Feeds'),
-			__('Manage Feeds'),
+			__('Manage Feeds', 'webtoffee-product-feed'),
+			__('Manage Feeds', 'webtoffee-product-feed'),
 			apply_filters('wt_import_export_allowed_capability', 'import'),
 			$this->module_id,
 			array($this, 'admin_settings_page')
@@ -220,25 +226,25 @@ class Webtoffee_Product_Feed_Sync_History
 
 
 		/**
-		*	Filter by form fields
-		*/ 
+		 *	Filter by form fields
+		 */ 
 		$filter_by=array(
 			'item_type'=>array(
-				'label'=>__('Post type'),
+				'label'=>__('Post type', 'webtoffee-product-feed'),
 				'values'=>$post_type_arr,
 				'val_labels'=>$post_type_label_arr,
 				'val_type'=>'%s',
 				'selected_val'=>'',
 			),
 			'template_type'=>array(
-				'label'=>__('Action type'),
+				'label'=>__('Action type', 'webtoffee-product-feed'),
 				'values'=>$action_type_arr,
 				'val_labels'=>self::$action_label_arr,
 				'val_type'=>'%s',
 				'selected_val'=>'',
 			),
 			'status'=>array(
-				'label'=>__('Status'),
+				'label'=>__('Status', 'webtoffee-product-feed'),
 				'values'=>$status_arr,
 				'val_labels'=>self::$status_label_arr,
 				'validation_rule'=>array('type'=>'absint'),
@@ -258,8 +264,8 @@ class Webtoffee_Product_Feed_Sync_History
 		*	Order by field vals
 		*/
 		$order_by=array(
-			'date_desc'=>array('label'=>__('Date descending'), 'sql'=>'created_at DESC'),
-			'date_asc'=>array('label'=>__('Date ascending'), 'sql'=>'created_at ASC'),
+			'date_desc'=>array('label'=>__('Date descending', 'webtoffee-product-feed'), 'sql'=>'created_at DESC'),
+			'date_asc'=>array('label'=>__('Date ascending', 'webtoffee-product-feed'), 'sql'=>'created_at ASC'),
 		);
 
 		/* just applying a text validation */
@@ -387,9 +393,9 @@ class Webtoffee_Product_Feed_Sync_History
 		$params=array(
 			'delete_url'=>$delete_url,
 			'msgs'=>array(
-				'sure'=>__('Are you sure?'),
+				'sure'=>__('Are you sure?', 'webtoffee-product-feed'),
 			),
-			'copied_msg' => __('URL copied to clipboard')
+			'copied_msg' => __('URL copied to clipboard', 'webtoffee-product-feed')
 		);
 		wp_localize_script($this->module_id, 'wt_pf_history_basic_params', $params);
             }
