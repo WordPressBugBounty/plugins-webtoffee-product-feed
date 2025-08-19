@@ -22,6 +22,7 @@ class Webtoffee_Product_Feed_Sync_Basic_Excelwriter
 	public $csv_delimiter='';
 	public $use_bom=false;
 	public $spreadsheet;
+	public $export_data;
 	public function __construct($file_path, $offset, $csv_delimiter=",", $use_bom=false)
 	{
 		$this->csv_delimiter=$csv_delimiter;

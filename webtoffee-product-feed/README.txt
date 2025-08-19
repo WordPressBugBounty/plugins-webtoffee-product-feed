@@ -1,10 +1,10 @@
-=== WooCommerce Product Feed Manager - Google Shopping, Pinterest Feed, TikTok Ads, & More ===
+=== WooCommerce Product Feeds - Google Shopping, Pinterest, TikTok Ads, & More ===
 Contributors: webtoffee
 Donate link: https://www.webtoffee.com/product/woocommerce-product-feed/
 Tags: woocommerce product feed, google shopping, google merchant center, facebook catalog, instagram feed
 Requires at least: 4.0
 Tested up to: 6.8.1
-Stable tag: 2.3.0
+Stable tag: 2.3.1
 Requires PHP: 5.6
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -13,7 +13,7 @@ Create WooCommerce product feeds containing unlimited number of products. Suppor
 
 == Description ==
 
-**Top-rated WooCommerce product feed plugin to generate WooCommerce product feeds for leading eCommerce channels.**
+**Top-rated WooCommerce product feed plugin to generate accurate and high-performing WooCommerce product feeds for popular marketplaces.**
 
 Promote and get more eyeballs on your WooCommerce products on Google Merchant Center, Facebook, Instagram, TikTok Ads, Pinterest, Snapchat, Bing, Idealo, Pricespy, Skroutz, Shopzilla, and more.
 
@@ -28,7 +28,7 @@ With the Facebook product catalog sync option, you will be able to automatically
 For Google Shopping, this WooCommerce Google shopping feed plugin lets you connect your WooCommerce store with the Merchant Center using WooCommerce Google Product feeds. This way you can make your WooCommerce products more visible to millions of users, which attracts potential buyers, increase sales, drive conversions and traffic to your store. 
 
 
-== Product Feed for WooCommerce - Google Shopping Product Feed, Pinterest Feed, TikTok Ads & More (Basic) ==
+== Product Feed for WooCommerce - WooCommerce Google Shopping Product Feed, Pinterest Feed, TikTok Ads & More (Basic) ==
 
 == Key Features of Product Feed WooCommerce Plugin ==
 
@@ -40,9 +40,9 @@ For Google Shopping, this WooCommerce Google shopping feed plugin lets you conne
 
 &#128312; **Easy Setup** - Easily connect your WooCommerce store to Google Shopping, Facebook, and Instagram, TikTok, Snapchat, Bing and more using its simple interface. <strong> Takes only a few minutes to <a rel="nofollow" href="https://www.webtoffee.com/webtoffee-product-feed-sync-setup-guide/"> set up. </a> </strong>
 
-&#128312; **Facebook Sync** - Sync your WooCommerce products with your Facebook Catalog by connecting your store to Facebook Business Catalog Manager to boost visibility and reach. With the help of our WooCommerce Facebook product feed plugin, you can easily set up a Facebook Shop catalog and generate a Facebook catalog feed to showcase your products seamlessly. Use dynamic ads to engage potential customers and drive more sales with automatic, regular updates.
+&#128312; **Facebook Sync** - Sync your WooCommerce products with your Facebook shop catalog by connecting your store to Facebook Business Catalog Manager to boost visibility and reach. With the help of our WooCommerce Facebook product feed plugin, you can easily set up a Facebook product catalog and generate a WooCommerce Facebook product feed catalog to showcase your products seamlessly. Use dynamic ads to engage potential customers and drive more sales with automatic, regular updates.
 
-&#128312; **Connect with Google Shopping** - Effortlessly connect your WooCommerce store to Google Merchant Center using the WooCommerce Google feed manager plugin. Promote your products across Google Shopping, Local Inventory Ads, Merchant Promotions, and Buy on Google. With an easy-to-manage Google product feeds setup, you can enhance product visibility, reach a wider audience, and drive more sales.
+&#128312; **Connect with Google Shopping** - Effortlessly connect your WooCommerce store to Google Merchant Center using the Google product feed for WooCommerce plugin. Promote your products across Google Shopping, Local Inventory Ads, Merchant Promotions, and Buy on Google. With an easy-to-manage Google shopping product feed setup, you can enhance product visibility, reach a wider audience, and drive more sales.
 
 &#128312; **Add Static Values to WooCommerce Feed** - Add static values to your product feeds for better customization. Set fixed attributes like brand, condition, or availability without manual updates. Ensure accurate and consistent product data across all sales channels.
 
@@ -58,13 +58,13 @@ For Google Shopping, this WooCommerce Google shopping feed plugin lets you conne
 
 &#128312; **Product Feed Refresh Status** - Keep track of the real-time status of your product feed updates, ensuring that your product listings always reflect the latest changes. Know when your product feeds was last updated and check whether they are running as scheduled.
 
-&#9989; Tested OK with WooCommerce 9.9.5
+&#9989; Tested OK with WooCommerce 10.1.0
 
 == Why Choose WooCommerce Product Feed Plugin? ==
 
 Our WooCommerce Product Feed Plugin is built to make your life easier! No technical skills? No problem. With just a few clicks, you can generate a product feed that works perfectly for Google Shopping, Facebook, and other marketplaces/sales channels.
 
-We keep things simple – no confusing settings, just an intuitive interface that gets the job done fast. Plus, we offer full support and regular updates to ensure everything runs smoothly. If you want a hassle-free way to get your products in front of more customers, this is the plugin for you!
+We keep things simple – no confusing settings, just an intuitive interface that gets the job done fast. Plus, we offer full support and regular updates to ensure everything runs smoothly. If you want a hassle-free way to get your products in front of more customers, this is the product feed plugin for you!
 
 **Hear It From Our Users**
 
@@ -81,13 +81,13 @@ We keep things simple – no confusing settings, just an intuitive interface tha
 == WOOCOMMERCE PRODUCT FEED PLUGIN (Pro) ==
 The premium version of the Product Feed for WooCommerce plugin gives you advanced features and filtering options. Plus, it offers support for additional sales channels to expand your reach. 
 
-= Premium Version Features =
+= Product Feed for WooCommerce - Premium Version Features =
 
 🟢 **Dynamic Price & Product Feed Update** </li>
 
-Keep your product feed accurate and up to date without any extra effort! Whenever you change prices, stock levels, or product details in your WooCommerce store, the product data feed updates automatically. This means your listings on Google Shopping, Facebook catalog, and other platforms always show the latest information—no need for manual updates.
+Keep your product feed accurate and up to date without any extra effort! Whenever you change prices, stock levels, or product details in your WooCommerce store, the product data feeds updates automatically. This means your listings on Google Shopping, Facebook catalog, and other platforms always show the latest information—no need for manual updates.
 
-With real-time syncing, you reduce errors, avoid discrepancies, and ensure customers see the correct prices and product details every time. Just set it up once, and let the plugin do the work for you!
+With real-time syncing, you reduce errors, avoid discrepancies, and ensure customers see the correct prices and product details every time. Just set it up once, and let the WooCommerce product feed plugin do the work for you!
 
 🟢 **Advanced Product Filtering Options for Generating Product Data Feeds** </li>
 
@@ -142,7 +142,7 @@ This means you can showcase branded products more effectively across different m
 
 Easily manage WooCommerce product feeds for multi-vendor stores! Our WooCommerce Product Feed Plugin is fully compatible with the Dokan Multivendor and WC Vendors plugins, allowing you to generate product feeds that include products from single or multiple vendors.
 
-This flexibility ensures that you can customize your product data feeds based on specific vendor selections, making it easier to manage large marketplaces with multiple sellers. Whether you want to create vendor-specific product feeds or a complete store-wide feed, our plugin makes it simple and efficient!
+This flexibility ensures that you can customize your product data feeds based on specific vendor selections, making it easier to manage large marketplaces with multiple sellers. Whether you want to create vendor-specific product feeds or complete store-wide shopping feeds, our WooCommerce product feed manager plugin makes it simple and efficient!
 
 <a rel="nofollow" href="https://www.wcvendors.com/">WC Vendors</a>
 <a rel="nofollow" href="https://dokan.co/wordpress/">Dokan</a>
@@ -316,6 +316,10 @@ function wt_modify_product_description_mode( $mode ) {
 
 
 == Changelog ==
+
+= 2.3.1  2025-08-19 =
+*[Fix] - Issue with Stock status and Quantity value for backorders in Fruugo Feed
+*[Compatibility] - Tested OK with WooCommerce 10.1.0
 
 = 2.3.0  2025-07-10 =
 *[Fix] - Revised fix for load_textdomain_just_in_time affecting plugin translations
@@ -584,7 +588,6 @@ function wt_modify_product_description_mode( $mode ) {
 
 == Upgrade Notice ==
 
-= 2.3.0 =
-*[Fix] - Revised fix for load_textdomain_just_in_time affecting plugin translations
-*[Compatibility] - Tested OK with WordPress 6.8.1
-*[Compatibility] - Tested OK with WooCommerce 9.9.5
+= 2.3.1 =
+*[Fix] - Issue with Stock status and Quantity value for backorders in Fruugo Feed
+*[Compatibility] - Tested OK with WooCommerce 10.1.0

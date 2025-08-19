@@ -16,6 +16,9 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Fruugo_Export')) {
         public $fruugo_feed_keys = array();
         public $fruugo_xml_skipfeed_keys = array();
         public $max_variation_count = 0;
+        public $export_children_sku;
+        public $export_shortcodes;
+        public $export_images_zip;
 
         public function __construct($parent_object) {
 
@@ -1600,10 +1603,8 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Fruugo_Export')) {
             $status = $this->product->get_stock_status();
             if ('instock' === $status) {
                 $status = 'INSTOCK';
-            } elseif ('outofstock' === $status) {
+            }elseif ( 'onbackorder' === $status || 'outofstock' === $status ) {
                 $status = 'OUTOFSTOCK';
-            } elseif ('onbackorder' === $status) {
-                $status = 'INSTOCK';
             } elseif ('preorder' === $status) {
                 $status = 'INSTOCK';
             }else{
@@ -1638,10 +1639,10 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Fruugo_Export')) {
             $quantity = $this->product->get_stock_quantity();
             $status = $this->product->get_stock_status();
 
-            //when product is outofstock , and it's quantity is empty, set quantity to 0
-            if ('outofstock' === $status && $quantity === null) {
+            //when product is outofstock or onbackorder , and it's quantity is empty, set quantity to 0
+            if ( in_array( $status, [ 'outofstock', 'onbackorder' ], true ) && ( 0 === $quantity || null === $quantity ) ) {
                 $quantity = 0;
-            }
+            }        
 
             if ($this->product->is_type('variable') && $this->product->has_child()) {
                 $visible_children = $this->product->get_visible_children();
@@ -1654,7 +1655,8 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Fruugo_Export')) {
                 $quantity = array_sum($qty);
             }
 
-            if ( 'outofstock' !== $status && ( 0 === $quantity || null === $quantity ) ) {
+            // For all other products (not outofstock/backorder) with 0 or null quantity, set fallback to 1
+            if ( ! in_array( $status, [ 'outofstock', 'onbackorder' ], true ) && ( 0 === $quantity || null === $quantity ) ) {
                 $quantity = 1;
             }
 

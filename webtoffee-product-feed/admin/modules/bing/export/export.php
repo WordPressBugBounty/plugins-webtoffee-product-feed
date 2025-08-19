@@ -13,7 +13,10 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Bing_Export')) {
         public $current_product_id;
         public $form_data;
         public $bing_feed_keys = array();
-
+        public $export_children_sku;
+        public $export_shortcodes;
+        public $export_images_zip;
+        
         public function __construct($parent_object) {
 
             $this->parent_module = $parent_object;

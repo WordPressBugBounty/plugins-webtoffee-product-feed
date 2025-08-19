@@ -12,6 +12,9 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Snapchat_Export')) {
         public $product;
         public $current_product_id;
         public $form_data;
+        public $export_children_sku;
+        public $export_shortcodes;
+        public $export_images_zip;
 
         public function __construct($parent_object) {
 

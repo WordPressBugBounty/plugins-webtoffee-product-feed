@@ -22,6 +22,12 @@ if ( !class_exists( 'WT_Facebook_Catalog_Product' ) ) :
 			'variable',
 			'variation'
 		);
+		
+		/**
+		 * Description type for Facebook catalog (short, long, etc.)
+		 * @var string
+		 */
+		public $sync_description_type;
 
 		public function __construct() {
 

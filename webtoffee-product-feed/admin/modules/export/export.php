@@ -707,9 +707,12 @@ class Webtoffee_Product_Feed_Sync_Export
 			$csv_delimiter=($csv_delimiter=="" ? ',' : $csv_delimiter);
 		}		
 		$file_as=(isset($this->allowed_export_file_type[$file_as]) ? $file_as : 'csv');
-
 		
-		$generated_file_name= sanitize_file_name($form_data['post_type_form_data']['item_filename'].'.'.$file_as);
+		$filename = isset($form_data['post_type_form_data']['item_filename']) 
+		? $form_data['post_type_form_data']['item_filename'] 
+		: 'export';
+	
+		$generated_file_name = sanitize_file_name($filename . '.' . $file_as);
 
 		if($export_id==0) //first batch then create a history entry
 		{

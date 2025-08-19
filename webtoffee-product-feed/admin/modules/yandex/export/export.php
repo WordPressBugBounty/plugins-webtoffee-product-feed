@@ -238,8 +238,8 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Yandex_Export')) {
                                 $variation = wc_get_product($id);  
                                 $this->parent_product = $product;
                                 $this->product = $variation;
-                                                                    $this->current_product_id = $variation->get_id();
                                 if(is_object($variation)){
+                                    $this->current_product_id = $variation->get_id();
                                     $product_array[] = $this->generate_row_data_wc_lower($variation);
                                 }
 

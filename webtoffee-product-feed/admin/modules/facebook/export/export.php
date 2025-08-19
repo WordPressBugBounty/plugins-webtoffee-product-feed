@@ -207,8 +207,8 @@ class Webtoffee_Product_Feed_Sync_Facebook_Export extends Webtoffee_Product_Feed
                                 $variation = wc_get_product($id);  
                                 $this->parent_product = $product;
                                 $this->product = $variation;
-                                                                    $this->current_product_id = $variation->get_id();
                                 if(is_object($variation)){
+                                    $this->current_product_id = $variation->get_id();
                                     $product_array[] = $this->generate_row_data_wc_lower($variation);
                                 }
 

@@ -42,8 +42,6 @@ class Webtoffee_Product_Feed_Sync_Admin {
 	 * @var      string    $version    The current version of this plugin.
 	 */
 	private $version;
-
-	
 		
 	public static $modules=array(	
 		'history',
@@ -63,6 +61,12 @@ class Webtoffee_Product_Feed_Sync_Admin {
 
 	/** @var array the page handles that with the plugin views */
 	public $wt_pages = array( 'woocommerce_page_webtoffee-product-feed', 'webtoffee-product-feed_page_webtoffee-product-feed' );
+	
+	/**
+	 * Logger instance
+	 * @var WC_Logger
+	 */
+	private $log;
 
 	/**
 	 * Initialize the class and set its properties.
@@ -1212,13 +1216,13 @@ class Webtoffee_Product_Feed_Sync_Admin {
 	public function wt_log_data_change( $content = 'wt-feed-upload', $data = '' ) {
 
 
-		if ( WC()->version < '2.7.0' ) {
+		if ( version_compare( WC()->version, '2.7.0', '<' ) ) {
 			$this->log = new WC_Logger();
 		} else {
 			$this->log = wc_get_logger();
 		}
 
-		if ( WC()->version < '2.7.0' ) {
+		if ( version_compare( WC()->version, '2.7.0', '<' ) ) {
 			$this->log->add( $content, $data );
 		} else {
 			$context = array( 'source' => $content );

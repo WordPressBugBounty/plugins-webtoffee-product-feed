@@ -402,8 +402,9 @@ class Webtoffee_Product_Feed_Sync_Common_Helper
         
 	public static function get_global_attributes() {
 
-                $global_attribute_dropdown = wp_cache_get( 'wt_feed_dropdown_product_global_attr_v4' );
+        $global_attribute_dropdown = wp_cache_get( 'wt_feed_dropdown_product_global_attr_v4' );
 		if ( false === $global_attribute_dropdown ) {
+			$global_attribute_dropdown = array();
 			// Load the main attributes
 			$global_attributes = wc_get_attribute_taxonomy_labels();
 			if ( count( $global_attributes ) ) {
@@ -411,7 +412,7 @@ class Webtoffee_Product_Feed_Sync_Common_Helper
 					$global_attribute_dropdown['wt_pf_pa_' . $key ] = $value;
 				}
 			}
-			wp_cache_set( 'wt_feed_dropdown_product_global_attr_v1', $global_attribute_dropdown, '', WEEK_IN_SECONDS );
+			wp_cache_set( 'wt_feed_dropdown_product_global_attr_v4', $global_attribute_dropdown, '', WEEK_IN_SECONDS );
 		}
                 return apply_filters( 'wt_feed_product_global_attributes_fields', $global_attribute_dropdown );
 	}        
