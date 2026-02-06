@@ -24,8 +24,8 @@ if ( ! function_exists( 'wt_fb_feed_render_categories' ) ) {
      */
     function wt_fb_feed_render_categories( $parent = 0, $par = '', $value = '' ) {
         
-        $category_query =   isset($_POST['cat_filter_type']) ? Wt_Pf_Sh::sanitize_item($_POST['cat_filter_type'], 'text') : '';
-        $query_categories = isset($_POST['inc_exc_cat']) ? Wt_Pf_Sh::sanitize_item($_POST['inc_exc_cat'], 'text_arr') : array();
+        $category_query =   isset($_POST['cat_filter_type']) ? Wt_Pf_Sh::sanitize_item(wp_unslash($_POST['cat_filter_type']), 'text') : ''; //phpcs:ignore
+        $query_categories = isset($_POST['inc_exc_cat']) ? Wt_Pf_Sh::sanitize_item(wp_unslash($_POST['inc_exc_cat']), 'text_arr') : array(); //phpcs:ignore
 
         $ids_to_include_or_exclude = array();
         $get_terms_to_include_or_exclude =  get_terms(
@@ -40,6 +40,7 @@ if ( ! function_exists( 'wt_fb_feed_render_categories' ) ) {
             $ids_to_include_or_exclude = $get_terms_to_include_or_exclude; 
         }
         
+        // Get all categories first, then filter out those with meta
         $category_args = [
 			'taxonomy'		 => 'product_cat',
 			'parent'		 => $parent,
@@ -49,23 +50,36 @@ if ( ! function_exists( 'wt_fb_feed_render_categories' ) ) {
 			'hierarchical'	 => 1,
 			'title_li'		 => '',
 			'hide_empty'	 => 1,
-			'meta_query'	 => [
-				[
-					'key'		 => 'wt_fb_category',
-					'compare'	 => 'NOT EXISTS',
-				]
-			]
+			'fields'         => 'all', // Get all fields for filtering
 		];
         
         if( !empty( $ids_to_include_or_exclude ) ){
             if( 'exclude_cat' ===  $category_query ){
-                $category_args['exclude'] = $ids_to_include_or_exclude;
+                // Use include with all IDs except excluded ones for better performance
+                $all_cat_ids = get_terms(array(
+                    'taxonomy' => 'product_cat',
+                    'fields' => 'ids',
+                    'hide_empty' => 1,
+                ));
+                $category_args['include'] = array_diff($all_cat_ids, $ids_to_include_or_exclude);
             }else{
                 $category_args['include'] = $ids_to_include_or_exclude;
             }
         }
         
         $categories   = get_categories( $category_args );
+        
+        // Filter out categories that already have the meta key (more efficient than meta_query)
+        if ( ! empty( $categories ) ) {
+            $filtered_categories = array();
+            foreach ( $categories as $cat ) {
+                $meta_value = get_term_meta( $cat->term_id, 'wt_fb_category', true );
+                if ( empty( $meta_value ) ) {
+                    $filtered_categories[] = $cat;
+                }
+            }
+            $categories = $filtered_categories;
+        }
 
         if ( ! empty( $categories ) ) {
             if ( ! empty( $par ) ) {
@@ -128,7 +142,7 @@ $value           = array();
 ?>
 <div class="wt-wrap">	
 	<h4><?php esc_html_e( 'Map WooCommerce categories with Facebook categories.', 'webtoffee-product-feed' ); ?></h4>
-	<span><?php esc_html_e( 'Facebook has a'); ?> <a target="_blank" href="https://www.facebook.com/products/categories/en_US.txt"><?php esc_html_e( 'pre-defined set of categories.'); ?></a> <?php esc_html_e( 'Mapping your store categories with the Facebook categories will give more visibility to your products in Facebook shops and dynamic ads. To edit the mapping go to the respective'); ?> <a target="_blank" href="<?php echo esc_url( admin_url('edit-tags.php?taxonomy=product_cat&post_type=product') ); ?>"><?php esc_html_e( 'categories page.'); ?></a></span>	
+	<span><?php esc_html_e( 'Facebook has a', 'webtoffee-product-feed'); ?> <a target="_blank" href="https://www.facebook.com/products/categories/en_US.txt"><?php esc_html_e( 'pre-defined set of categories.', 'webtoffee-product-feed'); ?></a> <?php esc_html_e( 'Mapping your store categories with the Facebook categories will give more visibility to your products in Facebook shops and dynamic ads. To edit the mapping go to the respective', 'webtoffee-product-feed'); ?> <a target="_blank" href="<?php echo esc_url( admin_url('edit-tags.php?taxonomy=product_cat&post_type=product') ); ?>"><?php esc_html_e( 'categories page.', 'webtoffee-product-feed'); ?></a></span>	
 	<form action="" name="feed" id="category-mapping-form" class="category-mapping-form" method="post" autocomplete="off">
 		<?php wp_nonce_field( 'wt-category-mapping' ); ?>
 		<br/>

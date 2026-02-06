@@ -18,7 +18,7 @@ $value           = array();
 	<h2><?php esc_html_e( 'Category Mapping', 'webtoffee-product-feed' ); ?></h2>
 	
 	<h4><?php esc_html_e( 'Map WooCommerce categories with Facebook categories.', 'webtoffee-product-feed' ); ?></h4>
-	<span><?php esc_html_e( 'Facebook has a'); ?> <a target="_blank" href="https://www.facebook.com/products/categories/en_US.txt"><?php esc_html_e( 'pre-defined set of categories.'); ?></a> <?php esc_html_e( 'Mapping your store categories with the Facebook categories will give more visibility to your products in Facebook shops and dynamic ads. To edit the mapping go to the respective'); ?> <a target="_blank" href="<?php echo esc_url( admin_url('edit-tags.php?taxonomy=product_cat&post_type=product') ); ?>"><?php esc_html_e( 'categories page.'); ?></a></span>
+	<span><?php esc_html_e( 'Facebook has a', 'webtoffee-product-feed'); ?> <a target="_blank" href="https://www.facebook.com/products/categories/en_US.txt"><?php esc_html_e( 'pre-defined set of categories.', 'webtoffee-product-feed'); ?></a> <?php esc_html_e( 'Mapping your store categories with the Facebook categories will give more visibility to your products in Facebook shops and dynamic ads. To edit the mapping go to the respective', 'webtoffee-product-feed'); ?> <a target="_blank" href="<?php echo esc_url( admin_url('edit-tags.php?taxonomy=product_cat&post_type=product') ); ?>"><?php esc_html_e( 'categories page.', 'webtoffee-product-feed'); ?></a></span>
 	
 	<form action="" name="feed" id="category-mapping-form" class="category-mapping-form" method="post" autocomplete="off">
 		<?php wp_nonce_field( 'wt-category-mapping' ); ?>

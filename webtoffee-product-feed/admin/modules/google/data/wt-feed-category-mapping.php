@@ -23,8 +23,8 @@ if ( ! function_exists( 'wt_google_feed_render_categories' ) ) {
      */
     function wt_google_feed_render_categories( $parent = 0, $par = '', $value = '' ) {
         
-        $category_query =   isset($_POST['cat_filter_type']) ? Wt_Pf_Sh::sanitize_item($_POST['cat_filter_type'], 'text') : '';
-        $query_categories = isset($_POST['inc_exc_cat']) ? Wt_Pf_Sh::sanitize_item($_POST['inc_exc_cat'], 'text_arr') : array();
+        $category_query =   isset($_POST['cat_filter_type']) ? Wt_Pf_Sh::sanitize_item(wp_unslash($_POST['cat_filter_type']), 'text') : ''; //phpcs:ignore
+        $query_categories = isset($_POST['inc_exc_cat']) ? Wt_Pf_Sh::sanitize_item(wp_unslash($_POST['inc_exc_cat']), 'text_arr') : array(); //phpcs:ignore
 
         $ids_to_include_or_exclude = array();
         $get_terms_to_include_or_exclude =  get_terms(
@@ -48,7 +48,7 @@ if ( ! function_exists( 'wt_google_feed_render_categories' ) ) {
 			'hierarchical'	 => 1,
 			'title_li'		 => '',
 			'hide_empty'	 => 1,
-			'meta_query'	 => [
+			'meta_query'	 => [ //phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 				[
 					'key'		 => 'wt_google_category',
 					'compare'	 => 'NOT EXISTS',
@@ -58,7 +58,7 @@ if ( ! function_exists( 'wt_google_feed_render_categories' ) ) {
         
         if( !empty( $ids_to_include_or_exclude ) ){
             if( 'exclude_cat' ===  $category_query ){
-                $category_args['exclude'] = $ids_to_include_or_exclude;
+                $category_args['exclude'] = $ids_to_include_or_exclude; //phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude
             }else{
                 $category_args['include'] = $ids_to_include_or_exclude;
             }
@@ -93,7 +93,7 @@ if ( ! function_exists( 'wt_google_feed_render_categories' ) ) {
             ?>
                 <tr class="treegrid-1">
                         <td>
-                                <?php esc_html_e('All categories have already been mapped'); ?>
+                                <?php esc_html_e('All categories have already been mapped', 'webtoffee-product-feed'); ?>
                         </td>
                 </tr>
             <?php
@@ -136,9 +136,9 @@ $value           = array();
         }
         ?>
             <?php if( 'google' === $this->to_export ): ?>
-        <span><?php esc_html_e( 'Google has a'); ?> <a target="_blank" href="https://www.google.com/basepages/producttype/taxonomy.en-US.txt"><?php esc_html_e( 'pre-defined set of categories'); ?></a>. <?php esc_html_e( 'Mapping your store categories with the Google categories will give more visibility to your products in Google ads and listings. To edit the mapping go to the respective'); ?> <a target="_blank" href="<?php echo esc_url( admin_url('edit-tags.php?taxonomy=product_cat&post_type=product') ); ?>"><?php esc_html_e( 'categories page'); ?></a></span>
+        <span><?php esc_html_e( 'Google has a', 'webtoffee-product-feed'); ?> <a target="_blank" href="https://www.google.com/basepages/producttype/taxonomy.en-US.txt"><?php esc_html_e( 'pre-defined set of categories', 'webtoffee-product-feed'); ?></a>. <?php esc_html_e( 'Mapping your store categories with the Google categories will give more visibility to your products in Google ads and listings. To edit the mapping go to the respective', 'webtoffee-product-feed'); ?> <a target="_blank" href="<?php echo esc_url( admin_url('edit-tags.php?taxonomy=product_cat&post_type=product') ); ?>"><?php esc_html_e( 'categories page', 'webtoffee-product-feed'); ?></a></span>
 	<?php else: ?>
-        <span><?php echo esc_html($feed_channel_name); if( 'tiktok' === $this->to_export ){ $feed_channel_name = 'TikTok';} // To avoid ads text multiple times ?> <?php esc_html_e( 'uses' ); ?> <a target="_blank" href="https://www.google.com/basepages/producttype/taxonomy.en-US.txt"><?php esc_html_e( 'Google categories'); ?></a>. <?php esc_html_e( 'Mapping your store categories with the Google categories will give more visibility to your products in');?> <?php echo esc_html($feed_channel_name); ?> <?php esc_html_e( 'ads. To edit the mapping go to the respective'); ?> <a target="_blank" href="<?php echo esc_url( admin_url('edit-tags.php?taxonomy=product_cat&post_type=product') ); ?>"><?php esc_html_e( 'categories page'); ?></a></span>
+        <span><?php echo esc_html($feed_channel_name); if( 'tiktok' === $this->to_export ){ $feed_channel_name = 'TikTok';} // To avoid ads text multiple times ?> <?php esc_html_e( 'uses', 'webtoffee-product-feed' ); ?> <a target="_blank" href="https://www.google.com/basepages/producttype/taxonomy.en-US.txt"><?php esc_html_e( 'Google categories', 'webtoffee-product-feed'); ?></a>. <?php esc_html_e( 'Mapping your store categories with the Google categories will give more visibility to your products in', 'webtoffee-product-feed');?> <?php echo esc_html($feed_channel_name); ?> <?php esc_html_e( 'ads. To edit the mapping go to the respective', 'webtoffee-product-feed'); ?> <a target="_blank" href="<?php echo esc_url( admin_url('edit-tags.php?taxonomy=product_cat&post_type=product') ); ?>"><?php esc_html_e( 'categories page', 'webtoffee-product-feed'); ?></a></span>
         <?php endif; ?>
 	<form action="" name="feed" id="category-mapping-form" class="category-mapping-form" method="post" autocomplete="off">
 		<?php wp_nonce_field( 'wt-category-mapping' ); ?>

@@ -32,14 +32,21 @@ if ( ! function_exists( 'wt_fbfeed_render_categories' ) ) {
 			'hierarchical'	 => 1,
 			'title_li'		 => '',
 			'hide_empty'	 => 0,
-			'meta_query'	 => [
-				[
-					'key'		 => 'wt_fb_category',
-					'compare'	 => 'NOT EXISTS',
-				]
-			]
+			'fields'         => 'all', // Get all fields for filtering
 		];
         $categories   = get_categories( $category_args );
+        
+        // Filter categories that don't have wt_fb_category meta in PHP for better performance
+        if ( ! empty( $categories ) ) {
+            $filtered_categories = array();
+            foreach ( $categories as $cat ) {
+                $meta_value = get_term_meta( $cat->term_id, 'wt_fb_category', true );
+                if ( empty( $meta_value ) ) {
+                    $filtered_categories[] = $cat;
+                }
+            }
+            $categories = $filtered_categories;
+        }
         if ( ! empty( $categories ) ) {
             if ( ! empty( $par ) ) {
                 $par = $par . ' > ';
@@ -57,7 +64,7 @@ if ( ! function_exists( 'wt_fbfeed_render_categories' ) ) {
 						
 
                         <select style="width:100%" id= "cat_mapping_<?php echo esc_attr( $cat->term_id ); ?>" name="map_to[<?php echo esc_attr( $cat->term_id ); ?>]" class="wc-enhanced-select">
-                                <?php echo wt_fb_category_dropdown(); ?>
+                                <?php echo wp_kses_post( wt_fb_category_dropdown() ); ?>
                             </select>
                     </td>
                 </tr>

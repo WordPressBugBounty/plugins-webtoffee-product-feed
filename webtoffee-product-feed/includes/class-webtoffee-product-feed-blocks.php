@@ -14,8 +14,8 @@ if (!function_exists('wt_add_meta_fields')) {
                     'id' => 'wt-feed-product-section',
                     'order' => $after_image_section->get_order() + 5,
                     'attributes' => [
-                        'title' => __('WebToffee Product Feed', 'woocommerce'),
-                        'description' => __('Add WooCommerce Product Feed data for different channels', 'woocommerce'),
+                        'title' => __('WebToffee Product Feed', 'webtoffee-product-feed'),
+                        'description' => __('Add WooCommerce Product Feed data for different channels', 'webtoffee-product-feed'),
                     ],
                     'hideConditions' => [
                         [
@@ -48,11 +48,11 @@ if (!function_exists('wt_add_meta_fields')) {
                     'blockName' => 'woocommerce/product-text-field',
                     'order' => 13,
                     'attributes' => [
-                        'label' => __('Brand'),
+                        'label' => __('Brand', 'webtoffee-product-feed'),
                         'property' => 'meta_data._wt_feed_brand',
                         'required' => false,
-                        'help' => __('The Brand of the product'),
-                        'tooltip' => __('The Brand of the product')
+                        'help' => __('The Brand of the product', 'webtoffee-product-feed'),
+                        'tooltip' => __('The Brand of the product', 'webtoffee-product-feed')
                     ],
                 ]
         );
@@ -72,11 +72,11 @@ if (!function_exists('wt_add_meta_fields')) {
                     'blockName' => 'woocommerce/product-text-field',
                     'order' => 16,
                     'attributes' => [
-                        'label' => __('GTIN'),
+                        'label' => __('GTIN', 'webtoffee-product-feed'),
                         'property' => 'meta_data._wt_feed_gtin',
                         'required' => false,
-                        'help' => __('The Global Trade Item Number (GTIN) is an identifier for trade items.'),
-                        'tooltip' => __('The Global Trade Item Number (GTIN) is an identifier for trade items.')
+                        'help' => __('The Global Trade Item Number (GTIN) is an identifier for trade items.', 'webtoffee-product-feed'),
+                        'tooltip' => __('The Global Trade Item Number (GTIN) is an identifier for trade items.', 'webtoffee-product-feed')
                     ]
                 ],
         );
@@ -104,11 +104,11 @@ if (!function_exists('wt_add_meta_fields')) {
                     'blockName' => 'woocommerce/product-text-field',
                     'order' => 13,
                     'attributes' => [
-                        'label' => __('HAN'),
+                        'label' => __('HAN', 'webtoffee-product-feed'),
                         'property' => 'meta_data._wt_feed_han',
                         'required' => false,
-                        'help' => __('A Manufacturer Article Number (HAN) is a unique identification number assigned by manufacturers to identify their own products.'),
-                        'tooltip' => __('A Manufacturer Article Number (HAN) is a unique identification number assigned by manufacturers to identify their own products.')
+                        'help' => __('A Manufacturer Article Number (HAN) is a unique identification number assigned by manufacturers to identify their own products.', 'webtoffee-product-feed'),
+                        'tooltip' => __('A Manufacturer Article Number (HAN) is a unique identification number assigned by manufacturers to identify their own products.', 'webtoffee-product-feed')
                     ],
                 ]
         );
@@ -128,11 +128,11 @@ if (!function_exists('wt_add_meta_fields')) {
                     'blockName' => 'woocommerce/product-text-field',
                     'order' => 16,
                     'attributes' => [
-                        'label' => __('EAN'),
+                        'label' => __('EAN', 'webtoffee-product-feed'),
                         'property' => 'meta_data._wt_feed_ean',
                         'required' => false,
-                        'help' => __('A European Article Number (EAN) is a unique identification number assigned by manufacturers to identify their own products.'),
-                        'tooltip' => __('A European Article Number (EAN) is a unique identification number assigned by manufacturers to identify their own products.')
+                        'help' => __('A European Article Number (EAN) is a unique identification number assigned by manufacturers to identify their own products.', 'webtoffee-product-feed'),
+                        'tooltip' => __('A European Article Number (EAN) is a unique identification number assigned by manufacturers to identify their own products.', 'webtoffee-product-feed')
                     ]
                 ],
         );
@@ -162,13 +162,13 @@ if (!function_exists('wt_add_meta_fields')) {
                     'blockName' => 'woocommerce/product-text-field',
                     'order' => 16,
                     'attributes' => [
-                        'label' => __('MPN'),
+                        'label' => __('MPN', 'webtoffee-product-feed'),
                         'property' => 'meta_data._wt_feed_mpn',
                         //'suffix' => 'suffix',
                         //'placeholder' => 'Placeholder',
                         'required' => false,
-                        'help' => __('A manufacturer part number (MPN) is a series of numbers and/or letters given to a part by its manufacturer.'),
-                        'tooltip' => __('A manufacturer part number (MPN) is a series of numbers and/or letters given to a part by its manufacturer.')
+                        'help' => __('A manufacturer part number (MPN) is a series of numbers and/or letters given to a part by its manufacturer.', 'webtoffee-product-feed'),
+                        'tooltip' => __('A manufacturer part number (MPN) is a series of numbers and/or letters given to a part by its manufacturer.', 'webtoffee-product-feed')
                     ]
                 ],
         );
@@ -200,10 +200,10 @@ if (!function_exists('wt_add_meta_fields')) {
                     'blockName' => 'woocommerce/product-radio-field',
                     'order' => 30,
                     'attributes' => [
-                        'title' => __('Condition'),
+                        'title' => __('Condition', 'webtoffee-product-feed'),
                         'property' => 'meta_data._wt_feed_condition',
                         'options' => $product_condition_list,
-                        'description' => __('The product condition.')
+                        'description' => __('The product condition.', 'webtoffee-product-feed')
                     ],
                 ]
         );
@@ -243,10 +243,10 @@ if (!function_exists('wt_add_meta_fields')) {
                     'blockName' => 'woocommerce/product-radio-field',
                     'order' => 30,
                     'attributes' => [
-                        'title' => __('Age group'),
+                        'title' => __('Age group', 'webtoffee-product-feed'),
                         'property' => 'meta_data._wt_feed_agegroup',
                         'options' => $age_group_list,
-                        'description' => __('The product age group.')
+                        'description' => __('The product age group.', 'webtoffee-product-feed')
                     ],
                 ]
         );
@@ -277,10 +277,10 @@ if (!function_exists('wt_add_meta_fields')) {
                     'blockName' => 'woocommerce/product-radio-field',
                     'order' => 30,
                     'attributes' => [
-                        'title' => __('Gender'),
+                        'title' => __('Gender', 'webtoffee-product-feed'),
                         'property' => 'meta_data._wt_feed_gender',
                         'options' => $gender_list,
-                        'description' => __('The product gender.')
+                        'description' => __('The product gender.', 'webtoffee-product-feed')
                     ],
                 ]
         );
@@ -308,11 +308,11 @@ if (!function_exists('wt_add_meta_fields')) {
                     'blockName' => 'woocommerce/product-text-field',
                     'order' => 13,
                     'attributes' => [
-                        'label' => __('Size'),
+                        'label' => __('Size', 'webtoffee-product-feed'),
                         'property' => 'meta_data._wt_feed_size',
                         'required' => false,
-                        'help' => __('The Size of the product'),
-                        'tooltip' => __('The Size of the product')
+                        'help' => __('The Size of the product', 'webtoffee-product-feed'),
+                        'tooltip' => __('The Size of the product', 'webtoffee-product-feed')
                     ],
                 ]
         );
@@ -332,11 +332,11 @@ if (!function_exists('wt_add_meta_fields')) {
                     'blockName' => 'woocommerce/product-text-field',
                     'order' => 16,
                     'attributes' => [
-                        'label' => __('Color'),
+                        'label' => __('Color', 'webtoffee-product-feed'),
                         'property' => 'meta_data._wt_feed_color',
                         'required' => false,
-                        'help' => __('The Color of the product.'),
-                        'tooltip' => __('The Color of the product.')
+                        'help' => __('The Color of the product.', 'webtoffee-product-feed'),
+                        'tooltip' => __('The Color of the product.', 'webtoffee-product-feed')
                     ]
                 ],
         );
@@ -364,11 +364,11 @@ if (!function_exists('wt_add_meta_fields')) {
                     'blockName' => 'woocommerce/product-text-field',
                     'order' => 13,
                     'attributes' => [
-                        'label' => __('Material'),
+                        'label' => __('Material', 'webtoffee-product-feed'),
                         'property' => 'meta_data._wt_feed_material',
                         'required' => false,
-                        'help' => __('The Material of the product'),
-                        'tooltip' => __('The Material of the product')
+                        'help' => __('The Material of the product', 'webtoffee-product-feed'),
+                        'tooltip' => __('The Material of the product', 'webtoffee-product-feed')
                     ],
                 ]
         );
@@ -388,11 +388,11 @@ if (!function_exists('wt_add_meta_fields')) {
                     'blockName' => 'woocommerce/product-text-field',
                     'order' => 16,
                     'attributes' => [
-                        'label' => __('Pattern'),
+                        'label' => __('Pattern', 'webtoffee-product-feed'),
                         'property' => 'meta_data._wt_feed_pattern',
                         'required' => false,
-                        'help' => __('The Pattern of the product.'),
-                        'tooltip' => __('The Pattern of the product.')
+                        'help' => __('The Pattern of the product.', 'webtoffee-product-feed'),
+                        'tooltip' => __('The Pattern of the product.', 'webtoffee-product-feed')
                     ]
                 ],
         );
@@ -420,11 +420,11 @@ if (!function_exists('wt_add_meta_fields')) {
                     'blockName' => 'woocommerce/product-text-field',
                     'order' => 13,
                     'attributes' => [
-                        'label' => __('Unit pricing measure'),
+                        'label' => __('Unit pricing measure', 'webtoffee-product-feed'),
                         'property' => 'meta_data._wt_feed_unit_pricing_measure',
                         'required' => false,
-                        'help' => __('Use the unit pricing measure [unit_pricing_measure] attribute to define the measure and dimension of your product. This value allows users to understand the exact cost per unit for your product.'),
-                        'tooltip' => __('Use the unit pricing measure [unit_pricing_measure] attribute to define the measure and dimension of your product. This value allows users to understand the exact cost per unit for your product.')
+                        'help' => __('Use the unit pricing measure [unit_pricing_measure] attribute to define the measure and dimension of your product. This value allows users to understand the exact cost per unit for your product.', 'webtoffee-product-feed'),
+                        'tooltip' => __('Use the unit pricing measure [unit_pricing_measure] attribute to define the measure and dimension of your product. This value allows users to understand the exact cost per unit for your product.', 'webtoffee-product-feed')
                     ],
                 ]
         );
@@ -444,11 +444,11 @@ if (!function_exists('wt_add_meta_fields')) {
                     'blockName' => 'woocommerce/product-text-field',
                     'order' => 16,
                     'attributes' => [
-                        'label' => __('Unit pricing base measure'),
+                        'label' => __('Unit pricing base measure', 'webtoffee-product-feed'),
                         'property' => 'meta_data._wt_feed_unit_pricing_base_measure',
                         'required' => false,
-                        'help' => __('The unit pricing base measure [unit_pricing_base_measure] attribute lets you include the denominator for your unit price. For example, you might be selling "150ml" of perfume, but customers are interested in seeing the price per "100ml".'),
-                        'tooltip' => __('The unit pricing base measure [unit_pricing_base_measure] attribute lets you include the denominator for your unit price. For example, you might be selling "150ml" of perfume, but customers are interested in seeing the price per "100ml".')
+                        'help' => __('The unit pricing base measure [unit_pricing_base_measure] attribute lets you include the denominator for your unit price. For example, you might be selling "150ml" of perfume, but customers are interested in seeing the price per "100ml".', 'webtoffee-product-feed'),
+                        'tooltip' => __('The unit pricing base measure [unit_pricing_base_measure] attribute lets you include the denominator for your unit price. For example, you might be selling "150ml" of perfume, but customers are interested in seeing the price per "100ml".', 'webtoffee-product-feed')
                     ]
                 ],
         );
@@ -476,11 +476,11 @@ if (!function_exists('wt_add_meta_fields')) {
                     'blockName' => 'woocommerce/product-text-field',
                     'order' => 13,
                     'attributes' => [
-                        'label' => __('Energy efficiency class'),
+                        'label' => __('Energy efficiency class', 'webtoffee-product-feed'),
                         'property' => 'meta_data._wt_feed_energy_efficiency_class',
                         'required' => false,
-                        'help' => __('The [energy_efficiency_class] attributes to tell customers the energy label of your product.'),
-                        'tooltip' => __('The [energy_efficiency_class] attributes to tell customers the energy label of your product.')
+                        'help' => __('The [energy_efficiency_class] attributes to tell customers the energy label of your product.', 'webtoffee-product-feed'),
+                        'tooltip' => __('The [energy_efficiency_class] attributes to tell customers the energy label of your product.', 'webtoffee-product-feed')
                     ],
                 ]
         );
@@ -500,11 +500,11 @@ if (!function_exists('wt_add_meta_fields')) {
                     'blockName' => 'woocommerce/product-text-field',
                     'order' => 16,
                     'attributes' => [
-                        'label' => __('Minimum Energy efficiency class'),
+                        'label' => __('Minimum Energy efficiency class', 'webtoffee-product-feed'),
                         'property' => 'meta_data._wt_feed_min_energy_efficiency_class',
                         'required' => false,
-                        'help' => __('The [min_energy_efficiency_class] attributes to tell customers the energy label of your product.'),
-                        'tooltip' => __('The [min_energy_efficiency_class] attributes to tell customers the energy label of your product.')
+                        'help' => __('The [min_energy_efficiency_class] attributes to tell customers the energy label of your product.', 'webtoffee-product-feed'),
+                        'tooltip' => __('The [min_energy_efficiency_class] attributes to tell customers the energy label of your product.', 'webtoffee-product-feed')
                     ]
                 ],
         );
@@ -532,11 +532,11 @@ if (!function_exists('wt_add_meta_fields')) {
                     'blockName' => 'woocommerce/product-text-field',
                     'order' => 13,
                     'attributes' => [
-                        'label' => __('Maximum Energy efficiency class'),
+                        'label' => __('Maximum Energy efficiency class', 'webtoffee-product-feed'),
                         'property' => 'meta_data._wt_feed_max_energy_efficiency_class',
                         'required' => false,
-                        'help' => __('The [max_energy_efficiency_class] attributes to tell customers the energy label of your product.'),
-                        'tooltip' => __('The [max_energy_efficiency_class] attributes to tell customers the energy label of your product.')
+                        'help' => __('The [max_energy_efficiency_class] attributes to tell customers the energy label of your product.', 'webtoffee-product-feed'),
+                        'tooltip' => __('The [max_energy_efficiency_class] attributes to tell customers the energy label of your product.', 'webtoffee-product-feed')
                     ],
                 ]
         );
@@ -552,11 +552,11 @@ if (!function_exists('wt_add_meta_fields')) {
         );
 
         $glpi_pickup_methods = [
-            '' => __('Default'),
-            'buy' => __('Buy'),
-            'reserve' => __('Reserve'),
-            'ship to store' => __('Ship to store'),
-            'not supported' => __('Not supported'),
+            '' => __('Default', 'webtoffee-product-feed'),
+            'buy' => __('Buy', 'webtoffee-product-feed'),
+            'reserve' => __('Reserve', 'webtoffee-product-feed'),
+            'ship to store' => __('Ship to store', 'webtoffee-product-feed'),
+            'not supported' => __('Not supported', 'webtoffee-product-feed'),
         ];
 
         $pickup_methods_list = [];
@@ -573,10 +573,10 @@ if (!function_exists('wt_add_meta_fields')) {
                     'blockName' => 'woocommerce/product-radio-field',
                     'order' => 30,
                     'attributes' => [
-                        'title' => __('Pickup method'),
+                        'title' => __('Pickup method', 'webtoffee-product-feed'),
                         'property' => 'meta_data._wt_feed_glpi_pickup_method',
                         'options' => $pickup_methods_list,
-                        'description' => __('The product Pickup method, used in google local product inventory.')
+                        'description' => __('The product Pickup method, used in google local product inventory.', 'webtoffee-product-feed')
                     ],
                 ]
         );
@@ -600,15 +600,15 @@ if (!function_exists('wt_add_meta_fields')) {
         );
 
         $glpi_pickup_sla = [
-            '' => __('Default'),
-            'same day' => __('Same day'),
-            'next day' => __('Next day'),
-            '2-day' => __('2 Day'),
-            '3-day' => __('3 Day'),
-            '4-day' => __('4 Day'),
-            '5-day' => __('5 Day'),
-            '6-day' => __('6 Day'),
-            'multi-week' => __('Multi week'),
+            '' => __('Default', 'webtoffee-product-feed'),
+            'same day' => __('Same day', 'webtoffee-product-feed'),
+            'next day' => __('Next day', 'webtoffee-product-feed'),
+            '2-day' => __('2 Day', 'webtoffee-product-feed'),
+            '3-day' => __('3 Day', 'webtoffee-product-feed'),
+            '4-day' => __('4 Day', 'webtoffee-product-feed'),
+            '5-day' => __('5 Day', 'webtoffee-product-feed'),
+            '6-day' => __('6 Day', 'webtoffee-product-feed'),
+            'multi-week' => __('Multi week', 'webtoffee-product-feed'),
         ];
 
         $glpi_pickup_sla_list = [];
@@ -625,10 +625,10 @@ if (!function_exists('wt_add_meta_fields')) {
                     'blockName' => 'woocommerce/product-radio-field',
                     'order' => 30,
                     'attributes' => [
-                        'title' => __('Pickup SLA'),
+                        'title' => __('Pickup SLA', 'webtoffee-product-feed'),
                         'property' => 'meta_data._wt_feed_glpi_pickup_sla',
                         'options' => $glpi_pickup_sla_list,
-                        'description' => __('The product Pickup SLA, used in google local product inventory.')
+                        'description' => __('The product Pickup SLA, used in google local product inventory.', 'webtoffee-product-feed')
                     ],
                 ]
         );
@@ -649,11 +649,11 @@ if (!function_exists('wt_add_meta_fields')) {
                     'blockName' => 'woocommerce/product-text-field',
                     'order' => 13,
                     'attributes' => [
-                        'label' => __('Custom label 0'),
+                        'label' => __('Custom label 0', 'webtoffee-product-feed'),
                         'property' => 'meta_data._wt_feed_custom_label_0',
                         'required' => false,
-                        'help' => __('Additional custom label for the item. Character limit: 100. eg:- Summer Sale.'),
-                        'tooltip' => __('Additional custom label for the item. Character limit: 100. eg:- Summer Sale.')
+                        'help' => __('Additional custom label for the item. Character limit: 100. eg:- Summer Sale.', 'webtoffee-product-feed'),
+                        'tooltip' => __('Additional custom label for the item. Character limit: 100. eg:- Summer Sale.', 'webtoffee-product-feed')
                     ],
                 ]
         );
@@ -681,11 +681,11 @@ if (!function_exists('wt_add_meta_fields')) {
                     'blockName' => 'woocommerce/product-text-field',
                     'order' => 13,
                     'attributes' => [
-                        'label' => __('Custom label 1'),
+                        'label' => __('Custom label 1', 'webtoffee-product-feed'),
                         'property' => 'meta_data._wt_feed_custom_label_1',
                         'required' => false,
-                        'help' => __('Additional custom label for the item. Character limit: 100. eg:- Summer Sale.'),
-                        'tooltip' => __('Additional custom label for the item. Character limit: 100. eg:- Summer Sale.')
+                        'help' => __('Additional custom label for the item. Character limit: 100. eg:- Summer Sale.', 'webtoffee-product-feed'),
+                        'tooltip' => __('Additional custom label for the item. Character limit: 100. eg:- Summer Sale.', 'webtoffee-product-feed')
                     ],
                 ]
         );
@@ -705,11 +705,11 @@ if (!function_exists('wt_add_meta_fields')) {
                     'blockName' => 'woocommerce/product-text-field',
                     'order' => 16,
                     'attributes' => [
-                        'label' => __('Custom label 2'),
+                        'label' => __('Custom label 2', 'webtoffee-product-feed'),
                         'property' => 'meta_data._wt_feed_custom_label_2',
                         'required' => false,
-                        'help' => __('Additional custom label for the item. Character limit: 100. eg:- Summer Sale.'),
-                        'tooltip' => __('Additional custom label for the item. Character limit: 100. eg:- Summer Sale.')
+                        'help' => __('Additional custom label for the item. Character limit: 100. eg:- Summer Sale.', 'webtoffee-product-feed'),
+                        'tooltip' => __('Additional custom label for the item. Character limit: 100. eg:- Summer Sale.', 'webtoffee-product-feed')
                     ]
                 ],
         );
@@ -737,11 +737,11 @@ if (!function_exists('wt_add_meta_fields')) {
                     'blockName' => 'woocommerce/product-text-field',
                     'order' => 13,
                     'attributes' => [
-                        'label' => __('Custom label 3'),
+                        'label' => __('Custom label 3', 'webtoffee-product-feed'),
                         'property' => 'meta_data._wt_feed_custom_label_3',
                         'required' => false,
-                        'help' => __('Additional custom label for the item. Character limit: 100. eg:- Summer Sale.'),
-                        'tooltip' => __('Additional custom label for the item. Character limit: 100. eg:- Summer Sale.')
+                        'help' => __('Additional custom label for the item. Character limit: 100. eg:- Summer Sale.', 'webtoffee-product-feed'),
+                        'tooltip' => __('Additional custom label for the item. Character limit: 100. eg:- Summer Sale.', 'webtoffee-product-feed')
                     ],
                 ]
         );
@@ -761,11 +761,11 @@ if (!function_exists('wt_add_meta_fields')) {
                     'blockName' => 'woocommerce/product-text-field',
                     'order' => 16,
                     'attributes' => [
-                        'label' => __('Custom label 4'),
+                        'label' => __('Custom label 4', 'webtoffee-product-feed'),
                         'property' => 'meta_data._wt_feed_custom_label_4',
                         'required' => false,
-                        'help' => __('Additional custom label for the item. Character limit: 100. eg:- Summer Sale.'),
-                        'tooltip' => __('Additional custom label for the item. Character limit: 100. eg:- Summer Sale.')
+                        'help' => __('Additional custom label for the item. Character limit: 100. eg:- Summer Sale.', 'webtoffee-product-feed'),
+                        'tooltip' => __('Additional custom label for the item. Character limit: 100. eg:- Summer Sale.', 'webtoffee-product-feed')
                     ]
                 ],
         );

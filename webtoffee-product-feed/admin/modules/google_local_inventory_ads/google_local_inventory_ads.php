@@ -192,12 +192,12 @@ if (!class_exists('Webtoffee_Product_Feed_Google_Local_Inventory_Ads')) {
 				$out[$fieldk] = $fieldv;
 			}
                         $out['file_as']['sele_vals'] = array(
-                            'xml'=>__('XML'), 
-                            'txt'=>__('TXT')
+                            'xml'=>__('XML', 'webtoffee-product-feed'), 
+                            'txt'=>__('TXT', 'webtoffee-product-feed')
                         );
                         $out['delimiter']['sele_vals'] = array(
-                            'tab' => array('value' => __('Tab'), 'val' => "\t"),
-                            'comma' => array('value' => __('Comma'), 'val' => ",")
+                            'tab' => array('value' => __('Tab', 'webtoffee-product-feed'), 'val' => "\t"),
+                            'comma' => array('value' => __('Comma', 'webtoffee-product-feed'), 'val' => ",")
                         );
 			return $out;
 		}

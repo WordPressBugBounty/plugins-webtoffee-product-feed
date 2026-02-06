@@ -645,10 +645,27 @@ img.tips {
   border-radius: 7px;
   padding: 0;
 }
+
 .wt-profeed-header{
   background: #FFFFFF;
   margin: 0;
+  position: relative;
 }
+
+/* Black Friday discount tag styles */
+.wt-bfcm-discount-tag {
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  z-index: 10;
+}
+
+.wt-bfcm-tag-svg {
+  width: 30px;
+  height: 40px;
+  display: block;
+}
+
 .wt-profeed-name{
   background: linear-gradient(178deg, #F4F1FF 3%, rgba(238, 240, 255, 0) 93.18%);
   border-radius: 3px;

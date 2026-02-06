@@ -82,7 +82,7 @@ class Webtoffee_Product_Feed_Sync {
 		if ( defined( 'WEBTOFFEE_PRODUCT_FEED_SYNC_VERSION' ) ) {
 			$this->version = WEBTOFFEE_PRODUCT_FEED_SYNC_VERSION;
 		} else {
-			$this->version = '2.3.1';
+			$this->version = '2.3.6';
 		}
 		$this->plugin_name = 'webtoffee-product-feed';
 		$this->plugin_base_name	 = WT_PRODUCT_FEED_BASE_NAME;
@@ -163,11 +163,18 @@ class Webtoffee_Product_Feed_Sync {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'helpers/class-wt-feed-shipping.php';
 
 		
-		
-		
-		
 
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-webtoffee-product-feed-sync-review-request.php';
+
+		/**
+		 * Includes the Black Friday and Cyber Monday CTA banners for 2025
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/banner/class-wt-bfcm-twenty-twenty-five.php';
+
+		/**
+		 * Includes the EMA banner for the analytics page
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/banner/class-wbte-ema-banner.php';
 
 		$this->loader = new Webtoffee_Product_Feed_Sync_Loader();
 	}
@@ -223,6 +230,11 @@ class Webtoffee_Product_Feed_Sync {
 		$this->loader->add_filter( 'plugin_action_links_' . $this->get_plugin_base_name(), $plugin_admin, 'add_productfeed_action_links' );   
                 
         $this->loader->add_filter( 'admin_footer_text', $plugin_admin, 'admin_footer_text', 1 );
+
+		/**
+		 *  Set screens to show promotional banner
+		 */
+		$this->loader->add_filter( 'wt_bfcm_banner_screens', $plugin_admin, 'wt_bfcm_banner_screens' );
                 
 	}
 

@@ -6,7 +6,7 @@ if (!defined('ABSPATH')) {
 <div class="wt_pf_export_main">
 	<p><?php echo esc_html( $step_info['description'] ); ?></p>
 	<div class="wt_pf_warn wt_pf_post_type_wrn" style="display:none;">
-		<?php esc_html_e('Please select a post type'); ?>
+		<?php esc_html_e('Please select a post type', 'webtoffee-product-feed'); ?>
 	</div>
 	<table class="form-table wt-pfd-form-table">
 		<tr>
@@ -47,7 +47,7 @@ if (!defined('ABSPATH')) {
 			<td></td>
 		</tr>
 		<tr>
-			<th><label><?php esc_html_e('Channel'); ?></label></th>
+			<th><label><?php esc_html_e('Channel', 'webtoffee-product-feed'); ?></label></th>
 			<td>
 				<select name="wt_pf_export_post_type">
                                         <?php
@@ -108,7 +108,7 @@ if (!defined('ABSPATH')) {
                 
                 
 		<tr>
-			<th><label><?php esc_html_e('Auto-refresh'); ?></label></th>
+			<th><label><?php esc_html_e('Auto-refresh', 'webtoffee-product-feed'); ?></label></th>
 			<td>
 
 				<?php
@@ -145,7 +145,7 @@ if (!defined('ABSPATH')) {
                     foreach ($days as $day) {
                         $day_vl = strtolower($day);
                         ?>
-                        <option value="<?php echo esc_attr($day_vl); ?>" <?php echo ($item_gen_cron_day == $day_vl ? 'selected' : ''); ?> ><?php esc_html_e($day, 'webtoffee-product-feed'); ?></option>                                        
+                        <option value="<?php echo esc_attr($day_vl); ?>" <?php echo ($item_gen_cron_day == $day_vl ? 'selected' : ''); ?> ><?php echo esc_html($day); ?></option>                                        
                         <?php
                     }
                     ?>
@@ -166,7 +166,7 @@ if (!defined('ABSPATH')) {
                         <?php
                     }
                     ?>
-                    <option value="last_day"><?php esc_html_e('Last day'); ?></option>
+                    <option value="last_day"><?php esc_html_e('Last day', 'webtoffee-product-feed'); ?></option>
                 </select>				
             </td>
             <td></td>

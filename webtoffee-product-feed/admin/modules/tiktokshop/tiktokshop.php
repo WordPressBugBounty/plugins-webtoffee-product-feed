@@ -169,7 +169,7 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_TiktokShop')) {
 				return $this->product_categories;
 			}
 			$out = array();
-			$product_categories = get_terms('product_cat', array('hide_empty' => false));
+			$product_categories = get_terms(array('taxonomy' => 'product_cat', 'hide_empty' => false));
 			if (!is_wp_error($product_categories)) {
 				$version = get_bloginfo('version');
 				foreach ($product_categories as $category) {
@@ -207,7 +207,7 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_TiktokShop')) {
 		public function exporter_alter_mapping_enabled_fields($mapping_enabled_fields, $base, $form_data_mapping_enabled_fields) {
 			if ($base == $this->module_base) {
 				$mapping_enabled_fields = array();
-				$mapping_enabled_fields['product_details'] = array(__('Product Details'), 1);																																								
+				$mapping_enabled_fields['product_details'] = array(__('Product Details', 'webtoffee-product-feed'), 1);																																								
 			}
 			return $mapping_enabled_fields;
 		}
@@ -259,7 +259,7 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_TiktokShop')) {
                     if( 'tiktokshop' === $export_channel ){
                         $max_variations = $this->get_max_variations_count_for_all_variable_products();
                         if( $max_variations > 0 ){  
-                            $attribute_dropdown .= sprintf( '<optgroup label="%s">', esc_attr__( 'Variations' ) );
+                            $attribute_dropdown .= sprintf( '<optgroup label="%s">', esc_attr__( 'Variations', 'webtoffee-product-feed' ) );
                             for($i=1; $i<=$max_variations; $i++){
                                 $select_val = 'Variation '.$i;
                                 $select_key = 'variation_'.$i;
@@ -294,19 +294,17 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_TiktokShop')) {
 
                 public function get_max_variations_count_for_all_variable_products(){
                     global $wpdb;
-
-                    $query = "
+                    // phpcs:ignore
+                    $result = $wpdb->get_results($wpdb->prepare("
                         SELECT MAX(variation_count) as max_variation_count
                         FROM (
                             SELECT COUNT(p.ID) as variation_count
                             FROM {$wpdb->prefix}posts as p
-                            WHERE p.post_type = 'product_variation'
-                            AND p.post_status = 'publish'
+                            WHERE p.post_type = %s
+                            AND p.post_status = %s
                             GROUP BY p.post_parent
                         ) as variation_counts
-                    ";
-
-                    $result = $wpdb->get_results($query);
+                    ", 'product_variation', 'publish'));//phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 
                     if ($result) {
                         return $result[0]->max_variation_count;
@@ -373,10 +371,10 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_TiktokShop')) {
                         if ('tiktokshop' === $base) {
 
                             $out['file_as']['sele_vals'] = array(
-                                'xlsx'=>__('XLSX') 
+                                'xlsx'=>__('XLSX', 'webtoffee-product-feed') 
                             );
                             $out['delimiter']['sele_vals'] = array(
-                                'comma' => array('value' => __('Comma'), 'val' => ",")
+                                'comma' => array('value' => __('Comma', 'webtoffee-product-feed'), 'val' => ",")
                             );
                         }
                         return $out;
@@ -392,71 +390,71 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_TiktokShop')) {
 			}
 
 			/* altering help text of default fields */
-			$fields['limit']['label'] = __('Total number of products to export');
-			$fields['limit']['help_text'] = __('Exports specified number of products. e.g. Entering 500 with a skip count of 10 will export products from 11th to 510th position.');
-			$fields['offset']['label'] = __('Skip first <i>n</i> products');
-			$fields['offset']['help_text'] = __('Skips specified number of products from the beginning of the database. e.g. Enter 10 to skip first 10 products from export.');
+			$fields['limit']['label'] = __('Total number of products to export', 'webtoffee-product-feed');
+			$fields['limit']['help_text'] = __('Exports specified number of products. e.g. Entering 500 with a skip count of 10 will export products from 11th to 510th position.', 'webtoffee-product-feed');
+			$fields['offset']['label'] = __('Skip first <i>n</i> products', 'webtoffee-product-feed');
+			$fields['offset']['help_text'] = __('Skips specified number of products from the beginning of the database. e.g. Enter 10 to skip first 10 products from export.', 'webtoffee-product-feed');
 
 			$fields['product'] = array(
-				'label' => __('Products'),
-				'placeholder' => __('All products'),
+				'label' => __('Products', 'webtoffee-product-feed'),
+				'placeholder' => __('All products', 'webtoffee-product-feed'),
 				'attr' => array('data-exclude_type' => 'variable,variation'),
 				'field_name' => 'product',
 				'sele_vals' => array(),
-				'help_text' => __('Export specific products. Keyin the product names to export multiple products.'),
+				'help_text' => __('Export specific products. Keyin the product names to export multiple products.', 'webtoffee-product-feed'),
 				'type' => 'multi_select',
 				'css_class' => 'wc-product-search',
 				'validation_rule' => array('type' => 'text_arr')
 			);
 			$fields['stock_status'] = array(
-				'label' => __('Stock status'),
-				'placeholder' => __('All status'),
+				'label' => __('Stock status', 'webtoffee-product-feed'),
+				'placeholder' => __('All status', 'webtoffee-product-feed'),
 				'field_name' => 'stock_status',
-				'sele_vals' => array('' => __('All status'), 'instock' => __('In Stock'), 'outofstock' => __('Out of Stock'), 'onbackorder' => __('On backorder')),
-				'help_text' => __('Export products based on stock status.'),
+				'sele_vals' => array('' => __('All status', 'webtoffee-product-feed'), 'instock' => __('In Stock', 'webtoffee-product-feed'), 'outofstock' => __('Out of Stock', 'webtoffee-product-feed'), 'onbackorder' => __('On backorder', 'webtoffee-product-feed')),
+				'help_text' => __('Export products based on stock status.', 'webtoffee-product-feed'),
 				'type' => 'select',
 				'validation_rule' => array('type' => 'text_arr')
 			);
 			$fields['exclude_product'] = array(
-				'label' => __('Exclude products'),
-				'placeholder' => __('Exclude products'),
+				'label' => __('Exclude products', 'webtoffee-product-feed'),
+				'placeholder' => __('Exclude products', 'webtoffee-product-feed'),
 				'attr' => array('data-exclude_type' => 'variable,variation'),
 				'field_name' => 'exclude_product',
 				'sele_vals' => array(),
-				'help_text' => __('Use this if you need to exclude a specific or multiple products from your export list.'),
+				'help_text' => __('Use this if you need to exclude a specific or multiple products from your export list.', 'webtoffee-product-feed'),
 				'type' => 'multi_select',
 				'css_class' => 'wc-product-search',
 				'validation_rule' => array('type' => 'text_arr')
 			);
 
 			$fields['product_categories'] = array(
-				'label' => __('Product categories'),
-				'placeholder' => __('Any category'),
+				'label' => __('Product categories', 'webtoffee-product-feed'),
+				'placeholder' => __('Any category', 'webtoffee-product-feed'),
 				'field_name' => 'product_categories',
 				'sele_vals' => $this->get_product_categories(),
-				'help_text' => __('Export products belonging to a particular or from multiple categories. Just select the respective categories.'),
+				'help_text' => __('Export products belonging to a particular or from multiple categories. Just select the respective categories.', 'webtoffee-product-feed'),
 				'type' => 'multi_select',
 				'css_class' => 'wc-enhanced-select',
 				'validation_rule' => array('type' => 'sanitize_title_with_dashes_arr')
 			);
 
 			$fields['product_tags'] = array(
-				'label' => __('Product tags'),
-				'placeholder' => __('Any tag'),
+				'label' => __('Product tags', 'webtoffee-product-feed'),
+				'placeholder' => __('Any tag', 'webtoffee-product-feed'),
 				'field_name' => 'product_tags',
 				'sele_vals' => $this->get_product_tags(),
-				'help_text' => __('Enter the product tags to export only the respective products that have been tagged accordingly.'),
+				'help_text' => __('Enter the product tags to export only the respective products that have been tagged accordingly.', 'webtoffee-product-feed'),
 				'type' => 'multi_select',
 				'css_class' => 'wc-enhanced-select',
 				'validation_rule' => array('type' => 'sanitize_title_with_dashes_arr')
 			);
 
 			$fields['product_status'] = array(
-				'label' => __('Product status'),
-				'placeholder' => __('Any status'),
+				'label' => __('Product status', 'webtoffee-product-feed'),
+				'placeholder' => __('Any status', 'webtoffee-product-feed'),
 				'field_name' => 'product_status',
 				'sele_vals' => self::get_product_statuses(),
-				'help_text' => __('Filter products by their status.'),
+				'help_text' => __('Filter products by their status.', 'webtoffee-product-feed'),
 				'type' => 'multi_select',
 				'css_class' => 'wc-enhanced-select',
 				'validation_rule' => array('type' => 'text_arr')

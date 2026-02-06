@@ -20,7 +20,7 @@ function wt_schedule_midnight_sync() {
  * A callback to run when the 'eg_midnight_log' scheduled action is run.
  */
 function wt_fbfeed_midnight_sync_process() {
-	error_log( 'It is just after midnight on ' . date( 'Y-m-d' ) );
+	// Debug log removed for production
 	$fb_feed_settings = new WT_Fb_Catalog_Manager_Settings();
 	$fb_feed_settings->wt_fbfeed_process_upload();
 }

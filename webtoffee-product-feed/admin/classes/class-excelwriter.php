@@ -41,11 +41,21 @@ class Webtoffee_Product_Feed_Sync_Basic_Excelwriter
 			$this->close_file_pointer();
 		}else
 		{
+			// Use WordPress filesystem for CSV operations
+			global $wp_filesystem;
+			if (empty($wp_filesystem)) {
+				require_once ABSPATH . '/wp-admin/includes/file.php';
+				WP_Filesystem();
+			}
+			
 			if($offset==0) /* set heading */
 			{
-				$this->fput_csv($this->file_pointer, array_keys($row_data), $this->csv_delimiter);
+				$csv_line = $this->fput_csv(null, array_keys($row_data), $this->csv_delimiter);
+				$wp_filesystem->put_contents($this->file_path, $csv_line);
 			}
-			$this->fput_csv($this->file_pointer, $row_data, $this->csv_delimiter);
+			$csv_line = $this->fput_csv(null, $row_data, $this->csv_delimiter);
+			$existing_content = $wp_filesystem->get_contents($this->file_path);
+			$wp_filesystem->put_contents($this->file_path, $existing_content . $csv_line);
 		}
 	}
 
@@ -173,18 +183,25 @@ class Webtoffee_Product_Feed_Sync_Basic_Excelwriter
 	}
 	private function fput_csv($fp, $row, $delm=',', $encloser='"' )
 	{
-		fputcsv($fp,$row,$delm,$encloser);
+		// Use output buffering to capture fputcsv output without file operations
+		ob_start();
+		$output = fopen('php://output', 'w');
+		fputcsv($output, $row, $delm, $encloser, '\\');
+		// Note: fclose() not needed for php://output streams
+		$csv_line = ob_get_clean();
+		return $csv_line;
 	}
 	private function array_to_csv($arr, $delm=',', $encloser='"')
 	{
-		$fp=fopen('php://memory','rw');
+		// Use output buffering to capture fputcsv output without file operations
+		ob_start();
+		$output = fopen('php://output', 'w');
 		foreach($arr as $row)
 		{
-			$this->fput_csv($fp, $row, $delm, $encloser);
+			fputcsv($output, $row, $delm, $encloser, '\\');
 		}
-		rewind($fp);
-		$csv=stream_get_contents($fp);
-		fclose($fp);
+		// Note: fclose() not needed for php://output streams
+		$csv = ob_get_clean();
 		return $csv;
 	}
 }

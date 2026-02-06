@@ -208,7 +208,10 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Shopmania')) {
 				return $this->product_categories;
 			}
 			$out = array();
-			$product_categories = get_terms('product_cat', array('hide_empty' => false));
+			$product_categories = get_terms(array(
+				'taxonomy' => 'product_cat',
+				'hide_empty' => false
+			));
 			if (!is_wp_error($product_categories)) {
 				$version = get_bloginfo('version');
 				foreach ($product_categories as $category) {
@@ -301,11 +304,11 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Shopmania')) {
                         if ('shopmania' === $base) {
 
                             $out['file_as']['sele_vals'] = array(
-                                'xml'=>__('XML'), 
-                                'csv'=>__('CSV')                                
+                                'xml'=>__('XML', 'webtoffee-product-feed'), 
+                                'csv'=>__('CSV', 'webtoffee-product-feed')                                
                             );
                             $out['delimiter']['sele_vals'] = array(
-                                'pipe' => array('value' => __('Pipe'), 'val' => "|")                                
+                                'pipe' => array('value' => __('Pipe', 'webtoffee-product-feed'), 'val' => "|")                                
                             );
                         }
 
@@ -316,9 +319,9 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Shopmania')) {
 
 public static function wt_feed_get_product_conditions() {
 	$conditions = array(
-		'new'           => _x( 'New', 'product condition', 'webtoffee-product-feed-pro' ),
-		'refurbished'   => _x( 'Refurbished', 'product condition', 'webtoffee-product-feed-pro' ),
-		'used'          => _x( 'Used', 'product condition', 'webtoffee-product-feed-pro' ),
+		'new'           => _x( 'New', 'product condition', 'webtoffee-product-feed' ),
+		'refurbished'   => _x( 'Refurbished', 'product condition', 'webtoffee-product-feed' ),
+		'used'          => _x( 'Used', 'product condition', 'webtoffee-product-feed' ),
 	);
 
 	return apply_filters( 'wt_feed_google_product_conditions', $conditions );
@@ -326,11 +329,11 @@ public static function wt_feed_get_product_conditions() {
 
 	public static function get_age_group() {
 			$google_age_group = array(
-				'adult' => __('Adult', 'webtoffee-product-feed-pro'),
-				'kids' => __('Kids', 'webtoffee-product-feed-pro'),
-				'toddler' => __('Toddler', 'webtoffee-product-feed-pro'),
-				'infant' => __('Infant', 'webtoffee-product-feed-pro'),
-				'newborn' => __('Newborn', 'webtoffee-product-feed-pro')
+				'adult' => __('Adult', 'webtoffee-product-feed'),
+				'kids' => __('Kids', 'webtoffee-product-feed'),
+				'toddler' => __('Toddler', 'webtoffee-product-feed'),
+				'infant' => __('Infant', 'webtoffee-product-feed'),
+				'newborn' => __('Newborn', 'webtoffee-product-feed')
 			);
 			return apply_filters( 'wt_feed_google_product_agegroup', $google_age_group );
 

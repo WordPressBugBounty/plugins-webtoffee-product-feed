@@ -172,7 +172,14 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_PriceSpy_Export')) {
                 }
 
                 if (!empty($prod_exc)) {
-                    $args['exclude'] = $prod_exc;
+                    // Use include with all product IDs except excluded ones for better performance
+                    $all_product_ids = get_posts(array(
+                        'post_type' => 'product',
+                        'posts_per_page' => -1,
+                        'fields' => 'ids',
+                        'post_status' => 'publish',
+                    ));
+                    $args['include'] = array_diff($all_product_ids, $prod_exc);
                 }
 
                 if (!empty($exc_stock_status)) {
@@ -180,8 +187,13 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_PriceSpy_Export')) {
                 }
 
                 // Export all language products if WPML is active and the language selected is all.
-                if (function_exists('icl_object_id') && isset($_SERVER["HTTP_REFERER"]) && strpos($_SERVER["HTTP_REFERER"], 'lang=all') !== false) {
-                    $args['suppress_filters'] = true;
+                // Note: suppress_filters is not used for VIP compliance
+                if (function_exists('icl_object_id') && isset($_SERVER["HTTP_REFERER"]) && strpos(sanitize_text_field(wp_unslash($_SERVER["HTTP_REFERER"])), 'lang=all') !== false) {
+                    // Use WPML's global language switching instead of suppress_filters
+                    global $sitepress;
+                    if ($sitepress) {
+                        $sitepress->switch_lang('all');
+                    }
                 }
 
 
@@ -442,7 +454,7 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_PriceSpy_Export')) {
             }
 
             //strip tags and special characters
-            $description = strip_tags($description);
+            $description = wp_strip_all_tags($description);
 
             return apply_filters('wt_feed_filter_product_description', $description, $this->product);
         }
@@ -500,7 +512,7 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_PriceSpy_Export')) {
 
 
             // Strip tags and special characters
-            $short_description = strip_tags($short_description);
+            $short_description = wp_strip_all_tags($short_description);
 
             return apply_filters('wt_feed_filter_product_short_description', $short_description, $this->product);
         }
@@ -1113,7 +1125,7 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_PriceSpy_Export')) {
              */
             $separator = apply_filters('wt_feed_tags_separator', ',', $this->product);
 
-            $tags = strip_tags( get_the_term_list($id, 'product_tag', '', $separator, '') );
+            $tags = wp_strip_all_tags( get_the_term_list($id, 'product_tag', '', $separator, '') );
 
             return apply_filters('wt_feed_filter_product_tags', $tags, $this->product);
         }

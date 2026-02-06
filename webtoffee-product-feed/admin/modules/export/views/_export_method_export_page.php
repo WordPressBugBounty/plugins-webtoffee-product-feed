@@ -7,16 +7,16 @@ if (!defined('ABSPATH')) {
 	<p><?php echo esc_html( $step_info['description'] ); ?></p>
 	
     <div class="wt_pf_warn wt_pf_method_export_wrn" style="display:none;">
-		<?php esc_html_e('Please select an export method');?>
+		<?php esc_html_e('Please select an export method', 'webtoffee-product-feed');?>
 	</div>
 
     <div class="wt_pf_warn wt_pf_export_template_wrn" style="display:none;">
-        <?php esc_html_e('Please select an export template.');?>
+        <?php esc_html_e('Please select an export template.', 'webtoffee-product-feed');?>
     </div>
-    <div id="product-type-message" class="updated" style="margin:0px;display: none;background: #dceff4;"><p><?php esc_html_e('The free version of this plugin exports and imports only WooCommerce Simple, Grouped and External/Affiliate product types.'); ?></p></div>
+    <div id="product-type-message" class="updated" style="margin:0px;display: none;background: #dceff4;"><p><?php esc_html_e('The free version of this plugin exports and imports only WooCommerce Simple, Grouped and External/Affiliate product types.', 'webtoffee-product-feed'); ?></p></div>
 	<table class="form-table wt-pfd-form-table">
 		<tr>
-			<th><label><?php esc_html_e('Select an export method');?></label></th>
+			<th><label><?php esc_html_e('Select an export method', 'webtoffee-product-feed');?></label></th>
 			<td colspan="2" style="width:75%;">
                 <div class="wt_pf_radio_block">
                     <?php
@@ -28,7 +28,7 @@ if (!defined('ABSPATH')) {
                         ?>
                         <p>
                             <input type="radio" value="<?php echo esc_attr( $key );?>" id="wt_pf_export_<?php echo esc_attr( $key );?>_export" name="wt_pf_export_method_export" <?php echo ($this->export_method==$key ? 'checked="checked"' : '');?>><b><label for="wt_pf_export_<?php echo esc_attr( $key );?>_export"><?php echo esc_html( $value['title'] ); ?></label></b> <br />
-                            <span><label for="wt_pf_export_<?php echo esc_atr( $key );?>_export"><?php echo esc_html( $value['description'] ); ?></label></span>
+                            <span><label for="wt_pf_export_<?php echo esc_attr( $key );?>_export"><?php echo esc_html( $value['description'] ); ?></label></span>
                         </p>
                         <?php
                     }
@@ -39,7 +39,7 @@ if (!defined('ABSPATH')) {
 		</tr>
 		<?php if(!empty($this->mapping_enabled_fields)):?>
         <tr class="wt-pfd-export-method-options wt-pfd-export-method-options-quick">
-            <th style="width:150px; text-align:left; vertical-align:top;"><label><?php esc_html_e('Include fields from the respective groups');?></label></th>
+            <th style="width:150px; text-align:left; vertical-align:top;"><label><?php esc_html_e('Include fields from the respective groups', 'webtoffee-product-feed');?></label></th>
             <td colspan="2" style="width:75%;">
                 <?php
                 foreach($this->mapping_enabled_fields as $mapping_enabled_field_key=>$mapping_enabled_field)
@@ -64,16 +64,16 @@ if (!defined('ABSPATH')) {
                     <?php
                 }
                 ?>
-                <span class="wt-pfd_form_help"><?php esc_html_e('Enabling any of these ensures that all the fields from the respective groups are included in your export.');?></span>
+                <span class="wt-pfd_form_help"><?php esc_html_e('Enabling any of these ensures that all the fields from the respective groups are included in your export.', 'webtoffee-product-feed');?></span>
             </td>
         </tr>
 		<?php endif; ?>
 
 		<tr class="wt-pfd-export-method-options wt-pfd-export-method-options-template" style="display:none;">
-    		<th><label><?php esc_html_e('Export template');?></label></th>
+    		<th><label><?php esc_html_e('Export template', 'webtoffee-product-feed');?></label></th>
     		<td>
     			<select class="wt-pfd-export-template-sele">
-    				<option value="0">-- <?php esc_html_e('Select a template'); ?> --</option>
+    				<option value="0">-- <?php esc_html_e('Select a template', 'webtoffee-product-feed'); ?> --</option>
     				<?php
     				foreach($this->mapping_templates as $mapping_template)
     				{

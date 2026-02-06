@@ -4,12 +4,12 @@ if (!defined('ABSPATH')) {
 }
 ?>
 <div class="wt_pf_export_main">
-    <p><?php echo esc_html( $step_info['description'] );  ?> <?php esc_html_e('To learn about adding static values refer to'); ?><a target="_blank" href="https://www.webtoffee.com/using-static-values-for-product-feed/"> <?php esc_html_e('this'); ?></a> <?php esc_html_e('article.'); ?></p>
+    <p><?php echo esc_html( $step_info['description'] );  ?> <?php esc_html_e('To learn about adding static values refer to', 'webtoffee-product-feed'); ?><a target="_blank" href="https://www.webtoffee.com/using-static-values-for-product-feed/"> <?php esc_html_e('this', 'webtoffee-product-feed'); ?></a> <?php esc_html_e('article.', 'webtoffee-product-feed'); ?></p>
 	<div class="wtpf_meta_mapping_box">
 		<div class="wtpf_meta_mapping_box_hd wt_pf_noselect">
 			<span class="dashicons dashicons-arrow-down"></span>
-			<?php esc_html_e('Default fields');?>
-			<span class="wtpf_meta_mapping_box_selected_count_box"><span class="wtpf_meta_mapping_box_selected_count_box_num">0</span> <?php esc_html_e(' columns(s) selected'); ?></span>
+			<?php esc_html_e('Default fields', 'webtoffee-product-feed');?>
+			<span class="wtpf_meta_mapping_box_selected_count_box"><span class="wtpf_meta_mapping_box_selected_count_box_num">0</span> <?php esc_html_e(' columns(s) selected', 'webtoffee-product-feed'); ?></span>
 		</div>
 		<div style="clear:both;"></div>
 		<div class="wtpf_meta_mapping_box_con" data-sortable="0" data-loaded="1" data-field-validated="0" data-key="" style="display:inline-block;">
@@ -19,14 +19,14 @@ if (!defined('ABSPATH')) {
 			    		<th>
 			    			<input type="checkbox" name="" class="wt_pf_mapping_checkbox_main">
 			    		</th>
-                                            <th><span id="wt_pf_channel_selected"><?php esc_html_e('Catalog');?></span> <?php esc_html_e('Attributes');?></th>
-                                            <th><?php esc_html_e('WooCommerce Product Fields');?></th>
+                                            <th><span id="wt_pf_channel_selected"><?php esc_html_e('Catalog', 'webtoffee-product-feed');?></span> <?php esc_html_e('Attributes', 'webtoffee-product-feed');?></th>
+                                            <th><?php esc_html_e('WooCommerce Product Fields', 'webtoffee-product-feed');?></th>
                                             <th width="217px"></th>
 			    	</tr>
 				</thead>
 				<tbody>
 				<?php
-				$draggable_tooltip=__("Drag to rearrange the columns");
+				$draggable_tooltip=__("Drag to rearrange the columns", 'webtoffee-product-feed');
 				$tr_count=0;
 				foreach($form_data_mapping_fields as $key=>$val)
 				{
@@ -54,7 +54,7 @@ if (!defined('ABSPATH')) {
 					?>
 					<tr>
 						<td colspan="3" style="text-align:center;">
-							<?php esc_html_e('No fields found.'); ?>
+							<?php esc_html_e('No fields found.', 'webtoffee-product-feed'); ?>
 						</td>
 					</tr>
 					<?php
@@ -86,7 +86,7 @@ if (!defined('ABSPATH')) {
 				<div class="wtpf_meta_mapping_box_hd wt_pf_noselect">
 					<span class="dashicons dashicons-arrow-right"></span>
 					<?php echo esc_html( $mapping_enabled_field[0] );?>
-					<span class="wtpf_meta_mapping_box_selected_count_box"><span class="wtpf_meta_mapping_box_selected_count_box_num">0</span> <?php esc_html_e(' columns(s) selected'); ?></span>
+					<span class="wtpf_meta_mapping_box_selected_count_box"><span class="wtpf_meta_mapping_box_selected_count_box_num">0</span> <?php esc_html_e(' columns(s) selected', 'webtoffee-product-feed'); ?></span>
 				</div>
 				<div style="clear:both;"></div>
 				<div class="wtpf_meta_mapping_box_con" data-sortable="0" data-loaded="0" data-field-validated="0" data-key="<?php echo esc_attr( $mapping_enabled_field_key );?>"></div>

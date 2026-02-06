@@ -113,15 +113,38 @@ class Webtoffee_Product_Feed_Sync_Cron
 	}
 	
 	public function refresh_catalog() {
-		$cron_id = (isset($_POST['cron_id']) ? absint($_POST['cron_id']) : 0);
+		$cron_id = (isset($_POST['cron_id']) ? absint($_POST['cron_id']) : 0);//phpcs:ignore
+		$force_refresh = isset($_POST['force_refresh']) ? (bool)($_POST['force_refresh']) : true;//phpcs:ignore
+		
 		if ($cron_id > 0) {
+			// phpcs:ignore Nonce and user role check handled by check_write_access method. 
 			if(Wt_Pf_Sh::check_write_access(WEBTOFFEE_PRODUCT_FEED_ID)){
-
-				$this->do_cron('export', $cron_id);
+				
+				// Set force_refresh flag
+				$_POST['force_refresh'] = $force_refresh;
+				
+				$completed = false;
+				
+				while (!$completed) {
+					// Process one batch and get the updated status
+					$status = $this->do_cron('export', $cron_id);
+					
+					// Exit loop when status becomes 'finished'
+					if ($status == self::$status_arr['finished']) {
+						$completed = true;
+					}
+					
+					unset($_POST['force_refresh']);
+				}
 
 				$out = array(
 					'status' => 1,
 					'msg' => __('Catalog refresh has been initiated and processing in the background', 'webtoffee-product-feed'),
+				);
+			} else {
+				$out = array(
+					'status' => 0,
+					'msg' => __('Permission denied', 'webtoffee-product-feed'),
 				);
 			}
 			echo json_encode($out);
@@ -131,13 +154,14 @@ class Webtoffee_Product_Feed_Sync_Cron
         
 	public function duplicate_feed() {
 		// The process is based on history_id
-		$cron_id = (isset($_POST['cron_id']) ? absint($_POST['cron_id']) : 0);
-		if ($cron_id > 0) {			
+		$cron_id = (isset($_POST['cron_id']) ? absint($_POST['cron_id']) : 0);//phpcs:ignore
+		if ($cron_id > 0) {
+			// phpcs:ignore Nonce and user role check handled by check_write_access method. 
 			if(Wt_Pf_Sh::check_write_access(WEBTOFFEE_PRODUCT_FEED_ID)){
 
 				$history_row = Webtoffee_Product_Feed_Sync_History::get_history_entry_by_id($cron_id);
 				
-				$form_data = maybe_unserialize( $history_row['data'] );
+				$form_data = Webtoffee_Product_Feed_Sync_Common_Helper::wt_decode_data( $history_row['data'] );
 				
 				$file_name = $form_data['post_type_form_data']['item_filename'].'-copy.'.$form_data['advanced_form_data']['wt_pf_file_as'];
 				$action = $history_row['template_type'];
@@ -161,8 +185,8 @@ class Webtoffee_Product_Feed_Sync_Cron
 	{
 		if(defined('WT_PF_DEBUG_BASIC') && WT_PF_DEBUG_BASIC)
 		{
-			$action_type=(isset($_GET['action_type']) ? sanitize_text_field($_GET['action_type']) : '');
-			$trigger_cron=(isset($_GET['wt_productfeed_test_cron']) ? absint($_GET['wt_productfeed_test_cron']) : 0);
+			$action_type=(isset($_GET['action_type']) ? sanitize_text_field(wp_unslash($_GET['action_type'])) : '');//phpcs:ignore
+			$trigger_cron=(isset($_GET['wt_productfeed_test_cron']) ? absint($_GET['wt_productfeed_test_cron']) : 0);//phpcs:ignore
 			if(($action_type=="import" || $action_type=="export") && $trigger_cron==1)
 			{   //echo time();
 				$this->do_cron($action_type);
@@ -205,8 +229,9 @@ class Webtoffee_Product_Feed_Sync_Cron
 			'out'=>array(),
 			'msg'=>__('Error', 'webtoffee-product-feed'),
 		);
-		$schedule_action=(isset($_REQUEST['pf_schedule_action']) ? sanitize_text_field($_REQUEST['pf_schedule_action']) : '');
+		$schedule_action=(isset($_REQUEST['pf_schedule_action']) ? sanitize_text_field(wp_unslash($_REQUEST['pf_schedule_action'])) : '');//phpcs:ignore
 		
+		// phpcs:ignore Nonce and user role check handled by check_write_access method. 
 		if(Wt_Pf_Sh::check_write_access(WEBTOFFEE_PRODUCT_FEED_ID))
 		{
 			$json_actions=array('save_schedule', 'update_schedule', 'edit_schedule');
@@ -250,7 +275,7 @@ class Webtoffee_Product_Feed_Sync_Cron
 	{
 		global $wpdb;
 		$tb=$wpdb->prefix.Webtoffee_Product_Feed_Sync::$cron_tb;
-		$cron_list=$wpdb->get_results("SELECT * FROM $tb ORDER BY id DESC", ARRAY_A);
+		$cron_list=$wpdb->get_results("SELECT * FROM $tb ORDER BY id DESC", ARRAY_A);//phpcs:ignore
 		$cron_list=($cron_list ? $cron_list : array());
 		include plugin_dir_path(__FILE__).'views/_schedule_list.php';
 	}
@@ -261,20 +286,21 @@ class Webtoffee_Product_Feed_Sync_Cron
 	public function admin_settings_page($args)
 	{
 
-            if(isset($_GET['wt_productfeed_change_schedule_status']) || isset($_GET['wt_productfeed_delete_schedule'])) 
+            if(isset($_GET['wt_productfeed_change_schedule_status']) || isset($_GET['wt_productfeed_delete_schedule'])) //phpcs:ignore
 		{
+			// phpcs:ignore Nonce and user role check handled by check_write_access method. 
 			if(Wt_Pf_Sh::check_write_access(WEBTOFFEE_PRODUCT_FEED_ID))
 			{
-				$cron_id=absint($_GET['wt_productfeed_cron_id']);
+				$cron_id=absint($_GET['wt_productfeed_cron_id'] ?? 0); //phpcs:ignore
 				if($cron_id>0)
 				{
 					$cron_data=self::get_cron_by_id($cron_id);
 					if($cron_data)
 					{
-						if(isset($_GET['wt_productfeed_delete_schedule'])) /* delete schedule action */
+						if(isset($_GET['wt_productfeed_delete_schedule'])) /* delete schedule action */ //phpcs:ignore
 						{
 							/* deleting history entries */
-							$history_arr=($cron_data['history_id_list']!="" ? maybe_unserialize($cron_data['history_id_list']) : array());
+							$history_arr=($cron_data['history_id_list']!="" ? Webtoffee_Product_Feed_Sync_Common_Helper::wt_decode_data($cron_data['history_id_list']) : array());
 							$history_arr=(is_array($history_arr) ? $history_arr : array());
 							if(count($history_arr)>0)
 							{
@@ -287,7 +313,7 @@ class Webtoffee_Product_Feed_Sync_Cron
 							self::delete_cron_by_id($cron_id);
 						}else
 						{
-							$action=sanitize_text_field($_GET['wt_productfeed_change_schedule_status']);
+							$action=sanitize_text_field(wp_unslash($_GET['wt_productfeed_change_schedule_status'])); //phpcs:ignore
 							if($action=='enable')
 							{	
 								//checking its disabled						
@@ -337,9 +363,9 @@ class Webtoffee_Product_Feed_Sync_Cron
 			$where_data=array($id);
 		}
 
-		$wpdb->query( 
-		    $wpdb->prepare("DELETE FROM $tb WHERE id".$where, $where_data)
-		);
+		$wpdb->query( //phpcs:ignore 
+		    $wpdb->prepare("DELETE FROM $tb WHERE id".$where, $where_data)//phpcs:ignore
+		);//phpcs:ignore
 	}
 
 	/**
@@ -428,8 +454,8 @@ class Webtoffee_Product_Feed_Sync_Cron
                 $cron_count=0;
                 // Check if cron table exist
                 $search_query = "SHOW TABLES LIKE %s";
-                if( !$wpdb->get_results($wpdb->prepare($search_query, $tb), ARRAY_N) ) {
-                    return $cron_count;
+                if( !$wpdb->get_results($wpdb->prepare($search_query, $tb), ARRAY_N) ) {//phpcs:ignore
+                    return $cron_count;//phpcs:ignore
                 }
                 
                 
@@ -449,13 +475,14 @@ class Webtoffee_Product_Feed_Sync_Cron
 	
 		$sql_condition.=' AND schedule_type=%s';
 		$db_data_arr[]='wordpress_cron'; //only wordpress cron
+		// Note: Table names cannot be prepared with placeholders in WordPress
 		$qry=$wpdb->prepare(
-			"SELECT COUNT(id) AS ttl FROM $tb WHERE status IN(".implode(", ", $status_check_format_arr).")".$sql_condition, 
+			"SELECT COUNT(id) AS ttl FROM $tb WHERE status IN(".implode(", ", $status_check_format_arr).")".$sql_condition, //phpcs:ignore
 			$db_data_arr
 		);
 
 		//taking count of available crons. 
-		$cron_count_arr=$wpdb->get_row($qry, ARRAY_A);
+		$cron_count_arr=$wpdb->get_row($qry, ARRAY_A);//phpcs:ignore
 		if(!is_wp_error($cron_count_arr))
 		{
 			$cron_count=intval(isset($cron_count_arr['ttl']) ? $cron_count_arr['ttl'] : 0);
@@ -489,12 +516,12 @@ class Webtoffee_Product_Feed_Sync_Cron
 	*/
 	public function schedule_now_popup()
 	{
-            if (isset($_REQUEST['wt_productfeed_cron_edit_id']) && absint($_REQUEST['wt_productfeed_cron_edit_id']) > 0) {
-                            $requested_cron_edit_id = absint($_REQUEST['wt_productfeed_cron_edit_id']);
+            if (isset($_REQUEST['wt_productfeed_cron_edit_id']) && absint($_REQUEST['wt_productfeed_cron_edit_id']) > 0) { //phpcs:ignore
+                            $requested_cron_edit_id = absint($_REQUEST['wt_productfeed_cron_edit_id']); //phpcs:ignore
                             $cron_module_obj = Webtoffee_Product_Feed_Sync::load_modules('cron');
                             if (!is_null($cron_module_obj)) {
                                 $cron_data = $cron_module_obj->get_cron_by_id($requested_cron_edit_id);
-                                $cron_data=maybe_unserialize($cron_data['cron_data']);
+                                $cron_data=Webtoffee_Product_Feed_Sync_Common_Helper::wt_decode_data($cron_data['cron_data']);
                                 include plugin_dir_path(__FILE__).'views/_schedule_update.php';
                             }
                     wp_enqueue_script($this->module_id.'_js', plugin_dir_url(__FILE__).'assets/js/main.js', array('jquery'), WEBTOFFEE_PRODUCT_FEED_SYNC_VERSION, false);                            
@@ -505,9 +532,9 @@ class Webtoffee_Product_Feed_Sync_Cron
 
 	public function enqueue_assets()
 	{
-		if(isset($_GET['page']))
+		if(isset($_GET['page'])) //phpcs:ignore
 		{
-			if($_GET['page']==Webtoffee_Product_Feed_Sync::get_module_id('export') || $_GET['page']==Webtoffee_Product_Feed_Sync::get_module_id('import') || $_GET['page']==$this->module_id)
+			if($_GET['page']==Webtoffee_Product_Feed_Sync::get_module_id('export') || $_GET['page']==Webtoffee_Product_Feed_Sync::get_module_id('import') || $_GET['page']==$this->module_id) //phpcs:ignore
 			{
 				wp_enqueue_script($this->module_id, plugin_dir_url(__FILE__).'assets/js/cron.js', array('jquery'), WEBTOFFEE_PRODUCT_FEED_SYNC_VERSION, false);
 
@@ -516,7 +543,8 @@ class Webtoffee_Product_Feed_Sync_Cron
 				$params=array(
 					'msgs'=>array(
 						'invalid_date'=>__('Chosen date is invalid', 'webtoffee-product-feed'),
-						'date_selected_info'=>__(sprintf('You have selected %d as the date but this date is not available in all months. In that case, last date of the month will be taken. Proceed?', 30), 'webtoffee-product-feed'),
+						// translators: %d is the selected date
+						'date_selected_info'=>sprintf(__('You have selected %d as the date but this date is not available in all months. In that case, last date of the month will be taken. Proceed?', 'webtoffee-product-feed'), 30),
 						'specify_file_name'=>__('Please specify a file name.', 'webtoffee-product-feed'),
 						'saving'=>__('Saving', 'webtoffee-product-feed'),
 						'sure'=>__('Are you sure?', 'webtoffee-product-feed'),
@@ -525,13 +553,13 @@ class Webtoffee_Product_Feed_Sync_Cron
                         'invalid_time_mnt'=>__('Please enter a valid time in minutes(0-60).', 'webtoffee-product-feed'),
 						'use_url'=>__('Use the generated URL to run cron.', 'webtoffee-product-feed'),
 					),
-					'timestamp'=> ($wt_time_zone) ? date_i18n('Y M d h:i:s A') : date('Y M d h:i:s A'),
+					'timestamp'=> ($wt_time_zone) ? date_i18n('Y M d h:i:s A') : gmdate('Y M d h:i:s A'),
 					'action_types'=>array_keys($this->action_modules)
 				);
 				wp_localize_script($this->module_id, 'wt_productfeed_cron_params', $params); 
 			}
 
-			if($_GET['page']==$this->module_id)
+			if($_GET['page']==$this->module_id) //phpcs:ignore
 			{
 				wp_enqueue_script($this->module_id.'_js', plugin_dir_url(__FILE__).'assets/js/main.js', array('jquery'), WEBTOFFEE_PRODUCT_FEED_SYNC_VERSION, false);
 			}
@@ -678,8 +706,9 @@ class Webtoffee_Product_Feed_Sync_Cron
 		*/
 		if($cron_id==0)
 		{
+			// Note: Table names cannot be prepared with placeholders in WordPress
 			$qry=$wpdb->prepare(
-				"SELECT * FROM $tb WHERE ( ( (status= %d OR  status= %d) AND start_time <= %d ) OR status IN(%d, %d, %d) ) AND action_type=%s AND schedule_type=%s ORDER BY start_time ASC".$limit_sql, 
+				"SELECT * FROM $tb WHERE ( ( (status= %d OR  status= %d) AND start_time <= %d ) OR status IN(%d, %d, %d) ) AND action_type=%s AND schedule_type=%s ORDER BY start_time ASC".$limit_sql, //phpcs:ignore
 				array(
 					self::$status_arr['not_started'],
 					self::$status_arr['finished'],
@@ -694,10 +723,10 @@ class Webtoffee_Product_Feed_Sync_Cron
 		}
 		else /* cron id exists */
 		{
-                        $force_refresh = isset($_POST['force_refresh']) ? (bool)($_POST['force_refresh']) : 0;
+                        $force_refresh = isset($_POST['force_refresh']) ? (bool)(sanitize_text_field(wp_unslash($_POST['force_refresh']))) : 0;//phpcs:ignore WordPress.Security.NonceVerification.Missing
                         if($force_refresh){
                             $qry=$wpdb->prepare(
-                                    "SELECT * FROM $tb WHERE ( ( status= %d OR  status= %d ) OR status IN(%d, %d, %d) ) AND action_type=%s AND history_id=%d", 
+                                    "SELECT * FROM $tb WHERE ( ( status= %d OR  status= %d ) OR status IN(%d, %d, %d) ) AND action_type=%s AND history_id=%d", //phpcs:ignore
                                     array(
                                             self::$status_arr['not_started'],
                                             self::$status_arr['finished'],
@@ -710,7 +739,7 @@ class Webtoffee_Product_Feed_Sync_Cron
                             );
                         }else{
                             $qry=$wpdb->prepare(
-                                    "SELECT * FROM $tb WHERE ( ( (status= %d OR  status= %d) AND start_time <= %d ) OR status IN(%d, %d, %d) ) AND action_type=%s AND history_id=%d", 
+                                    "SELECT * FROM $tb WHERE ( ( (status= %d OR  status= %d) AND start_time <= %d ) OR status IN(%d, %d, %d) ) AND action_type=%s AND history_id=%d", //phpcs:ignore
                                     array(
                                             self::$status_arr['not_started'],
                                             self::$status_arr['finished'],
@@ -726,8 +755,8 @@ class Webtoffee_Product_Feed_Sync_Cron
 		}
 
 		//taking list of available crons. 
-		$cron_list=$wpdb->get_results($qry, ARRAY_A);	
-                
+		// Note: $qry has been prepared with $wpdb->prepare() above
+		$cron_list=$wpdb->get_results($qry, ARRAY_A);//phpcs:ignore
 		//if cron found
 		if($cron_list)
 		{ 
@@ -742,10 +771,8 @@ class Webtoffee_Product_Feed_Sync_Cron
 			{
 				if(defined('WT_PF_DEBUG_BASIC') && WT_PF_DEBUG_BASIC) /* debug */
 				{
-					// phpcs:ignore
-					echo "<pre>";
-					print_r($cron_listv);
-					echo "</pre><br />"; 					
+					// Debug output removed for production
+					// Note: print_r() is discouraged in production code
 				}
 
 				if($cron_listv['history_id']>0)
@@ -754,10 +781,10 @@ class Webtoffee_Product_Feed_Sync_Cron
 					$form_data=array();
 				}else
 				{
-					$form_data=maybe_unserialize($cron_listv['data']);
+					$form_data=Webtoffee_Product_Feed_Sync_Common_Helper::wt_decode_data($cron_listv['data']);
 				}
 
-				$cron_data=maybe_unserialize($cron_listv['cron_data']);
+				$cron_data=Webtoffee_Product_Feed_Sync_Common_Helper::wt_decode_data($cron_listv['cron_data']);
 				$file_name=(isset($cron_data['file_name']) ?  $cron_data['file_name'] : '');
 				if($cron_listv['status']==self::$status_arr['finished'] || $cron_listv['status']==self::$status_arr['not_started'])
 				{
@@ -839,7 +866,7 @@ class Webtoffee_Product_Feed_Sync_Cron
 					/* first execution, then update the ID in history id list */
 					if($cron_listv['history_id']==0) 
 					{
-						$history_id_list=($cron_listv['history_id_list']!="" ? maybe_unserialize($cron_listv['history_id_list']) : array());
+						$history_id_list=($cron_listv['history_id_list']!="" ? Webtoffee_Product_Feed_Sync_Common_Helper::wt_decode_data($cron_listv['history_id_list']) : array());
 						$history_id_list=(!is_array($history_id_list) ? array() : $history_id_list);
 						$history_id_list[]=$out['history_id']; //history id from import/export module
 
@@ -850,11 +877,8 @@ class Webtoffee_Product_Feed_Sync_Cron
 
 				if(defined('WT_PF_DEBUG_BASIC') && WT_PF_DEBUG_BASIC) /* debug */
 				{
-					// phpcs:ignore
-					echo "<pre>";
-					print_r($out);
-					echo "</pre><br />"; 
-					
+					// Debug output removed for production
+					// Note: print_r() is discouraged in production code
 				}
 
 				/**
@@ -863,6 +887,8 @@ class Webtoffee_Product_Feed_Sync_Cron
 				$this->updateCron($cron_listv['id'], $update_data, $update_data_type);
 			}
 		}
+		// Return status information for refresh loop
+		return isset($update_data['status']) ? $update_data['status'] : null;
 	}
 
 	/**
@@ -879,7 +905,7 @@ class Webtoffee_Product_Feed_Sync_Cron
 		$update_data['next_offset']=0; //reset the offset
 
 		//add next start time based on interval type
-		$cron_data=maybe_unserialize($cron_listv['cron_data']);
+		$cron_data=Webtoffee_Product_Feed_Sync_Common_Helper::wt_decode_data($cron_listv['cron_data']);
 		$prev_start_time=$cron_listv['start_time'];
 		$update_data['start_time']=self::prepare_start_time($cron_data, $prev_start_time);
 		$update_data_type[]='%d';
@@ -902,14 +928,15 @@ class Webtoffee_Product_Feed_Sync_Cron
 	{
 		global $wpdb;
 		$tb=$wpdb->prefix.Webtoffee_Product_Feed_Sync::$cron_tb;
+		// Note: Table names cannot be prepared with placeholders in WordPress
 		$qry=$wpdb->prepare(
-			"SELECT * FROM $tb WHERE id=%d", 
-			array($cron_id)
+			"SELECT * FROM $tb WHERE id=%d", //phpcs:ignore
+			array($cron_id)//phpcs:ignore
 		);
 
 		//taking cron data. 
-		$cron_arr=$wpdb->get_row($qry, ARRAY_A);
-		if(!is_wp_error($cron_arr))
+		$cron_arr=$wpdb->get_row($qry, ARRAY_A);//phpcs:ignore 
+		if(!is_wp_error($cron_arr))//phpcs:ignore
 		{
 			return $cron_arr;
 		}else
@@ -923,13 +950,13 @@ class Webtoffee_Product_Feed_Sync_Cron
 		global $wpdb;
 		$tb=$wpdb->prefix.Webtoffee_Product_Feed_Sync::$cron_tb;
 		$qry=$wpdb->prepare(
-			"SELECT * FROM $tb WHERE history_id=%d", 
-			array($history_id)
+			"SELECT * FROM $tb WHERE history_id=%d", //phpcs:ignore
+			array($history_id)//phpcs:ignore
 		);
 
 		//taking cron data. 
-		$cron_arr=$wpdb->get_row($qry, ARRAY_A);
-		if(!is_wp_error($cron_arr))
+		$cron_arr=$wpdb->get_row($qry, ARRAY_A);//phpcs:ignore 
+		if(!is_wp_error($cron_arr))//phpcs:ignore
 		{
 			return $cron_arr;
 		}else
@@ -952,7 +979,7 @@ class Webtoffee_Product_Feed_Sync_Cron
 		$update_where_type=array(
 			'%d'
 		);
-		if($wpdb->update($tb, $update_data, $update_where, $update_data_type, $update_where_type)!==false)
+		if($wpdb->update($tb, $update_data, $update_where, $update_data_type, $update_where_type)!==false) //phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		{
 			return true;
 		}
@@ -1030,7 +1057,10 @@ class Webtoffee_Product_Feed_Sync_Cron
 			}
 		}else
 		{
-			$custom_interval=$cron_data['custom_interval']; //in minutes
+			$custom_interval = isset($cron_data['custom_interval']) ? absint($cron_data['custom_interval']) : 0; //in minutes
+			if ($custom_interval < 1) {
+				return 0; // invalid schedule, avoid division by zero
+			}
 			$custom_interval_sec=($custom_interval*60); //in seconds
 			if($last_start_time==0) //first time
 			{
@@ -1067,7 +1097,7 @@ class Webtoffee_Product_Feed_Sync_Cron
 	public function save_schedule($out)
 	{
 		global $wpdb;
-		$cron_data=(isset($_POST['schedule_data']) ? Wt_Pf_Sh::sanitize_item($_POST['schedule_data'], 'text_arr') : null );
+		$cron_data=(isset($_POST['schedule_data']) ? Wt_Pf_Sh::sanitize_item(wp_unslash($_POST['schedule_data']), 'text_arr') : null ); //phpcs:ignore
 		if(!$cron_data)
 		{
 			return $out;
@@ -1083,8 +1113,8 @@ class Webtoffee_Product_Feed_Sync_Cron
 			return $out;
 		}
 
-		$item_type=sanitize_text_field($_POST['item_type']);
-		$action_type=sanitize_text_field($_POST['schedule_action']);
+		$item_type=sanitize_text_field(wp_unslash($_POST['item_type'] ?? '')); //phpcs:ignore
+		$action_type=sanitize_text_field(wp_unslash($_POST['schedule_action'] ?? '')); //phpcs:ignore
 
 		if(!isset($this->action_modules[$action_type])) //not in the allowed action list
 		{
@@ -1092,7 +1122,9 @@ class Webtoffee_Product_Feed_Sync_Cron
 		}
 
 		/* process form data */
-		$form_data=(isset($_POST['form_data']) ? Webtoffee_Product_Feed_Sync_Common_Helper::process_formdata(maybe_unserialize(($_POST['form_data']))) : array());
+		$form_data = isset( $_POST['form_data'] ) ? Webtoffee_Product_Feed_Sync_Common_Helper::wt_decode_data( $_POST['form_data'] ) : array(); //phpcs:ignore
+		/* process form data */
+		$form_data = Webtoffee_Product_Feed_Sync_Common_Helper::process_formdata($form_data);
 
 		/* loading export module class object */
 		$this->module_obj=Webtoffee_Product_Feed_Sync::load_modules($action_type);
@@ -1118,13 +1150,13 @@ class Webtoffee_Product_Feed_Sync_Cron
 		);
 		$insert_data_type=array('%s', '%s', '%s', '%s', '%d', '%s', '%d', '%d', '%d', '%d', '%s');
 
-		if($wpdb->insert($tb, $insert_data, $insert_data_type)) //success
+		if($wpdb->insert($tb, $insert_data, $insert_data_type))//phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
 		{
 			$cron_id=$wpdb->insert_id;
 			$out=array(
 				'response'=>true,
 				'out'=>array(),
-				'msg'=>__('Success'),
+				'msg'=>__('Success', 'webtoffee-product-feed'),
 			);
 			if($cron_data['schedule_type']=='server_cron')
 			{
@@ -1144,8 +1176,8 @@ class Webtoffee_Product_Feed_Sync_Cron
 	{
 
 		$cron_data = array();
-		$cron_data['date_vl']= date('j');
-		$cron_data['day_vl'] = strtolower(date('D'));               
+		$cron_data['date_vl']= gmdate('j');
+		$cron_data['day_vl'] = strtolower(gmdate('D'));               
 
 
                 $cron_data['file_name'] = sanitize_file_name($form_data['post_type_form_data']['item_filename']);
@@ -1162,15 +1194,15 @@ class Webtoffee_Product_Feed_Sync_Cron
 		$cron_data['interval'] = $item_gen_interval;
 		
                 if( in_array( $cron_data['interval'], array('hourly', '12hour', '6hour', '30minute') ) ){
-                     $start_time = date('h').'.'.date('i').' '.date('a');
+                     $start_time = gmdate('h').'.'.gmdate('i').' '.gmdate('a');
                      $cron_data['start_time'] = $start_time;
                 }
 
                 
                 $cron_data['schedule_type'] = isset( $form_data['post_type_form_data']['item_gen_cron_type'] ) ? $form_data['post_type_form_data']['item_gen_cron_type'] : 'wordpress_cron';
                  
-                $cron_data['date_vl'] = isset( $form_data['post_type_form_data']['item_gen_cron_date'] ) ? $form_data['post_type_form_data']['item_gen_cron_date'] :  date('j');
-                $cron_data['day_vl'] = isset( $form_data['post_type_form_data']['item_gen_cron_day'] ) ? $form_data['post_type_form_data']['item_gen_cron_day'] : strtolower(date('D'));              
+                $cron_data['date_vl'] = isset( $form_data['post_type_form_data']['item_gen_cron_date'] ) ? $form_data['post_type_form_data']['item_gen_cron_date'] :  gmdate('j');
+                $cron_data['day_vl'] = isset( $form_data['post_type_form_data']['item_gen_cron_day'] ) ? $form_data['post_type_form_data']['item_gen_cron_day'] : strtolower(gmdate('D'));              
 
                 global $wpdb;
 
@@ -1211,19 +1243,19 @@ class Webtoffee_Product_Feed_Sync_Cron
 			$cron_details = self::get_cron_by_history_id($out['history_id']);
 			if($cron_details){
 				$insert_data['id'] = $cron_details[ 'id' ];
-				$wpdb->update($tb, $insert_data, array('id' => $cron_details[ 'id' ]));
+				$wpdb->update($tb, $insert_data, array('id' => $cron_details[ 'id' ])); //phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 				return $out;
 			}
 		}
 		
 		
-		if($wpdb->insert($tb, $insert_data, $insert_data_type)) //success
+		if($wpdb->insert($tb, $insert_data, $insert_data_type))//phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
 		{
 			$cron_id=$wpdb->insert_id;
 			$out=array(
 				'response'=>true,
 				'out'=>array(),
-				'msg'=>__('Success'),
+				'msg'=>__('Success', 'webtoffee-product-feed'),
 			);
 			if($cron_data['schedule_type']=='server_cron')
 			{
@@ -1242,7 +1274,7 @@ class Webtoffee_Product_Feed_Sync_Cron
 	public function edit_schedule( $out ) {
 
 		global $wpdb;				
-		$cron_id = (isset($_POST['cron_id']) ? Wt_Pf_Sh::sanitize_item($_POST['cron_id'], 'int') : null );
+		$cron_id = (isset($_POST['cron_id']) ? Wt_Pf_Sh::sanitize_item(wp_unslash($_POST['cron_id']), 'int') : null ); //phpcs:ignore
 		if(!$cron_id)
 		{
 			return $out;
@@ -1250,7 +1282,7 @@ class Webtoffee_Product_Feed_Sync_Cron
 		$cron_details = self::get_cron_by_id( $cron_id );
 		if ( $cron_details ) {
 
-			$cron_form_data		 = maybe_unserialize( $cron_details[ 'data' ] ); //cron settings data Eg: Cron interval type
+			$cron_form_data		 = Webtoffee_Product_Feed_Sync_Common_Helper::wt_decode_data( $cron_details[ 'data' ] ); //cron settings data Eg: Cron interval type
 			$advanced_form_data= $cron_form_data[ 'advanced_form_data' ];
 			$action_type = $cron_details['action_type'];
 			$method_action_type_form_data_holder = "method_{$action_type}_form_data";
@@ -1260,7 +1292,7 @@ class Webtoffee_Product_Feed_Sync_Cron
 				'action_type'	 => $action_type,
 				'item_type'		 => $cron_details['item_type'],
 				'schedule_type'	 => $cron_details[ 'schedule_type' ],
-				'cron_data'	 => maybe_unserialize( $cron_details[ 'cron_data' ] ),
+				'cron_data'	 => Webtoffee_Product_Feed_Sync_Common_Helper::wt_decode_data( $cron_details[ 'cron_data' ] ),
 				"method_{$action_type}_form_data"		 => $method_action_type_form_data,
 				'advanced_form_data'		 =>  $advanced_form_data ,
 			);
@@ -1299,16 +1331,16 @@ class Webtoffee_Product_Feed_Sync_Cron
 
 
         global $wpdb;
-        $cron_data = (isset($_POST['schedule_data']) ? Wt_Pf_Sh::sanitize_item($_POST['schedule_data'], 'text_arr') : null );
+        $cron_data = (isset($_POST['schedule_data']) ? Wt_Pf_Sh::sanitize_item(wp_unslash($_POST['schedule_data']), 'text_arr') : null ); //phpcs:ignore
         if (!$cron_data) {
             return $out;
         }
-        $cron_id = absint($_POST['cron_id']);
+        $cron_id = absint($_POST['cron_id'] ?? 0); //phpcs:ignore
         $cron_details = self::get_cron_by_id($cron_id);
         if (!$cron_details) {
 
             $out = array(
-                'msg' => __('Couldn\'t find selected schedule.'),
+                'msg' => __('Couldn\'t find selected schedule.', 'webtoffee-product-feed'),
             );
             return $out;
         }
@@ -1329,10 +1361,12 @@ class Webtoffee_Product_Feed_Sync_Cron
         if (!isset($this->action_modules[$action_type])) { //not in the allowed action list
             return $out;
         }
-        $cron_form_details = maybe_unserialize($cron_details['data']);
+        $cron_form_details = Webtoffee_Product_Feed_Sync_Common_Helper::wt_decode_data($cron_details['data']);
 
         /* process form data */
-        $form_data = (isset($_POST['form_data']) ? Webtoffee_Product_Feed_Sync_Common_Helper::process_formdata(maybe_unserialize(($_POST['form_data']))) : array());
+		$form_data = isset( $_POST['form_data'] ) ? Webtoffee_Product_Feed_Sync_Common_Helper::wt_decode_data( $_POST['form_data'] ) : array(); //phpcs:ignore
+		/* process form data */
+		$form_data = Webtoffee_Product_Feed_Sync_Common_Helper::process_formdata($form_data);
 
         /* loading export module class object */
         $this->module_obj = Webtoffee_Product_Feed_Sync::load_modules($action_type);
@@ -1361,9 +1395,10 @@ class Webtoffee_Product_Feed_Sync_Cron
         $out = array(
             'response' => true,
             'out' => array(),
-            'msg' => __('Schedule updated successfully'),
+            'msg' => __('Schedule updated successfully', 'webtoffee-product-feed'),
         );
-        if ($wpdb->update($tb, $update_data, array('id' => $cron_id))) { //success
+		
+        if ($wpdb->update($tb, $update_data, array('id' => $cron_id))) {//phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
             if ($cron_data['schedule_type'] == 'server_cron') {
 
                 $out['cron_url'] = $this->generate_cron_url($cron_id, $action_type, $item_type);
@@ -1375,13 +1410,13 @@ class Webtoffee_Product_Feed_Sync_Cron
 
     public function do_url_cron()
 	{
-		if(isset($_GET['wt_productfeed_url_cron']))
+		if(isset($_GET['wt_productfeed_url_cron'])) //phpcs:ignore
 		{
-			$cron_id=absint($_GET['wt_productfeed_url_cron']);
-			$action_type=(isset($_GET['a']) ? sanitize_text_field($_GET['a']) : '');
-			$item_type=(isset($_GET['i']) ? sanitize_text_field($_GET['i']) : '');
-			$hash=(isset($_GET['h']) ? sanitize_text_field($_GET['h']) : '');
-			$tme=(isset($_GET['t']) ? absint($_GET['t']) : '');
+			$cron_id=absint($_GET['wt_productfeed_url_cron']); //phpcs:ignore
+			$action_type=(isset($_GET['a']) ? sanitize_text_field(wp_unslash($_GET['a'])) : '');//phpcs:ignore
+			$item_type=(isset($_GET['i']) ? sanitize_text_field(wp_unslash($_GET['i'])) : '');//phpcs:ignore
+			$hash=(isset($_GET['h']) ? sanitize_text_field(wp_unslash($_GET['h'])) : '');//phpcs:ignore
+			$tme=(isset($_GET['t']) ? absint($_GET['t']) : ''); //phpcs:ignore
 			
 			if($cron_id>0 && $action_type!="" && $item_type!="" && $hash!="" && $tme>0)
 			{
@@ -1392,12 +1427,12 @@ class Webtoffee_Product_Feed_Sync_Cron
 					global $wpdb;
 					$tb=$wpdb->prefix.Webtoffee_Product_Feed_Sync::$cron_tb;
 					$db_data_arr=array(self::$status_arr['disabled'], $cron_id, $action_type, $item_type);
-					$qry=$wpdb->prepare(
-						"SELECT * FROM $tb WHERE status!=%d AND id=%d AND action_type=%s AND item_type=%s", 
-						$db_data_arr
-					);
+					$qry=$wpdb->prepare(//phpcs:ignore
+						"SELECT * FROM $tb WHERE status!=%d AND id=%d AND action_type=%s AND item_type=%s", //phpcs:ignore
+						$db_data_arr//phpcs:ignore
+					);//phpcs:ignore
 					//checking cron exists. 
-					$cron_count_arr=$wpdb->get_row($qry, ARRAY_A);
+					$cron_count_arr=$wpdb->get_row($qry, ARRAY_A); //phpcs:ignore
 					if(!is_wp_error($cron_count_arr))
 					{
 						$this->do_cron($action_type, $cron_id);

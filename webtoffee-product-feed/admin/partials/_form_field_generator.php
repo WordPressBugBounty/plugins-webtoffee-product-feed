@@ -183,7 +183,7 @@ foreach($form_fields as $key=>$value)
 					if($type=='text' || $type=='number' || $type=='password')
 					{
 						?>
-						<input placeholder="<?php echo esc_attr( $placeholder );?>" type="<?php echo esc_attr( $type ); ?>" <?php echo $html_id;?> <?php echo $css_attr;?> name="<?php echo $form_data_key;?>" value="<?php echo $vl;?>" <?php echo $attr;?> >
+						<input placeholder="<?php echo esc_attr( $placeholder );?>" type="<?php echo esc_attr( $type ); ?>" <?php echo wp_kses_post( $html_id );?> <?php echo wp_kses_post( $css_attr );?> name="<?php echo esc_attr( $form_data_key );?>" value="<?php echo esc_attr( $vl );?>" <?php echo wp_kses_post( $attr );?> >
 						<?php
 					}
 					if($type=='textarea')
@@ -241,10 +241,10 @@ foreach($form_fields as $key=>$value)
 	                    			?>
 	                  				<option value="<?php echo esc_attr( $single_vl );?>" selected><?php echo sprintf(
                                                /* translators: $1: user name, $2 user id, $3: user email */
-                                                esc_html__( '%1$s (#%2$s &ndash; %3$s)'),
-                                                $user->first_name . ' ' . $user->last_name,
-                                                $user->ID,
-                                                $user->user_email
+                                                esc_html__( '%1$s (#%2$s &ndash; %3$s)', 'webtoffee-product-feed'),
+                                                esc_html( $user->first_name . ' ' . $user->last_name ),
+                                                esc_html( $user->ID ),
+                                                esc_html( $user->user_email )
                                                 );?></option>
 	                    			<?php
 	                    		}
@@ -309,8 +309,8 @@ foreach($form_fields as $key=>$value)
 						<div class="wt_form_radio_block">
 							<?php
 							$radio_fields=array(
-				                'Yes' => __('Yes'),
-				                'No' => __('No')
+				                'Yes' => __('Yes', 'webtoffee-product-feed'),
+				                'No' => __('No', 'webtoffee-product-feed')
 				            );
 							foreach ($radio_fields as $rad_vl=>$rad_label) 
 							{
@@ -350,7 +350,7 @@ foreach($form_fields as $key=>$value)
 						?>
 						<div class="wt_pf_file_attacher_dv">
 				            <input <?php echo ( ( '' != $html_id ) ? wp_kses_post( $html_id ) : 'id="' . wp_kses_post( $field_id ) . '"' ); ?> placeholder="<?php echo wp_kses_post( $placeholder ); ?>" <?php echo wp_kses_post( $css_attr ); ?> type="text" name="<?php echo wp_kses_post( $form_data_key ); ?>" value="<?php echo wp_kses_post( $vl ); ?>" <?php echo wp_kses_post( $attr ); ?>/>						
-							<input type="button" name="upload_file" data-wt_iew_file_attacher_title="<?php esc_html_e( 'Choose a file.' ); ?>"  data-wt_iew_file_attacher_button_text="<?php esc_html_e( 'Select' ); ?>" class="wf_button button button-primary wt_iew_file_attacher" wt_iew_file_attacher_target="#<?php echo wp_kses_post( $field_id ); ?>" value="<?php esc_html_e( 'Upload' ); ?>" />
+								<input type="button" name="upload_file" data-wt_iew_file_attacher_title="<?php esc_html_e( 'Choose a file.', 'webtoffee-product-feed' ); ?>"  data-wt_iew_file_attacher_button_text="<?php esc_html_e( 'Select', 'webtoffee-product-feed' ); ?>" class="wf_button button button-primary wt_iew_file_attacher" wt_iew_file_attacher_target="#<?php echo wp_kses_post( $field_id ); ?>" value="<?php esc_html_e( 'Upload', 'webtoffee-product-feed' ); ?>" />
 						</div>
 						<?php
 					}elseif($type=='dropzone') /* dropzone file uploader */
@@ -362,9 +362,9 @@ foreach($form_fields as $key=>$value)
 						
 						<div id="<?php echo esc_attr( $dropzone_id );?>" class="wt_pf_dropzone" wt_pf_dropzone_target="#<?php echo esc_attr( $field_id ); ?>">
 							<div class="dz-message">
-								<?php esc_html_e('Drag and Drop'); ?>
-								<?php esc_html_e('or'); ?>
-								<?php esc_html_e(' Click and Upload');?>
+								<?php esc_html_e('Drag and Drop', 'webtoffee-product-feed'); ?>
+								<?php esc_html_e('or', 'webtoffee-product-feed'); ?>
+								<?php esc_html_e(' Click and Upload', 'webtoffee-product-feed');?>
 								<br /><br /><div class="wt_pf_dz_file_success"></div> <br />
 								<div class="wt_pf_dz_file_name"></div> <br />
 								<div class="wt_pf_dz_remove_link"></div> <br />

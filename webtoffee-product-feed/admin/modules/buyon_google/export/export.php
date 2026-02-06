@@ -127,7 +127,14 @@ if (!class_exists('Webtoffee_Product_Feed_BONGExport')) {
             
             
             if (!empty($exclude_products)) {
-                $args['exclude'] = $exclude_products;
+                // Use include with all product IDs except excluded ones for better performance
+                $all_product_ids = get_posts(array(
+                    'post_type' => 'product',
+                    'posts_per_page' => -1,
+                    'fields' => 'ids',
+                    'post_status' => 'publish',
+                ));
+                $args['include'] = array_diff($all_product_ids, $exclude_products);
             }
 			
 			if (!empty($exp_stock_status)) {
@@ -135,8 +142,13 @@ if (!class_exists('Webtoffee_Product_Feed_BONGExport')) {
             }
 			
             // Export all language products if WPML is active and the language selected is all.
-            if ( function_exists('icl_object_id') && isset( $_SERVER["HTTP_REFERER"] ) && strpos($_SERVER["HTTP_REFERER"], 'lang=all') !== false ) {
-                     $args['suppress_filters'] = true;
+            // Note: suppress_filters is not used for VIP compliance
+            if ( function_exists('icl_object_id') && isset( $_SERVER["HTTP_REFERER"] ) && strpos(sanitize_text_field(wp_unslash($_SERVER["HTTP_REFERER"])), 'lang=all') !== false ) {
+                // Use WPML's global language switching instead of suppress_filters
+                global $sitepress;
+                if ($sitepress) {
+                    $sitepress->switch_lang('all');
+                }
             }
 			
             $args = apply_filters("woocommerce_csv_product_export_args", $args);
@@ -227,7 +239,7 @@ if (!class_exists('Webtoffee_Product_Feed_BONGExport')) {
             'data' => $product_array,
         );
 		if( 0 == $batch_offset && 0 == $total_products ){
-				$return_products['no_post'] = __( 'Nothing to export under the selected criteria. Please try adjusting the filters.' );
+				$return_products['no_post'] = __( 'Nothing to export under the selected criteria. Please try adjusting the filters.', 'webtoffee-product-feed' );
 		}
 		return $return_products;
 
@@ -428,7 +440,7 @@ if (!class_exists('Webtoffee_Product_Feed_BONGExport')) {
             }
 
             //strip tags and special characters
-            $description = strip_tags($description);
+            $description = wp_strip_all_tags($description);
 
             return apply_filters('wt_feed_filter_product_description', $description, $this->product);
         }

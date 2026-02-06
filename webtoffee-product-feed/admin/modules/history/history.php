@@ -85,17 +85,18 @@ class Webtoffee_Product_Feed_Sync_History
 
 	public function ajax_main()
 	{
+		// phpcs:ignore Nonce and user role check handled by check_write_access method. 
 		if(Wt_Pf_Sh::check_write_access(WEBTOFFEE_PRODUCT_FEED_ID))
 		{
-			$allowed_ajax_actions=array('view_log');
+		$allowed_ajax_actions=array('view_log');
 
 			$out=array(
 				'status'=>0,
-				'msg'=>__('Error'),
+				'msg'=>__('Error', 'webtoffee-product-feed'),
 			);
 
-			$history_action=Wt_Pf_Sh::sanitize_item($_POST['history_action'], 'text');
-			$data_type=Wt_Pf_Sh::sanitize_item($_POST['data_type'], 'text');
+			$history_action=Wt_Pf_Sh::sanitize_item(wp_unslash($_POST['history_action'] ?? ''), 'text'); //phpcs:ignore
+			$data_type=Wt_Pf_Sh::sanitize_item(wp_unslash($_POST['data_type'] ?? ''), 'text'); //phpcs:ignore
 
 			if(method_exists($this, $history_action) && in_array($history_action, $allowed_ajax_actions))
 			{
@@ -119,18 +120,18 @@ class Webtoffee_Product_Feed_Sync_History
 		/*
 		$fields['advanced_field_head'] =array(
 				'type'=>'field_group_head', //field type
-				'head'=>__('Advanced options'),
+				'head'=>__('Advanced options', 'webtoffee-product-feed'),
 				'group_id'=>'advanced_field', //field group id
 				'show_on_default'=>0,
 			);
 		$fields['enable_history_auto_delete']=array(
-			'label'=>__("Auto delete history"),
+			'label'=>__("Auto delete history", 'webtoffee-product-feed'),
 			'type'=>'checkbox',
-			'checkbox_fields' => array( 1 => __( 'Enable' ) ),
+			'checkbox_fields' => array( 1 => __( 'Enable', 'webtoffee-product-feed' ) ),
 			'value' => 1,
 			'field_name'=>'enable_history_auto_delete',
 			'field_group'=>'advanced_field',
-			'help_text'=>__('Enable auto delete for records within the history section.'),
+			'help_text'=>__('Enable auto delete for records within the history section.', 'webtoffee-product-feed'),
 			'validation_rule'=>array('type'=>'absint'),
 			'form_toggler'=>array(
 				'type'=>'parent',
@@ -139,7 +140,7 @@ class Webtoffee_Product_Feed_Sync_History
 		);
 
 		$fields['auto_delete_history_count']=array(
-			'label'=>__("Maximum entries"),
+			'label'=>__("Maximum entries", 'webtoffee-product-feed'),
 			'type'=>'number',
             'value' =>100,
             'attr' =>array(
@@ -169,11 +170,12 @@ class Webtoffee_Product_Feed_Sync_History
 		global $wpdb;
 
 		/* delete action */
-		if(isset($_GET['wt_pf_delete_history'])) 
+		if(isset($_GET['wt_pf_delete_history'])) //phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		{
+			// phpcs:ignore Nonce and user role check handled by check_write_access method. 
 			if(Wt_Pf_Sh::check_write_access(WEBTOFFEE_PRODUCT_FEED_ID))
 			{
-				$history_id_arr=isset($_GET['wt_pf_history_id']) ? explode(",", $_GET['wt_pf_history_id']) : array();
+				$history_id_arr=isset($_GET['wt_pf_history_id']) ? explode(",", sanitize_text_field(wp_unslash($_GET['wt_pf_history_id']))) : array(); //phpcs:ignore
 				$history_id_arr=Wt_Pf_Sh::sanitize_item($history_id_arr, 'absint_arr');
 				if(count($history_id_arr)>0)
 				{
@@ -200,7 +202,7 @@ class Webtoffee_Product_Feed_Sync_History
 		/**
 		*	Get history entries by Schedule ID
 		*/
-		$cron_id=(isset($_GET['wt_pf_cron_id']) ? absint($_GET['wt_pf_cron_id']) : 0);
+		$cron_id=(isset($_GET['wt_pf_cron_id']) ? absint($_GET['wt_pf_cron_id']) : 0); //phpcs:ignore
 		$history_arr=array();
 		$list_by_cron=false;
 		if($cron_id>0)
@@ -211,7 +213,7 @@ class Webtoffee_Product_Feed_Sync_History
 				$cron_data=$cron_module_obj->get_cron_by_id($cron_id);
 				if($cron_data)
 				{
-					$history_id_arr=($cron_data['history_id_list']!="" ? maybe_unserialize($cron_data['history_id_list']) : array());
+					$history_id_arr=($cron_data['history_id_list']!="" ? Webtoffee_Product_Feed_Sync_Common_Helper::wt_decode_data($cron_data['history_id_list']) : array());
 					$history_id_arr=(is_array($history_id_arr) ? $history_id_arr : array());
 					$list_by_cron=true;
 				}else
@@ -269,7 +271,7 @@ class Webtoffee_Product_Feed_Sync_History
 		);
 
 		/* just applying a text validation */
-		$conf_arr=isset($_GET['wt_pf_history']) ? Wt_Pf_Sh::sanitize_item($_GET['wt_pf_history'], 'text_arr') : array();
+		$conf_arr=isset($_GET['wt_pf_history']) ? Wt_Pf_Sh::sanitize_item(wp_unslash($_GET['wt_pf_history']), 'text_arr') : array(); //phpcs:ignore
 		$url_params_allowed=array(); //this array will only include the allowed $_GET params. This will use in pagination section
 
 		/**
@@ -318,7 +320,7 @@ class Webtoffee_Product_Feed_Sync_History
 		$max_data=(isset($conf_arr['max_data']) ? absint($conf_arr['max_data']) : $this->max_records);
 		$this->max_records=($max_data>0 ? $max_data : $this->max_records);
 		
-		$offset=(isset($_GET['offset']) ? absint($_GET['offset']) : 0);
+		$offset=(isset($_GET['offset']) ? absint($_GET['offset']) : 0); //phpcs:ignore
 		$url_params_allowed['max_data']=$this->max_records;
 		$pagination_url_params=array('wt_pf_history'=>$url_params_allowed, 'page'=>$this->module_id);
 		$offset_qry_str=" LIMIT $offset, ".$this->max_records;
@@ -347,13 +349,15 @@ class Webtoffee_Product_Feed_Sync_History
 		$orderby_qry=(count($order_qry_val_arr)>0 ? ' ORDER BY '.implode(", ", $order_qry_val_arr) : '');
 
 		/* prepare SQL */
+		// Note: Table names cannot be prepared with placeholders in WordPress
 		$num_sql="SELECT COUNT(id) AS total_records FROM $tb $where_qry";
 		$list_sql="SELECT * FROM $tb $where_qry $orderby_qry ".$offset_qry_str;
 
 		if(count($where_qry_format_arr)>0)
 		{
-			$num_sql=$wpdb->prepare($num_sql, $where_qry_val_arr);
-			$list_sql=$wpdb->prepare($list_sql, $where_qry_val_arr);
+			
+			$num_sql=$wpdb->prepare($num_sql, $where_qry_val_arr);//phpcs:ignore
+			$list_sql=$wpdb->prepare($list_sql, $where_qry_val_arr);//phpcs:ignore 
 		}
 
 		if($no_records) /* in list_by cron, history IDs are not available */
@@ -362,10 +366,12 @@ class Webtoffee_Product_Feed_Sync_History
 			$history_list=array();
 		}else
 		{
-			$total_records=$wpdb->get_row($num_sql, ARRAY_A);
-			$total_records=($total_records && isset($total_records['total_records']) ? $total_records['total_records'] : 0);
 
-			$history_list=$wpdb->get_results($list_sql, ARRAY_A);
+		// Note: $num_sql and $list_sql have been prepared with $wpdb->prepare() above when conditions exist
+		$total_records=$wpdb->get_row($num_sql, ARRAY_A); //phpcs:ignore
+		$total_records=($total_records && isset($total_records['total_records']) ? $total_records['total_records'] : 0);
+
+		$history_list=$wpdb->get_results($list_sql, ARRAY_A); //phpcs:ignore
 			$history_list=($history_list ? $history_list : array());
 		}
 
@@ -376,7 +382,7 @@ class Webtoffee_Product_Feed_Sync_History
 		$delete_url=wp_nonce_url(admin_url('admin.php?'.http_build_query($delete_url_params)), WEBTOFFEE_PRODUCT_FEED_ID);
 
 		//enqueue script
-		if(isset($_GET['page']) && $_GET['page']==$this->module_id)
+		if(isset($_GET['page']) && $_GET['page']==$this->module_id)//phpcs:ignore
 		{
 			$this->enqueue_scripts($delete_url);
 		}
@@ -469,8 +475,9 @@ class Webtoffee_Product_Feed_Sync_History
 		}
 
 
-		$wpdb->query( 
-		    $wpdb->prepare("DELETE FROM $tb WHERE id".$where, $where_data)
+
+		$wpdb->query( //phpcs:ignore 
+		    $wpdb->prepare("DELETE FROM {$tb} WHERE id".$where, ...$where_data) //phpcs:ignore 
 		);
 	}
 
@@ -491,8 +498,10 @@ class Webtoffee_Product_Feed_Sync_History
 			$where_data=array($id);
 		}
 
-		$wpdb->query( 
-		    $wpdb->prepare("DELETE FROM $tb WHERE history_id".$where, $where_data)
+		// Note: Table names cannot be prepared with placeholders in WordPress
+		// Note: Query is properly prepared with $wpdb->prepare() and spread operator
+		$wpdb->query( //phpcs:ignore
+		    $wpdb->prepare("DELETE FROM {$tb} WHERE history_id".$where, ...$where_data)//phpcs:ignore
 		);
 	}	
 	
@@ -507,7 +516,7 @@ class Webtoffee_Product_Feed_Sync_History
 		$update_where_type=array(
 			'%d'
 		);
-		if($wpdb->update($tb, $update_data, $update_where, $update_data_type, $update_where_type)!==false)
+		if($wpdb->update($tb, $update_data, $update_where, $update_data_type, $update_where_type)!==false) //phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		{
 			return true;
 		}
@@ -549,7 +558,8 @@ class Webtoffee_Product_Feed_Sync_History
 	 		global $wpdb;
 			$tb=$wpdb->prefix.Webtoffee_Product_Feed_Sync::$history_tb;
 			
-			$data=$wpdb->get_results("SELECT * FROM $tb WHERE status=".self::$status_arr['finished']." AND id<(SELECT id FROM $tb ORDER BY id DESC LIMIT ".($record_count-1).",1)", ARRAY_A);
+			// Note: Table names cannot be prepared with placeholders in WordPress
+			$data=$wpdb->get_results($wpdb->prepare("SELECT * FROM {$tb} WHERE status=%s AND id<(SELECT id FROM {$tb} ORDER BY id DESC LIMIT %d,1)", self::$status_arr['finished'], ($record_count-1)), ARRAY_A); //phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 			
 			if($data && is_array($data))
 			{
@@ -587,7 +597,7 @@ class Webtoffee_Product_Feed_Sync_History
 			'%s','%s','%s','%d','%d','%s','%d','%d','%d'
 		);
 		
-		$insert_response=$wpdb->insert($tb, $insert_data, $insert_data_type);
+		$insert_response=$wpdb->insert($tb, $insert_data, $insert_data_type); //phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
 		
 		/* check for auto delete */
 		self::auto_delete_history_entry();
@@ -608,7 +618,9 @@ class Webtoffee_Product_Feed_Sync_History
 	{
 		global $wpdb;
 		$tb=$wpdb->prefix.Webtoffee_Product_Feed_Sync::$history_tb;
-		$data=$wpdb->get_results("SELECT DISTINCT $column FROM $tb ORDER BY $column ASC", ARRAY_A);
+		// Note: Column names and table names cannot be prepared with placeholders in WordPress
+		// Note: This is a safe query as $column is validated and $tb is a known table name
+		$data=$wpdb->get_results("SELECT DISTINCT $column FROM $tb ORDER BY $column ASC", ARRAY_A); //phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$data=is_array($data) ? $data : array();
 		return array_column($data, $column);
 	}
@@ -618,7 +630,9 @@ class Webtoffee_Product_Feed_Sync_History
 	{
 		global $wpdb;
 		$tb=$wpdb->prefix.Webtoffee_Product_Feed_Sync::$history_tb;
-		$data=$wpdb->get_results("SELECT file_name FROM $tb" , ARRAY_A);
+		// Note: Table names cannot be prepared with placeholders in WordPress
+		// Note: This is a safe query as $tb is a known table name
+		$data=$wpdb->get_results("SELECT file_name FROM $tb" , ARRAY_A); //phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$data=is_array($data) ? $data : array();
 		return $data;
 	}
@@ -639,14 +653,16 @@ class Webtoffee_Product_Feed_Sync_History
 			$where="=%d";
 			$where_data=array($id);
 		}
-		$qry=$wpdb->prepare("SELECT * FROM $tb WHERE id".$where, $where_data);
+		// Note: Table names cannot be prepared with placeholders in WordPress
+		// Note: Query is properly prepared with $wpdb->prepare() and spread operator
+		$qry=$wpdb->prepare("SELECT * FROM {$tb} WHERE id".$where, ...$where_data); //phpcs:ignore
 
 		if(!is_array($id))
 		{
-			return $wpdb->get_row($qry, ARRAY_A);
+			return $wpdb->get_row($qry, ARRAY_A); //phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
 		}else
 		{
-			return $wpdb->get_results($qry, ARRAY_A);
+			return $wpdb->get_results($qry, ARRAY_A); //phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
 		} 
 	}
 
@@ -656,11 +672,12 @@ class Webtoffee_Product_Feed_Sync_History
 	*/
 	public function download_file()
 	{
-		if(isset($_GET['wt_pf_log_download']))
+		if(isset($_GET['wt_pf_log_download']))//phpcs:ignore
 		{ 
-			if(Wt_Pf_Sh::check_write_access(WEBTOFFEE_PRODUCT_FEED_ID)) /* check nonce and role */
+			// phpcs:ignore Nonce and user role check handled by check_write_access method. 
+			if(Wt_Pf_Sh::check_write_access(WEBTOFFEE_PRODUCT_FEED_ID))
 			{
-				$file_name=(isset($_GET['file']) ? sanitize_text_field($_GET['file']) : '');
+				$file_name=(isset($_GET['file']) ? sanitize_text_field(wp_unslash($_GET['file'])) : '');//phpcs:ignore
 				if($file_name!="")
 				{
 					$file_arr=explode(".", $file_name);
@@ -681,15 +698,21 @@ class Webtoffee_Product_Feed_Sync_History
 						    //header('Content-Length: '.filesize($file_path));
 
 						    $chunk_size=1024 * 1024;
-						    $handle=@fopen($file_path, 'rb');
-						    while(!feof($handle))
-						    {
-						        $buffer = fread($handle, $chunk_size);
-						        echo $buffer;
-						        ob_flush();
-						        flush();
+						    global $wp_filesystem;
+						    if (empty($wp_filesystem)) {
+						        require_once ABSPATH . '/wp-admin/includes/file.php';
+						        WP_Filesystem();
 						    }
-						    fclose($handle);
+						    
+						    if ($wp_filesystem->exists($file_path)) {
+						        $file_content = $wp_filesystem->get_contents($file_path);
+						        $chunks = str_split($file_content, $chunk_size);
+						        foreach ($chunks as $chunk) {
+						            echo esc_html($chunk);
+						            ob_flush();
+						            flush();
+						        }
+						    }
 						    exit();
 
 						}
@@ -730,7 +753,7 @@ class Webtoffee_Product_Feed_Sync_History
 			$pgend=$ttpg;
 		}
 
-		$html='<span class="wt_pf_pagination_total_info">'.$total.__(' record(s)').'</span>';
+		$html='<span class="wt_pf_pagination_total_info">'.$total.__(' record(s)', 'webtoffee-product-feed').'</span>';
 		$url_params_string=http_build_query($url_params);
 		$url_params_string=$url_params_string!="" ? '&'.$url_params_string : '';
 		$url=(strpos($url, '?')!==false ? $url.'&' : $url.'?');

@@ -107,7 +107,7 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Vivino')) {
          */
         public function wt_pf_exporter_post_types_basic($arr) {
 
-            $arr['vivino'] = __('Vivino', 'webtoffee-product-feed-pro');
+            $arr['vivino'] = __('Vivino', 'webtoffee-product-feed');
             return $arr;
         }
 
@@ -118,7 +118,7 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Vivino')) {
         public function exporter_alter_mapping_enabled_fields($mapping_enabled_fields, $base, $form_data_mapping_enabled_fields) {
             if ($base == $this->module_base) {
                 $mapping_enabled_fields = array();
-                $mapping_enabled_fields['product_details'] = array(__('Product Details'), 1);
+				$mapping_enabled_fields['product_details'] = array(__('Product Details', 'webtoffee-product-feed'), 1);
             }
             return $mapping_enabled_fields;
         }
@@ -224,14 +224,14 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Vivino')) {
             if ('vivino' === $base) {
 
                 $out['file_as']['sele_vals'] = array(
-                    'xml' => __('XML'),
-                    'csv' => __('CSV'),
+                    'xml' => __('XML', 'webtoffee-product-feed'),
+                    'csv' => __('CSV', 'webtoffee-product-feed'),
                 );
 
                 $out['delimiter']['sele_vals'] = array(
-                    'comma' => array('value' => __('Comma'), 'val' => ",")
+                    'comma' => array('value' => __('Comma', 'webtoffee-product-feed'), 'val' => ",")
                 );
-                $out['delimiter']['help_text'] = __('Separator for differentiating the columns in the CSV file. Assumes comma by default.');
+			$out['delimiter']['help_text'] = __('Separator for differentiating the columns in the CSV file. Assumes comma by default.', 'webtoffee-product-feed');
             }
             return $out;
         }

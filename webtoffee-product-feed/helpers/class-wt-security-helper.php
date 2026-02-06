@@ -182,7 +182,7 @@ if(!class_exists('Wt_Pf_Sh'))
 		*/
 		public static function verify_nonce($plugin_id, $nonce_id = '')
 		{
-			$nonce = (isset($_REQUEST['_wpnonce']) ? sanitize_text_field($_REQUEST['_wpnonce']) : '');
+			$nonce = (isset($_REQUEST['_wpnonce']) ? sanitize_text_field(wp_unslash($_REQUEST['_wpnonce'])) : '');
     		$nonce = (is_array($nonce) ? $nonce[0] : $nonce); //in some cases multiple nonces are declared
     		$nonce_id = ($nonce_id == "" ? $plugin_id : $nonce_id); //if nonce id not provided then uses plugin id as nonce id
     		
@@ -193,7 +193,7 @@ if(!class_exists('Wt_Pf_Sh'))
 						'msg' => __('Access denied.', 'webtoffee-product-feed')
 					], 403);
 				} else {
-					wp_die(__('Access denied.', 'webtoffee-product-feed'), '', ['response' => 403]);
+					wp_die(esc_html__('Access denied.', 'webtoffee-product-feed'), '', ['response' => 403]);
 				}
             	exit;
 			}
@@ -230,7 +230,7 @@ if(!class_exists('Wt_Pf_Sh'))
 						'msg' => __('You do not have sufficient permissions to perform this operation.', 'webtoffee-product-feed')
 					), 403);
 				} else {
-					wp_die(__('You do not have sufficient permissions to perform this operation.', 'webtoffee-product-feed'), '', ['response' => 403]);
+					wp_die(esc_html__('You do not have sufficient permissions to perform this operation.', 'webtoffee-product-feed'), '', ['response' => 403]);
 				}
 	    		exit;
 	    	}

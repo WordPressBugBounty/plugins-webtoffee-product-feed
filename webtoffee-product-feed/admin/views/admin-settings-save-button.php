@@ -12,9 +12,9 @@ $after_button_text=isset($after_button_text) ? $after_button_text : '';
     <div class="left">
     </div>
     <div class="right">
-    	<?php echo esc_html_e( $before_button_text ); ?>
-        <input type="submit" name="wt_pf_update_admin_settings_form" value="<?php esc_html_e($settings_button_title); ?>" class="button button-primary" style="float:right;"/>
-        <?php echo esc_html_e( $after_button_text ); ?>
+    	<?php echo esc_html( $before_button_text ); ?>
+        <input type="submit" name="wt_pf_update_admin_settings_form" value="<?php echo esc_attr($settings_button_title); ?>" class="button button-primary" style="float:right;"/>
+        <?php echo esc_html( $after_button_text ); ?>
         <span class="spinner" style="margin-top:11px"></span>
     </div>
 </div>

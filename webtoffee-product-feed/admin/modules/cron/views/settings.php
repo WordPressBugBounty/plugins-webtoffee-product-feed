@@ -14,7 +14,7 @@ if ( ! defined( 'WPINC' ) ) {
 .wp-submenu li span.wt-pf-go-premium {font-weight: 700; color: #28e499;}
 </style>
 <div class="wt_productfeed_cron_settings_page">
-	<h2 class="wp-heading-inline"><?php esc_html_e('Scheduled Actions', 'webtoffee-product-feed');?> <div class="wt_productfeed_cron_current_time"><b><?php esc_html_e('Current server time:');?></b> <span>--:--:-- --</span><br/>
+	<h2 class="wp-heading-inline"><?php esc_html_e('Scheduled Actions', 'webtoffee-product-feed');?> <div class="wt_productfeed_cron_current_time"><b><?php esc_html_e('Current server time:', 'webtoffee-product-feed');?></b> <span>--:--:-- --</span><br/>
 			<?php 
 			$wt_time_zone = Webtoffee_Product_Feed_Sync_Common_Helper::get_advanced_settings('default_time_zone'); 
 			?>

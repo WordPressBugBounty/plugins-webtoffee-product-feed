@@ -193,7 +193,8 @@ class Webtoffee_Product_Feed_Sync_Admin {
                                 'template_del_error'=>__('Unable to delete template', 'webtoffee-product-feed'),
                                 'template_del_loader'=>__('Deleting template...', 'webtoffee-product-feed'),                             
 				'value_empty'=>__('Value is empty.', 'webtoffee-product-feed'),
-				'error'=> sprintf( __( 'Something went wrong. Please reload and check or %s contact our support %s for easy troubleshooting.', 'webtoffee-product-feed' ), '<a href="https://www.webtoffee.com/contact/" target="_blank">', '</a>' ),
+				// translators: %1$s is the opening HTML tag, %2$s is the closing HTML tag for the support link
+				'error'=> sprintf( __( 'Something went wrong. Please reload and check or %1$s contact our support %2$s for easy troubleshooting.', 'webtoffee-product-feed' ), '<a href="https://www.webtoffee.com/contact/" target="_blank">', '</a>' ),
 				'success'=>__('Success.', 'webtoffee-product-feed'),
 				'loading'=>__('Loading...', 'webtoffee-product-feed'),
 				'sure'=>__('Are you sure?', 'webtoffee-product-feed'),
@@ -288,7 +289,7 @@ class Webtoffee_Product_Feed_Sync_Admin {
 			'connection-manager' => __( 'Manage Connection', 'webtoffee-product-feed' ),
 		];
 		$is_connected	 = $this->is_connected();
-		if ( $is_connected || !empty( ($_GET[ 'fb_access_token' ]) ) ) { // phpcs:ignore csrf ok.
+		if ( $is_connected || !empty( wp_unslash( $_GET[ 'fb_access_token' ] ?? '' ) ) ) { // phpcs:ignore
 			$tabs[ 'sync-products' ]	 = __( 'Sync Products', 'webtoffee-product-feed' );
 			$tabs[ 'map-categories' ]	 = __( 'FB Category map', 'webtoffee-product-feed' );
 			$tabs[ 'logs' ]			 = __( 'Logs', 'webtoffee-product-feed' );
@@ -368,7 +369,7 @@ class Webtoffee_Product_Feed_Sync_Admin {
 		check_admin_referer( WT_Fb_Catalog_Manager_Settings::DISCONNECT_ACTION );
 
 		if ( !current_user_can( 'manage_woocommerce' ) ) {
-			wp_die( __( 'You do not have permission to uninstall Facebook Business Extension.', 'webtoffee-product-feed' ) );
+			wp_die( esc_html__( 'You do not have permission to uninstall Facebook Business Extension.', 'webtoffee-product-feed' ) );
 		}
 
 		$user_id		 = $this->get_fb_user_id();
@@ -406,12 +407,12 @@ class Webtoffee_Product_Feed_Sync_Admin {
 
 		
 		if ( !current_user_can( 'manage_woocommerce' ) ) {
-			wp_die( __( 'You do not have permission to view', 'webtoffee-product-feed' ) );
+			wp_die( esc_html__( 'You do not have permission to view', 'webtoffee-product-feed' ) );
 		}
 		
 		$tabs = $this->get_tabs();
 
-		$current_tab = !empty( ($_GET[ 'fbtab' ]) ) ? sanitize_text_field($_GET[ 'fbtab' ]) : '';
+		$current_tab = !empty( wp_unslash( $_GET[ 'fbtab' ] ?? '' ) ) ? sanitize_text_field( wp_unslash( $_GET[ 'fbtab' ] ) ) : '';//phpcs:ignore
 
 
 		if ( !$current_tab ) {
@@ -419,18 +420,18 @@ class Webtoffee_Product_Feed_Sync_Admin {
 		}
 
 
-		if ( !empty( ($_GET[ 'fb_access_token' ]) ) ) { // phpcs:ignore csrf ok.
+		if ( !empty( wp_unslash( $_GET[ 'fb_access_token' ] ?? '' ) ) ) {//phpcs:ignore
 
 
-			$fb_access_tkn =  isset($_GET[ 'fb_access_token' ]) ? sanitize_text_field( trim( $_GET[ 'fb_access_token' ] ) )  : '';
+			$fb_access_tkn =  isset($_GET[ 'fb_access_token' ]) ? sanitize_text_field( trim( wp_unslash( $_GET[ 'fb_access_token' ] ) ) )  : ''; //phpcs:ignore
 			$this->update_fb_access_token( $fb_access_tkn );
-			$fb_access_uid =  isset($_GET[ 'fb_user_id' ]) ? sanitize_text_field( trim( $_GET[ 'fb_user_id' ] ) )  : '';
+			$fb_access_uid =  isset($_GET[ 'fb_user_id' ]) ? sanitize_text_field( trim( wp_unslash( $_GET[ 'fb_user_id' ] ) ) )  : ''; //phpcs:ignore
 			$this->update_fb_user_id( $fb_access_uid );
-			$fb_access_buid =  isset($_GET[ 'fb_business_id' ]) ? sanitize_text_field( trim( $_GET[ 'fb_business_id' ] ) )  : '';
+			$fb_access_buid =  isset($_GET[ 'fb_business_id' ]) ? sanitize_text_field( trim( wp_unslash( $_GET[ 'fb_business_id' ] ) ) )  : ''; //phpcs:ignore
 			$this->update_fb_business_id( $fb_access_buid );
 
-			if ( !empty( ($_GET[ 'fb_catalog_id' ]) ) ) { // phpcs:ignore csrf ok.
-				$catalogs_data = isset( $_GET[ 'fb_catalog_id' ] ) ? (array) $_GET[ 'fb_catalog_id' ] : array();
+			if ( !empty( wp_unslash( $_GET[ 'fb_catalog_id' ] ?? '' ) ) ) { //phpcs:ignore
+				$catalogs_data = isset( $_GET[ 'fb_catalog_id' ] ) ? (array) wp_unslash( $_GET[ 'fb_catalog_id' ] ) : array(); //phpcs:ignore
 
 				$this->update_fb_catalog_id( $catalogs_data );
 			}
@@ -462,7 +463,7 @@ class Webtoffee_Product_Feed_Sync_Admin {
 								<p><?php esc_html_e( 'You must connect with your FB business account as a pre-requisite to start synchronizing your products with Facebook.', 'webtoffee-product-feed' ); ?></p>
 								<div class="not-connected-doc">
 									<p><?php esc_html_e( 'If you haven\'t already set up a Facebook shop in your business account visit', 'webtoffee-product-feed' ); ?> <a target="_blank" href="https://www.facebook.com/business/help/268860861184453?id=1077620002609475"> <b><?php esc_html_e( 'this link', 'webtoffee-product-feed'); ?></b> </a> <?php esc_html_e( 'to set up one.', 'webtoffee-product-feed' ); ?> </p>									
-									<p><?php esc_html_e( 'Use', 'webtoffee-product-feed'); ?> <a target="_blank" href="https://developers.facebook.com/docs/marketing-api/catalog-batch/reference#supported-fields-items-batch"><b><?php esc_html_e( 'this'); ?></b></a> <?php esc_html_e( 'reference to see which product fields will be synchronised by this plugin.', 'webtoffee-product-feed'); ?></p>
+									<p><?php esc_html_e( 'Use', 'webtoffee-product-feed'); ?> <a target="_blank" href="https://developers.facebook.com/docs/marketing-api/catalog-batch/reference#supported-fields-items-batch"><b><?php esc_html_e( 'this', 'webtoffee-product-feed'); ?></b></a> <?php esc_html_e( 'reference to see which product fields will be synchronised by this plugin.', 'webtoffee-product-feed'); ?></p>
 								</div>
 
 
@@ -474,8 +475,7 @@ class Webtoffee_Product_Feed_Sync_Admin {
 										'url'	 => $this->get_connect_url(),
 									],
 								];
-								?>
-
+								// phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage ?>
 								<img src="<?php echo esc_url(WT_PRODUCT_FEED_PLUGIN_URL.'/assets/images/undraw_social.svg'); ?>" alt="alt"/><br/>
 								<?php foreach ( $actions as $action_id => $action ) : ?>
 
@@ -514,7 +514,7 @@ class Webtoffee_Product_Feed_Sync_Admin {
 												echo '<br/>';
 											?>
 
-									<b><a target="_blank" href="<?php echo "https://facebook.com/products/catalogs/" . $catalog_id; ?>"><?php echo esc_attr($catalog_name); ?></a></b>								
+									<b><a target="_blank" href="<?php echo esc_url( "https://facebook.com/products/catalogs/" . $catalog_id ); ?>"><?php echo esc_html($catalog_name); ?></a></b>								
 											<?php
 											$ic++;
 										endforeach;
@@ -529,7 +529,7 @@ class Webtoffee_Product_Feed_Sync_Admin {
 							<br/>
 							<div class="clearfix"></div>
 							<div class="catalog-doc-section">
-							<p><?php esc_html_e( 'Use', 'webtoffee-product-feed'); ?> <a target="_blank" href="https://developers.facebook.com/docs/marketing-api/catalog-batch/reference#supported-fields-items-batch"><b><?php esc_html_e( 'this'); ?></b></a> <?php esc_html_e( 'reference to see which product fields will be synchronised by this plugin.', 'webtoffee-product-feed'); ?></p>
+							<p><?php esc_html_e( 'Use', 'webtoffee-product-feed'); ?> <a target="_blank" href="https://developers.facebook.com/docs/marketing-api/catalog-batch/reference#supported-fields-items-batch"><b><?php esc_html_e( 'this', 'webtoffee-product-feed'); ?></b></a> <?php esc_html_e( 'reference to see which product fields will be synchronised by this plugin.', 'webtoffee-product-feed'); ?></p>
 							<br/>
 							<p></p>
 							<p></p>
@@ -571,7 +571,7 @@ class Webtoffee_Product_Feed_Sync_Admin {
 					if ( $is_connected ) :
 						$wc_path			 = self::wt_get_wc_path();
 						wp_enqueue_script( 'wc-enhanced-select' );
-						wp_enqueue_style( 'woocommerce_admin_styles', $wc_path . '/assets/css/admin.css' );
+						wp_enqueue_style( 'woocommerce_admin_styles', $wc_path . '/assets/css/admin.css', array(), WC()->version );
 						?>
 						<p id="sync-loader" style="text-align:center">
 							<i><?php esc_html_e( 'Fetching the product categories, tags for sync with your FB Catalog ...', 'webtoffee-product-feed' ); ?></i>
@@ -590,7 +590,7 @@ class Webtoffee_Product_Feed_Sync_Admin {
 									<h4><?php esc_html_e( 'Filter data necessary for sync with my FB Catalog as per the below criteria by excluding non-relevant products.', 'webtoffee-product-feed' ); ?></h4>
 									<form action="" name="sync_products" id="sync_products" class="sync_products" method="post" autocomplete="off">	
 										<?php wp_nonce_field( 'wt-sync-products' ); ?>
-										<input type="hidden" name="wt_batch_hash_key" id="wt_batch_hash_key" value="<?php echo wp_generate_uuid4(); ?>"/>					
+										<input type="hidden" name="wt_batch_hash_key" id="wt_batch_hash_key" value="<?php echo esc_attr( wp_generate_uuid4() ); ?>"/>					
 										<table class="form-table">
 											<tr>
 												<th><?php esc_html_e( 'Select FB Catalog', 'webtoffee-product-feed' ); ?></th>
@@ -728,7 +728,7 @@ class Webtoffee_Product_Feed_Sync_Admin {
                                                 if(is_plugin_active('woocommerce/woocommerce.php'))
                                                 { 
                                                         wp_enqueue_script('wc-enhanced-select');
-                                                        wp_enqueue_style('woocommerce_admin_styles', WC()->plugin_url().'/assets/css/admin.css');
+                                                        wp_enqueue_style('woocommerce_admin_styles', WC()->plugin_url().'/assets/css/admin.css', array(), WC()->version);
                                                 }else
                                                 {
                                                         wp_enqueue_style(WEBTOFFEE_PRODUCT_FEED_ID.'-select2', WT_PRODUCT_FEED_PLUGIN_URL. 'admin/css/select2.css', array(), WEBTOFFEE_PRODUCT_FEED_SYNC_VERSION, 'all' );
@@ -838,7 +838,7 @@ class Webtoffee_Product_Feed_Sync_Admin {
 	public function wt_fbfeed_attribute_mapping() {
 
 
-		if ( count( $_POST ) && isset( $_POST[ 'map_to_attr' ] ) ) {
+		if ( count( $_POST ) && isset( $_POST[ 'map_to_attr' ] ) ) { //phpcs:ignore
 
 			check_admin_referer( 'wt-attribute-mapping' );
 
@@ -847,7 +847,7 @@ class Webtoffee_Product_Feed_Sync_Admin {
 			$mapping_data = array_map( 'absint', ($_POST[ 'map_to_attr' ]) );
 			foreach ( $mapping_data as $local_attribute_id => $fb_attribute_id ) {
 				if ( $fb_attribute_id )
-					update_term_meta( $local_category_id, 'wt_fb_category', $fb_attribute_id );
+					update_term_meta( $local_attribute_id, 'wt_fb_category', $fb_attribute_id );
 			}
 
 			// Delete product categories dropdown cache
@@ -976,7 +976,7 @@ class Webtoffee_Product_Feed_Sync_Admin {
 		public function wt_fbfeed_category_mapping() {
 
 
-		if ( count( $_POST ) && isset( $_POST[ 'map_to' ] ) ) {
+		if ( count( $_POST ) && isset( $_POST[ 'map_to' ] ) ) { //phpcs:ignore
 
 			check_admin_referer( 'wt-category-mapping' );
 
@@ -1020,16 +1020,16 @@ class Webtoffee_Product_Feed_Sync_Admin {
 			exit();
 		}
 
-		parse_str( $_POST[ 'form' ], $form );
+		parse_str( wp_unslash( $_POST[ 'form' ] ?? '' ), $form ); //phpcs:ignore
 
 		$_REQUEST	 = $form		 = (array) $form;
 		check_admin_referer( 'wt-sync-products' );
-		$step		 = absint( $_POST[ 'step' ] );
+		$step		 = absint( $_POST[ 'step' ] ?? 0 );
 
-		$wt_batch_hash_key = sanitize_text_field( $_REQUEST[ 'wt_batch_hash_key' ] );
+		$wt_batch_hash_key = sanitize_text_field( wp_unslash( $_REQUEST[ 'wt_batch_hash_key' ] ?? '' ) );
 
-		$wt_sync_selected_catalog = sanitize_text_field( $_REQUEST[ 'wt_sync_selected_catalog' ] );
-		$wt_sync_product_desc_type		 = isset( $_REQUEST[ 'wt_sync_product_desc_type' ] ) ? sanitize_text_field( $_REQUEST[ 'wt_sync_product_desc_type' ] ) : 'short';
+		$wt_sync_selected_catalog = sanitize_text_field( wp_unslash( $_REQUEST[ 'wt_sync_selected_catalog' ] ?? '' ) );
+		$wt_sync_product_desc_type		 = isset( $_REQUEST[ 'wt_sync_product_desc_type' ] ) ? sanitize_text_field( wp_unslash( $_REQUEST[ 'wt_sync_product_desc_type' ] ) ) : 'short';
 
 
 		$wt_sync_exclude_category	 = isset( $_REQUEST[ 'wt_sync_exclude_category' ] ) ? array_map( 'absint', ($_REQUEST[ 'wt_sync_exclude_category' ]) ) : [];
@@ -1141,7 +1141,7 @@ class Webtoffee_Product_Feed_Sync_Admin {
 		if ( !empty( $product_data ) ) {
 
 			$this->wt_log_data_change( 'wt-feed-upload', 'Requested Product Data:' );
-			$this->wt_log_data_change( 'wt-feed-upload', print_r( $product_data, 1 ) );
+			$this->wt_log_data_change( 'wt-feed-upload', wp_json_encode( $product_data ) );
 
 			//$catalog_id				 = $this->get_fb_catalog_id();
 			#$batch_url				 = "https://graph.facebook.com/v17.0/$catalog_id/batch";
@@ -1149,7 +1149,7 @@ class Webtoffee_Product_Feed_Sync_Admin {
 			#$single_product_url	 = "https://graph.facebook.com/v17.0/$catalog_id/products";
 			$batch_response			 = wp_remote_post( $items_batch, $request_body );
 			$this->wt_log_data_change( 'wt-feed-upload', 'Batch Response:' );
-			$this->wt_log_data_change( 'wt-feed-upload', print_r( $batch_response, 1 ) );
+			$this->wt_log_data_change( 'wt-feed-upload', wp_json_encode( $batch_response ) );
 			$batch_response_details	 = wp_remote_retrieve_body( $batch_response );
 			$batch_response_details	 = json_decode( $batch_response_details );
 
@@ -1161,26 +1161,26 @@ class Webtoffee_Product_Feed_Sync_Admin {
                             $batch_pocess_log = array();
                             if($step <= 1){
                                 $batch_pocess_log[ $wt_batch_hash_key ][] = [
-                                            'batch_time'	 => date( 'Y-m-d: H:i:s' ),
+                                            'batch_time'	 => gmdate( 'Y-m-d: H:i:s' ),
                                             'batch_handle'	 => $batch_response_details->handles[ 0 ],
                                             'catalog_id'	 => $catalog_id
                                     ];
                                 $insert_data=array(
                                         'catalog_id'=>$catalog_id,
                                         'data'=>maybe_serialize($batch_pocess_log),
-                                        'start_time'=>date( 'Y-m-d H:i:s' ), 
+                                        'start_time'=>gmdate( 'Y-m-d H:i:s' ), 
 
                                 );
                                 $insert_data_type=array('%s', '%s', '%s');
 
-                                $wpdb->insert($table_name, $insert_data, $insert_data_type);
+                                $wpdb->insert($table_name, $insert_data, $insert_data_type); //phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
                             }else{
                                 // All other batch update last log row
-                                $last_log = $wpdb->get_row( 'SELECT * FROM ' . $table_name . ' ORDER BY id DESC LIMIT 1');
-                                $batch_pocess_log = maybe_unserialize($last_log->data);
+                                $last_log = $wpdb->get_row( $wpdb->prepare( 'SELECT * FROM %s ORDER BY id DESC LIMIT 1', $table_name ) ); //phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+                                $batch_pocess_log = Webtoffee_Product_Feed_Sync_Common_Helper::wt_decode_data($last_log->data);
 
                                 $batch_pocess_log[ $wt_batch_hash_key ][] = [
-                                            'batch_time'	 => date( 'Y-m-d: H:i:s' ),
+                                            'batch_time'	 => gmdate( 'Y-m-d: H:i:s' ),
                                             'batch_handle'	 => $batch_response_details->handles[ 0 ],
                                             'catalog_id'	 => $catalog_id
                                     ];
@@ -1188,10 +1188,10 @@ class Webtoffee_Product_Feed_Sync_Admin {
                                         'id' => $last_log->id,
                                         'catalog_id'=>$catalog_id,
                                         'data'=>maybe_serialize($batch_pocess_log),
-                                        'start_time'=>date( 'Y-m-d H:i:s' )
+                                        'start_time'=>gmdate( 'Y-m-d H:i:s' )
 
                                 );
-                                $wpdb->update($table_name, $update_data, array('id' => $last_log->id));
+                                $wpdb->update($table_name, $update_data, array('id' => $last_log->id)); //phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
                             }    				
 				
 			}
@@ -1240,7 +1240,7 @@ class Webtoffee_Product_Feed_Sync_Admin {
 		$batch_status_response_details	 = json_decode( $batch_status_response_details );
 
 		$this->wt_log_data_change( 'wt-feed-upload', 'Batch Status Response:' );
-		$this->wt_log_data_change( 'wt-feed-upload', print_r( $batch_status_response, 1 ) );
+		$this->wt_log_data_change( 'wt-feed-upload', wp_json_encode( $batch_status_response ) );
 
 		return $batch_status_response_details;
 	}
@@ -1261,17 +1261,17 @@ class Webtoffee_Product_Feed_Sync_Admin {
                 global $wpdb;
                 $table_name = $wpdb->prefix.'wt_pf_fbsync_log';
                 $sync_log_exist = true;
-                if($wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name) {
+                if($wpdb->get_var($wpdb->prepare("SHOW TABLES LIKE %s", $table_name)) != $table_name) { //phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
                     $sync_log_exist = false;
                 }
-                $log_list = ($sync_log_exist) ? $wpdb->get_results( 'SELECT * FROM ' . $table_name . ' ORDER BY id DESC') : array();
+                $log_list = ($sync_log_exist) ? $wpdb->get_results( $wpdb->prepare( 'SELECT * FROM %s ORDER BY id DESC', $table_name ) ) : array(); //phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 
                 if ( is_array( $log_list ) && count( $log_list ) > 0 ) {
 			?>
 				<table class="wp-list-table widefat fixed striped history_list_tb log_list_tb">
 					<thead>
 						<tr>
-							<th class="log_file_name_col"><?php esc_html_e( "Batch Started at" ); ?></th>
+							<th class="log_file_name_col"><?php esc_html_e( "Batch Started at", 'webtoffee-product-feed' ); ?></th>
 							<th><?php esc_html_e( "Action" , 'webtoffee-product-feed' ); ?></th>
 						</tr>
 					</thead>
@@ -1288,10 +1288,10 @@ class Webtoffee_Product_Feed_Sync_Admin {
                                 $catalog_name = $catalog_details[$log_list_handles->catalog_id]; 
                             }
                             ?>
-                            <tr><td><?php esc_html_e('Catalog: '); echo esc_html( $catalog_name ); ?></td><td><?php esc_html_e('Started at:'); echo esc_html( $log_list_handles->start_time ); ?></td></tr>                               
+                            <tr><td><?php esc_html_e('Catalog: ', 'webtoffee-product-feed'); echo esc_html( $catalog_name ); ?></td><td><?php esc_html_e('Started at:', 'webtoffee-product-feed'); echo esc_html( $log_list_handles->start_time ); ?></td></tr>                               
                                             
                            <?php
-                             $log_list_single_batch = maybe_unserialize($log_list_handles->data); 
+                             $log_list_single_batch = Webtoffee_Product_Feed_Sync_Common_Helper::wt_decode_data($log_list_handles->data); 
                                 foreach ( $log_list_single_batch as $h_key => $log_list_details ) :
                                 foreach ( $log_list_details as $key => $single_batch_log ) :
                                 ?>						
@@ -1356,12 +1356,12 @@ class Webtoffee_Product_Feed_Sync_Admin {
 		}
 
 		if ( !empty( $_POST[ 'batch_handle' ] ) ) {
-			$nonce = (isset($_POST['_wpnonce']) ? sanitize_text_field($_POST['_wpnonce']) : '');
+			$nonce = (isset($_POST['_wpnonce']) ? sanitize_text_field(wp_unslash($_POST['_wpnonce'])) : '');
 			if(!wp_verify_nonce($nonce, WEBTOFFEE_PRODUCT_FEED_ID)){
 				return false;
 			}
-			$handle				 = sanitize_text_field( $_POST[ 'batch_handle' ] );
-			$catalog_id			 = sanitize_text_field( $_POST[ 'catalog_id' ] );
+			$handle				 = sanitize_text_field( wp_unslash( $_POST[ 'batch_handle' ] ) );
+			$catalog_id			 = sanitize_text_field( wp_unslash( $_POST[ 'catalog_id' ] ?? '' ) );
 			$batch_status_data	 = $this->get_batch_status( $handle, $catalog_id );
 
 			if ( isset( $batch_status_data->data ) ) {
@@ -1369,7 +1369,7 @@ class Webtoffee_Product_Feed_Sync_Admin {
                                 
 			}elseif (isset($batch_status_data->error)) {
                             
-                                wp_send_json( [ "errors" => __( $batch_status_data->error->message, 'webtoffee-product-feed'), "status" => 'failed', 'batch_response' => '']);
+                                wp_send_json( [ "errors" => $batch_status_data->error->message, "status" => 'failed', 'batch_response' => '']);
                         } else {
 
 				wp_send_json( [ "errors" => __( 'The request could not be handled', 'webtoffee-product-feed' ), "status" => 'cancelled' , 'batch_response' => ''] );			
@@ -1387,8 +1387,12 @@ class Webtoffee_Product_Feed_Sync_Admin {
 	 */
 	function wt_fbfeed_ajax_save_category() {
 
-
-		parse_str( $_POST[ 'form' ], $form );
+		// phpcs:ignore Nonce and user role check handled by check_write_access method. 
+		if (!Wt_Pf_Sh::check_write_access(WEBTOFFEE_PRODUCT_FEED_ID, 'wt-category-mapping')) {
+			return;  
+		}
+		
+		parse_str( wp_unslash( $_POST[ 'form' ] ?? '' ), $form ); //phpcs:ignore
 
 		$_REQUEST	 = $form		 = (array) $form;
 		check_admin_referer( 'wt-category-mapping' );
@@ -1396,7 +1400,7 @@ class Webtoffee_Product_Feed_Sync_Admin {
 
 		$mapping_option = 'wt_fbfeed_category_mapping';
 
-		$map_to_cats = !empty(($_REQUEST[ 'map_to' ])) ? ($_REQUEST[ 'map_to' ]) : array();
+		$map_to_cats = !empty(wp_unslash($_REQUEST[ 'map_to' ] ?? '')) ? wp_unslash($_REQUEST[ 'map_to' ]) : array(); //phpcs:ignore
 		$mapping_data = array_map( 'absint',  $map_to_cats);
 		
 		foreach ( $mapping_data as $local_category_id => $fb_category_id ) {
@@ -1491,7 +1495,7 @@ class Webtoffee_Product_Feed_Sync_Admin {
 			}
 		}
                 
-                add_submenu_page($parent_menu_key, esc_html__('Pro upgrade'), '<span class="wt-pf-go-premium">' . esc_html__('Pro upgrade') . '</span>', 'import', WEBTOFFEE_PRODUCT_FEED_ID . '#wt-pro-upgrade', array($this, 'admin_upgrade_premium_settings'));
+                add_submenu_page($parent_menu_key, esc_html__('Pro upgrade', 'webtoffee-product-feed'), '<span class="wt-pf-go-premium">' . esc_html__('Pro upgrade', 'webtoffee-product-feed') . '</span>', 'import', WEBTOFFEE_PRODUCT_FEED_ID . '#wt-pro-upgrade', array($this, 'admin_upgrade_premium_settings'));
                 
 		if(function_exists('remove_submenu_page')){
 			//remove_submenu_page(WT_PIEW_POST_TYPE, WT_PIEW_POST_TYPE);
@@ -1529,9 +1533,10 @@ class Webtoffee_Product_Feed_Sync_Admin {
 	{
 		$out=array(
 			'status'=>false,
-			'msg'=>__('Error'),
+			'msg'=>__('Error', 'webtoffee-product-feed'),
 		);
 
+		// phpcs:ignore Nonce and user role check handled by check_write_access method. 
 		if(Wt_Pf_Sh::check_write_access(WEBTOFFEE_PRODUCT_FEED_ID)) 
     	{
     		$advanced_settings=Webtoffee_Product_Feed_Sync_Common_Helper::get_advanced_settings();
@@ -1543,9 +1548,9 @@ class Webtoffee_Product_Feed_Sync_Admin {
 	            $form_field_name = isset($value['field_name']) ? $value['field_name'] : '';
 				$field_name=(substr($form_field_name,0,8)!=='wt_pf_' ? 'wt_pf_' : '').$form_field_name;
 	            $validation_key=str_replace('wt_pf_', '', $field_name);
-	            if(isset($_POST[$field_name]))
+	            if(isset($_POST[$field_name])) //phpcs:ignore
 	            {      	
-	            	$new_advanced_settings[$field_name]=Wt_Pf_Sh::sanitize_data($_POST[$field_name], $validation_key, $validation_rule);
+	            	$new_advanced_settings[$field_name]=Wt_Pf_Sh::sanitize_data(wp_unslash($_POST[$field_name]), $validation_key, $validation_rule); //phpcs:ignore
 	            }
 	        }
 			
@@ -1570,9 +1575,10 @@ class Webtoffee_Product_Feed_Sync_Admin {
         public function save_settings_custom_fields() {
             $out = array(
                 'status' => false,
-                'msg' => __('Error'),
+                'msg' => __('Error', 'webtoffee-product-feed'),
             );
 
+            // phpcs:ignore Nonce and user role check handled by check_write_access method. 
             if (Wt_Pf_Sh::check_write_access(WEBTOFFEE_PRODUCT_FEED_ID)) {
 
                 $checkbox_items = array(
@@ -1608,7 +1614,7 @@ class Webtoffee_Product_Feed_Sync_Admin {
 
                 $new_advanced_settings = array();
                 foreach ($checkbox_items as $checkbox_item) {
-                    $new_advanced_settings[$checkbox_item] = isset($_POST['_wt_feed_'.$checkbox_item]) ? absint( $_POST['_wt_feed_'.$checkbox_item] ) : 0;
+                    $new_advanced_settings[$checkbox_item] = isset($_POST['_wt_feed_'.$checkbox_item]) ? absint( wp_unslash( $_POST['_wt_feed_'.$checkbox_item] ) ) : 0; //phpcs:ignore
                 }
 
                 update_option('wt_pf_enabled_product_fields', $new_advanced_settings);
@@ -1630,17 +1636,18 @@ class Webtoffee_Product_Feed_Sync_Admin {
                 'msg' => __('Error', 'webtoffee-product-feed'),
             );
 
+            // phpcs:ignore Nonce and user role check handled by check_write_access method. 
             if (Wt_Pf_Sh::check_write_access(WEBTOFFEE_PRODUCT_FEED_ID)) {
-                if (isset($_POST['template_id'])) {
+                if (isset($_POST['template_id'])) { //phpcs:ignore
 
                     global $wpdb;
-                    $template_id = absint($_POST['template_id']);
+                    $template_id = absint(wp_unslash($_POST['template_id'])); //phpcs:ignore
                     $tb = $wpdb->prefix . Webtoffee_Product_Feed_Sync::$template_tb;
                     $where = "=%d";
                     $where_data = array($template_id);
-                    $wpdb->query($wpdb->prepare("DELETE FROM $tb WHERE id" . $where, $where_data));
+                    $wpdb->query($wpdb->prepare("DELETE FROM %s WHERE id = %d", $tb, $template_id)); //phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
                     $out['status'] = true;
-                    $out['msg'] = __('Template deleted successfully');
+                    $out['msg'] = __('Template deleted successfully', 'webtoffee-product-feed');
                     $out['template_id'] = $template_id;
                 }
             }
@@ -1758,7 +1765,38 @@ class Webtoffee_Product_Feed_Sync_Admin {
 	public static function module_exists($module)
 	{
 		return in_array($module, self::$existing_modules);
-	}                    
+	}   
+	
+		/**
+		 *  Screens to show Black Friday and Cyber Monday Banner.
+		 *
+		 *  @since 2.2.4
+		 *  @param array $screen_ids Array of screen ids.
+		 *  @return array            Array of screen ids.
+		 */
+		public function wt_bfcm_banner_screens( $screen_ids ) {
+			$screen_ids[] = 'toplevel_page_webtoffee_product_feed_main_export';
+			$screen_ids[] = 'webtoffee-product-feed_page_webtoffee_product_feed_main_history';
+			$screen_ids[] = 'webtoffee-product-feed_page_webtoffee_product_feed';
+			return $screen_ids;
+		}
 
+		/**
+		 * To Check if the current date is on or between the start and end date of black friday and cyber monday banner for 2025.
+		 *
+		 * @since 2.2.4
+		 */
+		public static function is_bfcm_season() {
+
+			$start_date   = new DateTime( '17-NOV-2025, 12:00 AM', new DateTimeZone( 'Asia/Kolkata' ) ); // Start date.
+			$current_date = new DateTime( 'now', new DateTimeZone( 'Asia/Kolkata' ) ); // Current date.
+			$end_date     = new DateTime( '04-DEC-2025, 11:59 PM', new DateTimeZone( 'Asia/Kolkata' ) ); // End date.
+
+			// Check if the date is on or between the start and end date of black friday and cyber monday banner for 2025.
+			if ( $current_date < $start_date || $current_date > $end_date ) {
+				return false;
+			}
+			return true;
+		}
     }
 }

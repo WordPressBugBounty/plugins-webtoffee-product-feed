@@ -62,12 +62,12 @@ if (!class_exists('Webtoffee_Product_Feed_Google_ProductReviewsExport')) {
             $product_ids = array();
             if ('include_cat' === $cat_filter_type) {
                 $prod_inc_categories = $inc_exc_category;
-                // Get product IDs from the specified categories
+                // Get product IDs from the specified categories - optimized query
                 $product_ids = get_posts(array(
                     'post_type'      => 'product',
                     'posts_per_page' => -1,
                     'fields'         => 'ids',
-                    'tax_query'      => array(
+                    'tax_query'      => array( //phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
                         array(
                             'taxonomy' => 'product_cat',
                             'field'    => 'slug',
@@ -75,23 +75,31 @@ if (!class_exists('Webtoffee_Product_Feed_Google_ProductReviewsExport')) {
                             'operator' => 'IN', // Match any of the categories
                         ),
                     ),
+                    'no_found_rows'  => true, // Skip counting total rows for better performance
+                    'update_post_meta_cache' => false, // Skip meta cache for better performance
+                    'update_post_term_cache' => false, // Skip term cache for better performance
                 ));
             } else {
                 $prod_exc_categories = $inc_exc_category;
-                // Get product IDs from the specified categories
-                $product_ids = get_posts(array(
+                // For exclude categories, get all products first, then filter in PHP for better performance
+                $all_product_ids = get_posts(array(
                     'post_type'      => 'product',
                     'posts_per_page' => -1,
                     'fields'         => 'ids',
-                    'tax_query'      => array(
-                        array(
-                            'taxonomy' => 'product_cat',
-                            'field'    => 'slug',
-                            'terms'    => $prod_exc_categories,
-                            'operator' => 'NOT IN', // Doesnt match any of the categories
-                        ),
-                    ),
+                    'no_found_rows'  => true, // Skip counting total rows for better performance
+                    'update_post_meta_cache' => false, // Skip meta cache for better performance
+                    'update_post_term_cache' => false, // Skip term cache for better performance
                 ));
+                
+                // Filter out products in excluded categories using PHP for better performance
+                $product_ids = array();
+                foreach ($all_product_ids as $product_id) {
+                    $product_categories = wp_get_post_terms($product_id, 'product_cat', array('fields' => 'slugs'));
+                    $has_excluded_category = !empty(array_intersect($product_categories, $prod_exc_categories));
+                    if (!$has_excluded_category) {
+                        $product_ids[] = $product_id;
+                    }
+                }
             }
 
             $brand_filter_type = !empty($form_data['post_type_form_data']['wt_pf_export_brand_filter_type']) ? $form_data['post_type_form_data']['wt_pf_export_brand_filter_type'] : 'include_brand';
@@ -280,7 +288,7 @@ if (!class_exists('Webtoffee_Product_Feed_Google_ProductReviewsExport')) {
 
             $date_time = $this->review->comment_date_gmt;
                     
-            $review_date = date("Y-m-d\TH:i:s\Z", strtotime( $date_time ) );
+            $review_date = gmdate("Y-m-d\TH:i:s\Z", strtotime( $date_time ) );
 
             return apply_filters('wt_feed_filter_review_timestamp', $review_date, $this->review);
         }

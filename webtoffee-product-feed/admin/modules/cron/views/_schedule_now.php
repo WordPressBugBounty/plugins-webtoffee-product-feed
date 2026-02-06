@@ -23,11 +23,11 @@ if (!defined('ABSPATH')) {
 <div class="wt_productfeed_schedule_now wt_productfeed_popup">
 	<div class="wt_productfeed_popup_hd">
 		<span style="line-height:40px;" class="dashicons dashicons-clock"></span>
-		<span class="wt_productfeed_popup_hd_label"><?php esc_html_e('Schedule now');?></span>
+		<span class="wt_productfeed_popup_hd_label"><?php esc_html_e('Schedule now', 'webtoffee-product-feed');?></span>
 		<div class="wt_productfeed_popup_close">X</div>
 	</div>
 	<div class="wt_productfeed_schedule_now_box">
-		<div class="wt_productfeed_cron_current_time"><b><?php esc_html_e('Current server time:');?></b> <span>--:--:-- --</span><br/>
+		<div class="wt_productfeed_cron_current_time"><b><?php esc_html_e('Current server time:', 'webtoffee-product-feed');?></b> <span>--:--:-- --</span><br/>
 		
 			<?php 
 			$wt_time_zone = Webtoffee_Product_Feed_Sync_Common_Helper::get_advanced_settings('default_time_zone'); 
@@ -35,10 +35,10 @@ if (!defined('ABSPATH')) {
 			
 		</div>
 
-		<label><?php esc_html_e('Schedule type');?></label>
+		<label><?php esc_html_e('Schedule type', 'webtoffee-product-feed');?></label>
 		<div class="wt_productfeed_schedule_now_formrow">
 			<div class="wt_productfeed_schedule_type_box_single" style="margin-bottom:0px;">
-				<label for="wt_productfeed_schedule_wordpress_cron"><input type="radio" name="wt_productfeed_schedule_type" id="wt_productfeed_schedule_wordpress_cron" value="wordpress_cron" checked="checked"> <?php esc_html_e('Wordpress Cron');?> </label>
+				<label for="wt_productfeed_schedule_wordpress_cron"><input type="radio" name="wt_productfeed_schedule_type" id="wt_productfeed_schedule_wordpress_cron" value="wordpress_cron" checked="checked"> <?php esc_html_e('Wordpress Cron', 'webtoffee-product-feed');?> </label>
 				<p class="wt_productfeed_schedule_type_desc"><?php esc_html_e('This type of scheduler depends on the Wordpress for scheduling your job at the specified time. However this model is dependent on your website visitors. Upon a visit Wordpress cron will check to see if the time/date is later than the scheduled event/s, and if it is– it will fire those events.', 'webtoffee-product-feed');?></p>
 			</div>
 			<div class="wt_productfeed_schedule_type_box_single">
@@ -63,7 +63,7 @@ if (!defined('ABSPATH')) {
 		}
 		?>
 
-		<label><?php esc_html_e('Interval');?></label>
+		<label><?php esc_html_e('Interval', 'webtoffee-product-feed');?></label>
 		<div class="wt_productfeed_schedule_now_formrow">			
 			<div class="wt_productfeed_schedule_now_interval_radio_block">
 				<label for="wt_productfeed_cron_interval_day"><input type="radio" id="wt_productfeed_cron_interval_day" name="wt_productfeed_cron_interval" value="day" checked="checked"> <?php esc_html_e('Every day', 'webtoffee-product-feed');?></label>
@@ -72,12 +72,12 @@ if (!defined('ABSPATH')) {
 				<label for="wt_productfeed_cron_interval_custom"><input type="radio" id="wt_productfeed_cron_interval_custom" name="wt_productfeed_cron_interval" value="custom"> <?php esc_html_e('Custom', 'webtoffee-product-feed');?></label>
 			</div>
 			<div class="wt_productfeed_schedule_now_interval_sub_block wt_productfeed_schedule_custom_interval_block">
-				<label><?php esc_html_e('Custom interval');?></label>
-				<input type="number" step="1" min="1" name="wt_productfeed_cron_interval_val" value="" placeholder="<?php esc_html_e('Interval in minutes.');?>">
-				<span class="wt-pfd_form_help" style="margin-top:3px;"><?php esc_html_e('Recommended: Minimum 2 hour(120 minutes)');?></span>
+				<label><?php esc_html_e('Custom interval', 'webtoffee-product-feed');?></label>
+				<input type="number" step="1" min="1" name="wt_productfeed_cron_interval_val" value="" placeholder="<?php esc_html_e('Interval in minutes.', 'webtoffee-product-feed');?>">
+				<span class="wt-pfd_form_help" style="margin-top:3px;"><?php esc_html_e('Recommended: Minimum 2 hour(120 minutes)', 'webtoffee-product-feed');?></span>
 			</div>
 			<div class="wt_productfeed_schedule_now_interval_sub_block wt_productfeed_schedule_day_block">
-				<label><?php esc_html_e('Which day?');?></label>
+				<label><?php esc_html_e('Which day?', 'webtoffee-product-feed');?></label>
 				<div class="wt_productfeed_schedule_now_interval_radio_block">				
 					<?php
 					$days = array( 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat');
@@ -86,14 +86,14 @@ if (!defined('ABSPATH')) {
 						$day_vl=strtolower($day);
 						$checked=($day_vl=='sun' ? ' checked="checked"' : '');
 						?>
-						<label for="wt_productfeed_cron_day_<?php echo esc_attr( $day_vl );?>"><input type="radio" value="<?php echo esc_attr( $day_vl );?>" id="wt_productfeed_cron_day_<?php echo esc_attr( $day_vl );?>" name="wt_productfeed_cron_day" <?php echo esc_attr( $checked );?>> <?php esc_html_e( $day );?></label>
+						<label for="wt_productfeed_cron_day_<?php echo esc_attr( $day_vl );?>"><input type="radio" value="<?php echo esc_attr( $day_vl );?>" id="wt_productfeed_cron_day_<?php echo esc_attr( $day_vl );?>" name="wt_productfeed_cron_day" <?php echo esc_attr( $checked );?>> <?php echo esc_html( $day );?></label>
 						<?php
 					}
 					?>
 				</div>
 			</div>
 			<div class="wt_productfeed_schedule_now_interval_sub_block wt_productfeed_schedule_date_block">
-				<label><?php esc_html_e('Day of the Month?');?></label>
+				<label><?php esc_html_e('Day of the Month?', 'webtoffee-product-feed');?></label>
 				<select name="wt_productfeed_cron_interval_date">
 					<?php
 					for($i=1; $i<=28; $i++)
@@ -103,11 +103,11 @@ if (!defined('ABSPATH')) {
 						<?php
 					}
 					?>
-					<option value="last_day"><?php esc_html_e('Last day');?></option>
+					<option value="last_day"><?php esc_html_e('Last day', 'webtoffee-product-feed');?></option>
 				</select>
 			</div>
 			<div class="wt_productfeed_schedule_now_interval_sub_block wt_productfeed_schedule_starttime_block">
-				<label><?php esc_html_e('Start time');?></label> 
+				<label><?php esc_html_e('Start time', 'webtoffee-product-feed');?></label> 
                                 <div style="float:left">
                                     <input  type="number" step="1" min="1" max="12" name="wt_productfeed_cron_start_val" value="" />
                                     <span class="wt-pfd_form_help" style="display:block; margin-top: 1px">Hour</span>
@@ -133,19 +133,19 @@ if (!defined('ABSPATH')) {
 		</div>
 
 		<div class="wt_productfeed_schedule_now_trigger_url">
-			<label><?php esc_html_e('Trigger URL');?></label>
+			<label><?php esc_html_e('Trigger URL', 'webtoffee-product-feed');?></label>
 			<div class="wt_productfeed_schedule_now_formrow" style="margin-bottom:0px;">
 				<input type="text" name="wt_productfeed_cron_url" value="" />
-				<p style="color:red; margin:0px;"><?php esc_html_e('Use the generated URL to run cron.'); ?></p>
+				<p style="color:red; margin:0px;"><?php esc_html_e('Use the generated URL to run cron.', 'webtoffee-product-feed'); ?></p>
 				<!-- <p>Eg: */2 * * * * wget -O /dev/null url >/dev/null 2>&1  </p> -->
 			</div>
 		</div>
 
 		<div class="wt_productfeed_popup_footer">
 			<button type="button" name="" class="button-secondary wt_productfeed_popup_cancel">
-				<?php esc_html_e('Cancel');?> 
+				<?php esc_html_e('Cancel', 'webtoffee-product-feed');?> 
 			</button>
-			<button type="button" name="" class="button-primary wt_productfeed_save_schedule"><?php esc_html_e('Schedule now');?></button>	
+			<button type="button" name="" class="button-primary wt_productfeed_save_schedule"><?php esc_html_e('Schedule now', 'webtoffee-product-feed');?></button>	
 		</div>
 	</div>
 </div>

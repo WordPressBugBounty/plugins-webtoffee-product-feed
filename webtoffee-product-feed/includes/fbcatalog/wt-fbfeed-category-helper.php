@@ -25,7 +25,15 @@ function wt_fbfeed_category_form_fields( $category ) {
 		<th scope="row" valign="top"><label for="wt_facebook_category"><?php esc_html_e(' Facebook Category', 'webtoffee-product-feed' ); ?></label></th>
 		<td>
                     <select name="wt_facebook_category" class="wc-enhanced-select">
-	<?php echo wt_fb_category_dropdown( $fb_category_id ); ?>
+	<?php 
+	$allowed_html = array(
+		'option' => array(
+			'value'    => true,
+			'selected' => true,
+		),
+	);
+	echo wp_kses( wt_fb_category_dropdown( $fb_category_id ), $allowed_html ); 
+	?>
 			</select>
 
 			<p class="description"><?php esc_html_e(' The Facebook Category corresponding to this category in the website.', 'webtoffee-product-feed'); ?></p></td>
@@ -39,7 +47,7 @@ function wt_fbfeed_category_form_save( $term_id ) {
 
 
 	if ( isset( $_POST[ 'wt_facebook_category' ] ) ) {
-		if(! wp_verify_nonce( $_POST['wt_category_edit_nonce'], 'wt_category_edit_nonce' )){
+		if(! wp_verify_nonce( sanitize_text_field(wp_unslash($_POST['wt_category_edit_nonce'] ?? '')), 'wt_category_edit_nonce' )){ 
 			return false;
 		}
 

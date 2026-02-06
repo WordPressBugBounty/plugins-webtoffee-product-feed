@@ -27,8 +27,8 @@ if ( ! function_exists( 'wt_onbuy_feed_render_categories' ) ) {
      */
     function wt_onbuy_feed_render_categories( $parent = 0, $par = '', $value = '' ) {
         
-        $category_query =   isset($_POST['cat_filter_type']) ? Wt_Pf_Sh::sanitize_item($_POST['cat_filter_type'], 'text') : '';
-        $query_categories = isset($_POST['inc_exc_cat']) ? Wt_Pf_Sh::sanitize_item($_POST['inc_exc_cat'], 'text_arr') : array();
+        $category_query =   isset($_POST['cat_filter_type']) ? Wt_Pf_Sh::sanitize_item(wp_unslash($_POST['cat_filter_type']), 'text') : ''; //phpcs:ignore
+        $query_categories = isset($_POST['inc_exc_cat']) ? Wt_Pf_Sh::sanitize_item(wp_unslash($_POST['inc_exc_cat']), 'text_arr') : array(); //phpcs:ignore
 
         $ids_to_include_or_exclude = array();
         $get_terms_to_include_or_exclude =  get_terms(
@@ -43,6 +43,7 @@ if ( ! function_exists( 'wt_onbuy_feed_render_categories' ) ) {
             $ids_to_include_or_exclude = $get_terms_to_include_or_exclude; 
         }        
         
+        // Get all categories first, then filter out those with meta
         $category_args = [
 			'taxonomy'		 => 'product_cat',
 			'parent'		 => $parent,
@@ -52,23 +53,37 @@ if ( ! function_exists( 'wt_onbuy_feed_render_categories' ) ) {
 			'hierarchical'	 => 1,
 			'title_li'		 => '',
 			'hide_empty'	 => 1,
-			'meta_query'	 => [
-				[
-					'key'		 => 'wt_onbuy_category',
-					'compare'	 => 'NOT EXISTS',
-				]
-			]
+			'fields'         => 'all', // Get all fields for filtering
 		];
         
         if( !empty( $ids_to_include_or_exclude ) ){
             if( 'exclude_cat' ===  $category_query ){
-                $category_args['exclude'] = $ids_to_include_or_exclude;
+                // Use include with all IDs except excluded ones for better performance
+                $all_cat_ids = get_terms(array(
+                    'taxonomy' => 'product_cat',
+                    'fields' => 'ids',
+                    'hide_empty' => 1,
+                ));
+                $category_args['include'] = array_diff($all_cat_ids, $ids_to_include_or_exclude);
             }else{
                 $category_args['include'] = $ids_to_include_or_exclude;
             }
         }
         
         $categories   = get_categories( $category_args );
+        
+        // Filter out categories that already have the meta key (more efficient than meta_query)
+        if ( ! empty( $categories ) ) {
+            $filtered_categories = array();
+            foreach ( $categories as $cat ) {
+                $meta_value = get_term_meta( $cat->term_id, 'wt_onbuy_category', true );
+                if ( empty( $meta_value ) ) {
+                    $filtered_categories[] = $cat;
+                }
+            }
+            $categories = $filtered_categories;
+        }
+        
         if ( ! empty( $categories ) ) {
             if ( ! empty( $par ) ) {
                 $par = $par . ' > ';
@@ -97,7 +112,7 @@ if ( ! function_exists( 'wt_onbuy_feed_render_categories' ) ) {
             ?>
                 <tr class="treegrid-1">
                         <td>
-                                <?php esc_html_e('All categories have already been mapped'); ?>
+                                <?php esc_html_e('All categories have already been mapped', 'webtoffee-product-feed'); ?>
                         </td>
                 </tr>
             <?php
@@ -145,7 +160,7 @@ $value           = array();
 <div class="wt-wrap">
 
 	
-	<h4><?php esc_html_e( 'Map WooCommerce categories with OnBuy categories.', 'webtoffee-product-feed-pro' ); ?></h4>
+	<h4><?php esc_html_e( 'Map WooCommerce categories with OnBuy categories.', 'webtoffee-product-feed' ); ?></h4>
 	<?php
             $feed_channel_name =  ucwords($this->to_export);
             if( 'tiktok' === $this->to_export ){
@@ -159,9 +174,9 @@ $value           = array();
             }
         ?>            
         <?php if( 'onbuy' === $this->to_export ): ?>
-        <span><?php esc_html_e( 'OnBuy has a pre-defined set of categories'); ?></a>. <?php esc_html_e( 'Mapping your store categories with the OnBuy categories will give more visibility to your products in OnBuy ads and listings. To edit the mapping go to the respective'); ?> <a target="_blank" href="<?php echo admin_url('edit-tags.php?taxonomy=product_cat&post_type=product'); ?>"><?php esc_html_e( 'categories page'); ?></a></span>
+        <span><?php esc_html_e( 'OnBuy has a pre-defined set of categories', 'webtoffee-product-feed'); ?></a>. <?php esc_html_e( 'Mapping your store categories with the OnBuy categories will give more visibility to your products in OnBuy ads and listings. To edit the mapping go to the respective', 'webtoffee-product-feed'); ?> <a target="_blank" href="<?php echo esc_url( admin_url('edit-tags.php?taxonomy=product_cat&post_type=product') ); ?>"><?php esc_html_e( 'categories page', 'webtoffee-product-feed'); ?></a></span>
 	<?php else: ?>
-        <span><?php echo esc_html($feed_channel_name); if( 'tiktok' === $this->to_export ){ $feed_channel_name = 'TikTok';} // To avoid ads text multiple times ?> <?php esc_html_e( 'uses' ); ?> <a target="_blank" href="https://www.onbuy.com/basepages/producttype/taxonomy.en-US.txt"><?php esc_html_e( 'OnBuy categories'); ?></a>. <?php esc_html_e( 'Mapping your store categories with the OnBuy categories will give more visibility to your products in');?> <?php echo esc_html($feed_channel_name); ?> <?php esc_html_e( 'ads. To edit the mapping go to the respective'); ?> <a target="_blank" href="<?php echo admin_url('edit-tags.php?taxonomy=product_cat&post_type=product'); ?>"><?php esc_html_e( 'categories page'); ?></a></span>
+        <span><?php echo esc_html($feed_channel_name); if( 'tiktok' === $this->to_export ){ $feed_channel_name = 'TikTok';} // To avoid ads text multiple times ?> <?php esc_html_e( 'uses', 'webtoffee-product-feed' ); ?> <a target="_blank" href="https://www.onbuy.com/basepages/producttype/taxonomy.en-US.txt"><?php esc_html_e( 'OnBuy categories', 'webtoffee-product-feed'); ?></a>. <?php esc_html_e( 'Mapping your store categories with the OnBuy categories will give more visibility to your products in', 'webtoffee-product-feed');?> <?php echo esc_html($feed_channel_name); ?> <?php esc_html_e( 'ads. To edit the mapping go to the respective', 'webtoffee-product-feed'); ?> <a target="_blank" href="<?php echo esc_url( admin_url('edit-tags.php?taxonomy=product_cat&post_type=product') ); ?>"><?php esc_html_e( 'categories page', 'webtoffee-product-feed'); ?></a></span>
         <?php endif; ?>
 	<form action="" name="feed" id="category-mapping-form" class="category-mapping-form" method="post" autocomplete="off">
 		<?php wp_nonce_field( 'wt-category-mapping' ); ?>
@@ -170,8 +185,8 @@ $value           = array();
 		<table class="table tree widefat fixed wt-pf-category-default-mapping-tb">
 			<thead>
 			<tr>
-				<th><?php esc_html_e( 'Store Categories', 'webtoffee-product-feed-pro' ); ?></th>
-				<th><?php esc_html_e( 'OnBuy Category', 'webtoffee-product-feed-pro' ); ?></th>
+				<th><?php esc_html_e( 'Store Categories', 'webtoffee-product-feed' ); ?></th>
+				<th><?php esc_html_e( 'OnBuy Category', 'webtoffee-product-feed' ); ?></th>
 			</tr>
 			</thead>
 			<tbody>

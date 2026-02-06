@@ -134,7 +134,7 @@ if ( !class_exists( 'WT_Facebook_Catalog_Product' ) ) :
 			if ( !$description ) {
 				$description = ($product->get_short_description()) ? $product->get_short_description() : $product->get_description();
 			}
-			return strip_tags( $description );
+			return wp_strip_all_tags( $description );
 		}
 
 		public function prepare_product( $product ) {

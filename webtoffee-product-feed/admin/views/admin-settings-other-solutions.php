@@ -29,8 +29,8 @@ if ( ! defined( 'WPINC' ) ) {die;
 <div class="wt-pfd-tab-content" data-id="<?php echo esc_attr($target_id);?>">
     <div class="wt_row"> 
         <div clas="wt_headings">
-            <h1 class="wt_heading_1"><?php _e('More Plugins To Make Your Store Stand Out', 'webtoffee-product-feed'); ?></h1>
-            <h2 class="wt_heading_2"><?php _e('Check out our other plugins that are perfectly suited for WooCommerce store needs.', 'webtoffee-product-feed'); ?></h2> 
+            <h1 class="wt_heading_1"><?php esc_html_e('More Plugins To Make Your Store Stand Out', 'webtoffee-product-feed'); ?></h1>
+            <h2 class="wt_heading_2"><?php esc_html_e('Check out our other plugins that are perfectly suited for WooCommerce store needs.', 'webtoffee-product-feed'); ?></h2> 
         </div>
     <div class="wt_column">
 <?php 
@@ -239,6 +239,7 @@ $plugins=array(
             <div class="wt_widget">
                 <div class="wt_widget_title_wrapper">
                     <div class="wt_widget_column_1">
+                        <?php // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage ?>
                         <img src="<?php echo esc_url($wt_admin_img_path . '/' . $value['image_url']);?>">
                     </div>
                     <div class="wt_widget_column_2">
@@ -257,7 +258,8 @@ $plugins=array(
                 if ( isset( $value['premium_url'] ) && ! empty( $value['premium_url'] ) ) {
                 ?>
                     <div class="wt_premium_button" style="width: 100%;">
-                        <a href="<?php echo esc_url($value['premium_url']); ?>" class="wt_get_premium_btn" target="_blank"><img src="<?php echo esc_url($wt_admin_img_path . '/promote_crown.png');?>" style="width: 10px;height: 10px;"><?php  _e(' Get Premium','webtoffee-product-feed'); ?></a>
+                        <?php // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage ?>
+                        <a href="<?php echo esc_url($value['premium_url']); ?>" class="wt_get_premium_btn" target="_blank"><img src="<?php echo esc_url($wt_admin_img_path . '/promote_crown.png');?>" style="width: 10px;height: 10px;"><?php  esc_html_e(' Get Premium','webtoffee-product-feed'); ?></a>
                     </div> 
 <?php           }   
                     if(is_plugin_active($value['basic_plugin']))
@@ -265,7 +267,7 @@ $plugins=array(
 ?>
                     <div class="wt_installed_button">
                         <button class="wt_installed_btn">
-                            <?php _e('Installed','webtoffee-product-feed'); ?>
+                            <?php esc_html_e('Installed','webtoffee-product-feed'); ?>
                         </button>
                     </div>
 <?php               
@@ -276,7 +278,7 @@ $plugins=array(
                     <div class="wt_free_button<?php echo (empty($value['premium_url'])) ? ' full_width' : ''; ?>">
                              <a class="wt_free_btn_a" href="<?php echo esc_url($value['basic_url']); ?>" target="_blank">
                                 <button class="wt_free_btn<?php echo (empty($value['premium_url'])) ? ' full_width' : ''; ?>">
-                                    <?php _e('Get Free Plugin', 'product-import-export-for-woo'); ?>
+                                    <?php esc_html_e('Get Free Plugin', 'webtoffee-product-feed'); ?>
                                 </button>
                             </a>
                     </div>

@@ -13,17 +13,17 @@
  * @package           Webtoffee_Product_Feed_Sync
  *
  * @wordpress-plugin
- * Plugin Name:       WebToffee WooCommerce Product Feed & Sync Manager
+ * Plugin Name:       WebToffee WooCommerce Product Feeds - Google Shopping, Pinterest, TikTok Ads, & More
  * Plugin URI:        https://wordpress.org/plugins/webtoffee-product-feed
  * Description:       Integrate your WooCommerce store with popular sale channels including Google Merchant Center, Facebook/Instagram ads&shops, TikTok ads and much more.
- * Version:           2.3.1
+ * Version:           2.3.6
  * Author:            WebToffee
  * Author URI:        https://www.webtoffee.com
  * License:           GPL-3.0+
  * License URI:       http://www.gnu.org/licenses/gpl-3.0.txt
  * Text Domain:       webtoffee-product-feed
  * Domain Path:       /languages
- * WC tested up to:   10.1.0
+ * WC tested up to:   10.4.2
  */
 // If this file is called directly, abort.
 if ( !defined( 'WPINC' ) ) {
@@ -35,7 +35,7 @@ if ( !defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'WEBTOFFEE_PRODUCT_FEED_SYNC_VERSION', '2.3.1' );
+define( 'WEBTOFFEE_PRODUCT_FEED_SYNC_VERSION', '2.3.6' );
 define( 'WEBTOFFEE_PRODUCT_FEED_ID', 'webtoffee_product_feed' );
 define( 'WT_PRODUCT_FEED_PLUGIN_URL', plugin_dir_url(__FILE__));
 define( 'WT_PRODUCT_FEED_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
@@ -52,6 +52,7 @@ if ( !defined( 'WEBTOFFEE_PRODUCT_FEED_MAIN_ID' ) ) {
 if ( !defined( 'WT_PF_DEBUG_BASIC' ) ) {
 	define( 'WT_PF_DEBUG_BASIC', false );
 }
+
 
 /**
  * The code that runs during plugin activation.
@@ -97,8 +98,9 @@ if ( !function_exists( 'wt_feed_basic_check_for_woocommerce' ) ) {
 				$install_url = wp_nonce_url( add_query_arg( array( 'action' => 'install-plugin', 'plugin' => 'woocommerce', ), admin_url( 'update.php' ) ), 'install-plugin_woocommerce' );
 				$class		 = 'notice notice-error';
 				$post_type	 = 'product';
-				$message	 = sprintf( __( 'The <b>WooCommerce</b> plugin must be active for <b> WebToffee WooCommerce %s Feed & Sync Manager</b> plugin to work.  Please <a href="%s" target="_blank">install & activate WooCommerce</a>.' ), ucfirst( $post_type ), esc_url( $install_url ) );
-				printf( '<div class="%s"><p>%s</p></div>', esc_attr( $class ), ( $message ) );
+				// translators: %1$s is the post type (e.g., Product), %2$s is the install URL
+				$message	 = sprintf( __( 'The <b>WooCommerce</b> plugin must be active for <b> WebToffee WooCommerce %1$s Feed & Sync Manager</b> plugin to work.  Please <a href="%2$s" target="_blank">install & activate WooCommerce</a>.', 'webtoffee-product-feed' ), ucfirst( $post_type ), esc_url( $install_url ) );
+				printf( '<div class="%s"><p>%s</p></div>', esc_attr( $class ), wp_kses_post( $message ) );
 			}
 
 		}

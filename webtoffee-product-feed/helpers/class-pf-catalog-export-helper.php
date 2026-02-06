@@ -18,9 +18,9 @@ if(!class_exists('Wt_Pf_IE_Basic_Helper'))
 		public static function _get_csv_delimiters()
 		{
 			return array(
-				'tab'=>array('value'=>__('Tab'), 'val'=>"\t"),				
-				'comma'=>array('value'=>__('Comma'), 'val'=>","),
-				'semicolon'=>array('value'=>__('Semicolon'), 'val'=>";"),
+				'tab'=>array('value'=>__('Tab', 'webtoffee-product-feed'), 'val'=>"\t"),				
+				'comma'=>array('value'=>__('Comma', 'webtoffee-product-feed'), 'val'=>","),
+				'semicolon'=>array('value'=>__('Semicolon', 'webtoffee-product-feed'), 'val'=>";"),
 			);
 		}
 		public static function _get_local_file_path($file_url)
@@ -190,12 +190,12 @@ if(!class_exists('Wt_Pf_IE_Basic_Helper'))
 			{
 				$debug_panel_btns=array(
 					'refresh_step'=>array(
-						'title'=>__('Refresh the step'),
+						'title'=>__('Refresh the step', 'webtoffee-product-feed'),
 						'icon'=>'dashicons dashicons-update',
 						'onclick'=>'wt_pf_basic_'.$module_base.'.refresh_step();',
 					),
 					'console_form_data'=>array(
-						'title'=>__('Console form data'),
+						'title'=>__('Console form data', 'webtoffee-product-feed'),
 						'icon'=>'dashicons dashicons-code-standards',
 						'onclick'=>'wt_pf_basic_'.$module_base.'.console_formdata();',
 					),
@@ -206,8 +206,8 @@ if(!class_exists('Wt_Pf_IE_Basic_Helper'))
 			if(defined('WT_PF_DEBUG_BASIC') && WT_PF_DEBUG_BASIC && is_array($debug_panel_btns) && count($debug_panel_btns)>0)
 			{
 				?>
-				<div class="wt_pf_debug_panel" title="<?php esc_html_e('For debugging process');?>">
-					<div class="wt_pf_debug_panel_hd"><?php esc_html_e('Debug panel');?></div>
+				<div class="wt_pf_debug_panel" title="<?php esc_html_e('For debugging process', 'webtoffee-product-feed');?>">
+					<div class="wt_pf_debug_panel_hd"><?php esc_html_e('Debug panel', 'webtoffee-product-feed');?></div>
 					<div class="wt_pf_debug_panel_con">
 						<?php
 						foreach ($debug_panel_btns as $btn) 

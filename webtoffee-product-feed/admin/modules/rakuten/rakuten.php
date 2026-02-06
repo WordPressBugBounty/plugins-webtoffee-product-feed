@@ -165,7 +165,10 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Rakuten')) {
 				return $this->product_categories;
 			}
 			$out = array();
-			$product_categories = get_terms('product_cat', array('hide_empty' => false));
+			$product_categories = get_terms(array(
+				'taxonomy' => 'product_cat',
+				'hide_empty' => false
+			));
 			if (!is_wp_error($product_categories)) {
 				$version = get_bloginfo('version');
 				foreach ($product_categories as $category) {
@@ -203,11 +206,11 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Rakuten')) {
 		public function exporter_alter_mapping_enabled_fields($mapping_enabled_fields, $base, $form_data_mapping_enabled_fields) {
 			if ($base === $this->module_base) {
 				$mapping_enabled_fields = array();
-				$mapping_enabled_fields['availability_price'] = array(__('Availability & Price'), 1);
-				$mapping_enabled_fields['unique_product_identifiers'] = array(__('Unique Product Identifiers'), 1);
-				$mapping_enabled_fields['detailed_product_attributes'] = array(__('Detailed Product Attributes'), 1);
-				$mapping_enabled_fields['tax_shipping'] = array(__('Tax & Shipping'), 1);
-				$mapping_enabled_fields['custom_label_identifiers'] = array(__('Custom Label Attributes'), 1);
+				$mapping_enabled_fields['availability_price'] = array(__('Availability & Price', 'webtoffee-product-feed'), 1);
+				$mapping_enabled_fields['unique_product_identifiers'] = array(__('Unique Product Identifiers', 'webtoffee-product-feed'), 1);
+				$mapping_enabled_fields['detailed_product_attributes'] = array(__('Detailed Product Attributes', 'webtoffee-product-feed'), 1);
+				$mapping_enabled_fields['tax_shipping'] = array(__('Tax & Shipping', 'webtoffee-product-feed'), 1);
+				$mapping_enabled_fields['custom_label_identifiers'] = array(__('Custom Label Attributes', 'webtoffee-product-feed'), 1);
 			
 			}
 			return $mapping_enabled_fields;
@@ -347,14 +350,14 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Rakuten')) {
                         if ('rakuten' === $base) {
 
                             $out['file_as']['sele_vals'] = array(
-                                'xml'=>__('XML'), 
-                                'tsv'=>__('TSV'),
-                                'txt'=>__('TXT'),
-                                'csv'=>__('CSV')                                
+                                'xml'=>__('XML', 'webtoffee-product-feed'), 
+                                'tsv'=>__('TSV', 'webtoffee-product-feed'),
+                                'txt'=>__('TXT', 'webtoffee-product-feed'),
+                                'csv'=>__('CSV', 'webtoffee-product-feed')                                
                             );
                             $out['delimiter']['sele_vals'] = array(
-                                'tab' => array('value' => __('Tab'), 'val' => "\t"),
-                                'comma' => array('value' => __('Comma'), 'val' => ",")
+                                'tab' => array('value' => __('Tab', 'webtoffee-product-feed'), 'val' => "\t"),
+                                'comma' => array('value' => __('Comma', 'webtoffee-product-feed'), 'val' => ",")
                             );
                         }
 
@@ -371,71 +374,71 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Rakuten')) {
 			}
 
 			/* altering help text of default fields */
-			$fields['limit']['label'] = __('Total number of products to export');
-			$fields['limit']['help_text'] = __('Exports specified number of products. e.g. Entering 500 with a skip count of 10 will export products from 11th to 510th position.');
-			$fields['offset']['label'] = __('Skip first <i>n</i> products');
-			$fields['offset']['help_text'] = __('Skips specified number of products from the beginning of the database. e.g. Enter 10 to skip first 10 products from export.');
+			$fields['limit']['label'] = __('Total number of products to export', 'webtoffee-product-feed');
+			$fields['limit']['help_text'] = __('Exports specified number of products. e.g. Entering 500 with a skip count of 10 will export products from 11th to 510th position.', 'webtoffee-product-feed');
+			$fields['offset']['label'] = __('Skip first <i>n</i> products', 'webtoffee-product-feed');
+			$fields['offset']['help_text'] = __('Skips specified number of products from the beginning of the database. e.g. Enter 10 to skip first 10 products from export.', 'webtoffee-product-feed');
 
 			$fields['product'] = array(
-				'label' => __('Products'),
-				'placeholder' => __('All products'),
+				'label' => __('Products', 'webtoffee-product-feed'),
+				'placeholder' => __('All products', 'webtoffee-product-feed'),
 				'attr' => array('data-exclude_type' => 'variable,variation'),
 				'field_name' => 'product',
 				'sele_vals' => array(),
-				'help_text' => __('Export specific products. Keyin the product names to export multiple products.'),
+				'help_text' => __('Export specific products. Keyin the product names to export multiple products.', 'webtoffee-product-feed'),
 				'type' => 'multi_select',
 				'css_class' => 'wc-product-search',
 				'validation_rule' => array('type' => 'text_arr')
 			);
 			$fields['stock_status'] = array(
-				'label' => __('Stock status'),
-				'placeholder' => __('All status'),
+				'label' => __('Stock status', 'webtoffee-product-feed'),
+				'placeholder' => __('All status', 'webtoffee-product-feed'),
 				'field_name' => 'stock_status',
-				'sele_vals' => array('' => __('All status'), 'instock' => __('In Stock'), 'outofstock' => __('Out of Stock'), 'onbackorder' => __('On backorder')),
-				'help_text' => __('Export products based on stock status.'),
+				'sele_vals' => array('' => __('All status', 'webtoffee-product-feed'), 'instock' => __('In Stock', 'webtoffee-product-feed'), 'outofstock' => __('Out of Stock', 'webtoffee-product-feed'), 'onbackorder' => __('On backorder', 'webtoffee-product-feed')),
+				'help_text' => __('Export products based on stock status.', 'webtoffee-product-feed'),
 				'type' => 'select',
 				'validation_rule' => array('type' => 'text_arr')
 			);
 			$fields['exclude_product'] = array(
-				'label' => __('Exclude products'),
-				'placeholder' => __('Exclude products'),
+				'label' => __('Exclude products', 'webtoffee-product-feed'),
+				'placeholder' => __('Exclude products', 'webtoffee-product-feed'),
 				'attr' => array('data-exclude_type' => 'variable,variation'),
 				'field_name' => 'exclude_product',
 				'sele_vals' => array(),
-				'help_text' => __('Use this if you need to exclude a specific or multiple products from your export list.'),
+				'help_text' => __('Use this if you need to exclude a specific or multiple products from your export list.', 'webtoffee-product-feed'),
 				'type' => 'multi_select',
 				'css_class' => 'wc-product-search',
 				'validation_rule' => array('type' => 'text_arr')
 			);
 
 			$fields['product_categories'] = array(
-				'label' => __('Product categories'),
-				'placeholder' => __('Any category'),
+				'label' => __('Product categories', 'webtoffee-product-feed'),
+				'placeholder' => __('Any category', 'webtoffee-product-feed'),
 				'field_name' => 'product_categories',
 				'sele_vals' => $this->get_product_categories(),
-				'help_text' => __('Export products belonging to a particular or from multiple categories. Just select the respective categories.'),
+				'help_text' => __('Export products belonging to a particular or from multiple categories. Just select the respective categories.', 'webtoffee-product-feed'),
 				'type' => 'multi_select',
 				'css_class' => 'wc-enhanced-select',
 				'validation_rule' => array('type' => 'sanitize_title_with_dashes_arr')
 			);
 
 			$fields['product_tags'] = array(
-				'label' => __('Product tags'),
-				'placeholder' => __('Any tag'),
+				'label' => __('Product tags', 'webtoffee-product-feed'),
+				'placeholder' => __('Any tag', 'webtoffee-product-feed'),
 				'field_name' => 'product_tags',
 				'sele_vals' => $this->get_product_tags(),
-				'help_text' => __('Enter the product tags to export only the respective products that have been tagged accordingly.'),
+				'help_text' => __('Enter the product tags to export only the respective products that have been tagged accordingly.', 'webtoffee-product-feed'),
 				'type' => 'multi_select',
 				'css_class' => 'wc-enhanced-select',
 				'validation_rule' => array('type' => 'sanitize_title_with_dashes_arr')
 			);
 
 			$fields['product_status'] = array(
-				'label' => __('Product status'),
-				'placeholder' => __('Any status'),
+				'label' => __('Product status', 'webtoffee-product-feed'),
+				'placeholder' => __('Any status', 'webtoffee-product-feed'),
 				'field_name' => 'product_status',
 				'sele_vals' => self::get_product_statuses(),
-				'help_text' => __('Filter products by their status.'),
+				'help_text' => __('Filter products by their status.', 'webtoffee-product-feed'),
 				'type' => 'multi_select',
 				'css_class' => 'wc-enhanced-select',
 				'validation_rule' => array('type' => 'text_arr')
@@ -448,9 +451,9 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Rakuten')) {
 
 public static function wt_feed_get_product_conditions() {
 	$conditions = array(
-		'new'           => _x( 'New', 'product condition', 'webtoffee-product-feed-pro' ),
-		'refurbished'   => _x( 'Refurbished', 'product condition', 'webtoffee-product-feed-pro' ),
-		'used'          => _x( 'Used', 'product condition', 'webtoffee-product-feed-pro' ),
+		'new'           => _x( 'New', 'product condition', 'webtoffee-product-feed' ),
+		'refurbished'   => _x( 'Refurbished', 'product condition', 'webtoffee-product-feed' ),
+		'used'          => _x( 'Used', 'product condition', 'webtoffee-product-feed' ),
 	);
 
 	return apply_filters( 'wt_feed_google_product_conditions', $conditions );
@@ -458,11 +461,11 @@ public static function wt_feed_get_product_conditions() {
 
 	public static function get_age_group() {
 			$google_age_group = array(
-				'adult' => __('Adult', 'webtoffee-product-feed-pro'),
-				'kids' => __('Kids', 'webtoffee-product-feed-pro'),
-				'toddler' => __('Toddler', 'webtoffee-product-feed-pro'),
-				'infant' => __('Infant', 'webtoffee-product-feed-pro'),
-				'newborn' => __('Newborn', 'webtoffee-product-feed-pro')
+				'adult' => __('Adult', 'webtoffee-product-feed'),
+				'kids' => __('Kids', 'webtoffee-product-feed'),
+				'toddler' => __('Toddler', 'webtoffee-product-feed'),
+				'infant' => __('Infant', 'webtoffee-product-feed'),
+				'newborn' => __('Newborn', 'webtoffee-product-feed')
 			);
 			return apply_filters( 'wt_feed_google_product_agegroup', $google_age_group );
 

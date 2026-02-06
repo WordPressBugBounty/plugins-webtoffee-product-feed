@@ -7,19 +7,19 @@ $wf_img_path=WT_PRODUCT_FEED_PLUGIN_URL.'images/';
 ?>
 <div class="wrap" id="<?php echo esc_attr( WEBTOFFEE_PRODUCT_FEED_ID );?>">
     <h2 class="wp-heading-inline">
-    <?php esc_html_e('Settings');?>
+    <?php esc_html_e('Settings', 'webtoffee-product-feed');?>
     </h2>
     <div class="nav-tab-wrapper wp-clearfix wt-pfd-tab-head">
         <?php
         $tab_head_arr=array(
-            'wt-advanced'=>__('General'),
-            'wt-custom-fields' => __('Additional Fields'),             
-            'wt-pro-upgrade'=>__('Free vs Premium'),           
-            'wt-other-solutions' => __('Other Solutions')
+            'wt-advanced'=>__('General', 'webtoffee-product-feed'),
+            'wt-custom-fields' => __('Additional Fields', 'webtoffee-product-feed'),             
+            'wt-pro-upgrade'=>__('Free vs Premium', 'webtoffee-product-feed'),           
+            'wt-other-solutions' => __('Other Solutions', 'webtoffee-product-feed')
         );
-        if(isset($_GET['debug']))
+        if(isset($_GET['debug']) && sanitize_text_field(wp_unslash($_GET['debug']))) //phpcs:ignore
         {
-            $tab_head_arr['wt-debug']='Debug';
+            $tab_head_arr['wt-debug']=__('Debug', 'webtoffee-product-feed');
         }
         Webtoffee_Product_Feed_Sync::generate_settings_tabhead($tab_head_arr);
         ?>
@@ -39,7 +39,7 @@ $wf_img_path=WT_PRODUCT_FEED_PLUGIN_URL.'images/';
             'wt-other-solutions' => 'admin-settings-other-solutions.php'
         );
 
-        if(isset($_GET['debug']))
+        if(isset($_GET['debug']))//phpcs:ignore
         {
             $setting_views_b['wt-debug']='admin-settings-debug.php';
         }

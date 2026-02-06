@@ -8,7 +8,7 @@ defined('ABSPATH') || exit;
 
 
 <div id="wt_feed_custom_metas" class="form-row short">
-	<h3 style="text-align: left;"><?php _e('WebToffee Product Feed', 'webtoffee-product-feed'); ?></h3>
+	<h3 style="text-align: left;"><?php esc_html_e('WebToffee Product Feed', 'webtoffee-product-feed'); ?></h3>
         <?php
 
 
@@ -457,6 +457,7 @@ defined('ABSPATH') || exit;
                                 array(
                                     'id'          => '_wt_google_google_product_category[' . $variation_count . ']',
                                     'label'       => _x( 'Google Product category', 'product data setting title', 'webtoffee-product-feed' ),
+                                    // translators: %1$s is the opening link tag, %2$s is the closing link tag
                                     'description' => sprintf( _x('A product category value provided by %1$s Google %2$s feed.', 'product data setting desc', 'webtoffee-product-feed'), '<a style="color:#93BBF9;" href="https://www.google.com/basepages/producttype/taxonomy.en-US.txt" target="_blank">', '</a>' ),
                                     'desc_tip'    => true,
                                     'options'     => array( '' => _x( 'Default', 'setting option', 'webtoffee-product-feed' ) ) + $google_categories,
@@ -476,6 +477,7 @@ defined('ABSPATH') || exit;
                             array(
                                     'id'          => '_wt_facebook_fb_product_category[' . $variation_count . ']',
                                     'label'       => _x( 'Facebook Product category', 'product data setting title', 'webtoffee-product-feed' ),
+                                    // translators: %1$s is the opening link tag, %2$s is the closing link tag
                                     'description' => sprintf( _x('A product category value provided by %1$s Facebook %2$s feed.', 'product data setting desc', 'webtoffee-product-feed'), '<a style="color:#93BBF9;" href="https://www.facebook.com/products/categories/en_US.txt" target="_blank">', '</a>' ),
                                     'desc_tip'    => true,
                                     'options'     => array( '' => _x( 'Default', 'setting option', 'webtoffee-product-feed' ) ) + $fb_categories,

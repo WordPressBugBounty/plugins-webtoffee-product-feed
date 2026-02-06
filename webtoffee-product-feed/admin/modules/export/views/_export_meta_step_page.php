@@ -13,8 +13,8 @@ if (!defined('ABSPATH')) {
     			?>
     			<input type="checkbox" name="" class="wt_pf_mapping_checkbox_main" <?php echo esc_attr( $checked_attr ); ?>>
     		</th>
-    		<th width="35%"><?php esc_html_e('Column');?></th>
-    		<th><?php esc_html_e('Column name');?></th>
+    		<th width="35%"><?php esc_html_e('Column', 'webtoffee-product-feed');?></th>
+    		<th><?php esc_html_e('Column name', 'webtoffee-product-feed');?></th>
                 <th></th>
                 <th></th>
     	</tr>
@@ -50,7 +50,7 @@ if (!defined('ABSPATH')) {
 			?>
 			<tr>
 				<td colspan="3" style="text-align:center;">
-					<?php esc_html_e('No fields found.'); ?>
+					<?php esc_html_e('No fields found.', 'webtoffee-product-feed'); ?>
 				</td>
 			</tr>
 			<?php

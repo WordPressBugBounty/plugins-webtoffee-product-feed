@@ -124,7 +124,7 @@ class Webtoffee_Product_Feed_Sync_Facebook_Export extends Webtoffee_Product_Feed
             }
             
             if (!empty($exclude_products)) {
-                $args['exclude'] = $exclude_products;
+                $args['exclude'] = $exclude_products; //phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude
             }
 			
             if (!empty($exp_stock_status)) {
@@ -132,8 +132,13 @@ class Webtoffee_Product_Feed_Sync_Facebook_Export extends Webtoffee_Product_Feed
             }
 			
             // Export all language products if WPML is active and the language selected is all.
-            if ( function_exists('icl_object_id') && isset( $_SERVER["HTTP_REFERER"] ) && strpos($_SERVER["HTTP_REFERER"], 'lang=all') !== false ) {
-                     $args['suppress_filters'] = true;
+            // Note: suppress_filters is not used for VIP compliance
+            if ( function_exists('icl_object_id') && isset( $_SERVER["HTTP_REFERER"] ) && strpos(sanitize_text_field(wp_unslash($_SERVER["HTTP_REFERER"])), 'lang=all') !== false ) {
+                // Use WPML's global language switching instead of suppress_filters
+                global $sitepress;
+                if ($sitepress) {
+                    $sitepress->switch_lang('all');
+                }
             }
 			
             $args['exclude_discarded'] = '_wt_feed_discard'; // To exclude individual excluded from product fetching.
@@ -227,7 +232,7 @@ class Webtoffee_Product_Feed_Sync_Facebook_Export extends Webtoffee_Product_Feed
             'data' => $product_array,
         );
 		if( 0 == $batch_offset && 0 == $total_products ){
-				$return_products['no_post'] = __( 'Nothing to export under the selected criteria. Please try adjusting the filters.' );
+				$return_products['no_post'] = __( 'Nothing to export under the selected criteria. Please try adjusting the filters.', 'webtoffee-product-feed' );
 		}
 		return $return_products;
 
@@ -393,7 +398,7 @@ class Webtoffee_Product_Feed_Sync_Facebook_Export extends Webtoffee_Product_Feed
 		}		
 		
 		// Strip tags and special characters
-		$short_description = strip_tags( $short_description );
+		$short_description = wp_strip_all_tags( $short_description );
 		
 		$short_description = apply_filters( 'wt_feed_filter_product_short_description', $short_description, $this->product );
                 return apply_filters( "wt_feed_{$this->parent_module->module_base}_product_short_description", $short_description, $this->product, $this->form_data );
@@ -818,7 +823,7 @@ class Webtoffee_Product_Feed_Sync_Facebook_Export extends Webtoffee_Product_Feed
 		 */
 		$separator = apply_filters( 'wt_feed_tags_separator', ',', $this->product );
 		
-		$tags = strip_tags( get_the_term_list( $id, 'product_tag', '', $separator, '' ) );
+		$tags = wp_strip_all_tags( get_the_term_list( $id, 'product_tag', '', $separator, '' ) );
 		
 		return apply_filters( "wt_feed_{$this->parent_module->module_base}_product_tags", $tags, $this->product, $this->form_data );
 	}

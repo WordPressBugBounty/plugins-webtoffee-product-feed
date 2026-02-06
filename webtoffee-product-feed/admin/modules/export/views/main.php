@@ -69,12 +69,13 @@ Wt_Pf_IE_Basic_Helper::debug_panel($this->module_base);
 
 
 
-<h2 class="wt_pf_page_hd" style="padding-left:35px;padding-right: 20px;"><?php esc_html_e('Product Feed'); ?><span class="wt_pf_post_type_name"></span>
+<h2 class="wt_pf_page_hd" style="padding-left:35px;padding-right: 20px;"><?php esc_html_e('Product Feed', 'webtoffee-product-feed'); ?><span class="wt_pf_post_type_name"></span>
 
 	<span class="wt-webtoffee-icon" style="float: <?php echo (!is_rtl()) ? 'right' : 'left'; ?>;">
     
-		<span style="font-size:14px;"><?php esc_html_e('Developed by'); ?></span>
+		<span style="font-size:14px;"><?php esc_html_e('Developed by', 'webtoffee-product-feed'); ?></span>
 		<a target="_blank" href="https://www.webtoffee.com">
+		<?php // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage ?>
         <img src="<?php echo esc_url( WT_PRODUCT_FEED_PLUGIN_URL.'/assets/images/webtoffee-logo_small.png' );?>" style="max-width:100px;">
     </a>
 </span>
@@ -87,7 +88,7 @@ Wt_Pf_IE_Basic_Helper::debug_panel($this->module_base);
 	{
 		?>
 		<div class="wt_pf_warn wt_pf_rerun_warn">
-			<?php esc_html_e('Unable to handle Re-Run request.');?>
+			<?php esc_html_e('Unable to handle Re-Run request.', 'webtoffee-product-feed');?>
 		</div>
 		<?php
 	}
@@ -98,16 +99,16 @@ Wt_Pf_IE_Basic_Helper::debug_panel($this->module_base);
 
 
 <div class="wt_pf_export_progress_wrapper">
-	<h3 class="wt_pf_export_progress_head"><?php esc_html_e('Generating feed...');?> </h3>
+	<h3 class="wt_pf_export_progress_head"><?php esc_html_e('Generating feed...', 'webtoffee-product-feed');?> </h3>
 	<div class="wt_pf_exporting_progress_percent"> 
-	<span class="wt_pf_exporting_progress_done">1</span>  <?php esc_html_e('out of');?> <span class="wt_pf_exporting_progress_total">100</span>
+	<span class="wt_pf_exporting_progress_done">1</span>  <?php esc_html_e('out of', 'webtoffee-product-feed');?> <span class="wt_pf_exporting_progress_total">100</span>
 	</div>
 	<div class="wt_pf_exporting_progress_bar_wrap">
 		<div class="progressa" style="height:30px;margin-left: 0px;margin-bottom: 10px;">
 			<div class="progressab" style="background-color: rgb(178, 222, 75);width:5px; "></div>
 		</div>
 	</div>
-	<div class="wt_pf_exporting_progress_cancel"><button class="button button-secondary wt_pf_export_popup_cancel_btn"> <?php esc_html_e('Cancel');?> </button></div>
+	<div class="wt_pf_exporting_progress_cancel"><button class="button button-secondary wt_pf_export_popup_cancel_btn"> <?php esc_html_e('Cancel', 'webtoffee-product-feed');?> </button></div>
 </div>
 
 
@@ -139,10 +140,16 @@ function wt_pf_exporter_validate(action, action_type, is_previous_step)
 
 <div class="wt-pf-help-tip">
     <span>        
-        <?php echo sprintf(esc_html__(' %s Documentation %s '), "<a href='https://www.webtoffee.com/woocommerce-product-feed-sync-manager-setup-guide/' target='blank'>", '</a>'); ?><br/>
+        <?php 
+        // translators: %1$s is the opening link tag, %2$s is the closing link tag
+        echo sprintf(esc_html__(' %1$s Documentation %2$s ', 'webtoffee-product-feed'), "<a href='https://www.webtoffee.com/woocommerce-product-feed-sync-manager-setup-guide/' target='blank'>", '</a>'); ?><br/>
         <hr>
-        <?php echo sprintf(esc_html__(' %s Video tutorial %s '), "<a href='https://www.youtube.com/watch?v=ys9NeQgCHLE' target='blank'>", '</a>'); ?><br/>
+        <?php 
+        // translators: %1$s is the opening link tag, %2$s is the closing link tag
+        echo sprintf(esc_html__(' %1$s Video tutorial %2$s ', 'webtoffee-product-feed'), "<a href='https://www.youtube.com/watch?v=ys9NeQgCHLE' target='blank'>", '</a>'); ?><br/>
         <hr>        
-        <?php echo sprintf(esc_html__(' %s Contact Support %s '), "<a href='https://www.webtoffee.com/contact/' target='blank'>", '</a>'); ?><br/>
+        <?php 
+        // translators: %1$s is the opening link tag, %2$s is the closing link tag
+        echo sprintf(esc_html__(' %1$s Contact Support %2$s ', 'webtoffee-product-feed'), "<a href='https://www.webtoffee.com/contact/' target='blank'>", '</a>'); ?><br/>
     </span>
 </div>

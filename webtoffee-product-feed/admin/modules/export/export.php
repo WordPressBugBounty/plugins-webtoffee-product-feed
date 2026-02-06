@@ -98,7 +98,7 @@ class Webtoffee_Product_Feed_Sync_Export
 			'txt'=>__('TXT', 'webtoffee-product-feed')
 		);
 
-        $feed_page_heading = isset( $_GET['wt_pf_rerun'] ) ? __('Edit feed', 'webtoffee-product-feed') : __('Create new feed', 'webtoffee-product-feed');
+        $feed_page_heading = isset( $_GET['wt_pf_rerun'] ) ? __('Edit feed', 'webtoffee-product-feed') : __('Create new feed', 'webtoffee-product-feed'); //phpcs:ignore
 		
 		/* default step list */
 		$this->steps=array
@@ -142,10 +142,11 @@ class Webtoffee_Product_Feed_Sync_Export
 
 	public function populate_cat_mapping(){
 
+		// phpcs:ignore Nonce and user role check handled by check_write_access method. 
 		if(Wt_Pf_Sh::check_write_access(WEBTOFFEE_PRODUCT_FEED_ID)){
 			
-			$mathc_case = isset($_POST['term']) ? sanitize_text_field( wp_unslash( $_POST['term']) ) : '';
-			$channel_type = isset($_POST['to_export']) ? sanitize_text_field( wp_unslash( $_POST['to_export']) ) : 'google';                
+			$mathc_case = isset($_POST['term']) ? sanitize_text_field( wp_unslash( $_POST['term']) ) : ''; //phpcs:ignore
+			$channel_type = isset($_POST['to_export']) ? sanitize_text_field( wp_unslash( $_POST['to_export']) ) : 'google'; //phpcs:ignore                
 			$category_found = self::get_category_array($channel_type, $mathc_case);
 			wp_send_json( $category_found );
 		}
@@ -169,6 +170,7 @@ class Webtoffee_Product_Feed_Sync_Export
 			$fileName = WT_PRODUCT_FEED_PLUGIN_PATH . '/admin/modules/google/data/google_taxonomy.txt';
 			$exploder = '-';                
 		}
+		// Note: Direct file operations used for reading static taxonomy files
 		$customTaxonomyFile = fopen($fileName, 'r');  // phpcs:ignore
 		$taxonomy = array();
 		$taxonomy[''] = 'Do not map';
@@ -188,6 +190,8 @@ class Webtoffee_Product_Feed_Sync_Export
 					$indx++;
 				}
 			}
+			// Note: fclose() needed for taxonomy file reading
+			fclose($customTaxonomyFile);  // phpcs:ignore
 		}
 		
 		$result = preg_grep("/$match_cat/i", $taxonomy);
@@ -261,7 +265,7 @@ class Webtoffee_Product_Feed_Sync_Export
 			$this->module_base.'-sub'=>array(
 				'submenu',
 				$this->module_id,
-				isset( $_GET['wt_pf_rerun'] ) ? __('Edit feed', 'webtoffee-product-feed') : __('Create new feed', 'webtoffee-product-feed'),
+				isset( $_GET['wt_pf_rerun'] ) ? __('Edit feed', 'webtoffee-product-feed') : __('Create new feed', 'webtoffee-product-feed'), //phpcs:ignore
 				__('Create new feed', 'webtoffee-product-feed'), 
 				apply_filters('wt_import_export_allowed_capability', 'export'),
 				$this->module_id,
@@ -281,7 +285,7 @@ class Webtoffee_Product_Feed_Sync_Export
 		/**
 		*	Check it is a rerun call
 		*/
-		$requested_rerun_id=(isset($_GET['wt_pf_rerun']) ? absint($_GET['wt_pf_rerun']) : 0);
+		$requested_rerun_id=(isset($_GET['wt_pf_rerun']) ? absint(wp_unslash($_GET['wt_pf_rerun'])) : 0); //phpcs:ignore
 		$this->_process_rerun($requested_rerun_id);
 
 		$this->enqueue_assets();
@@ -295,29 +299,30 @@ class Webtoffee_Product_Feed_Sync_Export
 	{       
 
 		include_once plugin_dir_path(__FILE__).'classes/class-export-ajax.php';
+		// phpcs:ignore Nonce and user role check handled by check_write_access method. 
 		if(Wt_Pf_Sh::check_write_access(WEBTOFFEE_PRODUCT_FEED_ID))
 		{
 			/**
 			*	Check it is a rerun call
 			*/
-			if(!$this->_process_rerun((isset($_POST['rerun_id']) ? absint($_POST['rerun_id']) : 0)))
+			if(!$this->_process_rerun((isset($_POST['rerun_id']) ? absint(wp_unslash($_POST['rerun_id'])) : 0))) //phpcs:ignore
 			{	
-				$this->export_method=(isset($_POST['export_method']) ? Wt_Pf_Sh::sanitize_item($_POST['export_method'], 'text') : '');
-				$this->to_export=(isset($_POST['to_export']) ? Wt_Pf_Sh::sanitize_item($_POST['to_export'], 'text') : '');
-				$this->selected_template=(isset($_POST['selected_template']) ? Wt_Pf_Sh::sanitize_item($_POST['selected_template'], 'int') : 0);
+				$this->export_method=(isset($_POST['export_method']) ? Wt_Pf_Sh::sanitize_item(wp_unslash($_POST['export_method']), 'text') : ''); //phpcs:ignore
+				$this->to_export=(isset($_POST['to_export']) ? Wt_Pf_Sh::sanitize_item(wp_unslash($_POST['to_export']), 'text') : ''); //phpcs:ignore
+				$this->selected_template=(isset($_POST['selected_template']) ? Wt_Pf_Sh::sanitize_item(wp_unslash($_POST['selected_template']), 'int') : 0); //phpcs:ignore
 			}		
 			$this->get_steps();
 
 			$ajax_obj=new Webtoffee_Product_Feed_Sync_Export_Ajax($this, $this->to_export, $this->steps, $this->export_method, $this->selected_template, $this->rerun_id);
 			
-			$export_action=Wt_Pf_Sh::sanitize_item($_POST['export_action'], 'text');
-			$data_type=Wt_Pf_Sh::sanitize_item($_POST['data_type'], 'text');
+			$export_action=Wt_Pf_Sh::sanitize_item(wp_unslash($_POST['export_action'] ?? ''), 'text'); //phpcs:ignore
+			$data_type=Wt_Pf_Sh::sanitize_item(wp_unslash($_POST['data_type'] ?? ''), 'text'); //phpcs:ignore
 			
 			$allowed_ajax_actions=array('get_steps', 'get_meta_mapping_fields', 'save_template', 'save_template_as', 'update_template', 'upload', 'export', 'export_image');
 
 			$out=array(
 				'status'=>0,
-				'msg'=>__('Error'),
+				'msg'=>__('Error', 'webtoffee-product-feed'),
 			);
 
 			if(method_exists($ajax_obj, $export_action) && in_array($export_action, $allowed_ajax_actions))
@@ -349,7 +354,7 @@ class Webtoffee_Product_Feed_Sync_Export
                     'label' => __("Offset", 'webtoffee-product-feed'),
                     'value' => '',
                     'field_name' => 'offset',
-                    'placeholder' => __('0'),
+                    'placeholder' => __('0', 'webtoffee-product-feed'),
                     'help_text' => __('Specify the number of records that should be skipped from the beginning of the database. e.g. An offset of 10 skips the first 10 records.', 'webtoffee-product-feed'),
                     'type' => 'number',
                     'attr' => array('step' => 1, 'min' => 0),
@@ -362,7 +367,7 @@ class Webtoffee_Product_Feed_Sync_Export
 
         public function get_advanced_screen_fields($advanced_form_data)
 	{
-		$file_into_arr=array('local'=>__('Local'));
+		$file_into_arr=array('local'=>__('Local', 'webtoffee-product-feed'));
 
 		/* taking available remote adapters */
 		$remote_adapter_names=array();
@@ -384,6 +389,7 @@ class Webtoffee_Product_Feed_Sync_Export
                                 'merge_right'=>true,
 				'value'=>$this->default_batch_count,
 				'field_name'=>'batch_count',
+				// translators: %d is the default batch count number
 				'help_text'=>sprintf(__('The number of records that the server will process for every iteration within the configured timeout interval. If the process fails due to timeout you can lower this number accordingly and try again. Defaulted to %d records.', 'webtoffee-product-feed'), 10),
 				'validation_rule'=>array('type'=>'absint'),
 			),
@@ -416,7 +422,7 @@ class Webtoffee_Product_Feed_Sync_Export
 			)
 		);
                 
-                $posted_to_export=(isset($_POST['to_export']) ? Wt_Pf_Sh::sanitize_item($_POST['to_export'], 'text') : '');
+                $posted_to_export=(isset($_POST['to_export']) ? Wt_Pf_Sh::sanitize_item(wp_unslash($_POST['to_export']), 'text') : ''); //phpcs:ignore
                 if( ($posted_to_export) && $posted_to_export !== $this->to_export){ // If the channel type changes fro rerun, it should reflect on following steps.
                     $this->to_export = $posted_to_export;
                 }
@@ -462,12 +468,12 @@ class Webtoffee_Product_Feed_Sync_Export
 
 				if($history_data && $history_data['template_type']==$this->module_base)
 				{
-					$form_data=maybe_unserialize($history_data['data']);
+					$form_data=Webtoffee_Product_Feed_Sync_Common_Helper::wt_decode_data($history_data['data']);
 
 					if($form_data && is_array($form_data))
 					{
 						$this->to_export=(isset($form_data['post_type_form_data']) && isset($form_data['post_type_form_data']['item_type']) ? $form_data['post_type_form_data']['item_type'] : '');
-						$posted_to_export=(isset($_POST['to_export']) ? Wt_Pf_Sh::sanitize_item($_POST['to_export'], 'text') : '');
+						$posted_to_export=(isset($_POST['to_export']) ? Wt_Pf_Sh::sanitize_item(wp_unslash($_POST['to_export']), 'text') : ''); //phpcs:ignore
 						if( ($posted_to_export) && $posted_to_export !== $this->to_export){ // If the channel type changes fro rerun, it should reflect on coming steps.
 							$this->to_export = $posted_to_export;
 						}						
@@ -491,7 +497,7 @@ class Webtoffee_Product_Feed_Sync_Export
 	protected function enqueue_assets()
 	{
         if(Webtoffee_Product_Feed_Sync_Common_Helper::wt_is_screen_allowed()){
-		wp_enqueue_script($this->module_id, plugin_dir_url(__FILE__).'assets/js/main.js', array('jquery', 'jquery-ui-sortable', 'jquery-ui-datepicker'), WEBTOFFEE_PRODUCT_FEED_SYNC_VERSION);
+		wp_enqueue_script($this->module_id, plugin_dir_url(__FILE__).'assets/js/main.js', array('jquery', 'jquery-ui-sortable', 'jquery-ui-datepicker'), WEBTOFFEE_PRODUCT_FEED_SYNC_VERSION, true);
 		wp_enqueue_style('jquery-ui-datepicker');
 		wp_enqueue_style(WEBTOFFEE_PRODUCT_FEED_ID.'-jquery-ui', WT_PRODUCT_FEED_PLUGIN_URL.'admin/css/jquery-ui.css', array(), WEBTOFFEE_PRODUCT_FEED_SYNC_VERSION, 'all');
         
@@ -507,7 +513,7 @@ class Webtoffee_Product_Feed_Sync_Export
 			'item_type'=>'',
 			'steps'=>$this->steps,
 			'rerun_id'=>$this->rerun_id,
-			'to_export'=> isset( $_GET['wt_to_export'] ) ? sanitize_text_field( $_GET['wt_to_export'] ) : $this->to_export,
+			'to_export'=> isset( $_GET['wt_to_export'] ) ? sanitize_text_field( wp_unslash($_GET['wt_to_export']) ) : $this->to_export, //phpcs:ignore
 			'export_method'=>$this->export_method,
 			'export_file_names' => json_encode($file_names),
 			'msgs'=>array(
@@ -541,7 +547,7 @@ class Webtoffee_Product_Feed_Sync_Export
 		if(is_plugin_active('woocommerce/woocommerce.php'))
 		{ 
 			wp_enqueue_script('wc-enhanced-select');
-			wp_enqueue_style('woocommerce_admin_styles', WC()->plugin_url().'/assets/css/admin.css');
+			wp_enqueue_style('woocommerce_admin_styles', WC()->plugin_url().'/assets/css/admin.css', array(), WC()->version);
 		}else
 		{
 			wp_enqueue_style(WEBTOFFEE_PRODUCT_FEED_ID.'-select2', WT_PRODUCT_FEED_PLUGIN_URL. 'admin/css/select2.css', array(), WEBTOFFEE_PRODUCT_FEED_SYNC_VERSION, 'all' );
@@ -579,7 +585,7 @@ class Webtoffee_Product_Feed_Sync_Export
 			return $out;
 		}
 
-		$form_data=maybe_unserialize($export_data['data']);
+		$form_data=Webtoffee_Product_Feed_Sync_Common_Helper::wt_decode_data($export_data['data']);
 
 		//taking file name
 		$file_name=(isset($export_data['file_name']) ? $export_data['file_name'] : '');
@@ -619,7 +625,7 @@ class Webtoffee_Product_Feed_Sync_Export
 			{
 				$msg=sprintf('Unable to initailize %s', $file_into);
 				Webtoffee_Product_Feed_Sync_History::record_failure($export_id, $msg);
-				$out['msg']=__($msg);
+				$out['msg']=$msg;
 				return $out;
 			}
 
@@ -630,7 +636,7 @@ class Webtoffee_Product_Feed_Sync_Export
 
 			$upload_data = $remote_adapter->upload($file_path, $file_name, $advanced_form_data, $upload_out_format);
 			$out['response'] = (isset($upload_data['response']) ? $upload_data['response'] : false);
-			$out['msg'] = (isset($upload_data['msg']) ? $upload_data['msg'] : __('Error'));
+			$out['msg'] = (isset($upload_data['msg']) ? $upload_data['msg'] : __('Error', 'webtoffee-product-feed'));
 
 			//unlink the local file
 			@unlink($file_path);
@@ -643,7 +649,7 @@ class Webtoffee_Product_Feed_Sync_Export
 		$out['finished']=1;  //if any error then also its finished, but with errors
 		if($out['response'] === true) //success
 		{
-			$out['msg']=__('Finished');
+			$out['msg']=__('Finished', 'webtoffee-product-feed');
 			
 			/* updating finished status */
 			$update_data=array(
@@ -690,7 +696,7 @@ class Webtoffee_Product_Feed_Sync_Export
 			}
 
 			//processing form data
-			$form_data=(isset($export_data['data']) ? maybe_unserialize($export_data['data']) : array());
+			$form_data=(isset($export_data['data']) ? Webtoffee_Product_Feed_Sync_Common_Helper::wt_decode_data($export_data['data']) : array());
 		}
 		$this->to_export=$to_process;
 		$default_batch_count=$this->_get_default_batch_count($form_data);
@@ -703,7 +709,36 @@ class Webtoffee_Product_Feed_Sync_Export
 		{
 			$batch_count=(isset($form_data['advanced_form_data']['wt_pf_batch_count']) ? $form_data['advanced_form_data']['wt_pf_batch_count'] : $batch_count);
 			$file_as=(isset($form_data['advanced_form_data']['wt_pf_file_as']) ? $form_data['advanced_form_data']['wt_pf_file_as'] : 'csv');
-			$csv_delimiter=(isset($form_data['advanced_form_data']['wt_pf_delimiter']) ? $form_data['advanced_form_data']['wt_pf_delimiter'] : ',');
+			
+			// Handle delimiter: check for preset first, then custom delimiter
+			// This is important because sanitize_text_field() strips control characters like tabs
+			$csv_delimiter = ',';
+			$delimiter_preset = isset($form_data['advanced_form_data']['wt_pf_delimiter_preset']) ? trim($form_data['advanced_form_data']['wt_pf_delimiter_preset']) : '';
+			$custom_delimiter = isset($form_data['advanced_form_data']['wt_pf_delimiter']) ? trim($form_data['advanced_form_data']['wt_pf_delimiter']) : '';
+			
+			// Get delimiter presets for conversion
+			$delimiter_presets = Wt_Pf_IE_Basic_Helper::_get_csv_delimiters();
+			
+			//Use delimiter_preset if available and valid
+			if($delimiter_preset != '' && $delimiter_preset != 'other' && isset($delimiter_presets[$delimiter_preset]))
+			{
+				// Convert preset value to actual delimiter character
+				$csv_delimiter = $delimiter_presets[$delimiter_preset]['val'];
+			}
+
+			elseif($custom_delimiter === 't' && ($delimiter_preset === '' || $delimiter_preset === 'other'))
+			{
+				// Likely a tab that was sanitized to "t", restore it
+				$csv_delimiter = "\t";
+			}
+			//Use custom delimiter if available
+			elseif($custom_delimiter != '')
+			{
+				// Only allow single character delimiters for security
+				$csv_delimiter = mb_substr($custom_delimiter, 0, 1);
+			}
+			
+			// Ensure delimiter is not empty
 			$csv_delimiter=($csv_delimiter=="" ? ',' : $csv_delimiter);
 		}		
 		$file_as=(isset($this->allowed_export_file_type[$file_as]) ? $file_as : 'csv');
@@ -738,7 +773,7 @@ class Webtoffee_Product_Feed_Sync_Export
 			//no need to add translation function in message
 			Webtoffee_Product_Feed_Sync_History::record_failure($export_id, $msg);
 
-            $out['msg']=__($msg);
+            $out['msg']=$msg;
             return $out;
 		}
 
@@ -786,6 +821,7 @@ class Webtoffee_Product_Feed_Sync_Export
 			{
 				include_once WT_PRODUCT_FEED_PLUGIN_PATH.'admin/classes/class-xmlwriter.php';
 				$writer=new Webtoffee_Product_Feed_Sync_Basic_Xmlwriter($file_path);
+				$writer->form_data = $form_data;
 			}elseif( 'xlsx' === $file_as ){
                             
 				include_once WT_PRODUCT_FEED_PLUGIN_PATH.'admin/classes/class-excelwriter.php';
@@ -843,7 +879,8 @@ class Webtoffee_Product_Feed_Sync_Export
 			{
 				$out['finished']=2; //file created, next upload it
 
-				$out['msg']=sprintf(__('Uploading to %s'), $file_into);
+				// translators: %s is the file destination (e.g., FTP, local)
+				$out['msg']=sprintf(__('Uploading to %s', 'webtoffee-product-feed'), $file_into);
 			}else
 			{
 				$out['file_url']=html_entity_decode($this->get_file_url($file_name));
@@ -860,24 +897,24 @@ class Webtoffee_Product_Feed_Sync_Export
                                 }
                                 
                                 $raw_file_url = esc_url( content_url().'/uploads/webtoffee_product_feed/'.($file_name) ); 
-                                $is_edit = ( !empty( $_REQUEST['rerun_id'] ) and $_REQUEST['rerun_id'] > 0 ) ? true : false;
+                                $is_edit = ( !empty( $_REQUEST['rerun_id'] ) and absint(wp_unslash($_REQUEST['rerun_id'])) > 0 ) ? true : false; //phpcs:ignore
                                 
                                 if($is_edit){
-                                    $success_message =  __('Feed updated successfully!');
+                                    $success_message =  __('Feed updated successfully!', 'webtoffee-product-feed');
                                     $edit_link = '';
                                 }else{
-                                    $success_message = __('Feed generated successfully!');
-                                    $edit_link = '<a class="button media-butto" style="margin-top:10px;margin-right:10px;font-weight:bold;padding:5px 15px" onclick="wt_pf_basic_export.hide_export_info_box();" href="'.esc_attr( $export_page_url ).'&wt_pf_rerun='.$export_id.'" >'.__('Edit').'</a>';
+                                    $success_message = __('Feed generated successfully!', 'webtoffee-product-feed');
+                                    $edit_link = '<a class="button media-butto" style="margin-top:10px;margin-right:10px;font-weight:bold;padding:5px 15px" onclick="wt_pf_basic_export.hide_export_info_box();" href="'.esc_attr( $export_page_url ).'&wt_pf_rerun='.$export_id.'" >'.__('Edit', 'webtoffee-product-feed').'</a>';
                                 }
                                                                 
                                 
 				$msg = '<span class="wt_pf_popup_close dashicons dashicons-dismiss" style="line-height:10px;width:auto" onclick="wt_pf_basic_export.hide_export_info_box();"></span>'; 
                                 $msg.= '<h2><span class="dashicons dashicons-yes" style="background:#20B93E;color:#fff;border-radius:15px; margin-right:10px;padding:5px;"></span><br/><p></p><span style="font-weight:400">' . esc_html( $success_message ) . '</span></h2>';                                
                                 $msg.='<span class="wt_pf_info_box_finished_text" style="font-size: 10px; display:block">';                                
-                                $msg.='<a class="button media-button" style="margin-top:10px;margin-right:10px;font-weight:bold;padding:5px 15px" onclick="wt_pf_basic_export.hide_export_info_box();" target="_blank" href="'.esc_attr( $out['file_url'] ).'" ><span style="margin-top: 7px;margin-right: 4px;" class="dashicons dashicons-download"></span>'.__('Download').'</a>'
+                                $msg.='<a class="button media-button" style="margin-top:10px;margin-right:10px;font-weight:bold;padding:5px 15px" onclick="wt_pf_basic_export.hide_export_info_box();" target="_blank" href="'.esc_attr( $out['file_url'] ).'" ><span style="margin-top: 7px;margin-right: 4px;" class="dashicons dashicons-download"></span>'.__('Download', 'webtoffee-product-feed').'</a>'
                                         .$edit_link
-                                        .'<a class="button media-butto" style="margin-top:10px;margin-right:10px;font-weight:bold;padding:5px 15px" onclick="wt_pf_basic_export.hide_export_info_box();" target="_blank" href="'.esc_attr( $history_page_url ).'" >'.__('Manage feeds').'</a>'
-                                        .'<button class="button button-primary wt_pf_copy" style="margin-top:10px;font-weight:bold;padding:5px 15px" data-uri="'.esc_attr( $raw_file_url ).'" >'.__('Copy URL').'</a>'
+                                        .'<a class="button media-butto" style="margin-top:10px;margin-right:10px;font-weight:bold;padding:5px 15px" onclick="wt_pf_basic_export.hide_export_info_box();" target="_blank" href="'.esc_attr( $history_page_url ).'" >'.__('Manage feeds', 'webtoffee-product-feed').'</a>'
+                                        .'<button class="button button-primary wt_pf_copy" style="margin-top:10px;font-weight:bold;padding:5px 15px" data-uri="'.esc_attr( $raw_file_url ).'" >'.__('Copy URL', 'webtoffee-product-feed').'</a>'
                                         . '</span>';
                                
                                                                
@@ -914,7 +951,8 @@ class Webtoffee_Product_Feed_Sync_Export
 		}else
 		{
 			$out['new_offset']=$new_offset;
-			$out['msg']=sprintf(__('Exporting...(%d out of %d)'), $new_offset, $total_records);
+			// translators: %1$d is the current offset, %2$d is the total records
+			$out['msg']=sprintf(__('Exporting...(%1$d out of %2$d)', 'webtoffee-product-feed'), $new_offset, $total_records);
 			
 			$export_percentage = (int)(( $new_offset / $total_records ) * 100);
 			$out['total_percent'] = $export_percentage;
@@ -929,7 +967,8 @@ class Webtoffee_Product_Feed_Sync_Export
 	{
 		if(!is_dir(self::$export_dir))
         {
-            if(!mkdir(self::$export_dir, 0775))
+            // Use WP_Filesystem for directory creation
+            if(!wp_mkdir_p(self::$export_dir))
             {
             	return false;
             }else
@@ -940,11 +979,14 @@ class Webtoffee_Product_Feed_Sync_Export
 		        {
 		        	if(!file_exists(self::$export_dir.'/'.$file))
 			        {
-			            $fh=@fopen(self::$export_dir.'/'.$file, "w");
-			            if(is_resource($fh))
-			            {
-			                fwrite($fh, $file_content);
-			                fclose($fh);
+			            // Use WP_Filesystem for file operations
+			            global $wp_filesystem;
+			            if(empty($wp_filesystem)) {
+			                require_once(ABSPATH . '/wp-admin/includes/file.php');
+			                WP_Filesystem();
+			            }
+			            if($wp_filesystem) {
+			                $wp_filesystem->put_contents(self::$export_dir.'/'.$file, $file_content, 0644);
 			            }
 			        }
 		        } 
@@ -958,11 +1000,24 @@ class Webtoffee_Product_Feed_Sync_Export
 	*/
 	public function download_file()
 	{
-		if(isset($_GET['wt_pf_export_download']))
+		if(isset($_GET['wt_pf_export_download'])) //phpcs:ignore
 		{ 
-			if(Wt_Pf_Sh::check_write_access(WEBTOFFEE_PRODUCT_FEED_ID)) /* check nonce and role */
+			// Initialize allowed_export_file_type if not already set
+			if(empty($this->allowed_export_file_type))
 			{
-				$file_name=(isset($_GET['file']) ? sanitize_file_name($_GET['file']) : '');
+				$this->allowed_export_file_type=array(
+					'xml'=>__('XML', 'webtoffee-product-feed'),			
+					'csv'=>__('CSV', 'webtoffee-product-feed'),
+					'xlsx'=>__('XLSX', 'webtoffee-product-feed'),
+					'tsv'=>__('TSV', 'webtoffee-product-feed'),
+					'txt'=>__('TXT', 'webtoffee-product-feed')
+				);
+			}
+			
+			// phpcs:ignore Nonce and user role check handled by check_write_access method. 
+			if(Wt_Pf_Sh::check_write_access(WEBTOFFEE_PRODUCT_FEED_ID))
+			{
+				$file_name=(isset($_GET['file']) ? sanitize_file_name(wp_unslash($_GET['file'])) : ''); //phpcs:ignore
 				if($file_name!="")
 				{
 					$file_arr=explode(".", $file_name);
@@ -972,17 +1027,35 @@ class Webtoffee_Product_Feed_Sync_Export
 						$file_path=self::$export_dir.'/'.$file_name;
 						if(file_exists($file_path) && is_file($file_path)) /* check existence of file */
                                                 {   
-                                                    // Disable error display and logging
-                                                    ini_set('display_errors', 0);
-                                                    ini_set('error_reporting', 0);
+                                                    // Disable error display and logging for clean file download
+                                                    ini_set('display_errors', 0);//phpcs:ignore
+                                                    ini_set('error_reporting', 0);//phpcs:ignore
 
                                                     // Clean ALL output buffers
                                                     while (ob_get_level()) {
                                                         ob_end_clean();
                                                     }
 
-                                                    // Start fresh output buffer
-                                                    ob_start();
+                                                    // Determine Content-Type based on file extension
+                                                    $content_type = 'application/octet-stream';
+                                                    switch(strtolower($file_ext)) {
+                                                        case 'xml':
+                                                            $content_type = 'application/xml; charset=UTF-8';
+                                                            break;
+                                                        case 'csv':
+                                                            $content_type = 'text/csv; charset=UTF-8';
+                                                            break;
+                                                        case 'xlsx':
+                                                            $content_type = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+                                                            break;
+                                                        case 'tsv':
+                                                        case 'txt':
+                                                            $content_type = 'text/plain; charset=UTF-8';
+                                                            break;
+                                                        case 'zip':
+                                                            $content_type = 'application/zip';
+                                                            break;
+                                                    }
 
                                                     // Set headers
                                                     header('Pragma: public');
@@ -992,23 +1065,35 @@ class Webtoffee_Product_Feed_Sync_Export
                                                     header('Content-Transfer-Encoding: binary');
                                                     header('Content-Disposition: attachment; filename="'.$file_name.'";');
                                                     header('Content-Description: File Transfer');
-                                                    header('Content-Type: application/octet-stream');
+                                                    header('Content-Type: ' . $content_type);
                                                     header('Content-Length: ' . filesize($file_path));
 
-                                                    // Clean buffer again before file output
-                                                    ob_clean();
-                                                    flush();
-
-                                                    // Read file in binary mode
-                                                    if(readfile($file_path) === false) {
-                                                        // Fallback to chunked reading if readfile fails
-                                                        $handle = fopen($file_path, 'rb');
-                                                        while (!feof($handle)) {
-                                                            echo fread($handle, 8192);
-                                                            ob_flush();
-                                                            flush();
+                                                    // Use WP_Filesystem for file reading
+                                                    global $wp_filesystem;
+                                                    if(empty($wp_filesystem)) {
+                                                        require_once(ABSPATH . '/wp-admin/includes/file.php');
+                                                        WP_Filesystem();
+                                                    }
+                                                    if($wp_filesystem && $wp_filesystem->exists($file_path)) {
+                                                        $file_content = $wp_filesystem->get_contents($file_path);
+                                                        echo $file_content;//phpcs:ignore
+                                                    } else {
+                                                        // Fallback to direct file reading if WP_Filesystem fails
+                                                        // Note: Using direct file operations for performance-critical file downloads
+                                                        if(readfile($file_path) === false) { //phpcs:ignore
+                                                            // Final fallback to chunked reading
+                                                            $handle = fopen($file_path, 'rb'); //phpcs:ignore
+                                                            if($handle) {
+                                                                while (!feof($handle)) {
+                                                                    echo fread($handle, 8192); //phpcs:ignore
+                                                                    if(ob_get_level()) {
+                                                                        ob_flush();
+                                                                    }
+                                                                    flush();
+                                                                }
+                                                                fclose($handle); //phpcs:ignore
+                                                            }
                                                         }
-                                                        fclose($handle);
                                                     }
 
                                                     exit();
@@ -1125,12 +1210,12 @@ class Webtoffee_Product_Feed_Sync_Export
 			) );
 
                 $current_product = wc_get_product($post_id);
-                if(is_object($current_product) && $current_product->is_type('variable') && ! empty( $_POST[ '_wt_feed_discard' ] ) ){
+                if(is_object($current_product) && $current_product->is_type('variable') && ! empty( $_POST[ '_wt_feed_discard' ] ) ){ //phpcs:ignore
                     unset($_POST['_wt_feed_discard']);
                 }
                 foreach ( $props as $prop ) {
 			$key   = "_wt_feed_{$prop}";
-			$value = ( ! empty( $_POST[ $key ] ) ? wc_clean( wp_unslash( $_POST[ $key ] ) ) : '' ); // phpcs:ignore WordPress.Security.NonceVerification
+			$value = ( ! empty( $_POST[ $key ] ) ? wc_clean( wp_unslash( $_POST[ $key ] ) ) : '' ); //phpcs:ignore
 
 			if ( $value ) {
 				update_post_meta( $post_id, $key, $value );
@@ -1145,7 +1230,7 @@ class Webtoffee_Product_Feed_Sync_Export
                 );
 		foreach ( $channel_based_params as $chanel_prop ) {
 			
-			$value = ( ! empty( $_POST[ $chanel_prop ] ) ? wc_clean( wp_unslash( $_POST[ $chanel_prop ] ) ) : '' ); // phpcs:ignore WordPress.Security.NonceVerification
+			$value = ( ! empty( $_POST[ $chanel_prop ] ) ? wc_clean( wp_unslash( $_POST[ $chanel_prop ] ) ) : '' ); //phpcs:ignore
 
 			if ( $value ) {
 				update_post_meta( $post_id, $chanel_prop, $value );
@@ -1166,7 +1251,7 @@ class Webtoffee_Product_Feed_Sync_Export
 
 
 			
-			if ( empty( $_POST['_wt_feed_variations'] ) || ! wp_verify_nonce( $_POST['_wt_feed_variations'], 'wt_feed_variations' ) || ! isset( $_POST['variable_post_id'] ) || ! is_array( $_POST['variable_post_id'] ) ) {
+			if ( empty( $_POST['_wt_feed_variations'] ) || ! wp_verify_nonce( wp_unslash($_POST['_wt_feed_variations']), 'wt_feed_variations' ) || ! isset( $_POST['variable_post_id'] ) || ! is_array( $_POST['variable_post_id'] ) ) { //phpcs:ignore
 				return;
 			}
 
@@ -1175,7 +1260,7 @@ class Webtoffee_Product_Feed_Sync_Export
 			for ($i = 0; $i <= $count; $i++) {
 				if (isset($_POST['variable_post_id'][$i])) {
 
-					$post_id = sanitize_text_field($_POST['variable_post_id'][$i]);
+					$post_id = sanitize_text_field(wp_unslash($_POST['variable_post_id'][$i]));
 					$props = apply_filters( 'wt_feed_product_additional_data_fields', array(
 						'discard',
 						'brand',
@@ -1207,7 +1292,7 @@ class Webtoffee_Product_Feed_Sync_Export
 						) );
 					foreach ($props as $prop) {
 						$key = "_wt_feed_{$prop}";
-						$value = (!empty($_POST[$key]) ? wc_clean(wp_unslash($_POST[$key][$i])) : '' ); // phpcs:ignore WordPress.Security.NonceVerification
+						$value = (!empty($_POST[$key]) ? wc_clean(wp_unslash($_POST[$key][$i])) : '' ); //phpcs:ignore
 
 						if ($value) {
 							update_post_meta($post_id, $key, $value);
@@ -1221,7 +1306,7 @@ class Webtoffee_Product_Feed_Sync_Export
                                         );
                                         foreach ( $channel_based_params as $chanel_prop ) {
 
-                                                $value = ( ! empty( $_POST[ $chanel_prop ] ) ? wc_clean( wp_unslash( $_POST[ $chanel_prop ][$i] ) ) : '' ); // phpcs:ignore WordPress.Security.NonceVerification
+                                                $value = ( ! empty( $_POST[ $chanel_prop ] ) ? wc_clean( wp_unslash( $_POST[ $chanel_prop ][$i] ) ) : '' ); //phpcs:ignore
 
                                                 if ( $value ) {
                                                         update_post_meta( $post_id, $chanel_prop, $value );

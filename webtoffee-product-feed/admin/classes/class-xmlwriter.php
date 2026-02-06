@@ -14,13 +14,16 @@ class Webtoffee_Product_Feed_Sync_Basic_Xmlwriter extends XMLWriter
 	public $file_path='';
 	public $data_ar='';
 	public $to_export='item';
-        public $export_data=array();
-        public $head_data=array();
-        public $to_export_channel = 'google';
+    public $export_data=array();
+    public $head_data=array();
+    public $to_export_channel = 'google';
+    public $temp_file_path='';
+    public $form_data=array();
 
 	public function __construct($file_path)
 	{
 		$this->file_path=$file_path;
+        $this->temp_file_path = $file_path . '.tmp';
 	}
     public function write_to_file($export_data, $offset, $is_last_offset, $to_export)
     {       
@@ -46,10 +49,18 @@ class Webtoffee_Product_Feed_Sync_Basic_Xmlwriter extends XMLWriter
         }        
         
         $this->to_export_channel = $to_export;        
-	$this->to_export = $item_key;
+	    $this->to_export = $item_key;
         $this->export_data=$export_data;
         $this->head_data=$export_data['head_data'];
         $file_path=$this->file_path;
+
+        // Handle initial offset - create temporary file
+        if($offset==0){
+            // Clean up any existing temporary file
+            if(file_exists($this->temp_file_path)){
+                wp_delete_file($this->temp_file_path);
+            }
+        }
 
         $this->openMemory();
         $this->setIndent(TRUE);
@@ -69,14 +80,20 @@ class Webtoffee_Product_Feed_Sync_Basic_Xmlwriter extends XMLWriter
             $this->endDocument();
             
             /* need this checking because, if only single batch exists */
-            if(file_exists($file_path) && $offset!=0)
+            if(file_exists($this->temp_file_path) && $offset!=0)
             {
-                $fpr = fopen($file_path, 'r');
-		$fsize = filesize($file_path) ? filesize($file_path) : 1;
-                $prev_body_xml_data = fread($fpr,filesize($file_path)); //reading previous offset data
+                global $wp_filesystem;
+                if (empty($wp_filesystem)) {
+                    require_once ABSPATH . '/wp-admin/includes/file.php';
+                    WP_Filesystem();
+                }
+                if ( $wp_filesystem && $wp_filesystem->exists( $this->temp_file_path ) ) {
+                    $prev_body_xml_data = $wp_filesystem->get_contents( $this->temp_file_path );
+                } else {
+                    $prev_body_xml_data = '';
+                }
             }
             
-
             /* create xml starting tag */
             $this->startDocument($xml_version, $xml_encoding /*, $xml_standalone*/);
             $doc_xml_data=$this->outputMemory(); //taking xml starting data
@@ -117,7 +134,7 @@ if ('review' === $this->to_export) {
 if ('product' === $this->to_export) {
     $fav_icon_url = get_site_icon_url();
                 $xml_start_data = '<mywebstore>
-   <created_at>'.date('Y-m-d H:i').'</created_at>
+   <created_at>'.gmdate('Y-m-d H:i').'</created_at>
 <products>';
                 $xml_end_data = '</products></mywebstore>';
 }
@@ -134,8 +151,7 @@ if ('product' === $this->to_export) {
             
             if ('yandex' === $this->to_export_channel) {
                 
-
-                if(isset($this->form_data['post_type_form_data']['wt_pf_inc_exc_category'])){
+                if(!empty($this->form_data) && isset($this->form_data['post_type_form_data']['wt_pf_inc_exc_category'])){
                     $categories = array();
                     foreach ($this->form_data['post_type_form_data']['wt_pf_inc_exc_category'] as $key => $cat_slug){
                         $categories[] = get_term_by('slug', $cat_slug, 'product_cat');
@@ -175,7 +191,7 @@ if ('product' === $this->to_export) {
             if ('vivino' === $this->to_export_channel) {
                 $fav_icon_url = get_site_icon_url();
                             $xml_start_data = '<vivino-product-list>
-<meta-data><feed-generation-date>'.date('Y-m-d H:i').'</feed-generation-date>
+<meta-data><feed-generation-date>'.gmdate('Y-m-d H:i').'</feed-generation-date>
 </meta-data>';
                             $xml_end_data = '</vivino-product-list>';
             }
@@ -184,23 +200,41 @@ if ('product' === $this->to_export) {
 
             $xml_data = str_replace( ['<dummyoffer>', '</dummyoffer>'],['', ''] , $xml_data);
             
-            $fp=fopen($file_path,'w');  //writing the full xml data to file
-            fwrite($fp,$xml_data);
-            fclose($fp);
+            global $wp_filesystem;
+            if (empty($wp_filesystem)) {
+                require_once ABSPATH . '/wp-admin/includes/file.php';
+                WP_Filesystem();
+            }
+            // Write to temporary file first
+            $wp_filesystem->put_contents($this->temp_file_path, $xml_data);  //writing the full xml data to temporary file
+            
+            // Replace original file with temporary file
+            if($wp_filesystem->exists($this->temp_file_path)) {
+                // Delete original file if it exists
+                if($wp_filesystem->exists($file_path)) {
+                    $wp_filesystem->delete($file_path);
+                }
+                // Move temp file to final location
+                $wp_filesystem->move($this->temp_file_path, $file_path);
+            }
 
         }else //append data to file
         {
             $xml_data=$this->outputMemory(); //taking xml starting data
             $this->endDocument();
+            global $wp_filesystem;
+            if (empty($wp_filesystem)) {
+                require_once ABSPATH . '/wp-admin/includes/file.php';
+                WP_Filesystem();
+            }
             if($offset==0)
             {
-                $fp=fopen($file_path,'w');
+                $wp_filesystem->put_contents($this->temp_file_path, $xml_data);
             }else
             {
-                $fp=fopen($file_path,'a+');
+                $existing_content = $wp_filesystem->get_contents($this->temp_file_path);
+                $wp_filesystem->put_contents($this->temp_file_path, $existing_content . $xml_data);
             }
-            fwrite($fp,$xml_data);
-            fclose($fp);
         }
     }
 

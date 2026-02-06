@@ -21,17 +21,33 @@ class Webtoffee_Product_Feed_Sync_Basic_Logwriter extends Webtoffee_Product_Feed
 	}
 	public static function init($file_path, $mode="a+")
 	{
+		global $wp_filesystem;
+		if (empty($wp_filesystem)) {
+			require_once ABSPATH . '/wp-admin/includes/file.php';
+			WP_Filesystem();
+		}
+		
 		self::$file_path=$file_path;
 		self::$mode=$mode;
-		self::$file_pointer=@fopen($file_path, $mode);
+		// WordPress filesystem handles file operations automatically
+		// No need to store file pointer
 	}
 	public static function write_row($text, $is_writing_finished=false)
 	{
-		if(is_null(self::$file_pointer))
+		global $wp_filesystem;
+		if (empty($wp_filesystem)) {
+			require_once ABSPATH . '/wp-admin/includes/file.php';
+			WP_Filesystem();
+		}
+		
+		if(empty(self::$file_path))
 		{
 			return;
 		}
-		@fwrite(self::$file_pointer, $text.PHP_EOL);
+		
+		$existing_content = $wp_filesystem->get_contents(self::$file_path);
+		$wp_filesystem->put_contents(self::$file_path, $existing_content . $text . PHP_EOL);
+		
 		if($is_writing_finished)
 		{
 			self::close_file_pointer();
@@ -39,10 +55,8 @@ class Webtoffee_Product_Feed_Sync_Basic_Logwriter extends Webtoffee_Product_Feed
 	}
 	public static function close_file_pointer()
 	{
-		if(self::$file_pointer!=null)
-		{
-			fclose(self::$file_pointer);
-		}
+		// WordPress filesystem handles file operations automatically
+		// No need to manually close file pointers
 	}
 	
 	/**

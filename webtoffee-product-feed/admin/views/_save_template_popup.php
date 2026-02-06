@@ -10,7 +10,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 ?>
-<div class="wt_pf_template_name wt_pf_popup" data-save-label="<?php esc_html_e('Save');?>" data-saveas-label="<?php esc_html_e('Save as');?>">
+<div class="wt_pf_template_name wt_pf_popup" data-save-label="<?php esc_html_e('Save', 'webtoffee-product-feed');?>" data-saveas-label="<?php esc_html_e('Save as', 'webtoffee-product-feed');?>">
 	<div class="wt_pf_popup_hd">
 		<span style="line-height:40px;" class="dashicons dashicons-edit"></span>
 		<span class="wt_pf_popup_hd_label"></span>
@@ -18,15 +18,15 @@ if (!defined('ABSPATH')) {
 	</div>
 	<div class="wt_pf_warn_box">
 		<div class="wt_pf_warn wt_pf_template_name_wrn">
-			<?php esc_html_e('Please enter name');?> 
+			<?php esc_html_e('Please enter name', 'webtoffee-product-feed');?> 
 		</div>
 	</div>
 	<div class="wt_pf_template_name_box">
-		<label class="wt_pf_template_name_label"><?php esc_html_e('Template name');?></label>
+		<label class="wt_pf_template_name_label"><?php esc_html_e('Template name', 'webtoffee-product-feed');?></label>
 		<input type="text" name="wt_pf_template_name_field" class="wt_pf_text_field wt_pf_template_name_field">
 		<div class="wt_pf_popup_footer">
 			<button type="button" name="" class="button-secondary wt_pf_popup_cancel">
-				<?php esc_html_e('Cancel');?> 
+				<?php esc_html_e('Cancel', 'webtoffee-product-feed');?> 
 			</button>
 			<button type="button" name="" class="button-primary wt_pf_template_create_btn"></button>	
 		</div>

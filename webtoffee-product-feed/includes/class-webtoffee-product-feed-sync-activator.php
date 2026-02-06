@@ -38,7 +38,7 @@ public static function activate()
         if(is_multisite()) 
         {
             // Get all blogs in the network and activate plugin on each one
-            $blog_ids = $wpdb->get_col( "SELECT blog_id FROM $wpdb->blogs" );
+            $blog_ids = $wpdb->get_col( "SELECT blog_id FROM $wpdb->blogs" ); //phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
             foreach($blog_ids as $blog_id ) 
             {
                 switch_to_blog( $blog_id );
@@ -66,12 +66,12 @@ public static function activate()
 		
 
         //creating table for saving export/import history================
-        $search_query = "SHOW TABLES LIKE %s";
         $tb='wt_pf_action_history';
         $table_name = $wpdb->prefix.$tb;
-        if(!$wpdb->get_results($wpdb->prepare($search_query, $table_name), ARRAY_N)) 
+        if(!$wpdb->get_results($wpdb->prepare("SHOW TABLES LIKE %s", $table_name), ARRAY_N)) //phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching 
         {
-            $sql_settings = "CREATE TABLE IF NOT EXISTS `$table_name` (
+			//phpcs:ignore WordPress.DB.DirectDatabaseQuery.SchemaChange
+            $sql_settings = "CREATE TABLE IF NOT EXISTS `$table_name` ( 
 				`id` INT NOT NULL AUTO_INCREMENT, 
 				`template_type` VARCHAR(255) NOT NULL, 
 				`item_type` VARCHAR(255) NOT NULL,
@@ -85,16 +85,16 @@ public static function activate()
 				`data` LONGTEXT NOT NULL, 
 				PRIMARY KEY (`id`)
 			) $charset_collate;";
-            dbDelta($sql_settings);
+            dbDelta($sql_settings); 
         }
         //creating table for saving export/import history================
 
 		//creating table for saving cron data================
-        $search_query = "SHOW TABLES LIKE %s";
         $tb='wt_pf_cron';
         $table_name = $wpdb->prefix.$tb;
-        if(!$wpdb->get_results($wpdb->prepare($search_query, $table_name), ARRAY_N)) 
+        if(!$wpdb->get_results($wpdb->prepare("SHOW TABLES LIKE %s", $table_name), ARRAY_N)) //phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching 
         {
+			//phpcs:ignore WordPress.DB.DirectDatabaseQuery.SchemaChange
             $sql_settings = "CREATE TABLE IF NOT EXISTS `$table_name` (
 				`id` INT NOT NULL AUTO_INCREMENT, 
 				`status` INT NOT NULL DEFAULT '0',
@@ -111,7 +111,7 @@ public static function activate()
 				`history_id` INT NOT NULL, 
 				PRIMARY KEY (`id`)
 			) DEFAULT CHARSET=utf8;";
-            dbDelta($sql_settings);
+            dbDelta($sql_settings); 
         }
         //creating table for saving cron data================
 		
@@ -121,8 +121,9 @@ public static function activate()
 
         $fblog_tb='wt_pf_fbsync_log';
         $table_name = $wpdb->prefix.$fblog_tb;
-        if(!$wpdb->get_results($wpdb->prepare("SHOW TABLES LIKE %s", $table_name), ARRAY_N)) 
+        if(!$wpdb->get_results($wpdb->prepare("SHOW TABLES LIKE %s", $table_name), ARRAY_N)) //phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching 
         {
+			//phpcs:ignore WordPress.DB.DirectDatabaseQuery.SchemaChange
             $sql_settings = "CREATE TABLE IF NOT EXISTS `$table_name` (
 				`id` INT NOT NULL AUTO_INCREMENT, 
 				`data` LONGTEXT NOT NULL, 
@@ -130,7 +131,7 @@ public static function activate()
 				`catalog_id` TEXT NOT NULL,
 				PRIMARY KEY (`id`)
 			) DEFAULT CHARSET=utf8;";
-            dbDelta($sql_settings);
+            dbDelta($sql_settings); 
         }
         //creating table for saving cron data================        
         

@@ -21,35 +21,47 @@ class Webtoffee_Product_Feed_Sync_Basic_Logreader
 	}
 	public function init($file_path, $mode="r")
 	{
+		global $wp_filesystem;
+		if (empty($wp_filesystem)) {
+			require_once ABSPATH . '/wp-admin/includes/file.php';
+			WP_Filesystem();
+		}
+		
 		$this->file_path=$file_path;
 		$this->mode=$mode;
-		$this->file_pointer=@fopen($file_path, 'r');
+		// WordPress filesystem handles file operations automatically
+		// No need to store file pointer
 	}
 	public function close_file_pointer()
 	{
-		if($this->file_pointer!=null)
-		{
-			fclose($this->file_pointer);
-		}
+		// WordPress filesystem handles file operations automatically
+		// No need to manually close file pointers
 	}
 
 	public function get_full_data($file_path)
 	{
+		global $wp_filesystem;
+		if (empty($wp_filesystem)) {
+			require_once ABSPATH . '/wp-admin/includes/file.php';
+			WP_Filesystem();
+		}
+		
 		$out=array(
 			'response'=>false,
 			'data_str'=>'',
 		);
 		$this->init($file_path);
-		if(!is_resource($this->file_pointer))
+		
+		if(!$wp_filesystem->exists($file_path))
 		{
 			return $out;
 		}
-		$data=fread($this->file_pointer, filesize($file_path));
-
+		
+		$data = $wp_filesystem->get_contents($file_path);
 		$this->close_file_pointer();
 
 		$out=array(
-			'response'=>false,
+			'response'=>true,
 			'data_str'=>$data,
 		);
 		return $out;
@@ -64,6 +76,12 @@ class Webtoffee_Product_Feed_Sync_Basic_Logreader
 	*/
 	public function get_data_as_batch($file_path, $offset=0, $batch_count=50)
 	{
+		global $wp_filesystem;
+		if (empty($wp_filesystem)) {
+			require_once ABSPATH . '/wp-admin/includes/file.php';
+			WP_Filesystem();
+		}
+		
 		$out=array(
 			'response'=>false,
 			'offset'=>$offset,
@@ -71,31 +89,48 @@ class Webtoffee_Product_Feed_Sync_Basic_Logreader
 			'finished'=>false, //end of file reached or not
 		);
 		$this->init($file_path);
-		if(!is_resource($this->file_pointer))
+		
+		if(!$wp_filesystem->exists($file_path))
 		{
 			return $out;
 		}
 
-		fseek($this->file_pointer, $offset);
+		$file_content = $wp_filesystem->get_contents($file_path);
+		$lines = explode("\n", $file_content);
+		
 		$row_count=0;
 		$next_offset=$offset;
 		$finished=false;
 		$data_arr=array();
-		while(($data=fgets($this->file_pointer))!==false)
-		{
-			$data=maybe_unserialize($data);
+		
+		// Calculate starting line based on offset
+		$start_line = 0;
+		$current_offset = 0;
+		foreach($lines as $line_num => $line) {
+			$line_length = strlen($line) + 1; // +1 for newline
+			if($current_offset + $line_length > $offset) {
+				$start_line = $line_num;
+				break;
+			}
+			$current_offset += $line_length;
+		}
+		
+		for($i = $start_line; $i < count($lines); $i++) {
+			$data = $lines[$i];
+			$data = Webtoffee_Product_Feed_Sync_Common_Helper::wt_decode_data($data);
 			if(is_array($data))
 			{
 				$data_arr[]=$data;
 				$row_count++;
-				$next_offset=ftell($this->file_pointer);
+				$next_offset += strlen($lines[$i]) + 1; // +1 for newline
 			}
 			if($row_count==$batch_count)
 			{
 				break;
 			}
 		}
-		if($next_offset==filesize($file_path))
+		
+		if($next_offset >= strlen($file_content))
 		{
 			$finished=true;
 		}

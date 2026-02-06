@@ -8,8 +8,8 @@ if (!defined('ABSPATH')) {
 	<div class="wtpf_meta_mapping_box">
 		<div class="wtpf_meta_mapping_box_hd wt_pf_noselect">
 			<span class="dashicons dashicons-arrow-down"></span>
-			<?php esc_html_e('Default fields');?>
-			<span class="wtpf_meta_mapping_box_selected_count_box"><span class="wtpf_meta_mapping_box_selected_count_box_num">0</span> <?php esc_html_e(' columns(s) selected'); ?></span>
+			<?php esc_html_e('Default fields', 'webtoffee-product-feed');?>
+			<span class="wtpf_meta_mapping_box_selected_count_box"><span class="wtpf_meta_mapping_box_selected_count_box_num">0</span> <?php esc_html_e(' columns(s) selected', 'webtoffee-product-feed'); ?></span>
 		</div>
 		<div style="clear:both;"></div>
 		<div class="wtpf_meta_mapping_box_con" data-sortable="0" data-loaded="1" data-field-validated="0" data-key="" style="display:inline-block;">
@@ -19,13 +19,13 @@ if (!defined('ABSPATH')) {
 			    		<th>
 			    			<input type="checkbox" name="" class="wt_pf_mapping_checkbox_main">
 			    		</th>
-			    		<th width="35%"><?php esc_html_e('Column');?></th>
-			    		<th><?php esc_html_e('Column name');?></th>
+			    		<th width="35%"><?php esc_html_e('Column', 'webtoffee-product-feed');?></th>
+			    		<th><?php esc_html_e('Column name', 'webtoffee-product-feed');?></th>
 			    	</tr>
 				</thead>
 				<tbody>
 				<?php
-				$draggable_tooltip=__("Drag to rearrange the columns");
+				$draggable_tooltip=__("Drag to rearrange the columns", 'webtoffee-product-feed');
 				$tr_count=0;
 				foreach($form_data_mapping_fields as $key=>$val)
 				{
@@ -53,7 +53,7 @@ if (!defined('ABSPATH')) {
 					?>
 					<tr>
 						<td colspan="3" style="text-align:center;">
-							<?php esc_html_e('No fields found.'); ?>
+							<?php esc_html_e('No fields found.', 'webtoffee-product-feed'); ?>
 						</td>
 					</tr>
 					<?php
@@ -86,7 +86,7 @@ if (!defined('ABSPATH')) {
 				<div class="wtpf_meta_mapping_box_hd wt_pf_noselect">
 					<span class="dashicons dashicons-arrow-right"></span>
 					<?php echo esc_html( $mapping_enabled_field[0] );?>
-					<span class="wtpf_meta_mapping_box_selected_count_box"><span class="wtpf_meta_mapping_box_selected_count_box_num">0</span> <?php esc_html_e(' columns(s) selected'); ?></span>
+					<span class="wtpf_meta_mapping_box_selected_count_box"><span class="wtpf_meta_mapping_box_selected_count_box_num">0</span> <?php esc_html_e(' columns(s) selected', 'webtoffee-product-feed'); ?></span>
 				</div>
 				<div style="clear:both;"></div>
 				<div class="wtpf_meta_mapping_box_con" data-sortable="0" data-loaded="0" data-field-validated="0" data-key="<?php echo esc_attr( $mapping_enabled_field_key );?>"></div>

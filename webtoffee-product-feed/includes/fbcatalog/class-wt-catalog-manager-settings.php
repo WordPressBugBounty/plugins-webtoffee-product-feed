@@ -82,7 +82,7 @@ if ( !class_exists( 'WT_Fb_Catalog_Manager_Settings' ) ) :
 		public function wt_fbfeed_category_mapping() {
 
 
-			if ( count( $_POST ) && isset( $_POST[ 'map_to' ] ) ) {
+			if ( count( $_POST ) && isset( $_POST[ 'map_to' ] ) ) { //phpcs:ignore
 
 				check_admin_referer( 'wt-category-mapping' );
 

@@ -127,8 +127,8 @@ if (!defined('WPINC')) {
     }
 </style>
 <div class="wt-pfd-tab-content" data-id="<?php echo esc_attr($target_id); ?>">
-    <h3><span><?php esc_html_e(' Manage product additional fields for feed' ); ?> </span></h3>
-    <form method="post" action="<?php echo esc_url($_SERVER["REQUEST_URI"]); ?>" id="wt_pf_settings_custom_fields_form" class="wt_pf_settings_custom_fields_form">			
+    <h3><span><?php esc_html_e(' Manage product additional fields for feed', 'webtoffee-product-feed' ); ?> </span></h3>
+    <form method="post" action="<?php echo esc_url(sanitize_text_field(wp_unslash($_SERVER["REQUEST_URI"] ?? ''))); ?>" id="wt_pf_settings_custom_fields_form" class="wt_pf_settings_custom_fields_form">			
         <?php
         // Set nonce:
         if (function_exists('wp_nonce_field')) {
@@ -136,34 +136,34 @@ if (!defined('WPINC')) {
         }
 
         $product_custom_fields = array(
-            'discard' => __('Exclude From Feed'),
-            'unit_pricing_measure' => __('Unit Price Measure'),
-            'brand' => __('Brand'),
-            'unit_pricing_base_measure' => __('Unit Pricing Base Measure'),
-            'gtin' => __('GTIN'),
-            'energy_efficiency_class' => __('Energy Efficiency Class'),            
-            'mpn' => __('MPN'),
-            'min_energy_efficiency_class' => __('Min Energy Efficiency Class'),            
-            'han' => __('HAN'),
-            'max_energy_efficiency_class' => __('Max Energy Efficiency Class'),            
-            'ean' => __('EAN'),
-            'glpi_pickup_method' => __('Google Local Inventory Pickup Method'),            
-            'condition' => __('Condition'),
-            'glpi_pickup_sla' => __('Google Local Inventory Pickup SLA'),            
-            'agegroup' => __('Age group'),
-            '_wt_google_google_product_category' => __('Google Product category'),            
-            'gender' => __('Gender'),
-            '_wt_facebook_fb_product_category' => __('Facebook Product category'),            
-            'size' => __('Size'),
-            'custom_label_0' => __('Custom Label 0'),
-            'color' => __('Color'),
-            'custom_label_1' => __('Custom Label 1'),            
-            'material' => __('Material'),
-            'custom_label_2' => __('Custom Label 2'),            
-            'pattern' => __('Pattern'),
-            'custom_label_3' => __('Custom Label 3'),
-            'availability_date' => __('Availability Date'),
-            'custom_label_4' => __('Custom Label 4'),
+            'discard' => __('Exclude From Feed', 'webtoffee-product-feed'),
+            'unit_pricing_measure' => __('Unit Price Measure', 'webtoffee-product-feed'),
+            'brand' => __('Brand', 'webtoffee-product-feed'),
+            'unit_pricing_base_measure' => __('Unit Pricing Base Measure', 'webtoffee-product-feed'),
+            'gtin' => __('GTIN', 'webtoffee-product-feed'),
+            'energy_efficiency_class' => __('Energy Efficiency Class', 'webtoffee-product-feed'),            
+            'mpn' => __('MPN', 'webtoffee-product-feed'),
+            'min_energy_efficiency_class' => __('Min Energy Efficiency Class', 'webtoffee-product-feed'),            
+            'han' => __('HAN', 'webtoffee-product-feed'),
+            'max_energy_efficiency_class' => __('Max Energy Efficiency Class', 'webtoffee-product-feed'),            
+            'ean' => __('EAN', 'webtoffee-product-feed'),
+            'glpi_pickup_method' => __('Google Local Inventory Pickup Method', 'webtoffee-product-feed'),            
+            'condition' => __('Condition', 'webtoffee-product-feed'),
+            'glpi_pickup_sla' => __('Google Local Inventory Pickup SLA', 'webtoffee-product-feed'),            
+            'agegroup' => __('Age group', 'webtoffee-product-feed'),
+            '_wt_google_google_product_category' => __('Google Product category', 'webtoffee-product-feed'),            
+            'gender' => __('Gender', 'webtoffee-product-feed'),
+            '_wt_facebook_fb_product_category' => __('Facebook Product category', 'webtoffee-product-feed'),            
+            'size' => __('Size', 'webtoffee-product-feed'),
+            'custom_label_0' => __('Custom Label 0', 'webtoffee-product-feed'),
+            'color' => __('Color', 'webtoffee-product-feed'),
+            'custom_label_1' => __('Custom Label 1', 'webtoffee-product-feed'),            
+            'material' => __('Material', 'webtoffee-product-feed'),
+            'custom_label_2' => __('Custom Label 2', 'webtoffee-product-feed'),            
+            'pattern' => __('Pattern', 'webtoffee-product-feed'),
+            'custom_label_3' => __('Custom Label 3', 'webtoffee-product-feed'),
+            'availability_date' => __('Availability Date', 'webtoffee-product-feed'),
+            'custom_label_4' => __('Custom Label 4', 'webtoffee-product-feed'),
         );
 
         $custom_filds_list = get_option('wt_pf_enabled_product_fields', array());
@@ -194,14 +194,14 @@ if (!defined('WPINC')) {
             </tbody>
         </table>
         <?php
-        $settings_button_title = __('Update settings');        
+        $settings_button_title = __('Update settings', 'webtoffee-product-feed');        
         ?>
         <div style="clear: both;"></div>
         <div class="wt-pfd-plugin-toolbar bottom">
             <div class="left">
             </div>
             <div class="right">
-                <input type="submit" name="wt_iew_update_admin_settings_form" value="<?php esc_attr_e($settings_button_title); ?>" class="button button-primary" style="float:right;"/>
+                <input type="submit" name="wt_iew_update_admin_settings_form" value="<?php echo esc_attr($settings_button_title); ?>" class="button button-primary" style="float:right;"/>
                 <span class="spinner" style="margin-top:11px"></span>
             </div>
         </div>

@@ -32,7 +32,7 @@ if ( ! function_exists( 'wt_fbfeed_render_attributes' ) ) {
 			'hierarchical'	 => 1,
 			'title_li'		 => '',
 			'hide_empty'	 => 0,
-			'meta_query'	 => [
+			'meta_query'	 => [ //phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 				[
 					'key'		 => 'wt_fb_category',
 					'compare'	 => 'NOT EXISTS',
@@ -60,7 +60,7 @@ if ( ! function_exists( 'wt_fbfeed_render_attributes' ) ) {
                     <td><!--suppress HtmlUnknownAttribute -->
 						
                         <select name="map_to[<?php echo esc_attr( $cat->term_id ); ?>]">
-                                <?php echo wt_fb_category_dropdown(); ?>
+                                <?php echo wp_kses_post( wt_fb_category_dropdown() ); ?>
                             </select>
                     </td>
                 </tr>

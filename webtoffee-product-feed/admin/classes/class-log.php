@@ -25,9 +25,15 @@ class Webtoffee_Product_Feed_Sync_Basic_Log
 	*/
 	public static function get_file_path($file_name="")
 	{
-		if(!is_dir(self::$log_dir))
+		global $wp_filesystem;
+		if (empty($wp_filesystem)) {
+			require_once ABSPATH . '/wp-admin/includes/file.php';
+			WP_Filesystem();
+		}
+		
+		if(!$wp_filesystem->is_dir(self::$log_dir))
         {
-            if(!mkdir(self::$log_dir, 0700))
+            if(!$wp_filesystem->mkdir(self::$log_dir, 0700))
             {
             	return false;
             }else
@@ -35,14 +41,9 @@ class Webtoffee_Product_Feed_Sync_Basic_Log
             	$files_to_create=array('.htaccess' => 'deny from all', 'index.php'=>'<?php // Silence is golden');
 		        foreach($files_to_create as $file=>$file_content)
 		        {
-		        	if(!file_exists(self::$log_dir.'/'.$file))
+		        	if(!$wp_filesystem->exists(self::$log_dir.'/'.$file))
 			        {
-			            $fh=@fopen(self::$log_dir.'/'.$file, "w");
-			            if(is_resource($fh))
-			            {
-			                fwrite($fh, $file_content);
-			                fclose($fh);
-			            }
+			            $wp_filesystem->put_contents(self::$log_dir.'/'.$file, $file_content);
 			        }
 		        } 
             }
@@ -72,8 +73,8 @@ class Webtoffee_Product_Feed_Sync_Basic_Log
 				$file_time=strtotime($file_date_time_arr[0]);
 				if($file_time) //file time exists
 				{
-					$today=strtotime(date('Y-m-d'));
-					$file_time=strtotime(date('Y-m-d', $file_time));
+					$today=strtotime(gmdate('Y-m-d'));
+					$file_time=strtotime(gmdate('Y-m-d', $file_time));
 					if($today==$file_time) //file exists with the current day
 					{
 						return $value;
@@ -96,7 +97,7 @@ class Webtoffee_Product_Feed_Sync_Basic_Log
 			$arr[]='schedule';
 		}
 		$arr[]=$action_type;
-		$arr[]=date('Y-m-d h i s A'); /* if changing this format please consider `check_log_exists_for_entry` method */
+		$arr[]=gmdate('Y-m-d h i s A'); /* if changing this format please consider `check_log_exists_for_entry` method */
 
 		$arr=array_filter($arr);
 		return implode("_", $arr).'.log';

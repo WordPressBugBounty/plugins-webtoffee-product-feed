@@ -110,7 +110,7 @@ if (!class_exists('Webtoffee_Product_Feed_Product')) {
             }            
             
             //strip tags and special characters
-            $description = trim( strip_tags($description) );
+            $description = trim( wp_strip_all_tags($description) );
 
             $description = apply_filters('wt_feed_filter_product_description', $description, $this->product);
             return apply_filters("wt_feed_{$this->parent_module->module_base}_product_description", $description, $this->product, $this->form_data);
@@ -173,7 +173,7 @@ if (!class_exists('Webtoffee_Product_Feed_Product')) {
 
 
             // Strip tags and special characters
-            $short_description = strip_tags($short_description);
+            $short_description = wp_strip_all_tags($short_description);
 
             $short_description = apply_filters('wt_feed_filter_product_short_description', $short_description, $this->product);
             return apply_filters("wt_feed_{$this->parent_module->module_base}_product_short_description", $short_description, $this->product, $this->form_data);

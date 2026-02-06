@@ -27,8 +27,8 @@ if (!function_exists('wt_fruugo_feed_render_categories')) {
      */
     function wt_fruugo_feed_render_categories($parent = 0, $par = '', $value = '') {
 
-        $category_query = isset($_POST['cat_filter_type']) ? Wt_Pf_Sh::sanitize_item($_POST['cat_filter_type'], 'text') : '';
-        $query_categories = isset($_POST['inc_exc_cat']) ? Wt_Pf_Sh::sanitize_item($_POST['inc_exc_cat'], 'text_arr') : array();
+        $category_query = isset($_POST['cat_filter_type']) ? Wt_Pf_Sh::sanitize_item(wp_unslash($_POST['cat_filter_type']), 'text') : ''; //phpcs:ignore
+        $query_categories = isset($_POST['inc_exc_cat']) ? Wt_Pf_Sh::sanitize_item(wp_unslash($_POST['inc_exc_cat']), 'text_arr') : array(); //phpcs:ignore
 
         $ids_to_include_or_exclude = array();
         $get_terms_to_include_or_exclude = get_terms(
@@ -52,7 +52,7 @@ if (!function_exists('wt_fruugo_feed_render_categories')) {
             'hierarchical' => 1,
             'title_li' => '',
             'hide_empty' => 1,
-            'meta_query' => [
+            'meta_query' => [ //phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
                 [
                     'key' => 'wt_fruugo_category',
                     'compare' => 'NOT EXISTS',
@@ -62,7 +62,7 @@ if (!function_exists('wt_fruugo_feed_render_categories')) {
 
         if (!empty($ids_to_include_or_exclude)) {
             if ('exclude_cat' === $category_query) {
-                $category_args['exclude'] = $ids_to_include_or_exclude;
+                $category_args['exclude'] = $ids_to_include_or_exclude; //phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude
             } else {
                 $category_args['include'] = $ids_to_include_or_exclude;
             }
@@ -97,7 +97,7 @@ if (!function_exists('wt_fruugo_feed_render_categories')) {
             ?>
             <tr class="treegrid-1">
                 <td>
-                    <?php esc_html_e('All categories have already been mapped'); ?>
+                    <?php esc_html_e('All categories have already been mapped', 'webtoffee-product-feed'); ?>
                 </td>
             </tr>
             <?php
@@ -116,8 +116,8 @@ $value = array();
 <div class="wt-wrap">
 
 
-    <h4><?php esc_html_e('Map WooCommerce categories with Fruugo categories.', 'webtoffee-product-feed-pro'); ?></h4>          
-    <span><?php esc_html_e('Fruugo has it\'s own' ); ?> <a target="_blank" href="https://fruugo.atlassian.net/wiki/spaces/RR/pages/67792527/Mapping+Category+Tree?preview=/67792527/67874831/Fruugo_Mapping_Categories.xlsx"><?php esc_html_e('category list'); ?></a>. <?php esc_html_e(' It is mandatory to map the store categories against Fruugo categories. To edit the mapping go to the respective'); ?> <a target="_blank" href="<?php echo esc_url( admin_url('edit-tags.php?taxonomy=product_cat&post_type=product') ); ?>"><?php esc_html_e('categories page'); ?></a></span>
+    <h4><?php esc_html_e('Map WooCommerce categories with Fruugo categories.', 'webtoffee-product-feed'); ?></h4>          
+    <span><?php esc_html_e('Fruugo has it\'s own', 'webtoffee-product-feed' ); ?> <a target="_blank" href="https://fruugo.atlassian.net/wiki/spaces/RR/pages/67792527/Mapping+Category+Tree?preview=/67792527/67874831/Fruugo_Mapping_Categories.xlsx"><?php esc_html_e('category list', 'webtoffee-product-feed'); ?></a>. <?php esc_html_e(' It is mandatory to map the store categories against Fruugo categories. To edit the mapping go to the respective', 'webtoffee-product-feed'); ?> <a target="_blank" href="<?php echo esc_url( admin_url('edit-tags.php?taxonomy=product_cat&post_type=product') ); ?>"><?php esc_html_e('categories page', 'webtoffee-product-feed'); ?></a></span>
     <form action="" name="feed" id="category-mapping-form" class="category-mapping-form" method="post" autocomplete="off">
         <?php wp_nonce_field('wt-category-mapping'); ?>
 
@@ -125,8 +125,8 @@ $value = array();
         <table class="table tree widefat fixed wt-pf-category-default-mapping-tb">
             <thead>
                 <tr>
-                    <th><?php esc_html_e('Store Categories', 'webtoffee-product-feed-pro'); ?></th>
-                    <th><?php esc_html_e('Fruugo Category', 'webtoffee-product-feed-pro'); ?></th>
+                    <th><?php esc_html_e('Store Categories', 'webtoffee-product-feed'); ?></th>
+                    <th><?php esc_html_e('Fruugo Category', 'webtoffee-product-feed'); ?></th>
                 </tr>
             </thead>
             <tbody>

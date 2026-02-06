@@ -58,7 +58,8 @@ class Webtoffee_Product_Feed_Sync_Review_Request
      */
     public function wt_product_feed_init_review_request() {
         if ($this->check_condition()) /* checks the banner is active now */ {
-            $this->banner_message = sprintf(esc_html__("Hey, we at %sWebToffee%s would like to thank you for using our plugin. We would really appreciate if you could take a moment to drop a quick review that will inspire us to keep going.", 'webtoffee-product-feed'), '<b>', '</b>');
+            // translators: %1$s is the opening HTML tag, %2$s is the closing HTML tag for WebToffee
+            $this->banner_message = sprintf( esc_html__( 'Hey, we at %1$sWebToffee%2$s would like to thank you for using our plugin. We would really appreciate if you could take a moment to drop a quick review that will inspire us to keep going.', 'webtoffee-product-feed' ), '<b>', '</b>' );
 
             /* button texts */
             $this->later_btn_text   = __( 'Remind me later', 'webtoffee-product-feed');
@@ -125,6 +126,7 @@ class Webtoffee_Product_Feed_Sync_Review_Request
         update_option($this->banner_state_option_name, $val);
     }
 
+
     /**
      *	Prints the banner 
      */
@@ -150,7 +152,8 @@ class Webtoffee_Product_Feed_Sync_Review_Request
                 <a class="button button-primary" data-type="review"><?php echo esc_html( $this->review_btn_text ); ?></a>
             </p>
             <div class="wt-cli-review-footer" style="position: relative;">
-                <span class="wt-cli-footer-icon" style="position: absolute;right: 0;bottom: 10px;"><img src="<?php echo esc_url( $this->webtoffee_logo_url ); ?>" style="max-width:100px;"></span>
+            <?php // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage ?>    
+            <span class="wt-cli-footer-icon" style="position: absolute;right: 0;bottom: 10px;"><img src="<?php echo esc_url( $this->webtoffee_logo_url ); ?>" style="max-width:100px;"></span>
             </div>
         </div>
     <?php
@@ -163,7 +166,7 @@ class Webtoffee_Product_Feed_Sync_Review_Request
     {
         check_ajax_referer($this->plugin_prefix);
         if (isset($_POST['wt_review_action_type'])) {
-            $action_type = sanitize_text_field($_POST['wt_review_action_type']);
+            $action_type = sanitize_text_field(wp_unslash($_POST['wt_review_action_type']));
 
             /* current action is in allowed action list */
             if (in_array($action_type, $this->allowed_action_type_arr)) {
@@ -230,7 +233,7 @@ class Webtoffee_Product_Feed_Sync_Review_Request
 
             })(jQuery);
             jQuery(window).on("load", function () {
-                jQuery('.wt_pfs_review_request > .notice-dismiss').append('<span style="position: absolute; right: 30px; top:11px; color:#000;">'+'<?php esc_html_e('Dismiss'); ?>'+'</span>');
+                jQuery('.wt_pfs_review_request > .notice-dismiss').append('<span style="position: absolute; right: 30px; top:11px; color:#000;">'+'<?php esc_html_e('Dismiss', 'webtoffee-product-feed'); ?>'+'</span>');
             });
         </script>
 <?php
@@ -265,5 +268,6 @@ class Webtoffee_Product_Feed_Sync_Review_Request
 
         return false;
     }
+
 }
 new Webtoffee_Product_Feed_Sync_Review_Request();

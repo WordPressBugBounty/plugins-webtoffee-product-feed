@@ -192,10 +192,10 @@ if (!class_exists('Webtoffee_Product_Feed_Buyon_Google')) {
 				$out[$fieldk] = $fieldv;
 			}
                         $out['file_as']['sele_vals'] = array(
-                            'xml'=>__('XML')
+                            'xml'=>__('XML', 'webtoffee-product-feed')
                         );
                         $out['delimiter']['sele_vals'] = array(
-                            'comma' => array('value' => __('Comma'), 'val' => ",")
+                            'comma' => array('value' => __('Comma', 'webtoffee-product-feed'), 'val' => ",")
                         );
 			return $out;
 		}

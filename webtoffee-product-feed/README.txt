@@ -1,10 +1,10 @@
-=== WooCommerce Product Feeds - Google Shopping, Pinterest, TikTok Ads, & More ===
+=== WebToffee WooCommerce Product Feeds - Google Shopping, Pinterest, TikTok Ads, & More ===
 Contributors: webtoffee
 Donate link: https://www.webtoffee.com/product/woocommerce-product-feed/
 Tags: woocommerce product feed, google shopping, google merchant center, facebook catalog, instagram feed
 Requires at least: 4.0
-Tested up to: 6.8.1
-Stable tag: 2.3.1
+Tested up to: 6.9
+Stable tag: 2.3.6
 Requires PHP: 5.6
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -58,7 +58,7 @@ For Google Shopping, this WooCommerce Google shopping feed plugin lets you conne
 
 &#128312; **Product Feed Refresh Status** - Keep track of the real-time status of your product feed updates, ensuring that your product listings always reflect the latest changes. Know when your product feeds was last updated and check whether they are running as scheduled.
 
-&#9989; Tested OK with WooCommerce 10.1.0
+&#9989; Tested OK with WooCommerce 10.3.5
 
 == Why Choose WooCommerce Product Feed Plugin? ==
 
@@ -314,8 +314,29 @@ function wt_modify_product_description_mode( $mode ) {
 19. FB catalog manager.
 20. Logs
 
-
 == Changelog ==
+
+= 2.3.6 2026-01-29 =
+*[Fix] Feed export shows empty when excluding a category in the Facebook/Instagram catalog.
+
+= 2.3.5 2026-01-09 = 
+*[Fix] - Replaced the maybe_unserialize() with our custom function 'wt_decode_data' 
+*[Fix] - Category mapping dropdown was not rendering options properly.
+*[Compatibility] - Tested OK with WooCommerce 10.4.3
+*[Compatibility] - Tested OK with WordPress 6.9
+
+= 2.3.4  2025-12-22 =
+*[Fix] - Vulnerability. Thanks to Mrreee (Patchstack) for pointing out the issue.
+*[Compatibility] - Tested OK with WooCommerce 10.4.2
+*[Compatibility] - Tested OK with WordPress 6.9
+
+= 2.3.3  2025-11-14 =
+*[Fix] - Minor UI/UX Fix
+
+= 2.3.2  2025-11-13 =
+*[Fix] - Vulnerability. Thanks to Legion Hunter for pointing out the issue.
+*[Compatibility] - Tested OK with WordPress 6.8.3
+*[Compatibility] - Tested OK with WooCommerce 10.3.5
 
 = 2.3.1  2025-08-19 =
 *[Fix] - Issue with Stock status and Quantity value for backorders in Fruugo Feed
@@ -588,6 +609,5 @@ function wt_modify_product_description_mode( $mode ) {
 
 == Upgrade Notice ==
 
-= 2.3.1 =
-*[Fix] - Issue with Stock status and Quantity value for backorders in Fruugo Feed
-*[Compatibility] - Tested OK with WooCommerce 10.1.0
+= 2.3.6 =
+*[Fix] Feed export shows empty when excluding a category in the Facebook/Instagram catalog.

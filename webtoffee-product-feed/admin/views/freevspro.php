@@ -165,7 +165,18 @@ if (!defined('WPINC')) {
 		</table>
 	</div>
 	<div class="wt-profeed-header" style="float:right;width:28%;">
+	   <?php
+			// Check if Black Friday season is active
+			if ( method_exists( 'Webtoffee_Product_Feed_Sync_Admin', 'is_bfcm_season' ) && Webtoffee_Product_Feed_Sync_Admin::is_bfcm_season() ) {
+				?>
+				<div class="wt-bfcm-discount-tag">
+					<img src="<?php echo esc_url( plugin_dir_url( __FILE__ ) . '../Banner/assets/images/black-friday-discount-tag.svg' ); ?>" alt="<?php esc_attr_e( 'Black Friday Discount', 'webtoffee-product-feed' ); ?>" class="wt-bfcm-tag-svg">
+				</div>
+				<?php
+			}
+		?>
 		<div class="wt-profeed-name">
+			<?php // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage ?>
 			<div style="float: left"><img src="<?php echo esc_url( WT_PRODUCT_FEED_PLUGIN_URL ); ?>assets/images/gopro/product-feed.svg" alt="featured img" width="36" height="36"></div>
 			<div style="float: right">
 				<h4 class="wt-profeed-name"><?php esc_html_e('WooCommerce Product Feed & Sync Manager(Pro)', 'webtoffee-product-feed'); ?></h4>				
@@ -186,6 +197,7 @@ if (!defined('WPINC')) {
 	<div class="wt-profeed-header-bottom" style="height:250px; padding: 10px">
 		<div class="wt-profeed-bottom-left" style="float:left;width:50%;margin-top: 30px;">
 			<div class="wt-profeed-name-bottom">
+				<?php // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage ?>
 				<div style="float: left"><img src="<?php echo esc_url( WT_PRODUCT_FEED_PLUGIN_URL ); ?>assets/images/gopro/product-feed.svg" alt="featured img" width="36" height="36"></div>
 				<div style="float: right">
 					<h4 class="wt-profeed-name-bottom"><?php esc_html_e('WooCommerce Product Feed & Sync Manager(Pro)', 'webtoffee-product-feed'); ?></h4>				

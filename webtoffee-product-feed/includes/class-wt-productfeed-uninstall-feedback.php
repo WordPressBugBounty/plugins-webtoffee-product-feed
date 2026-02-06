@@ -68,6 +68,7 @@ if (!class_exists('ProductFeed_Uninstall_Feedback')) :
                 return;
             }
             $reasons = $this->get_uninstall_reasons();
+            $nonce = wp_create_nonce('wt_pf_uninstall_feedback');
             ?>
             <div class="productfeed-modal" id="productfeed-productfeed-modal">
                 <div class="productfeed-modal-wrap">
@@ -83,8 +84,8 @@ if (!class_exists('ProductFeed_Uninstall_Feedback')) :
                             <?php } ?>
                         </ul>
                         <div class="wt-uninstall-feedback-privacy-policy">
-                            <?php _e('We do not collect any personal data when you submit this form. It\'s your feedback that we value.', 'webtoffee-product-feed'); ?>
-                            <a href="https://www.webtoffee.com/privacy-policy/" target="_blank"><?php _e('Privacy Policy', 'webtoffee-product-feed'); ?></a>
+                            <?php esc_html_e('We do not collect any personal data when you submit this form. It\'s your feedback that we value.', 'webtoffee-product-feed'); ?>
+                            <a href="https://www.webtoffee.com/privacy-policy/" target="_blank"><?php esc_html_e('Privacy Policy', 'webtoffee-product-feed'); ?></a>
                         </div>                        
                     </div>
                     <div class="productfeed-modal-footer">
@@ -215,7 +216,8 @@ if (!class_exists('ProductFeed_Uninstall_Feedback')) :
                                 data: {
                                     action: 'productfeed_submit_uninstall_reason',
                                     reason_id: (0 === $radio.length) ? 'none' : $radio.val(),
-                                    reason_info: (0 !== $input.length) ? $input.val().trim() : ''
+                                    reason_info: (0 !== $input.length) ? $input.val().trim() : '',
+                                    _wpnonce: '<?php echo esc_js($nonce); ?>'
                                 },
                                 beforeSend: function () {
                                     button.addClass('disabled');
@@ -234,22 +236,27 @@ if (!class_exists('ProductFeed_Uninstall_Feedback')) :
 
         public function send_uninstall_reason() {
 
+
+            if (!Wt_Pf_Sh::check_write_access(WEBTOFFEE_PRODUCT_FEED_ID, 'wt_pf_uninstall_feedback')) {
+                return;
+            }
+                
             global $wpdb;
 
-            if (!isset($_POST['reason_id'])) {
+            if (!isset($_POST['reason_id']) || !isset($_POST['_wpnonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['_wpnonce'])), 'wt_pf_uninstall_feedback')) {
                 wp_send_json_error();
             }
 
 
             $data = array(
-                'reason_id' => sanitize_text_field($_POST['reason_id']),
+                'reason_id' => sanitize_text_field(wp_unslash($_POST['reason_id'])),//phpcs:ignore
                 'plugin' => "productfeed",
                 'auth' => 'productfeed_uninstall_1234#',
                 'date' => gmdate("M d, Y h:i:s A"),
                 'url' => '',
                 'user_email' => '',
-                'reason_info' => isset($_REQUEST['reason_info']) ? trim(stripslashes($_REQUEST['reason_info'])) : '',
-                'software' => $_SERVER['SERVER_SOFTWARE'],
+                'reason_info' => isset($_REQUEST['reason_info']) ? sanitize_textarea_field(wp_unslash($_REQUEST['reason_info'])) : '', //phpcs:ignore
+                'software' => sanitize_text_field(wp_unslash($_SERVER['SERVER_SOFTWARE'] ?? '')),
                 'php_version' => phpversion(),
                 'mysql_version' => $wpdb->db_version(),
                 'wp_version' => get_bloginfo('version'),
