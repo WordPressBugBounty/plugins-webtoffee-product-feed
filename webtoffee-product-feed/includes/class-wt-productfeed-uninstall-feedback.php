@@ -1,4 +1,7 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 if (!class_exists('ProductFeed_Uninstall_Feedback')) :
 
     /**

@@ -264,41 +264,84 @@ if ( !class_exists( 'WT_Facebook_Catalog_Product' ) ) :
                         return apply_filters( 'wt_fbfeed_prepare_product_data', $product_data, $id );
 		}
 
+		/**
+		 * Get the checkout URL for a given product.
+		 *
+		 * This function generates the direct checkout URL for a WooCommerce product,
+		 * including support for variable/variation products. For unsupported types,
+		 * defaults to the provided product URL. Returns null if unable to generate.
+		 *
+		 * @param WC_Product $product      The WooCommerce product object.
+		 * @param string     $product_url  The default product URL (used as fallback).
+		 *
+		 * @return string|null The checkout URL string, or null if not available.
+		 */
 		public function get_checkout_url( $product, $product_url ) {
 
+			// If product is not an object, use the default URL as a fallback.
+			if ( ! is_object( $product ) ) {
+				/**
+				 * Filter for checkout link when the product object is not valid.
+				 *
+				 * @param string $product_url Default product URL.
+				 * @param mixed  $product     Provided product data.
+				 */
+				return apply_filters( 'wt_feed_facebook_catalog_product_checkout_link', $product_url, $product );
+			}
+
+			// Get product type for conditional URL generation.
 			$product_type = $product->get_type();
-			if ( !$product_type || !in_array( $product_type, self::$checkout_url_products )) {
+
+			// Use default URL if product type is not supported for checkout URLs.
+			if ( ! $product_type || ! in_array( $product_type, self::$checkout_url_products, true ) ) {
 				$checkout_url = $product_url;
+
+			// If the WooCommerce cart URL function exists and returns a URL, build a custom checkout URL.
 			} elseif ( function_exists( 'wc_get_cart_url' ) && wc_get_cart_url() ) {
-				$char = '?';
+				$cart_url = wc_get_cart_url();
+				// Correct separator if there are query args in cart URL.
+				$char     = ( strpos( $cart_url, '?' ) !== false ) ? '&' : '?';
 
-				if ( strpos( wc_get_cart_url(), '?' ) !== false ) {
-					$char = '&';
-				}
+				// Prepare base checkout URL.
+				$checkout_url = self::make_url( $cart_url . $char );
 
-				$checkout_url = self::make_url(
-				wc_get_cart_url() . $char
-				);
-
+				// Variation case: add parent ID, variation ID, plus all variation attributes.
 				if ( self::is_variation_type( $product_type ) ) {
 					$query_data = array(
-						'add-to-cart'	 => $product->get_parent_id(),
-						'variation_id'	 => $product->get_id(),
+						'add-to-cart'  => $product->get_parent_id(),
+						'variation_id' => $product->get_id(),
+					);
+					// Merge in variation attributes (e.g., color/size selectors).
+					$query_data = array_merge(
+						$query_data,
+						$product->get_variation_attributes() // Assumes this returns an array as per WC_Product_Variation.
 					);
 
-					$query_data = array_merge(
-					$query_data, $product->get_variation_attributes()
-					);
+				// Simple or other supported product: just add product ID.
 				} else {
 					$query_data = array(
 						'add-to-cart' => $product->get_id(),
 					);
 				}
 
-				$checkout_url = $checkout_url . http_build_query( $query_data );
+				// Append arguments to base URL using http_build_query for correct encoding.
+				$checkout_url .= http_build_query( $query_data );
+
+			// Catch-all: unable to generate checkout URL.
 			} else {
 				$checkout_url = null;
 			}
+
+			/**
+			 * Filter the checkout URL for the Facebook catalog product feed.
+			 *
+			 * Plugins can use this to modify the checkout URL sent to Facebook.
+			 *
+			 * @param string|null $checkout_url Final checkout URL or null.
+			 * @param WC_Product  $product      WooCommerce product object.
+			 */
+			$checkout_url = apply_filters( 'wt_feed_facebook_catalog_product_checkout_link', $checkout_url, $product );
+
 			return $checkout_url;
 		}
 

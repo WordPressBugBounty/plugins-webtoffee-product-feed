@@ -556,10 +556,10 @@ class Webtoffee_Product_Feed_Sync_History
 		if($record_count>=1)
 	 	{
 	 		global $wpdb;
-			$tb=$wpdb->prefix.Webtoffee_Product_Feed_Sync::$history_tb;
-			
-			// Note: Table names cannot be prepared with placeholders in WordPress
-			$data=$wpdb->get_results($wpdb->prepare("SELECT * FROM {$tb} WHERE status=%s AND id<(SELECT id FROM {$tb} ORDER BY id DESC LIMIT %d,1)", self::$status_arr['finished'], ($record_count-1)), ARRAY_A); //phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			// Table name from trusted constant; identifiers cannot be prepared in WordPress.
+			$tb = $wpdb->prefix . Webtoffee_Product_Feed_Sync::$history_tb;
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Custom table; table name from constant; values are prepared.
+			$data = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM `{$tb}` WHERE status=%s AND id<(SELECT id FROM `{$tb}` ORDER BY id DESC LIMIT %d,1)", self::$status_arr['finished'], ( $record_count - 1 ) ), ARRAY_A );
 			
 			if($data && is_array($data))
 			{
@@ -611,59 +611,56 @@ class Webtoffee_Product_Feed_Sync_History
 
 	/**
 	* 	Get distinct column values from history table
-	*	@param string $column table column name
+	*	@param string $column table column name (must be one of: item_type, template_type, status)
 	*	@return array array of distinct column values
 	*/
-	private static function get_disticnt_items($column)
-	{
+	private static function get_disticnt_items( $column ) {
 		global $wpdb;
-		$tb=$wpdb->prefix.Webtoffee_Product_Feed_Sync::$history_tb;
-		// Note: Column names and table names cannot be prepared with placeholders in WordPress
-		// Note: This is a safe query as $column is validated and $tb is a known table name
-		$data=$wpdb->get_results("SELECT DISTINCT $column FROM $tb ORDER BY $column ASC", ARRAY_A); //phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-		$data=is_array($data) ? $data : array();
-		return array_column($data, $column);
+		$allowed_columns = array( 'item_type', 'template_type', 'status' );
+		if ( ! in_array( $column, $allowed_columns, true ) ) {
+			return array();
+		}
+		// Table/column from trusted source; identifiers cannot be prepared in WordPress.
+		$tb = $wpdb->prefix . Webtoffee_Product_Feed_Sync::$history_tb;
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Custom table; $column whitelisted; $tb from constant.
+		$data = $wpdb->get_results( "SELECT DISTINCT `{$column}` FROM `{$tb}` ORDER BY `{$column}` ASC", ARRAY_A );
+		$data = is_array( $data ) ? $data : array();
+		return array_column( $data, $column );
 	}
 	
 
-	public static function get_filename_items()
-	{
+	public static function get_filename_items() {
 		global $wpdb;
-		$tb=$wpdb->prefix.Webtoffee_Product_Feed_Sync::$history_tb;
-		// Note: Table names cannot be prepared with placeholders in WordPress
-		// Note: This is a safe query as $tb is a known table name
-		$data=$wpdb->get_results("SELECT file_name FROM $tb" , ARRAY_A); //phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-		$data=is_array($data) ? $data : array();
+		// Table name from trusted constant; identifiers cannot be prepared in WordPress.
+		$tb = $wpdb->prefix . Webtoffee_Product_Feed_Sync::$history_tb;
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Custom table; table name from constant.
+		$data = $wpdb->get_results( "SELECT file_name FROM `{$tb}`", ARRAY_A );
+		$data = is_array( $data ) ? $data : array();
 		return $data;
 	}
 
 	/**
 	* 	Taking history entry by ID
 	*/
-	public static function get_history_entry_by_id($id)
-	{
+	public static function get_history_entry_by_id( $id ) {
 		global $wpdb;
-		$tb=$wpdb->prefix.Webtoffee_Product_Feed_Sync::$history_tb;
-		if(is_array($id))
-		{
-			$where=" IN(".implode(",", array_fill(0, count($id), '%d')).")";
-			$where_data=$id;
-		}else
-		{
-			$where="=%d";
-			$where_data=array($id);
+		// Table name from trusted constant; identifiers cannot be prepared in WordPress.
+		$tb = $wpdb->prefix . Webtoffee_Product_Feed_Sync::$history_tb;
+		if ( is_array( $id ) ) {
+			$where      = ' IN(' . implode( ',', array_fill( 0, count( $id ), '%d' ) ) . ')';
+			$where_data = $id;
+		} else {
+			$where      = '=%d';
+			$where_data = array( $id );
 		}
-		// Note: Table names cannot be prepared with placeholders in WordPress
-		// Note: Query is properly prepared with $wpdb->prepare() and spread operator
-		$qry=$wpdb->prepare("SELECT * FROM {$tb} WHERE id".$where, ...$where_data); //phpcs:ignore
+		$qry = $wpdb->prepare( "SELECT * FROM `{$tb}` WHERE id" . $where, ...$where_data ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Table from constant; $where holds %d placeholders; values prepared.
 
-		if(!is_array($id))
-		{
-			return $wpdb->get_row($qry, ARRAY_A); //phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
-		}else
-		{
-			return $wpdb->get_results($qry, ARRAY_A); //phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
-		} 
+		if ( ! is_array( $id ) ) {
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Custom table; query built with prepare(); table from constant.
+			return $wpdb->get_row( $qry, ARRAY_A );
+		}
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Custom table; query built with prepare(); table from constant.
+		return $wpdb->get_results( $qry, ARRAY_A );
 	}
 
 

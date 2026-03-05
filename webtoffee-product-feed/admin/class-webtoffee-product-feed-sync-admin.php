@@ -1175,23 +1175,40 @@ class Webtoffee_Product_Feed_Sync_Admin {
 
                                 $wpdb->insert($table_name, $insert_data, $insert_data_type); //phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
                             }else{
-                                // All other batch update last log row
-                                $last_log = $wpdb->get_row( $wpdb->prepare( 'SELECT * FROM %s ORDER BY id DESC LIMIT 1', $table_name ) ); //phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-                                $batch_pocess_log = Webtoffee_Product_Feed_Sync_Common_Helper::wt_decode_data($last_log->data);
+                                // All other batch update last log row.
+                                // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Custom log table; table name from $wpdb->prefix + constant; identifiers cannot be prepared.
+                                $last_log = $wpdb->get_row( "SELECT * FROM `{$table_name}` ORDER BY id DESC LIMIT 1" );
+                                if ( $last_log && isset( $last_log->data ) ) {
+                                    $batch_pocess_log = Webtoffee_Product_Feed_Sync_Common_Helper::wt_decode_data($last_log->data);
 
-                                $batch_pocess_log[ $wt_batch_hash_key ][] = [
-                                            'batch_time'	 => gmdate( 'Y-m-d: H:i:s' ),
-                                            'batch_handle'	 => $batch_response_details->handles[ 0 ],
-                                            'catalog_id'	 => $catalog_id
-                                    ];
-                                $update_data=array(
-                                        'id' => $last_log->id,
-                                        'catalog_id'=>$catalog_id,
-                                        'data'=>maybe_serialize($batch_pocess_log),
-                                        'start_time'=>gmdate( 'Y-m-d H:i:s' )
+                                    $batch_pocess_log[ $wt_batch_hash_key ][] = [
+                                                'batch_time'	 => gmdate( 'Y-m-d: H:i:s' ),
+                                                'batch_handle'	 => $batch_response_details->handles[ 0 ],
+                                                'catalog_id'	 => $catalog_id
+                                        ];
+                                    $update_data=array(
+                                            'id' => $last_log->id,
+                                            'catalog_id'=>$catalog_id,
+                                            'data'=>maybe_serialize($batch_pocess_log),
+                                            'start_time'=>gmdate( 'Y-m-d H:i:s' )
 
-                                );
-                                $wpdb->update($table_name, $update_data, array('id' => $last_log->id)); //phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+                                    );
+                                    $wpdb->update($table_name, $update_data, array('id' => $last_log->id)); //phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+                                } else {
+                                    // No previous log row (e.g. table empty or first batch); insert as new log.
+                                    $batch_pocess_log = array();
+                                    $batch_pocess_log[ $wt_batch_hash_key ][] = [
+                                                'batch_time'	 => gmdate( 'Y-m-d: H:i:s' ),
+                                                'batch_handle'	 => $batch_response_details->handles[ 0 ],
+                                                'catalog_id'	 => $catalog_id
+                                        ];
+                                    $insert_data = array(
+                                            'catalog_id' => $catalog_id,
+                                            'data'       => maybe_serialize( $batch_pocess_log ),
+                                            'start_time' => gmdate( 'Y-m-d H:i:s' ),
+                                    );
+                                    $wpdb->insert( $table_name, $insert_data, array( '%s', '%s', '%s' ) ); //phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
+                                }
                             }    				
 				
 			}
@@ -1261,10 +1278,16 @@ class Webtoffee_Product_Feed_Sync_Admin {
                 global $wpdb;
                 $table_name = $wpdb->prefix.'wt_pf_fbsync_log';
                 $sync_log_exist = true;
-                if($wpdb->get_var($wpdb->prepare("SHOW TABLES LIKE %s", $table_name)) != $table_name) { //phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+                // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Table existence check; no WP API for SHOW TABLES.
+                if ( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $table_name ) ) !== $table_name ) {
                     $sync_log_exist = false;
                 }
-                $log_list = ($sync_log_exist) ? $wpdb->get_results( $wpdb->prepare( 'SELECT * FROM %s ORDER BY id DESC', $table_name ) ) : array(); //phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+                if ( $sync_log_exist ) {
+                    // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Custom log table; table name from $wpdb->prefix + constant; identifiers cannot be prepared.
+                    $log_list = $wpdb->get_results( "SELECT * FROM `{$table_name}` ORDER BY id DESC" );
+                } else {
+                    $log_list = array();
+                }
 
                 if ( is_array( $log_list ) && count( $log_list ) > 0 ) {
 			?>
@@ -1382,17 +1405,54 @@ class Webtoffee_Product_Feed_Sync_Admin {
 	/**
 	 * Process batch exports via ajax
 	 *
-	 * @since 1.0.0
+	 * @since 1.0.0 
 	 * @return void
 	 */
 	function wt_fbfeed_ajax_save_category() {
 
-		// phpcs:ignore Nonce and user role check handled by check_write_access method. 
-		if (!Wt_Pf_Sh::check_write_access(WEBTOFFEE_PRODUCT_FEED_ID, 'wt-category-mapping')) {
-			return;  
+		// Form data is sent serialized in POST 'form'; _wpnonce is inside that string.
+		// check_write_access() reads $_REQUEST['_wpnonce'], so it fails. Verify nonce from parsed form and role instead.
+		if ( ! isset( $_POST['form'] ) ) {
+			wp_send_json_error(
+				array(
+					'step'    => 'done',
+					'message' => __( 'Invalid request.', 'webtoffee-product-feed' ),
+				)
+			);
 		}
-		
-		parse_str( wp_unslash( $_POST[ 'form' ] ?? '' ), $form ); //phpcs:ignore
+
+		// Parse the serialized form data safely.
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce is verified below from parsed form.
+		parse_str( sanitize_text_field( wp_unslash( $_POST['form'] ) ), $form );
+		$form = (array) $form;
+
+		if ( ! is_user_logged_in() ) {
+			wp_send_json_error(
+				array(
+					'step'    => 'done',
+					'message' => __( 'Access denied. Unable to save mapping.', 'webtoffee-product-feed' ),
+				)
+			);
+		}
+
+		$form_nonce = isset( $form['_wpnonce'] ) ? sanitize_text_field( $form['_wpnonce'] ) : '';
+		if ( ! $form_nonce || ! wp_verify_nonce( $form_nonce, 'wt-category-mapping' ) ) {
+			wp_send_json_error(
+				array(
+					'step'    => 'done',
+					'message' => __( 'Access denied. Unable to save mapping.', 'webtoffee-product-feed' ),
+				)
+			);
+		}
+
+		if ( ! Wt_Pf_Sh::check_role_access( WEBTOFFEE_PRODUCT_FEED_ID ) ) {
+			wp_send_json_error(
+				array(
+					'step'    => 'done',
+					'message' => __( 'Access denied. Unable to save mapping.', 'webtoffee-product-feed' ),
+				)
+			);
+		}
 
 		$_REQUEST	 = $form		 = (array) $form;
 		check_admin_referer( 'wt-category-mapping' );

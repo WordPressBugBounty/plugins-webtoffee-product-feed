@@ -60,7 +60,15 @@ if ( ! function_exists( 'wt_fbfeed_render_attributes' ) ) {
                     <td><!--suppress HtmlUnknownAttribute -->
 						
                         <select name="map_to[<?php echo esc_attr( $cat->term_id ); ?>]">
-                                <?php echo wp_kses_post( wt_fb_category_dropdown() ); ?>
+                                <?php
+								$allowed_html = array(
+									'option' => array(
+										'value'    => true,
+										'selected' => true,
+									),
+								);
+								echo wp_kses( wt_fb_category_dropdown(), $allowed_html );
+								?>
                             </select>
                     </td>
                 </tr>

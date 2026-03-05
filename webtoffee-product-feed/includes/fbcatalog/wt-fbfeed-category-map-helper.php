@@ -64,7 +64,15 @@ if ( ! function_exists( 'wt_fbfeed_render_categories' ) ) {
 						
 
                         <select style="width:100%" id= "cat_mapping_<?php echo esc_attr( $cat->term_id ); ?>" name="map_to[<?php echo esc_attr( $cat->term_id ); ?>]" class="wc-enhanced-select">
-                                <?php echo wp_kses_post( wt_fb_category_dropdown() ); ?>
+                                <?php
+								$allowed_html = array(
+									'option' => array(
+										'value'    => true,
+										'selected' => true,
+									),
+								);
+								echo wp_kses( wt_fb_category_dropdown(), $allowed_html );
+								?>
                             </select>
                     </td>
                 </tr>

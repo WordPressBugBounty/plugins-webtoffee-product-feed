@@ -718,14 +718,13 @@ class Webtoffee_Product_Feed_Sync_Export
 			
 			// Get delimiter presets for conversion
 			$delimiter_presets = Wt_Pf_IE_Basic_Helper::_get_csv_delimiters();
-			
+
 			//Use delimiter_preset if available and valid
 			if($delimiter_preset != '' && $delimiter_preset != 'other' && isset($delimiter_presets[$delimiter_preset]))
 			{
 				// Convert preset value to actual delimiter character
 				$csv_delimiter = $delimiter_presets[$delimiter_preset]['val'];
-			}
-
+			} 
 			elseif($custom_delimiter === 't' && ($delimiter_preset === '' || $delimiter_preset === 'other'))
 			{
 				// Likely a tab that was sanitized to "t", restore it

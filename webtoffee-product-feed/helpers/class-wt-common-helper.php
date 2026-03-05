@@ -1,4 +1,7 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 if(!class_exists('Webtoffee_Product_Feed_Sync_Common_Helper')){
 	class Webtoffee_Product_Feed_Sync_Common_Helper
 	{

@@ -176,6 +176,9 @@ class Webtoffee_Product_Feed_Sync_Facebook_Export extends Webtoffee_Product_Feed
             }
             foreach ($products_ids as $key => $product_id) {  
                 $product = wc_get_product($product_id); 
+				if( !is_object( $product ) || is_wp_error( $product ) ){
+					continue;
+				}
 
                 // Skip variations that belongs to a specific categories that is excluded in filter
                 if ($product->is_type('variation') && !empty($prod_exc_categories)) {
