@@ -1,3 +1,8 @@
+= 2.3.8 2026-04-21 =
+* [Fix] - Replace echo esc_html_e with esc_attr_e on data-placeholder attribute
+* [Compatibility] - Tested OK with WooCommerce 10.7.0
+* [Compatibility] - Tested OK with WordPress 6.9.4
+
 = 2.3.7 2026-03-05 =
 * [Fix] - Facebook/insta catalog sync was not working properly
 * [Fix] - PHP Fatal error: Uncaught Error: Call to a member function is_type() on false in facebook export

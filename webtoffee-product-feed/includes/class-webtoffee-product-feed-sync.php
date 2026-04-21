@@ -85,7 +85,7 @@ class Webtoffee_Product_Feed_Sync {
 		if ( defined( 'WEBTOFFEE_PRODUCT_FEED_SYNC_VERSION' ) ) {
 			$this->version = WEBTOFFEE_PRODUCT_FEED_SYNC_VERSION;
 		} else {
-			$this->version = '2.3.7';
+			$this->version = '2.3.8';
 		}
 		$this->plugin_name = 'webtoffee-product-feed';
 		$this->plugin_base_name	 = WT_PRODUCT_FEED_BASE_NAME;
@@ -178,6 +178,13 @@ class Webtoffee_Product_Feed_Sync {
 		 * Includes the EMA banner for the analytics page
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/banner/class-wbte-ema-banner.php';
+
+		/**
+		 * Includes cross promotion banner main class file.
+		 *
+		 * @since 1.2.9
+		 */
+		require_once plugin_dir_path( __DIR__ ) . 'admin/cross-promotion-banners/class-wbte-cross-promotion-banners.php';
 
 		$this->loader = new Webtoffee_Product_Feed_Sync_Loader();
 	}

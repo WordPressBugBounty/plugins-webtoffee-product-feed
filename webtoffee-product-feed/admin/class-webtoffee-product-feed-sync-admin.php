@@ -455,7 +455,7 @@ class Webtoffee_Product_Feed_Sync_Admin {
 
 				<?php if ( 'connection-manager' === $current_tab ): ?>
 				<h2 style="text-align:center;"><?php esc_html_e( 'Grow your store with Facebook Shops & Dynamic Ads', 'webtoffee-product-feed' ); ?></h2>
-					<div class="actions">
+					<div class="actions" style="width:100%;float:left;">
 						<?php
 						if ( !$is_connected ):
 							?>
@@ -500,26 +500,19 @@ class Webtoffee_Product_Feed_Sync_Admin {
 							$catalog_details = $this->get_fb_catalog_details();
 							?>
 
-						<div class="catalog-connected-section" style="background: #ebf3f7;padding: 10px;">
+						<div class="catalog-connected-section" style="background: #ebf3f7;padding: 10px; width:98%;float:left;">
 							<!--<p><?php //esc_html_e( 'You are currently connected to your FB account.', 'webtoffee-product-feed' ); ?></p>-->
 							<?php if ( isset( $catalog_details ) ): ?>
-							<div class="catalogs-list-section">
-								<div class="dashicons-before dashicons-cart" style="float:left; width: 50%;"><?php esc_html_e( 'Catalogs associated with your FB account:', 'webtoffee-product-feed'); ?></div>
-							<div class="fb-catalog-list"  style="float:right; width: 50%;">	
-								<?php
-									if ( !empty( $catalog_details ) ) {
-										$ic = 0;
-										foreach ( $catalog_details as $catalog_id => $catalog_name ):
-											if ( $ic !== 0 )
-												echo '<br/>';
-											?>
-
-									<b><a target="_blank" href="<?php echo esc_url( "https://facebook.com/products/catalogs/" . $catalog_id ); ?>"><?php echo esc_html($catalog_name); ?></a></b>								
-											<?php
-											$ic++;
-										endforeach;
-									}
-									?>
+							<div class="catalogs-list-section" style="width:100%;float:left;">
+								<div class="dashicons-before dashicons-cart" style="float:left; width: 100%;"><?php esc_html_e( 'Catalogs associated with your FB account:', 'webtoffee-product-feed'); ?></div>
+							<div class="fb-catalog-list"  style="float:left; width: 100%;">
+								<?php if ( !empty( $catalog_details ) ) : ?>
+									<ul>
+										<?php foreach ( $catalog_details as $catalog_id => $catalog_name ) : ?>
+											<li><b><a target="_blank" href="<?php echo esc_url( "https://facebook.com/products/catalogs/" . $catalog_id ); ?>"><?php echo esc_html( $catalog_name ); ?></a></b></li>
+										<?php endforeach; ?>
+									</ul>
+								<?php endif; ?>
 								</div>
 							</div>
 							<?php else: ?>

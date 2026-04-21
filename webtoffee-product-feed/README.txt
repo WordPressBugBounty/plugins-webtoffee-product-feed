@@ -4,7 +4,7 @@ Donate link: https://www.webtoffee.com/product/woocommerce-product-feed/
 Tags: woocommerce product feed, google shopping, google merchant center, facebook catalog, instagram feed
 Requires at least: 4.0
 Tested up to: 6.9
-Stable tag: 2.3.7
+Stable tag: 2.3.8
 Requires PHP: 5.6
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -25,12 +25,12 @@ Get free listings and ads on Google Shopping for WooCommerce products and Pinter
 
 With the Facebook product catalog sync option, you will be able to automatically sync your WooCommerce product catalog with Facebook shops. 
 
-For Google Shopping, this WooCommerce Google shopping feed plugin lets you connect your WooCommerce store with the Merchant Center using WooCommerce Google Product feeds. This way you can make your WooCommerce products more visible to millions of users, which attracts potential buyers, increase sales, drive conversions and traffic to your store. 
+For Google Shopping, this WooCommerce Google shopping feed plugin lets you connect your WooCommerce store with the Merchant Center using WooCommerce Google Product feeds. This way, this WooCommerce Google shopping plugin you can make your WooCommerce products more visible to millions of users, which attracts potential buyers, increase sales, drive conversions and traffic to your store.
 
 
 == Product Feed for WooCommerce - WooCommerce Google Shopping Product Feed, Pinterest Feed, TikTok Ads & More (Basic) ==
 
-== Key Features of Product Feed WooCommerce Plugin ==
+== Key Features of Product Feed WooCommerce Plugin (Free Version) ==
 
 &#128312; **Sales Channels** - Supports 25+ eCommerce channels to expand your reach. Easily create and customize product feeds for multiple platforms. Ensure free listings and clear product visibility to drive more sales.
 
@@ -42,7 +42,7 @@ For Google Shopping, this WooCommerce Google shopping feed plugin lets you conne
 
 &#128312; **Facebook Sync** - Sync your WooCommerce products with your Facebook shop catalog by connecting your store to Facebook Business Catalog Manager to boost visibility and reach. With the help of our WooCommerce Facebook product feed plugin, you can easily set up a Facebook product catalog and generate a WooCommerce Facebook product feed catalog to showcase your products seamlessly. Use dynamic ads to engage potential customers and drive more sales with automatic, regular updates.
 
-&#128312; **Connect with Google Shopping** - Effortlessly connect your WooCommerce store to Google Merchant Center using the Google product feed for WooCommerce plugin. Promote your products across Google Shopping, Local Inventory Ads, Merchant Promotions, and Buy on Google. With an easy-to-manage Google shopping product feed setup, you can enhance product visibility, reach a wider audience, and drive more sales.
+&#128312; **Connect with Google Shopping** - Effortlessly connect your WooCommerce store to Google Merchant Center using the Google product feed for WooCommerce plugin. Promote your products across Google Shopping, Local Inventory Ads, Merchant Promotions, and Buy on Google by creating a product feed for Google. This WooCommerce Google feed manager features an easy-to-manage Google shopping product feed setup, helping you enhance product visibility, reach a wider audience, and drive more sales.
 
 &#128312; **Add Static Values to WooCommerce Feed** - Add static values to your product feeds for better customization. Set fixed attributes like brand, condition, or availability without manual updates. Ensure accurate and consistent product data across all sales channels.
 
@@ -58,7 +58,7 @@ For Google Shopping, this WooCommerce Google shopping feed plugin lets you conne
 
 &#128312; **Product Feed Refresh Status** - Keep track of the real-time status of your product feed updates, ensuring that your product listings always reflect the latest changes. Know when your product feeds was last updated and check whether they are running as scheduled.
 
-&#9989; Tested OK with WooCommerce 10.5.3
+&#9989; Tested OK with WooCommerce 10.7.0
 
 == Why Choose WooCommerce Product Feed Plugin? ==
 
@@ -122,7 +122,7 @@ This means your product feeds will always reflect the latest prices, stock level
 
 🟢 **Auto-Catalog Sync for Facebook Catalog** </li>
 
-Effortlessly keep your Facebook product catalog up to date with automatic syncing! Simply connect your WooCommerce store to Facebook Business Manager, and the plugin takes care of the rest—syncing your products and updating their details in real-time through a reliable Facebook product feed.
+Effortlessly keep your Facebook product catalog up to date with automatic syncing! Simply connect your WooCommerce store to Facebook Business Manager, and the WooCommerce Facebook product feed plugin takes care of the rest—syncing your products and updating their details in real-time through a reliable Facebook product feed.
 
 Any changes to prices, stock, or product information in your WooCommerce store are instantly reflected in your Facebook product catalog. No manual updates required—ensuring your Facebook ads and shop always display the most accurate and current product data.
 
@@ -161,37 +161,21 @@ Our product feed WooCommerce plugin is fully compatible with popular currency sw
 Enhance your WooCommerce store’s sales potential by seamlessly integrating with Discount Rules for WooCommerce and YITH WooCommerce Dynamic Pricing & Discounts. With this seamless compatibility, you can easily set up custom discounts, promotions, and upsell strategies to attract more customers and increase conversions. Whether it’s bulk discounts, BOGO deals, or personalized offers, this integration helps you sell more while keeping shoppers happy!
 
 == 👉 Create Product Feeds for 25+ Sales Channels. Power your Multi-Channel Strategy ==
-- Google Product Feeds
-- Meta feed for Facebook/Instagram
-- Google Local Product Inventory
-- Google Local Inventory Ads
-- Google Merchant Promotions
-- Buy on Google
-- TikTok Ads
-- Pinterest Product Feed
-- Pinterest RSS feed
-- Snapchat Feed
-- Idealo Product Feed
-- Bing Shopping Feed(Microsoft Ads)
-- PriceSpy Feed (Prisjakt)
-- PriceRunner Feed
-- Skroutz Data Feed
-- Shopzilla Feed
-- Bizrate Product Feed
-- Become Shop Feed
-- Price grabber Feed
-- LeGuide Feed
-- Google Product Reviews
-- Heureka
-- Fruugo
-- Vivino
-- OnBuy
-- Yandex
-- X(Twitter)
-- Rakuten
-- Shopmania
-- Google Manufacturer Center(Premium)
-- Custom Feed(Premium)
+
+**Google Shopping Feed**
+Google Shopping, Google Local Product Inventory, Google Local Inventory Ads, Google Merchant Promotions, Buy on Google, Google Manufacturer Center(Premium)
+
+**Social Commerce**
+Facebook product feed, Instagram product feed, TikTok Ads, Pinterest Product Feed, X(Twitter), Snapchat Feed
+
+**Shopping & Comparison**
+Bing Shopping Feed(Microsoft Ads), Idealo Product Feed, PriceSpy Feed (Prisjakt), PriceRunner Feed, Shopzilla Feed, Skroutz Data Feed, Bizrate Product Feed, Shopmania, LeGuide, Become Shop Feed
+
+**European Marketplaces**
+Heureka, Fruugo, Vivino, OnBuy, Yandex, Rakuten
+
+**Other**
+Custom Feed(Premium)
 
 Please visit <a rel="dofollow" href="https://www.webtoffee.com/product/woocommerce-product-feed/?utm_source=free_plugin_readme&utm_medium=product_feed&utm_campaign=WooCommerce_Product_Feed">WooCommerce Product Feed Plugin </a> for more details.
 
@@ -320,20 +304,16 @@ function wt_modify_product_description_mode( $mode ) {
 
 == Changelog ==
 
-= 2.3.7 2026-03-05 =
-* [Fix] - Facebook/insta catalog sync was not working properly
-* [Fix] - PHP Fatal error: Uncaught Error: Call to a member function is_type() on false in facebook export
-* [Tweak] - Added filter `wt_feed_facebook_catalog_product_checkout_link` to alter the checkout url for the facebook insta catalog sync module
-* [Compatibility] - Tested OK with WooCommerce 10.5.3
-* [Compatibility] - Tested OK with WordPress 6.9.1
+= 2.3.8 2026-04-21 =
+* [Fix] - Replace echo esc_html_e with esc_attr_e on data-placeholder attribute
+* [Compatibility] - Tested OK with WooCommerce 10.7.0
+* [Compatibility] - Tested OK with WordPress 6.9.4
 
 [See changelog for all versions](https://plugins.svn.wordpress.org/webtoffee-product-feed/trunk/changelog.txt)
 
 == Upgrade Notice ==
 
-= 2.3.7 =
-* [Fix] - Facebook/insta catalog sync was not working properly
-* [Fix] - PHP Fatal error: Uncaught Error: Call to a member function is_type() on false in facebook export
-* [Tweak] - Added filter `wt_feed_facebook_catalog_product_checkout_link` to alter the checkout url for the facebook insta catalog sync module
-* [Compatibility] - Tested OK with WooCommerce 10.5.3
-* [Compatibility] - Tested OK with WordPress 6.9.1
+= 2.3.8 =
+* [Fix] - Replace echo esc_html_e with esc_attr_e on data-placeholder attribute
+* [Compatibility] - Tested OK with WooCommerce 10.7.0
+* [Compatibility] - Tested OK with WordPress 6.9.4

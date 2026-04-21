@@ -90,7 +90,7 @@ if (!defined('ABSPATH')) {
                 <tr>
             <th></th>
             <td class="wt-feed-filter-section-td" style="width:35% !important;">
-                <select name="wt_pf_inc_exc_category" id="wt_pf_inc_exc_category" class="wc-enhanced-select" multiple="multiple" data-placeholder ="<?php echo esc_html_e('Select product category&hellip;', 'webtoffee-product-feed'); ?>" style="width:35% !important;" >
+                <select name="wt_pf_inc_exc_category" id="wt_pf_inc_exc_category" class="wc-enhanced-select" multiple="multiple" data-placeholder ="<?php esc_attr_e( 'Select product category&hellip;', 'webtoffee-product-feed' ); ?>" style="width:35% !important;" >
                 <?php
                 $product_categories = Webtoffee_Product_Feed_Sync_Common_Helper::get_product_categories();
                 foreach ($product_categories as $key => $category ) {
