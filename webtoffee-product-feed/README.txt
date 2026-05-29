@@ -3,13 +3,13 @@ Contributors: webtoffee
 Donate link: https://www.webtoffee.com/product/woocommerce-product-feed/
 Tags: woocommerce product feed, google shopping, google merchant center, facebook catalog, instagram feed
 Requires at least: 4.0
-Tested up to: 6.9
-Stable tag: 2.3.8
+Tested up to: 7.0
+Stable tag: 2.3.9
 Requires PHP: 5.6
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Create WooCommerce product feeds containing unlimited number of products. Supports Google Product feed, Facebook catalog feed, Instagram, Bing & many more.
+Create unlimited WooCommerce product feeds for Google Shopping, Facebook, Instagram & 25+ top channels. Easy feed mapping, filters, and auto updates.
 
 == Description ==
 
@@ -58,7 +58,7 @@ For Google Shopping, this WooCommerce Google shopping feed plugin lets you conne
 
 &#128312; **Product Feed Refresh Status** - Keep track of the real-time status of your product feed updates, ensuring that your product listings always reflect the latest changes. Know when your product feeds was last updated and check whether they are running as scheduled.
 
-&#9989; Tested OK with WooCommerce 10.7.0
+&#9989; Tested OK with WooCommerce 10.8.1
 
 == Why Choose WooCommerce Product Feed Plugin? ==
 
@@ -304,16 +304,14 @@ function wt_modify_product_description_mode( $mode ) {
 
 == Changelog ==
 
-= 2.3.8 2026-04-21 =
-* [Fix] - Replace echo esc_html_e with esc_attr_e on data-placeholder attribute
-* [Compatibility] - Tested OK with WooCommerce 10.7.0
-* [Compatibility] - Tested OK with WordPress 6.9.4
+= 2.3.9 2026-05-29 =
+* [Compatibility] - Tested OK with WooCommerce 10.8.1
+* [Compatibility] - Tested OK with WordPress 7.0
 
 [See changelog for all versions](https://plugins.svn.wordpress.org/webtoffee-product-feed/trunk/changelog.txt)
 
 == Upgrade Notice ==
 
-= 2.3.8 =
-* [Fix] - Replace echo esc_html_e with esc_attr_e on data-placeholder attribute
-* [Compatibility] - Tested OK with WooCommerce 10.7.0
-* [Compatibility] - Tested OK with WordPress 6.9.4
+= 2.3.9 =
+* [Compatibility] - Tested OK with WooCommerce 10.8.1
+* [Compatibility] - Tested OK with WordPress 7.0

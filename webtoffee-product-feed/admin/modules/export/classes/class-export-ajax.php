@@ -759,6 +759,7 @@ class Webtoffee_Product_Feed_Sync_Export_Ajax
 		$step_keys=$this->step_keys;
 		$current_index=$this->current_step_index;
 		$last_page=$this->last_page;
+		$legacy_arrow_style = version_compare( get_bloginfo( 'version' ), '7.0', '>=' ) ? '' : ' style="line-height:27px;"';
 		if($current_index!==false) /* step exists */
 		{
 			if($current_index>0) //add back button
@@ -767,10 +768,10 @@ class Webtoffee_Product_Feed_Sync_Export_Ajax
 					'type'=>'button',
 					'action_type'=>'step',
 					'key'=>$step_keys[$current_index-1],
-						'text'=>'<span class="dashicons dashicons-arrow-left-alt2" style="line-height:27px;"></span> '.__('Back', 'webtoffee-product-feed'),
+						'text'=>'<span class="dashicons dashicons-arrow-left-alt2"'.$legacy_arrow_style.'></span> '.__('Back', 'webtoffee-product-feed'),
 				);
 			}
-			
+
 			if(isset($step_keys[$current_index+1])) /* not last step */
 			{
 				$next_number=$current_index+2;
@@ -780,7 +781,7 @@ class Webtoffee_Product_Feed_Sync_Export_Ajax
 					'type'=>'button',
 					'action_type'=>'step',
 					'key'=>$next_key,
-						'text'=>__('Step', 'webtoffee-product-feed').' '.$next_number.': '.$next_title.' <span class="dashicons dashicons-arrow-right-alt2" style="line-height:27px;"></span>',
+						'text'=>__('Step', 'webtoffee-product-feed').' '.$next_number.': '.$next_title.' <span class="dashicons dashicons-arrow-right-alt2"'.$legacy_arrow_style.'></span>',
 				);
 
 				if($this->export_method=='quick' || $this->export_method=='template') //Quick Or Template method

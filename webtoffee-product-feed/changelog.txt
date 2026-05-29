@@ -1,3 +1,7 @@
+= 2.3.9 2026-05-29 =
+* [Compatibility] - Tested OK with WooCommerce 10.8.1
+* [Compatibility] - Tested OK with WordPress 7.0
+
 = 2.3.8 2026-04-21 =
 * [Fix] - Replace echo esc_html_e with esc_attr_e on data-placeholder attribute
 * [Compatibility] - Tested OK with WooCommerce 10.7.0
