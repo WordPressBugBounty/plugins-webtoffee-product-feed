@@ -71,7 +71,7 @@ if ( !class_exists( 'WT_Fb_Catalog_Manager_Settings' ) ) :
 			$this->wt_log_data_change( 'wt-feed-upload', json_encode( $request_body ) );
 			$catalog_id		 = get_option( 'wt_facebook_catalog_id' );
 
-			$batch_url		 = "https://graph.facebook.com/v17.0/$catalog_id/batch";
+			$batch_url		 = 'https://graph.facebook.com/' . WT_PRODUCT_FEED_FB_API_VERSION . "/$catalog_id/batch";
 			$batch_response	 = wp_remote_post( $batch_url, $request_body );
 
 			$this->wt_log_data_change( 'wt-feed-upload', json_encode( $batch_response ) );

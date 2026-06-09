@@ -23,6 +23,10 @@ class Webtoffee_Product_Feed_Sync_Cron
 	public static $status_label_arr=array();
 	public static $status_color_arr=array();
 
+	/** Per-request caches to prevent duplicate DB queries. */
+	private static $cron_table_exists = null;
+	private static $cron_scheduled_cache = array();
+
 	public $to_cron='';
 	private $cron_url_salt='Dyeb(DjCr<}P2c#s';
 
@@ -446,47 +450,47 @@ class Webtoffee_Product_Feed_Sync_Cron
 	/**
 	* Checks any cron is available in the database
 	*/
-	private function is_cron_scheduled($action_type='')
-	{
-		global $wpdb;
-		$tb=$wpdb->prefix.Webtoffee_Product_Feed_Sync::$cron_tb;
-                
-                $cron_count=0;
-                // Check if cron table exist
-                $search_query = "SHOW TABLES LIKE %s";
-                if( !$wpdb->get_results($wpdb->prepare($search_query, $tb), ARRAY_N) ) {//phpcs:ignore
-                    return $cron_count;//phpcs:ignore
-                }
-                
-                
-		$status_check_arr=self::$status_arr;
-		unset($status_check_arr['disabled']);
-
-		$db_data_arr=array_values($status_check_arr);
-		$status_check_format_arr=array_fill(0, count($db_data_arr), '%d');
-		
-		/* preparing condition for action specified cron */
-		$sql_condition='';	
-		if($action_type!="")
-		{
-			$sql_condition=($action_type!="" ? ' AND action_type=%s' : '');
-			$db_data_arr[]=$action_type;
+	private function is_cron_scheduled( $action_type = '' ) {
+		if ( array_key_exists( $action_type, self::$cron_scheduled_cache ) ) {
+			return self::$cron_scheduled_cache[ $action_type ];
 		}
-	
-		$sql_condition.=' AND schedule_type=%s';
-		$db_data_arr[]='wordpress_cron'; //only wordpress cron
-		// Note: Table names cannot be prepared with placeholders in WordPress
-		$qry=$wpdb->prepare(
-			"SELECT COUNT(id) AS ttl FROM $tb WHERE status IN(".implode(", ", $status_check_format_arr).")".$sql_condition, //phpcs:ignore
+
+		global $wpdb;
+		$tb          = $wpdb->prefix . Webtoffee_Product_Feed_Sync::$cron_tb;
+		$cron_count  = 0;
+
+		/* Check cron table exists — cached for the entire request. */
+		if ( null === self::$cron_table_exists ) {
+			self::$cron_table_exists = (bool) $wpdb->get_results( $wpdb->prepare( 'SHOW TABLES LIKE %s', $tb ), ARRAY_N ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		}
+		if ( ! self::$cron_table_exists ) {
+			self::$cron_scheduled_cache[ $action_type ] = $cron_count;
+			return $cron_count;
+		}
+
+		$status_check_arr    = self::$status_arr;
+		unset( $status_check_arr['disabled'] );
+		$db_data_arr         = array_values( $status_check_arr );
+		$status_check_format = array_fill( 0, count( $db_data_arr ), '%d' );
+
+		$sql_condition = '';
+		if ( '' !== $action_type ) {
+			$sql_condition = ' AND action_type=%s';
+			$db_data_arr[] = $action_type;
+		}
+		$sql_condition .= ' AND schedule_type=%s';
+		$db_data_arr[]  = 'wordpress_cron';
+
+		$qry = $wpdb->prepare(
+			'SELECT COUNT(id) AS ttl FROM ' . $tb . ' WHERE status IN(' . implode( ', ', $status_check_format ) . ')' . $sql_condition, // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 			$db_data_arr
 		);
 
-		//taking count of available crons. 
-		$cron_count_arr=$wpdb->get_row($qry, ARRAY_A);//phpcs:ignore
-		if(!is_wp_error($cron_count_arr))
-		{
-			$cron_count=intval(isset($cron_count_arr['ttl']) ? $cron_count_arr['ttl'] : 0);
+		$cron_count_arr = $wpdb->get_row( $qry, ARRAY_A ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		if ( ! is_wp_error( $cron_count_arr ) ) {
+			$cron_count = intval( isset( $cron_count_arr['ttl'] ) ? $cron_count_arr['ttl'] : 0 );
 		}
+		self::$cron_scheduled_cache[ $action_type ] = $cron_count;
 		return $cron_count;
 	}
 

@@ -4,7 +4,7 @@ Donate link: https://www.webtoffee.com/product/woocommerce-product-feed/
 Tags: woocommerce product feed, google shopping, google merchant center, facebook catalog, instagram feed
 Requires at least: 4.0
 Tested up to: 7.0
-Stable tag: 2.3.9
+Stable tag: 2.4.0
 Requires PHP: 5.6
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -304,14 +304,14 @@ function wt_modify_product_description_mode( $mode ) {
 
 == Changelog ==
 
-= 2.3.9 2026-05-29 =
-* [Compatibility] - Tested OK with WooCommerce 10.8.1
-* [Compatibility] - Tested OK with WordPress 7.0
+= 2.4.0 2026-06-09 =
+* [Tweak] - Upgraded Facebook Marketing API from v17.0 to v25.0 to address Meta's deprecation deadline for older API versions.
+* [Performance] - Performance improvements by caching cron scheduled checks to remove duplicate DB queries.
 
 [See changelog for all versions](https://plugins.svn.wordpress.org/webtoffee-product-feed/trunk/changelog.txt)
 
 == Upgrade Notice ==
 
-= 2.3.9 =
-* [Compatibility] - Tested OK with WooCommerce 10.8.1
-* [Compatibility] - Tested OK with WordPress 7.0
+= 2.4.0 =
+* [Tweak] - Upgraded Facebook Marketing API from v17.0 to v25.0 to address Meta's deprecation deadline for older API versions.
+* [Performance] - Performance improvements by caching cron scheduled checks to remove duplicate DB queries.

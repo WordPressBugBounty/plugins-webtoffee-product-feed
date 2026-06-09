@@ -1138,7 +1138,7 @@ class Webtoffee_Product_Feed_Sync_Admin {
 
 			//$catalog_id				 = $this->get_fb_catalog_id();
 			#$batch_url				 = "https://graph.facebook.com/v17.0/$catalog_id/batch";
-			$items_batch			 = "https://graph.facebook.com/v17.0/$catalog_id/items_batch";
+			$items_batch			 = 'https://graph.facebook.com/' . WT_PRODUCT_FEED_FB_API_VERSION . "/$catalog_id/items_batch";
 			#$single_product_url	 = "https://graph.facebook.com/v17.0/$catalog_id/products";
 			$batch_response			 = wp_remote_post( $items_batch, $request_body );
 			$this->wt_log_data_change( 'wt-feed-upload', 'Batch Response:' );
@@ -1244,7 +1244,7 @@ class Webtoffee_Product_Feed_Sync_Admin {
 
 		$access_token = $this->get_access_token();
 
-		$batch_status_handle_check_url	 = "https://graph.facebook.com/v17.0/$fb_catalog_id/check_batch_request_status?handle=$handle&access_token=$access_token&load_ids_of_invalid_requests=1";
+		$batch_status_handle_check_url	 = 'https://graph.facebook.com/' . WT_PRODUCT_FEED_FB_API_VERSION . "/$fb_catalog_id/check_batch_request_status?handle=$handle&access_token=$access_token&load_ids_of_invalid_requests=1";
 		$batch_status_response			 = wp_remote_get( $batch_status_handle_check_url );
 		$batch_status_response_details	 = wp_remote_retrieve_body( $batch_status_response );
 		$batch_status_response_details	 = json_decode( $batch_status_response_details );
@@ -1271,8 +1271,11 @@ class Webtoffee_Product_Feed_Sync_Admin {
                 global $wpdb;
                 $table_name = $wpdb->prefix.'wt_pf_fbsync_log';
                 $sync_log_exist = true;
-                // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Table existence check; no WP API for SHOW TABLES.
-                if ( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $table_name ) ) !== $table_name ) {
+                static $fbsync_log_table_exists = null;
+                if ( null === $fbsync_log_table_exists ) {
+                    $fbsync_log_table_exists = ( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $table_name ) ) === $table_name ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+                }
+                if ( ! $fbsync_log_table_exists ) {
                     $sync_log_exist = false;
                 }
                 if ( $sync_log_exist ) {
