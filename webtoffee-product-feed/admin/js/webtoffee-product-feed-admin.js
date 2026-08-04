@@ -50,7 +50,7 @@ jQuery( function ()
 		    export_form.find( '.spinner' ).remove();
 		    export_form.find( '.edd-progress' ).remove();
 
-		    jQuery( '#example-basic-p-1' ).html( '<div class="updated notice"><p>Product sync completed.</p></div><br/><div><a target="_blank" class="button" style="margin-left:15px;background:#1877f2;border-color:#1877f2;color:#fff;" href="'+response.catalog+'">Check FB Catalog</a></div>' );		    
+		    jQuery( '#example-basic-p-1' ).html( '<div class="updated notice"><p>'+wt_feed_params.msgs.sync_completed+'</p></div><br/><div><a target="_blank" class="button" style="margin-left:15px;background:#1877f2;border-color:#1877f2;color:#fff;" href="'+response.catalog+'">'+wt_feed_params.msgs.check_fb_catalog+'</a></div>' );
 		    /*
 	setTimeout(function() {
             window.location= response.url;
@@ -68,7 +68,7 @@ jQuery( function ()
 		    } );
 		    		    
 		    console.log(response.products);
-		    jQuery('#found-product-count').html(response.products +' products(including variations) found.');
+		    jQuery('#found-product-count').html(wt_feed_params.msgs.products_found.replace('%s', response.products));
 		    process_step( parseInt( response.step ), data );
 		}
 
@@ -87,8 +87,8 @@ jQuery( function ()
 	transitionEffect: "slideLeft",
 	autoFocus: true,
 	labels: {
-        finish: "Map FB categories and Sync",
-        loading: "Loading ..."
+        finish: wt_feed_params.msgs.finish_label,
+        loading: wt_feed_params.msgs.loading
     },
 	
 
@@ -375,3 +375,5 @@ var wt_fbfeed_notify_msg =
 jQuery( function () {
     wt_fbfeed_history.Set();
 } );
+
+

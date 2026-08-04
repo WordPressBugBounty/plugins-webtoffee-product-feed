@@ -95,7 +95,7 @@ if ( ! function_exists( 'wt_fb_feed_render_categories' ) ) {
                         <label for="cat_mapping_<?php echo esc_attr( $cat->term_id ); ?>"><?php echo esc_html( $par . $cat->name ); ?></label>
                     </th>
                     <td>						
-                        <select id= "cat_mapping_<?php echo esc_attr( $cat->term_id ); ?>" name="map_to[<?php echo esc_attr( $cat->term_id ); ?>]"  class="wc-enhanced-select wt-wc-enhanced-search" placeholder="Search for a category...">
+                        <select id= "cat_mapping_<?php echo esc_attr( $cat->term_id ); ?>" name="map_to[<?php echo esc_attr( $cat->term_id ); ?>]"  class="wc-enhanced-select wt-wc-enhanced-search" placeholder="<?php esc_attr_e( 'Search for a category...', 'webtoffee-product-feed' ); ?>">
                                 <?php //echo wt_fb_feed_category_dropdown(); ?>
                             </select>
                     </td>

@@ -1,3 +1,8 @@
+= 2.4.1 2026-08-04 =
+* [Tweak] - Translation updates.
+* [Compatibility] - Tested OK with WordPress 7.0.2
+* [Compatibility] - Tested OK with WooCommerce 10.9.4
+
 = 2.4.0 2026-06-09 =
 * [Tweak] - Upgraded Facebook Marketing API from v17.0 to v25.0 to address Meta's deprecation deadline for older API versions.
 * [Performance] - Performance improvements by caching cron scheduled checks to remove duplicate DB queries.

@@ -177,7 +177,7 @@ if (!defined('WPINC')) {
 		?>
 		<div class="wt-profeed-name">
 			<?php // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage ?>
-			<div style="float: left"><img src="<?php echo esc_url( WT_PRODUCT_FEED_PLUGIN_URL ); ?>assets/images/gopro/product-feed.svg" alt="featured img" width="36" height="36"></div>
+			<div style="float: left"><img src="<?php echo esc_url( WT_PRODUCT_FEED_PLUGIN_URL ); ?>assets/images/gopro/product-feed.svg" alt="<?php esc_attr_e( 'Featured image', 'webtoffee-product-feed' ); ?>" width="36" height="36"></div>
 			<div style="float: right">
 				<h4 class="wt-profeed-name"><?php esc_html_e('WooCommerce Product Feed & Sync Manager(Pro)', 'webtoffee-product-feed'); ?></h4>				
 			</div>
@@ -198,7 +198,7 @@ if (!defined('WPINC')) {
 		<div class="wt-profeed-bottom-left" style="float:left;width:50%;margin-top: 30px;">
 			<div class="wt-profeed-name-bottom">
 				<?php // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage ?>
-				<div style="float: left"><img src="<?php echo esc_url( WT_PRODUCT_FEED_PLUGIN_URL ); ?>assets/images/gopro/product-feed.svg" alt="featured img" width="36" height="36"></div>
+				<div style="float: left"><img src="<?php echo esc_url( WT_PRODUCT_FEED_PLUGIN_URL ); ?>assets/images/gopro/product-feed.svg" alt="<?php esc_attr_e( 'Featured image', 'webtoffee-product-feed' ); ?>" width="36" height="36"></div>
 				<div style="float: right">
 					<h4 class="wt-profeed-name-bottom"><?php esc_html_e('WooCommerce Product Feed & Sync Manager(Pro)', 'webtoffee-product-feed'); ?></h4>				
 				</div>

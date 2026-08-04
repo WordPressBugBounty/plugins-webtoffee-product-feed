@@ -1,297 +1,929 @@
 <?php
-if ( ! defined( 'WPINC' ) ) {die;
-}
-?>
-<style>
-.wt_card_margin {margin-bottom: 0.0rem;width : 31%;height : 300px;float: left;margin: 10px 150px 20px 15px;}
-.card {margin: 10px 10px 20px 10px;padding-left:px;border: 0;box-shadow: 0px 0px 10px 0px rgba(82, 63, 105, 0.1);-webkit-box-shadow: 0px 0px 10px 0px rgba(82, 63, 105, 0.1);-moz-box-shadow: 0px 0px 10px 0px rgba(82, 63, 105, 0.1);-ms-box-shadow: 0px 0px 10px 0px rgba(82, 63, 105, 0.1);}
-.card {height: 360px;position: relative;display: flex;flex-direction: column;min-width: 0;word-wrap: break-word;background-color: #ffffff;background-clip: border-box;border: 1px solid #e6e4e9;border-radius: 8px;}
-.wt_heading_1{text-align:center;font-style: normal;font-weight: bold;font-size: 82px;}
-.wt_heading_2{text-align:center;font-style: normal;font-weight: normal;font-size: 17px;}
-.wt_widget{padding-left:-100px;}
-.wt_widget .wt_widget_title_wrapper {display: flex;}
-.wt_widget .wt_buttons {display: flex;}
-.wt_widget_column_1 img {width: 60px;height: 60px;}
-.wt_widget_column_1{padding-top:18px;}
-.wt_widget_title_wrapper .wt_widget_column_2{align:top;}
-.wt_widget_column_2{font-size: 15px;text-align: top;padding-left:10px; width:100%;height:100px;}
-.wt_widget_column_3{text-align:left;vertical-align: text-top;position: relative;height:170px;}
-.wt_installed_button{padding-left:10px;width: 100%;}
-.wt_free_button{padding-left:10px;}
-.wt_free_btn_a{}
-.wt_get_premium_btn {text-align:center;padding: 6px 1px 0px 1px;height:25px; width:100%; background: linear-gradient(90.67deg, #2608DF -34.86%, #3284FF 115.74%);box-shadow: 0px 4px 13px rgb(46 80 242 / 39%);border-radius: 5px;display: inline-block;font-style: normal;font-size: 12px;line-height: 18px;color: #FFFFFF;text-decoration: none;}
-.wt_get_premium_btn:hover {box-shadow: 0px 3px 13px rgb(46 80 242 / 50%);text-decoration: none;transform: translateY(2px);transition: all .2s ease;color: #FFFFFF;}
-.wt_installed_btn{height:30px;width:100%; border-style: solid;border-color: #2A2EEA;border-radius: 5px;color: #2A2EEA;}
-.wt_free_btn{height:30px;width:109px; border-style: solid;border-color: #2A2EEA;border-radius: 5px;color: #2A2EEA;cursor: pointer;}
-.wt_free_button.full_width {width: 100%;}
-.wt_free_btn.full_width {width: 100%;}
-</style>
-<div class="wt-pfd-tab-content" data-id="<?php echo esc_attr($target_id);?>">
-    <div class="wt_row"> 
-        <div clas="wt_headings">
-            <h1 class="wt_heading_1"><?php esc_html_e('More Plugins To Make Your Store Stand Out', 'webtoffee-product-feed'); ?></h1>
-            <h2 class="wt_heading_2"><?php esc_html_e('Check out our other plugins that are perfectly suited for WooCommerce store needs.', 'webtoffee-product-feed'); ?></h2> 
-        </div>
-    <div class="wt_column">
-<?php 
+/**
+ * "Other Solutions" admin tab — sidebar categories + card grid layout.
+ *
+ * Ported from wt-woocommerce-related-products' "You May Also Need" template.
+ * Class prefix renamed wt-crp-os-* → wtpf-os-* to keep both plugins collision-free.
+ *
+ * @package WebToffee_Product_Feed
+ */
 
-/* image location for the logos */
-$wt_admin_img_path = WT_PRODUCT_FEED_PLUGIN_URL . 'assets/images/other_solutions';
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals -- Template file; variables are template-scoped, not plugin globals.
+defined( 'WPINC' ) || die;
 
-/* Plugin lists array */
-$plugins=array(
-    'product_feed_sync' => array(
-        'title'         => __('WooCommerce Product Feed & Sync Manager', 'webtoffee-product-feed'),
-        'description'   => __('Generate WooCommerce product feeds for Google Merchant Center and Facebook Business Manager. Use the Facebook catalog sync manager to sync WooCommerce products with Facebook and Instagram shops.', 'webtoffee-product-feed'),
-        'image_url'     => 'product-feed-sync.png',
-        'premium_url'   => 'https://www.webtoffee.com/product/product-catalog-sync-for-facebook/?utm_source=other_solution_page&utm_medium=free_plugin&utm_campaign=WooCommerce_Product_Feed',
-        'basic_url'     => 'https://wordpress.org/plugins/webtoffee-product-feed/',
-        'pro_plugin'    => 'webtoffee-product-feed-pro/webtoffee-product-feed-pro.php',
-        'basic_plugin'  => 'webtoffee-product-feed/webtoffee-product-feed.php',
-    ),
-    'request_quote' => array(
-        'title'         => __('Woocommerce Request a Quote', 'webtoffee-product-feed'),
-        'description'   => __('Configure a fully optimized WooCommerce quote request set up in your store. Allow customers to request quotes and store managers to respond to them. Hide product prices, set up email alerts, and more.', 'webtoffee-product-feed'),
-        'image_url'     => 'request-quote.png',
-        'premium_url'   => 'https://www.webtoffee.com/product/woocommerce-request-a-quote/?utm_source=other_solution_page&utm_medium=free_plugin&utm_campaign=Request_Quote',
-        'basic_url'     => '',
-        'pro_plugin'    => 'wt-woo-request-quote/wt-woo-request-quote.php',
-        'basic_plugin'  => '',
-    ),
-    'giftcards_plugin' => array(
-        'title'         => __('WooCommerce Gift Cards', 'webtoffee-product-feed'),
-        'description'   => __('Create and manage advanced gift cards for WooCommerce stores. Enable your customers to buy, redeem, and share gift cards from your store.', 'webtoffee-product-feed'),
-        'image_url'     => 'giftcards_plugin.png',
-        'premium_url'   => 'https://www.webtoffee.com/product/woocommerce-gift-cards/?utm_source=other_solution_page&utm_medium=free_plugin&utm_campaign=WooCommerce_Gift_Cards',
-        'basic_url'     => 'https://wordpress.org/plugins/wt-gift-cards-woocommerce/',
-        'pro_plugin'    => 'wt-woocommerce-gift-cards/wt-woocommerce-gift-cards.php',
-        'basic_plugin'  => 'wt-gift-cards-woocommerce/wt-gift-cards-woocommerce.php', 
-    ),
-    'fbt_plugins' => array(
-        'title'         => __('Frequently Bought Together for WooCommerce', 'webtoffee-product-feed'),
-        'description'   => __('Boost the visibility of the products by displaying them as ‘Frequently bought together’ items in your store. You may also set up discounts for Frequently Bought Together bundles with this plugin.', 'webtoffee-product-feed'),
-        'image_url'     => 'fbt_plugin.png',
-        'premium_url'   => 'https://www.webtoffee.com/product/woocommerce-frequently-bought-together/?utm_source=other_solution_page&utm_medium=free_plugin&utm_campaign=Frequently_Bought_Together',
-        'basic_url'     => '',
-        'pro_plugin'    => 'wt-frequently-bought-together/wt-frequently-bought-together.php',
-        'basic_plugin'  => '', 
-    ),
-    'product_recommendations' => array(
-        'title'         => __('WooCommerce Product Recommendations', 'webtoffee-product-feed'),
-        'description'   => __('Generate Intelligent Product Recommendations For Your WooCommerce Store. Offer WooCommerce smart product recommendations to your customers & maximize the average cart value.', 'webtoffee-product-feed'),
-        'image_url'     => 'product-recommendation.png',
-        'premium_url'   => 'https://www.webtoffee.com/product/woocommerce-product-recommendations/?utm_source=other_solution_page&utm_medium=free_plugin&utm_campaign=Product_Recommendations',
-        'basic_url'     => '',
-        'pro_plugin'    => 'wt-woocommerce-product-recommendations/wt-woocommerce-product-recommendations.php',
-        'basic_plugin'  => '', 
-    ),    
-    'product_import_export_plugin' => array(
-        'title'         => __('Product Import Export Plugin For WooCommerce', 'webtoffee-product-feed'),
-        'description'   => __('Seamlessly import/export your WooCommerce products including simple, variable, custom products and subscriptions. You may also import and export product images, tags, categories, reviews, and ratings.', 'webtoffee-product-feed'),
-        'image_url'     => 'product-import-export-plugin.png',
-        'premium_url'   => 'https://www.webtoffee.com/product/product-import-export-woocommerce/?utm_source=other_solution_page&utm_medium=free_plugin&utm_campaign=Product_Import_Export',
-        'basic_url'     => 'https://wordpress.org/plugins/product-import-export-for-woo/',
-        'pro_plugin'    => 'wt-import-export-for-woo-product/wt-import-export-for-woo-product.php',
-        'basic_plugin'  => 'product-import-export-for-woo/product-import-export-for-woo.php',
-    ),
-    'customers_import_export_plugin' => array(
-        'title'         => __('WordPress Users & WooCommerce Customers Import Export', 'webtoffee-product-feed'),
-        'description'   => __('Easily import and export your WordPress users and WooCommerce customers using the Import Export plugin for WooCommerce. The plugin supports the use of CSV, XML, TSV, XLS, and XLSX file formats.', 'webtoffee-product-feed'),
-        'image_url'     => 'user-import-export-plugin.png',
-        'premium_url'   => 'https://www.webtoffee.com/product/wordpress-users-woocommerce-customers-import-export/?utm_source=other_solution_page&utm_medium=free_plugin&utm_campaign=User_Import_Export',
-        'basic_url'     => 'https://wordpress.org/plugins/users-customers-import-export-for-wp-woocommerce/',
-        'pro_plugin'    => 'wt-import-export-for-woo-user/wt-import-export-for-woo-user.php',
-        'basic_plugin'  => 'users-customers-import-export-for-wp-woocommerce/users-customers-import-export-for-wp-woocommerce.php',
-    ),
-    'order_import_export_plugin' => array(
-        'title'         => __('Order, Coupon, Subscription Export Import for WooCommerce', 'webtoffee-product-feed'),
-        'description'   => __('Export and Import your WooCommerce orders, subscriptions, and discount coupons using a single Import Export plugin. You may customize the export and import files with advanced filters and settings.', 'webtoffee-product-feed'),
-        'image_url'     => 'order-import-export-plugin.png',
-        'premium_url'   => 'https://www.webtoffee.com/product/order-import-export-plugin-for-woocommerce/?utm_source=other_solution_page&utm_medium=free_plugin&utm_campaign=Order_Import_Export',
-        'basic_url'     => 'https://wordpress.org/plugins/order-import-export-for-woocommerce/',
-        'pro_plugin'    => 'wt-import-export-for-woo-order/wt-import-export-for-woo-order.php',
-        'basic_plugin'  => 'order-import-export-for-woocommerce/order-import-export-for-woocommerce.php',
-    ),
-    'import_export_suit' => array(
-        'title'         => __('Import Export Suite for WooCommerce', 'webtoffee-product-feed'),
-        'description'   => __('An all-in-one plugin to import and export WooCommerce store data. You can import and export products, product reviews, orders, customers, discount coupons, and subscriptions using this single plugin.', 'webtoffee-product-feed'),
-        'image_url'     => 'suite-1-plugin.png',
-        'premium_url'   => 'https://www.webtoffee.com/product/woocommerce-import-export-suite/?utm_source=other_solution_page&utm_medium=free_plugin&utm_campaign=Import_Export_Suite',
-        'basic_url'     => '',
-        'pro_plugin'    => array(
-            'product'   => 'wt-import-export-for-woo-product/wt-import-export-for-woo-product.php',
-            'user'      => 'wt-import-export-for-woo-user/wt-import-export-for-woo-user.php',
-            'order'     => 'wt-import-export-for-woo-order/wt-import-export-for-woo-order.php',
-            ),
-        'basic_plugin'  => '', 
-    ),
-    'smart_coupons_plugin' => array(
-        'title'         => __('Smart Coupons for WooCommerce', 'webtoffee-product-feed'),
-        'description'   => __('Create coupons to offer discounts and free products to your customers with Smart Coupons for WooCommerce. You can set up BOGO coupons, giveaways, gift cards, store credits, and more with this plugin.', 'webtoffee-product-feed'),
-        'image_url'     => 'smart-coupons-plugin.png',
-        'premium_url'   => 'https://www.webtoffee.com/product/smart-coupons-for-woocommerce/?utm_source=other_solution_page&utm_medium=free_plugin&utm_campaign=smart_coupons',
-        'basic_url'     => 'https://wordpress.org/plugins/wt-smart-coupons-for-woocommerce/',
-        'pro_plugin'    => 'wt-smart-coupon-pro/wt-smart-coupon-pro.php',
-        'basic_plugin'  => 'wt-smart-coupon/wt-smart-coupon.php',
-    ),
-    'url_coupons_plugin' => array(
-        'title'         => __('URL Coupons for WooCommerce', 'webtoffee-product-feed'),
-        'description'   => __('Generate custom URLs and QR codes for every discount coupon in your WooCommerce store. These unique coupons are easy to share and can even be set to add new products to the cart upon application.', 'webtoffee-product-feed'),
-        'image_url'     => 'url-coupons-plugin.png',
-        'premium_url'   => 'https://www.webtoffee.com/product/url-coupons-for-woocommerce/?utm_source=other_solution_page&utm_medium=free_plugin&utm_campaign=URL_Coupons',
-        'basic_url'     => '',
-        'pro_plugin'    => 'wt-woocommerce-gift-cards/wt-woocommerce-gift-cards.php',
-        'basic_plugin'  => '', 
-    ),
-    'sequential_order_plugin' => array(
-        'title' => __('Sequential Order Numbers for WooCommerce', 'webtoffee-product-feed'),
-        'description' => __('Number your WooCommerce orders in a custom, sequential & manageable format. The Sequential Order Number plugin lets your orders follow a custom & unique numbering sequence suitable for your business.', 'webtoffee-product-feed'),
-        'image_url' => 'Sequential-order-number-plugin.png',
-        'premium_url' => 'https://www.webtoffee.com/product/woocommerce-sequential-order-numbers/?utm_source=other_solution_page&utm_medium=free_plugin&utm_campaign=Sequential_Order_Numbers',
-        'basic_url' => 'https://wordpress.org/plugins/wt-woocommerce-sequential-order-numbers/',
-        'pro_plugin' => 'wt-woocommerce-sequential-order-numbers-pro/wt-advanced-order-number-pro.php',
-        'basic_plugin' => 'wt-woocommerce-sequential-order-numbers/wt-advanced-order-number.php',
-    ),
-	'wt_ipc_addon' => array(
-        'title'         => __('WooCommerce PDF Invoices, Packing Slips and Credit Notes', 'webtoffee-product-feed'),
-        'description'   => __('Easily generate & print fully customized PDF Invoices, Packing Slips, and Credit Notes for your orders. Automatically send the documents to the recipients by attaching them to the order status emails.', 'webtoffee-product-feed'),
-        'image_url'     => 'wt_ipc_logo.png',
-        'premium_url'   => 'https://www.webtoffee.com/product/woocommerce-pdf-invoices-packing-slips/?utm_source=other_solution_page&utm_medium=free_plugin&utm_campaign=PDF_invoice',
-        'basic_url'     => '',
-        'pro_plugin'    => 'wt-woocommerce-invoice-addon/wt-woocommerce-invoice-addon.php',
-        'basic_plugin'  => '',
-    ),
-    'wt_sdd_addon' => array(
-        'title'         => __('WooCommerce Shipping Labels, Dispatch Labels and Delivery Notes', 'webtoffee-product-feed'),
-        'description'   => __('Automatically generate WooCommerce Shipping Labels, Dispatch Labels, and Delivery Notes with custom settings and layouts. Customize the label sizes and add extra product or order fields as required.', 'webtoffee-product-feed'),
-        'image_url'     => 'wt_sdd_logo.png',
-        'premium_url'   => 'https://www.webtoffee.com/product/woocommerce-shipping-labels-delivery-notes/?utm_source=other_solution_page&utm_medium=free_plugin&utm_campaign=Shipping_Label',
-        'basic_url'     => '',
-        'pro_plugin'    => 'wt-woocommerce-shippinglabel-addon/wt-woocommerce-shippinglabel-addon.php',
-        'basic_plugin'  => '',
-    ),
-    'wt_pl_addon' => array(
-        'title'         => __('WooCommerce Picklists', 'webtoffee-product-feed'),
-        'description'   => __('Customize, generate and print WooCommerce picklists for all orders on your store and automatically attach them to the order status emails. Add product variation data and other fields to the document.', 'webtoffee-product-feed'),
-        'image_url'     => 'wt_pl_logo.png',
-        'premium_url'   => 'https://www.webtoffee.com/product/woocommerce-picklist/?utm_source=other_solution_page&utm_medium=free_plugin&utm_campaign=Picklist',
-        'basic_url'     => '',
-        'pro_plugin'    => 'wt-woocommerce-picklist-addon/wt-woocommerce-picklist-addon.php',
-        'basic_plugin'  => '',
-    ),
-    'wt_pi_addon' => array(
-        'title'         => __('WooCommerce Proforma Invoices', 'webtoffee-product-feed'),
-        'description'   => __('Automate the generation of WooCommerce proforma invoices when new orders are placed and send them to your customers via order emails. Customize the layout and content of the invoice as per your needs.', 'webtoffee-product-feed'),
-        'image_url'     => 'wt_pi_logo.png',
-        'premium_url'   => 'https://www.webtoffee.com/product/woocommerce-proforma-invoice/?utm_source=other_solution_page&utm_medium=free_plugin&utm_campaign=Proforma_Invoice',
-        'basic_url'     => '',
-        'pro_plugin'    => 'wt-woocommerce-proforma-addon/wt-woocommerce-proforma-addon.php',
-        'basic_plugin'  => '',
-    ),
-    'wt_al_addon' => array(
-        'title'         => __('WooCommerce Address Labels', 'webtoffee-product-feed'),
-        'description'   => __('Generate address labels for all orders in your store and easily print them in bulk. Customize the label layout and create labels of different types (shipping, billing, return, from address) with ease.', 'webtoffee-product-feed'),
-        'image_url'     => 'wt_al_logo.png',
-        'premium_url'   => 'https://www.webtoffee.com/product/woocommerce-address-label/?utm_source=other_solution_page&utm_medium=free_plugin&utm_campaign=Address_Label',
-        'basic_url'     => '',
-        'pro_plugin'    => 'wt-woocommerce-addresslabel-addon/wt-woocommerce-addresslabel-addon.php',
-        'basic_plugin'  => '',
-    ),	
-    'backup_and_migration_plugin' => array(
-        'title' => __('WordPress Backup and Migration', 'webtoffee-product-feed'),
-        'description' => __('A complete WordPress backup and migration plugin to easily back up and migrate your WordPress website and database. This fast and flexible backup solution makes creating and restoring backups easy.', 'webtoffee-product-feed'),
-        'image_url' => 'WordPress-backup-and-migration-plugin.png',
-        'premium_url' => '',
-        'basic_url' => 'https://wordpress.org/plugins/wp-migration-duplicator/',
-        'pro_plugin' => 'wp-migration-duplicator-pro/wp-migration-duplicator-pro.php',
-        'basic_plugin' => 'wp-migration-duplicator/wp-migration-duplicator.php',
-    ),
-    'gdpr_cookie_consent_plugin' => array(
-        'title'         => __('CookieYes – Cookie Banner for Cookie Consent (Easy to setup GDPR/CCPA Compliant Cookie Notice)', 'webtoffee-product-feed'),
-        'description'   => __('The plugin helps you get compliant with GDPR, CCPA, and other major cookie laws. You can create and manage cookie consent banners, scan website cookies, and generate cookie policies with this plugin.','webtoffee-product-feed'),
-        'image_url'     => 'gdpr-cookie-concent-plugin.png',
-        'premium_url'   => 'https://www.webtoffee.com/product/gdpr-cookie-consent/?utm_source=other_solution_page&utm_medium=_free_plugin_&utm_campaign=GDPR',
-        'basic_url'     => 'https://wordpress.org/plugins/cookie-law-info/',
-        'pro_plugin'    => 'webtoffee-gdpr-cookie-consent/cookie-law-info.php',
-        'basic_plugin'  => 'cookie-law-info/cookie-law-info.php', 
-    ),    
+$wtpf_img_base = esc_url( WT_PRODUCT_FEED_PLUGIN_URL . 'assets/images/other_solutions' );
+
+$wtpf_categories = array(
+	'ecommerce-promotions' => array(
+		'label'      => __( 'E-commerce Promotions', 'webtoffee-product-feed' ),
+		'subtitle'   => __( 'Create and run successful promotional campaigns with the best marketing tools for WooCommerce', 'webtoffee-product-feed' ),
+		'icon'       => 'sidebar-ecommerce-promotions.svg',
+		'hero'       => null,
+		'plugins'    => array(
+			array(
+				'type'     => 'standard',
+				'name'     => __( 'Smart Coupons for WooCommerce', 'webtoffee-product-feed' ),
+				'icon'     => 'smart-coupons-plugin.png',
+				'rating'   => '4.9',
+				'features' => array(
+					__( 'Advanced BOGO Coupons', 'webtoffee-product-feed' ),
+					__( 'Offer store credits', 'webtoffee-product-feed' ),
+					__( 'Create attractive gift cards', 'webtoffee-product-feed' ),
+					__( 'Give away product coupons', 'webtoffee-product-feed' ),
+					__( 'Coupons based on past purchases', 'webtoffee-product-feed' ),
+					__( 'Restrict coupons by country', 'webtoffee-product-feed' ),
+					__( 'Create and offer sign-up discount coupons', 'webtoffee-product-feed' ),
+					__( 'Cart abandonment coupons', 'webtoffee-product-feed' ),
+					__( 'Customizable countdown sales banner', 'webtoffee-product-feed' ),
+					__( 'Bulk generate coupons', 'webtoffee-product-feed' ),
+					__( 'Import and export coupons', 'webtoffee-product-feed' ),
+					__( 'Coupon embeds', 'webtoffee-product-feed' ),
+					__( 'Allow coupon combinations', 'webtoffee-product-feed' ),
+				),
+				'url'      => 'https://www.webtoffee.com/product/smart-coupons-for-woocommerce/?utm_source=other_solution_page&utm_medium=free_plugin_product_feed&utm_campaign=smart_coupons',
+			),
+			array(
+				'type'     => 'standard',
+				'name'     => __( 'URL Coupons for WooCommerce', 'webtoffee-product-feed' ),
+				'icon'     => 'url-coupons-plugin.png',
+				'rating'   => '5.0',
+				'features' => array(
+					__( 'Generate custom coupon URLs', 'webtoffee-product-feed' ),
+					__( 'Set up a redirect page', 'webtoffee-product-feed' ),
+					__( 'Automatically add products', 'webtoffee-product-feed' ),
+					__( 'Create QR code coupons', 'webtoffee-product-feed' ),
+				),
+				'url'      => 'https://www.webtoffee.com/product/url-coupons-for-woocommerce/?utm_source=other_solution_page&utm_medium=free_plugin_product_feed&utm_campaign=URL_Coupons',
+			),
+			array(
+				'type'     => 'standard',
+				'name'     => __( 'WooCommerce Product Recommendations', 'webtoffee-product-feed' ),
+				'icon'     => 'product-recommendation-plugin.png',
+				'rating'   => '5.0',
+				'features' => array(
+					__( 'Automatically generate suggestions based on order history', 'webtoffee-product-feed' ),
+					__( 'Display recommended products on the product pages', 'webtoffee-product-feed' ),
+					__( 'Quick setup page to add & edit recommendations', 'webtoffee-product-feed' ),
+					__( 'Multiple product recommendation layouts', 'webtoffee-product-feed' ),
+					__( 'Set up discounts on the recommended product bundle', 'webtoffee-product-feed' ),
+					__( 'Manually create a bought-together list', 'webtoffee-product-feed' ),
+					__( 'Use upsells, cross-sells, & related products as frequently bought products', 'webtoffee-product-feed' ),
+					__( 'Customize the title, button, and label texts', 'webtoffee-product-feed' ),
+					__( 'Customize the display of the recommended products', 'webtoffee-product-feed' ),
+				),
+				'url'      => 'https://www.webtoffee.com/product/woocommerce-product-recommendations/?utm_source=other_solution_page&utm_medium=free_plugin_product_feed&utm_campaign=Product_Recommendations',
+			),
+			array(
+				'type'     => 'standard',
+				'name'     => __( 'WooCommerce Coupon Generator', 'webtoffee-product-feed' ),
+				'icon'     => 'coupon-generator-plugin.png',
+				'rating'   => '5.0',
+				'features' => array(
+					__( 'Bulk generate WooCommerce coupons', 'webtoffee-product-feed' ),
+					__( 'Bulk export WooCommerce coupons to CSV', 'webtoffee-product-feed' ),
+					__( 'Add usage restrictions to coupons', 'webtoffee-product-feed' ),
+				),
+				'url'      => 'https://www.webtoffee.com/product/woocommerce-coupon-generator/?utm_source=other_solution_page&utm_medium=free_plugin_product_feed&utm_campaign=Coupon_Generator',
+			),
+			array(
+				'type'        => 'standard-with-image',
+				'name'        => __( 'WooCommerce Gift Cards', 'webtoffee-product-feed' ),
+				'icon'        => 'gift-card-plugin.png',
+				'rating'      => 'stars',
+				'features'    => array(
+					__( 'Create unlimited gift cards', 'webtoffee-product-feed' ),
+					__( 'Email gift cards to customers', 'webtoffee-product-feed' ),
+					__( 'Provide refunds to store credit', 'webtoffee-product-feed' ),
+					__( '20+ predefined gift card templates', 'webtoffee-product-feed' ),
+					__( 'Category wise template listing', 'webtoffee-product-feed' ),
+					__( 'Add custom templates for gift cards', 'webtoffee-product-feed' ),
+					__( 'Generate gift cards based on order status', 'webtoffee-product-feed' ),
+					__( 'Manage user credit balance', 'webtoffee-product-feed' ),
+					__( 'Fixed and custom gift card amounts', 'webtoffee-product-feed' ),
+					__( 'Add usage restrictions for gift cards', 'webtoffee-product-feed' ),
+				),
+				'url'         => 'https://www.webtoffee.com/product/woocommerce-gift-cards/?utm_source=other_solution_page&utm_medium=free_plugin_product_feed&utm_campaign=WooCommerce_Gift_Cards',
+				'image_src'   => 'woocommerce-giftcard-hero.svg',
+				'card_class'  => 'wtpf-os-card--gift-cards',
+				'plugin_file' => 'wt-woocommerce-gift-cards/wt-woocommerce-gift-cards.php',
+			),
+		),
+		'standalone' => array(
+			'name'        => __( 'ECommerce Marketing Automation App', 'webtoffee-product-feed' ),
+			'icon'        => 'ema-app-plugin.png',
+			'desc'        => __( 'Create signup forms, popups, and automated email campaigns with pre-built workflow templates to capture leads, recover abandoned carts, and grow sales.', 'webtoffee-product-feed' ),
+			'screenshot'  => 'ema-screenshot.svg',
+			'url'         => 'https://www.webtoffee.com/product/ecommerce-marketing-automation/?utm_source=other_solution_page&utm_medium=free_plugin_product_feed&utm_campaign=EMA',
+			'plugin_file' => 'ecommerce-marketing-automation/ecommerce-marketing-automation.php',
+		),
+		'bundle'     => array(
+			'tag_emoji'    => '📣',
+			'tag_color'    => 'yellow',
+			'tag'          => __( 'Promotion Bundle', 'webtoffee-product-feed' ),
+			'title'        => __( 'WooCommerce Promotion Bundle', 'webtoffee-product-feed' ),
+			'url'          => 'https://www.webtoffee.com/woocommerce-promotions/?utm_source=other_solution_page&utm_medium=free_plugin_product_feed&utm_campaign=Promotion_Bundle',
+			'desc'         => __( 'Make powerful promotional campaigns with our WooCommerce promotion bundle. Create coupon promotions, set up gift cards, and implement popular product recommendation strategies.', 'webtoffee-product-feed' ),
+			'pills'        => array(
+				__( 'Smart Coupons', 'webtoffee-product-feed' ),
+				__( 'Product recommendation', 'webtoffee-product-feed' ),
+				__( 'Gift cards', 'webtoffee-product-feed' ),
+			),
+			'price_orig'   => '$277',
+			'price_sale'   => '$194',
+			'savings'      => __( 'Save up to 30% off', 'webtoffee-product-feed' ),
+			'illustration' => 'woocommerce-promotion-bundle-hero.svg',
+		),
+	),
+	'privacy-compliance'   => array(
+		'label'      => __( 'Privacy Compliance', 'webtoffee-product-feed' ),
+		'subtitle'   => __( 'Ensure compliance with major cookie laws, including, GDPR, CCPA, LGPD, CNIL, and more', 'webtoffee-product-feed' ),
+		'icon'       => 'sidebar-privacy-compliance.svg',
+		'hero'       => array(
+			'name'        => __( 'GDPR Cookie Consent Plugin (CCPA Ready)', 'webtoffee-product-feed' ),
+			'icon'        => 'gdpr-plugin.png',
+			'rating'      => 'stars',
+			'image'       => 'cookie-consent.svg',
+			'desc'        => __( 'This Google-certified CMP lets you create a customizable cookie banner, manage user consent, and ensure global privacy compliance with automatic script blocking.', 'webtoffee-product-feed' ),
+			'features'    => array(),
+			'url'         => 'https://www.webtoffee.com/product/gdpr-cookie-consent/?utm_source=other_solution_page&utm_medium=free_plugin_product_feed&utm_campaign=GDPR',
+			'plugin_file' => 'webtoffee-cookie-consent/webtoffee-cookie-consent.php',
+		),
+		'plugins'    => array(
+			array(
+				'type'        => 'standard-with-image',
+				'name'        => __( 'EU Order Withdrawal Button Plugin for WooCommerce', 'webtoffee-product-feed' ),
+				'icon'        => 'eu-withdrawal-plugin-icon.svg',
+				'rating'      => 'stars',
+				'features'    => array(
+					__( 'Add "Request Withdrawal" button to WooCommerce', 'webtoffee-product-feed' ),
+					__( 'Supports guest withdrawal option', 'webtoffee-product-feed' ),
+					__( 'Two-step confirmation to prevent errors', 'webtoffee-product-feed' ),
+					__( 'Full or partial order withdrawal support', 'webtoffee-product-feed' ),
+					__( 'Dedicated admin dashboard for all requests', 'webtoffee-product-feed' ),
+					__( 'Send email confirmation to customers', 'webtoffee-product-feed' ),
+				),
+				'url'         => 'https://www.webtoffee.com/product/eu-withdrawal-button/?utm_source=other_solution_page&utm_medium=free_plugin&utm_campaign=EU_Withdarawal_Button',
+				'image_src'   => 'eu-withdrawal-hero.svg',
+				'card_class'  => 'wtpf-os-card--full-width',
+				'plugin_file' => 'wt-eu-withdrawal-button/wt-eu-withdrawal-button.php',
+			),
+		),
+		'standalone' => null,
+		'bundle'     => null,
+	),
+	'data-import-export'   => array(
+		'label'      => __( 'Data Import & Export', 'webtoffee-product-feed' ),
+		'subtitle'   => __( 'The best-in-class import, export, and migration solutions for your WooCommerce data', 'webtoffee-product-feed' ),
+		'icon'       => 'sidebar-data-import-export.svg',
+		'hero'       => null,
+
+		// Product Feed & Sync Manager is intentionally omitted here — this is the free
+		// version of that product; we don't cross-sell ourselves on our own page.
+		'plugins'    => array(
+			array(
+				'type'        => 'standard',
+				'name'        => __( 'Product Import Export Plugin', 'webtoffee-product-feed' ),
+				'icon'        => 'product-ie-plugin.png',
+				'rating'      => '4.9',
+				'features'    => array(
+					__( 'Supports Excel, XML, CSV, and TSV file formats', 'webtoffee-product-feed' ),
+					__( 'Schedule automated import and export', 'webtoffee-product-feed' ),
+					__( 'Support for multiple product types', 'webtoffee-product-feed' ),
+					__( 'Export product images in a separate zip file', 'webtoffee-product-feed' ),
+					__( 'Import from URL, Google Sheets, FTP/SFTP', 'webtoffee-product-feed' ),
+					__( 'Export to FTP/SFTP', 'webtoffee-product-feed' ),
+					__( 'Advanced filters and customizations for import and export', 'webtoffee-product-feed' ),
+					__( 'Add and update data while importing', 'webtoffee-product-feed' ),
+					__( 'Maintains action history and debug logs', 'webtoffee-product-feed' ),
+					__( 'Compatible with major 3rd-party plugins', 'webtoffee-product-feed' ),
+				),
+				'url'         => 'https://www.webtoffee.com/product/product-import-export-woocommerce/?utm_source=other_solution_page&utm_medium=free_plugin_product_feed&utm_campaign=Product_Import_Export',
+				'plugin_file' => 'product-import-export-for-woo/product-import-export-for-woo.php',
+			),
+			array(
+				'type'        => 'standard',
+				'name'        => __( 'Order, Coupon, Subscription Export Import', 'webtoffee-product-feed' ),
+				'icon'        => 'order-ie-plugin.png',
+				'rating'      => '4.6',
+				'features'    => array(
+					__( 'Supports Excel, XML, CSV, and TSV file formats', 'webtoffee-product-feed' ),
+					__( 'Schedule automated import & export', 'webtoffee-product-feed' ),
+					__( 'Email customers on order status change', 'webtoffee-product-feed' ),
+					__( 'Create users on order import', 'webtoffee-product-feed' ),
+					__( 'Filter export by products, order status, email, date, etc', 'webtoffee-product-feed' ),
+					__( 'Import from URL, Google Sheets, FTP/SFTP', 'webtoffee-product-feed' ),
+					__( 'Export to FTP/SFTP', 'webtoffee-product-feed' ),
+					__( 'Advanced filters and customizations for import & export', 'webtoffee-product-feed' ),
+					__( 'Add & update data while importing', 'webtoffee-product-feed' ),
+					__( 'Maintains action history and debug logs', 'webtoffee-product-feed' ),
+					__( 'Compatible with major 3rd-party plugins', 'webtoffee-product-feed' ),
+				),
+				'url'         => 'https://www.webtoffee.com/product/order-import-export-plugin-for-woocommerce/?utm_source=other_solution_page&utm_medium=free_plugin_product_feed&utm_campaign=Order_Import_Export',
+				'plugin_file' => 'order-import-export-for-woocommerce/order-import-export-for-woocommerce.php',
+			),
+			array(
+				'type'        => 'standard',
+				'name'        => __( 'User Import Export Plugin', 'webtoffee-product-feed' ),
+				'icon'        => 'user-ie-plugin.png',
+				'rating'      => '5.0',
+				'features'    => array(
+					__( 'Supports Excel, XML, CSV, and TSV file formats', 'webtoffee-product-feed' ),
+					__( 'Schedule automated import and export', 'webtoffee-product-feed' ),
+					__( 'Customize and send emails to new users on import', 'webtoffee-product-feed' ),
+					__( 'Retain user passwords on import/export', 'webtoffee-product-feed' ),
+					__( 'Export and import custom fields and third-party plugin fields', 'webtoffee-product-feed' ),
+					__( 'Filter by user role, email, date, etc', 'webtoffee-product-feed' ),
+					__( 'Import from URL, Google Sheets, FTP/SFTP', 'webtoffee-product-feed' ),
+					__( 'Export to FTP/SFTP', 'webtoffee-product-feed' ),
+					__( 'Advanced filters and customizations for import & export', 'webtoffee-product-feed' ),
+					__( 'Add & update data while importing', 'webtoffee-product-feed' ),
+					__( 'Maintains action history and debug logs', 'webtoffee-product-feed' ),
+					__( 'Compatible with major 3rd-party plugins', 'webtoffee-product-feed' ),
+				),
+				'url'         => 'https://www.webtoffee.com/product/wordpress-users-woocommerce-customers-import-export/?utm_source=other_solution_page&utm_medium=free_plugin_product_feed&utm_campaign=User_Import_Export',
+				'plugin_file' => 'users-customers-import-export-for-wp-woocommerce/users-customers-import-export-for-wp-woocommerce.php',
+			),
+			array(
+				'type'       => 'standard-with-image',
+				'name'       => __( 'Import Export Suite for WooCommerce', 'webtoffee-product-feed' ),
+				'icon'       => 'ie-suite-plugin.png',
+				'rating'     => 'stars',
+				'features'   => array(
+					__( 'Import/export Products, Orders, Subscriptions, Coupons, Customers, WordPress Users, Categories & Tags, Reviews', 'webtoffee-product-feed' ),
+					__( 'Supports Excel, XML, CSV, and TSV file formats', 'webtoffee-product-feed' ),
+					__( 'Schedule automated import & export', 'webtoffee-product-feed' ),
+					__( 'Import from URL, Google Sheets, FTP/SFTP', 'webtoffee-product-feed' ),
+					__( 'Export to FTP/SFTP', 'webtoffee-product-feed' ),
+					__( 'Import & export custom fields and values', 'webtoffee-product-feed' ),
+					__( 'Advanced filters and customizations for import & export', 'webtoffee-product-feed' ),
+					__( 'Add and update data while importing', 'webtoffee-product-feed' ),
+					__( 'Maintains action history and debug logs', 'webtoffee-product-feed' ),
+					__( 'Compatible with major 3rd-party plugins', 'webtoffee-product-feed' ),
+				),
+				'url'        => 'https://www.webtoffee.com/product/woocommerce-import-export-suite/?utm_source=other_solution_page&utm_medium=free_plugin_product_feed&utm_campaign=Import_Export_Suite',
+				'image_src'  => 'data-io-illustration.svg',
+				'card_class' => 'wtpf-os-card--ie-suite',
+			),
+		),
+		'standalone' => null,
+		'bundle'     => null,
+	),
+	'accounting-invoicing' => array(
+		'label'      => __( 'Accounting & Invoicing', 'webtoffee-product-feed' ),
+		'subtitle'   => __( 'Automatically generate professional WooCommerce invoices and documents for all your orders', 'webtoffee-product-feed' ),
+		'icon'       => 'sidebar-accounting-invoicing.svg',
+		'hero'       => array(
+			'name'        => __( 'PDF Invoices, Packing Slips, & Credit Notes', 'webtoffee-product-feed' ),
+			'icon'        => 'pdf-invoices-plugin.png',
+			'rating'      => 'stars',
+			'pdf_cluster' => true,
+			'desc'        => __( 'Automatically generate, customize, and manage professional WooCommerce PDF invoices, packing slips, and credit notes with advanced automation and tax compliance features.', 'webtoffee-product-feed' ),
+			'features'    => array(),
+			'url'         => 'https://www.webtoffee.com/product/woocommerce-pdf-invoices-packing-slips/?utm_source=other_solution_page&utm_medium=free_plugin_product_feed&utm_campaign=PDF_invoice',
+		),
+		'plugins'    => array(
+			array(
+				'type'     => 'standard',
+				'name'     => __( 'Shipping Labels, Dispatch Labels, & Delivery Notes', 'webtoffee-product-feed' ),
+				'icon'     => 'shipping-labels-plugin.png',
+				'rating'   => '5.0',
+				'features' => array(
+					__( 'Create delivery notes, shipping & dispatch labels', 'webtoffee-product-feed' ),
+					__( 'Enable customers to print the documents from order emails', 'webtoffee-product-feed' ),
+					__( 'Customize shipping label size', 'webtoffee-product-feed' ),
+					__( 'Add multiple shipping labels on one page', 'webtoffee-product-feed' ),
+					__( 'Show product variation data', 'webtoffee-product-feed' ),
+					__( 'Add extra product & order data fields', 'webtoffee-product-feed' ),
+					__( 'Pre-built layouts & customizable templates', 'webtoffee-product-feed' ),
+					__( 'Group products by \'Category\'', 'webtoffee-product-feed' ),
+					__( 'Sort products based on Name or SKU', 'webtoffee-product-feed' ),
+					__( 'Multilingual support', 'webtoffee-product-feed' ),
+				),
+				'url'      => 'https://www.webtoffee.com/product/woocommerce-shipping-labels-delivery-notes/?utm_source=other_solution_page&utm_medium=free_plugin_product_feed&utm_campaign=Shipping_Label',
+			),
+			array(
+				'type'     => 'standard',
+				'name'     => __( 'WooCommerce Picklists plugin', 'webtoffee-product-feed' ),
+				'icon'     => 'picklists-plugin.png',
+				'rating'   => '4.0',
+				'features' => array(
+					__( 'Bulk print picklists from the admin order page', 'webtoffee-product-feed' ),
+					__( 'Automatically email picklists based on order status', 'webtoffee-product-feed' ),
+					__( 'Create or customize picklist templates', 'webtoffee-product-feed' ),
+					__( 'Show product variation data', 'webtoffee-product-feed' ),
+					__( 'Group products in picklist by order/category', 'webtoffee-product-feed' ),
+					__( 'Add product meta fields & attributes', 'webtoffee-product-feed' ),
+					__( 'Exclude virtual products from picklists', 'webtoffee-product-feed' ),
+					__( 'Multilingual support', 'webtoffee-product-feed' ),
+				),
+				'url'      => 'https://www.webtoffee.com/product/woocommerce-picklist/?utm_source=other_solution_page&utm_medium=free_plugin_product_feed&utm_campaign=Picklist',
+			),
+			array(
+				'type'     => 'standard',
+				'name'     => __( 'Customizer for WooCommerce PDF Invoices', 'webtoffee-product-feed' ),
+				'icon'     => 'pdf-customizer-plugin.png',
+				'rating'   => '5.0',
+				'features' => array(
+					__( 'Drag-and-drop easy customization', 'webtoffee-product-feed' ),
+					__( 'Advanced visual and code editor', 'webtoffee-product-feed' ),
+					__( 'Easy invoice layout customization', 'webtoffee-product-feed' ),
+					__( 'Customize individual elements using block editors', 'webtoffee-product-feed' ),
+					__( 'View live preview of customization', 'webtoffee-product-feed' ),
+					__( 'Change color, text, background, border & more', 'webtoffee-product-feed' ),
+				),
+				'url'      => 'https://www.webtoffee.com/product/customizer-for-woocommerce-pdf-invoice/?utm_source=other_solution_page&utm_medium=free_plugin_product_feed&utm_campaign=PDF_Customizer',
+			),
+			array(
+				'type'     => 'standard',
+				'name'     => __( 'WooCommerce Address Labels plugin', 'webtoffee-product-feed' ),
+				'icon'     => 'address-labels-plugin.png',
+				'rating'   => '5.0',
+				'features' => array(
+					__( 'Generate \'Shipping Address\', \'Billing Address\', \'From Address\', and \'Return Address\' labels', 'webtoffee-product-feed' ),
+					__( 'Customize label sizes', 'webtoffee-product-feed' ),
+					__( 'Bulk print address labels', 'webtoffee-product-feed' ),
+					__( 'Offers built-in label templates', 'webtoffee-product-feed' ),
+					__( 'Change address label layout', 'webtoffee-product-feed' ),
+					__( 'Multilingual support', 'webtoffee-product-feed' ),
+				),
+				'url'      => 'https://www.webtoffee.com/product/woocommerce-address-label/?utm_source=other_solution_page&utm_medium=free_plugin_product_feed&utm_campaign=Address_Label',
+			),
+			array(
+				'type'     => 'standard',
+				'name'     => __( 'Proforma Invoice', 'webtoffee-product-feed' ),
+				'icon'     => 'proforma-invoice-plugin.png',
+				'rating'   => '5.0',
+				'features' => array(
+					__( 'Create proforma invoices automatically', 'webtoffee-product-feed' ),
+					__( 'Pre-built proforma invoice layouts', 'webtoffee-product-feed' ),
+					__( 'Easy invoice layout customization', 'webtoffee-product-feed' ),
+					__( 'Attach proforma invoice PDF to order emails', 'webtoffee-product-feed' ),
+					__( 'Allow customers to print invoices', 'webtoffee-product-feed' ),
+					__( 'Set custom proforma invoice number', 'webtoffee-product-feed' ),
+					__( 'Add additional product & order data fields', 'webtoffee-product-feed' ),
+					__( 'Attach special notes with proforma invoices', 'webtoffee-product-feed' ),
+					__( 'Attach transport & sales terms', 'webtoffee-product-feed' ),
+					__( 'Multilingual support', 'webtoffee-product-feed' ),
+				),
+				'url'      => 'https://www.webtoffee.com/product/woocommerce-proforma-invoice/?utm_source=other_solution_page&utm_medium=free_plugin_product_feed&utm_campaign=Proforma_Invoice',
+			),
+			array(
+				'type'     => 'standard',
+				'name'     => __( 'QR Code Add-on for WooCommerce PDF Invoices', 'webtoffee-product-feed' ),
+				'icon'     => 'qr-code-plugin.png',
+				'rating'   => '5.0',
+				'features' => array(
+					__( 'Assign QR codes to all generated invoices', 'webtoffee-product-feed' ),
+					__( 'Create QR code that reads order or invoice number', 'webtoffee-product-feed' ),
+					__( 'Add custom data to invoices', 'webtoffee-product-feed' ),
+					__( 'Compatible with WooCommerce PDF Invoice, Packing Slip & Credit Note (Premium)', 'webtoffee-product-feed' ),
+					__( 'Compatible with WooCommerce PDF Invoices, Packing Slips, Delivery Notes, and Shipping Labels (Free)', 'webtoffee-product-feed' ),
+				),
+				'url'      => 'https://www.webtoffee.com/product/qr-code-addon-for-woocommerce-pdf-invoices/?utm_source=other_solution_page&utm_medium=free_plugin_product_feed&utm_campaign=QR_Code',
+			),
+			array(
+				'type'        => 'standard',
+				'name'        => __( 'WooCommerce Request a Quote', 'webtoffee-product-feed' ),
+				'icon'        => 'request-quote-plugin.png',
+				'rating'      => '5.0',
+				'features'    => array(
+					__( 'Add quote button to the product & shop pages', 'webtoffee-product-feed' ),
+					__( 'Enable quotation request for selected products', 'webtoffee-product-feed' ),
+					__( 'Automatically send quotes to users', 'webtoffee-product-feed' ),
+					__( 'Disable guest users from asking for quote', 'webtoffee-product-feed' ),
+					__( 'Hide prices and \'add to cart\' button', 'webtoffee-product-feed' ),
+					__( 'Automatic email alerts for admin & users', 'webtoffee-product-feed' ),
+					__( 'Easy button and form customization', 'webtoffee-product-feed' ),
+					__( 'Set quote expiry period', 'webtoffee-product-feed' ),
+					__( 'Limit spams with reCAPTCHA', 'webtoffee-product-feed' ),
+				),
+				'url'         => 'https://www.webtoffee.com/product/woocommerce-request-a-quote/?utm_source=other_solution_page&utm_medium=free_plugin_product_feed&utm_campaign=Request_Quote',
+				'plugin_file' => 'wt-woo-request-quote/wt-woo-request-quote.php',
+			),
+			array(
+				'type'       => 'standard-with-image',
+				'name'       => __( 'Sequential Order Numbers', 'webtoffee-product-feed' ),
+				'icon'       => 'sequential-orders-plugin.png',
+				'rating'     => 'stars',
+				'features'   => array(
+					__( 'Auto reset sequence per month/year etc', 'webtoffee-product-feed' ),
+					__( 'Add a custom suffix for order numbers', 'webtoffee-product-feed' ),
+					__( 'Date suffix in order numbers', 'webtoffee-product-feed' ),
+					__( 'Custom sequence for free orders', 'webtoffee-product-feed' ),
+					__( 'Increment sequence in custom series', 'webtoffee-product-feed' ),
+					__( 'More order number templates', 'webtoffee-product-feed' ),
+				),
+				'url'        => 'https://www.webtoffee.com/product/woocommerce-sequential-order-numbers/?utm_source=other_solution_page&utm_medium=free_plugin_product_feed&utm_campaign=Sequential_Order_Numbers',
+				'image_src'  => 'seq-orders-illustration.svg',
+				'card_class' => 'wtpf-os-card--seq-orders',
+			),
+		),
+		'standalone' => null,
+		'bundle'     => array(
+			'tag_emoji'    => '📄',
+			'tag_color'    => 'green',
+			'tag'          => __( 'Invoice Bundle', 'webtoffee-product-feed' ),
+			'title'        => __( 'All in one Invoice bundle', 'webtoffee-product-feed' ),
+			'url'          => 'https://www.webtoffee.com/pdf-invoices-packing-slips-suite-woocommerce/?utm_source=other_solution_page&utm_medium=free_plugin_product_feed&utm_campaign=Invoice_bundle',
+			'desc'         => __( 'A complete suite of invoices and shipping documents bundle to create and print PDF invoices, packing slips, shipping and delivery documents in WooCommerce.', 'webtoffee-product-feed' ),
+			'pills'        => array(
+				__( 'Invoice', 'webtoffee-product-feed' ),
+				__( 'Packing Slip', 'webtoffee-product-feed' ),
+				__( 'Address Labels', 'webtoffee-product-feed' ),
+				__( 'Dispatch Labels', 'webtoffee-product-feed' ),
+				__( 'Shipping Labels', 'webtoffee-product-feed' ),
+				__( 'Delivery Notes', 'webtoffee-product-feed' ),
+				__( 'Picklists', 'webtoffee-product-feed' ),
+				__( 'Proforma Invoice', 'webtoffee-product-feed' ),
+			),
+			'price_orig'   => '$279',
+			'price_sale'   => '$179',
+			'savings'      => __( 'Save up to 30% off', 'webtoffee-product-feed' ),
+			'illustration' => 'invoice-bundle.png',
+		),
+	),
 );
 
-    foreach ($plugins as $key => $value)
-    {   
-        if(isset($value['pro_plugin'])){
-            if(is_array($value['pro_plugin']) && isset($value['pro_plugin']['product']) && isset($value['pro_plugin']['user']) && isset($value['pro_plugin']['order']))
-            {
-                if(is_plugin_active($value['pro_plugin']['product']) && is_plugin_active($value['pro_plugin']['user']) && is_plugin_active($value['pro_plugin']['order'])){
-                    continue;
-                }
-            }
-            else
-            {
-                if(is_plugin_active($value['pro_plugin']))
-                {
-                    continue;
-                }
-            }
-        }
+/*
+ * This is the Product Feed plugin — Data Import & Export is the most relevant
+ * category for our audience, so it leads the sidebar. Any category listed here
+ * but missing from the array is silently skipped; any category present in the
+ * array but not listed here is appended at the end.
+ */
+$wtpf_category_order = array(
+	'data-import-export',
+	'ecommerce-promotions',
+	'privacy-compliance',
+	'accounting-invoicing',
+);
+$wtpf_categories     = array_replace( array_fill_keys( $wtpf_category_order, null ), $wtpf_categories );
+$wtpf_categories     = array_filter(
+	$wtpf_categories,
+	static function ( $wtpf_c ) {
+		return null !== $wtpf_c;
+	}
+);
+
+/*
+ * Hide categories whose entire content is empty — i.e. no hero, no bundle, no
+ * visible standalone (either missing or its plugin is active), and every plugin
+ * card in the grid has its plugin_file set AND that plugin is active. Both the
+ * sidebar link AND the panel body are skipped for such categories.
+ */
+if ( ! function_exists( 'is_plugin_active' ) ) {
+	require_once ABSPATH . 'wp-admin/includes/plugin.php';
+}
+$wtpf_categories = array_filter(
+	$wtpf_categories,
+	static function ( $wtpf_c ) {
+		if ( ! empty( $wtpf_c['hero'] ) ) {
+			$wtpf_hf = isset( $wtpf_c['hero']['plugin_file'] ) ? $wtpf_c['hero']['plugin_file'] : '';
+			if ( '' === $wtpf_hf || ! is_plugin_active( $wtpf_hf ) ) {
+				return true;
+			}
+		}
+		if ( ! empty( $wtpf_c['bundle'] ) ) {
+			return true;
+		}
+		if ( ! empty( $wtpf_c['standalone'] ) ) {
+			$wtpf_sf = isset( $wtpf_c['standalone']['plugin_file'] ) ? $wtpf_c['standalone']['plugin_file'] : '';
+			if ( '' === $wtpf_sf || ! is_plugin_active( $wtpf_sf ) ) {
+				return true;
+			}
+		}
+		if ( ! empty( $wtpf_c['plugins'] ) ) {
+			foreach ( $wtpf_c['plugins'] as $wtpf_p ) {
+				if ( empty( $wtpf_p['plugin_file'] ) || ! is_plugin_active( $wtpf_p['plugin_file'] ) ) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+);
 ?>
-        <div class="card wt_card_margin">
-            <div class="wt_widget">
-                <div class="wt_widget_title_wrapper">
-                    <div class="wt_widget_column_1">
-                        <?php // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage ?>
-                        <img src="<?php echo esc_url($wt_admin_img_path . '/' . $value['image_url']);?>">
-                    </div>
-                    <div class="wt_widget_column_2">
-                        <h4 class="card-title">
-                            <?php echo esc_html($value['title']); ?>
-                        </h4>
-                    </div>
-                </div>
-                <div class="wt_widget_column_3">
-                    <p class="">
-                        <?php echo esc_html($value['description']); ?>
-                    </p>
-                </div> 
-                <div class="wt_buttons">
-                <?php
-                if ( isset( $value['premium_url'] ) && ! empty( $value['premium_url'] ) ) {
-                ?>
-                    <div class="wt_premium_button" style="width: 100%;">
-                        <?php // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage ?>
-                        <a href="<?php echo esc_url($value['premium_url']); ?>" class="wt_get_premium_btn" target="_blank"><img src="<?php echo esc_url($wt_admin_img_path . '/promote_crown.png');?>" style="width: 10px;height: 10px;"><?php  esc_html_e(' Get Premium','webtoffee-product-feed'); ?></a>
-                    </div> 
-<?php           }   
-                    if(is_plugin_active($value['basic_plugin']))
-		            { 
+<?php if ( empty( $wtpf_categories ) ) : ?>
+	<div class="wt-pfd-tab-content" data-id="<?php echo esc_attr( $target_id ); ?>">
+		<div class="wtpf-os-page">
+			<div class="wtpf-os-header">
+				<h1 class="wtpf-os-page-title"><?php esc_html_e( 'You\'re all set!', 'webtoffee-product-feed' ); ?></h1>
+				<p class="wtpf-os-page-subtitle"><?php esc_html_e( 'All recommended plugins are already active on your store.', 'webtoffee-product-feed' ); ?></p>
+			</div>
+		</div>
+	</div>
+	<?php return; ?>
+<?php endif; ?>
+<?php
+$wtpf_first_category = array_key_first( $wtpf_categories );
+$wtpf_first_cat      = $wtpf_categories[ $wtpf_first_category ];
 ?>
-                    <div class="wt_installed_button">
-                        <button class="wt_installed_btn">
-                            <?php esc_html_e('Installed','webtoffee-product-feed'); ?>
-                        </button>
-                    </div>
-<?php               
-                    }elseif(isset($value['basic_plugin']) && "" !== $value['basic_plugin'] && !is_plugin_active($value['basic_plugin'])
-                    && isset($value['basic_url']) && "" !== $value['basic_url'] && isset($value['pro_plugin']) && is_string($value['pro_plugin']) && "" !== $value['pro_plugin'] && !is_plugin_active($value['pro_plugin']))
-		            { 
-?>
-                    <div class="wt_free_button<?php echo (empty($value['premium_url'])) ? ' full_width' : ''; ?>">
-                             <a class="wt_free_btn_a" href="<?php echo esc_url($value['basic_url']); ?>" target="_blank">
-                                <button class="wt_free_btn<?php echo (empty($value['premium_url'])) ? ' full_width' : ''; ?>">
-                                    <?php esc_html_e('Get Free Plugin', 'webtoffee-product-feed'); ?>
-                                </button>
-                            </a>
-                    </div>
+<div class="wt-pfd-tab-content" data-id="<?php echo esc_attr( $target_id ); ?>">
+	<div class="wtpf-os-page">
 
-              <?php } ?>
-              
+		<div class="wtpf-os-header">
+			<h1 class="wtpf-os-page-title" id="wtpf-os-cat-title"><?php echo esc_html( $wtpf_first_cat['label'] ); ?></h1>
+			<p class="wtpf-os-page-subtitle" id="wtpf-os-cat-subtitle"><?php echo esc_html( $wtpf_first_cat['subtitle'] ); ?></p>
+		</div>
 
-                </div>
-            </div>
-        </div>
+		<div class="wtpf-os-layout">
 
-<?php } ?>
+			<?php /* ---- Sidebar ---- */ ?>
+			<div class="wtpf-os-sidebar">
+				<ul class="wtpf-os-sidebar-nav">
+					<?php foreach ( $wtpf_categories as $wtpf_cat_id => $wtpf_cat ) : ?>
+						<li>
+							<a href="#"
+								class="wtpf-os-cat-link<?php echo ( $wtpf_cat_id === $wtpf_first_category ) ? ' active' : ''; ?>"
+								data-category="<?php echo esc_attr( $wtpf_cat_id ); ?>">
+								<?php // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage ?>
+								<img class="wtpf-os-cat-icon"
+									src="<?php echo esc_url( $wtpf_img_base . '/' . $wtpf_cat['icon'] ); ?>"
+									alt="<?php echo esc_attr( $wtpf_cat['label'] ); ?>">
+								<?php echo esc_html( $wtpf_cat['label'] ); ?>
+							</a>
+						</li>
+					<?php endforeach; ?>
+				</ul>
 
-        </div>
-    </div>
+				<div class="wtpf-os-trust-badges">
+					<div class="wtpf-os-trust-badge">
+						<?php // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage ?>
+						<img src="<?php echo esc_url( $wtpf_img_base . '/thirty-day-guarantee.png' ); ?>"
+							alt="<?php esc_attr_e( '30 Day Money Back Guarantee', 'webtoffee-product-feed' ); ?>">
+						<span><?php esc_html_e( '30 Day No Risk Money Back Guarantee', 'webtoffee-product-feed' ); ?></span>
+					</div>
+					<div class="wtpf-os-trust-badge">
+						<?php // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage ?>
+						<img src="<?php echo esc_url( $wtpf_img_base . '/satisfaction-badge.png' ); ?>"
+							alt="<?php esc_attr_e( '99% Satisfaction Rating', 'webtoffee-product-feed' ); ?>">
+						<span><?php esc_html_e( 'Fast Support with 99% Satisfaction Rating', 'webtoffee-product-feed' ); ?></span>
+					</div>
+				</div>
+			</div>
+
+			<?php /* ---- Main content ---- */ ?>
+			<div class="wtpf-os-main">
+
+				<?php foreach ( $wtpf_categories as $wtpf_cat_id => $wtpf_cat ) : ?>
+					<div id="wtpf-os-panel-<?php echo esc_attr( $wtpf_cat_id ); ?>"
+						class="wtpf-os-category-panel<?php echo ( $wtpf_cat_id === $wtpf_first_category ) ? ' active' : ''; ?>"
+						data-title="<?php echo esc_attr( $wtpf_cat['label'] ); ?>"
+						data-subtitle="<?php echo esc_attr( $wtpf_cat['subtitle'] ); ?>">
+
+						<?php /* -- Hero card -- */ ?>
+						<?php
+						if ( ! empty( $wtpf_cat['hero'] ) ) :
+							$wtpf_hero              = $wtpf_cat['hero'];
+							$wtpf_hero_plugin_file  = isset( $wtpf_hero['plugin_file'] ) ? $wtpf_hero['plugin_file'] : '';
+							$wtpf_hero_is_active    = $wtpf_hero_plugin_file && is_plugin_active( $wtpf_hero_plugin_file );
+							$wtpf_hero_is_installed = $wtpf_hero_plugin_file && file_exists( WP_PLUGIN_DIR . '/' . $wtpf_hero_plugin_file );
+
+							if ( ! $wtpf_hero_is_active ) :
+								?>
+							<div class="wtpf-os-hero-card">
+								<div class="wtpf-os-hero-left">
+									<div class="wtpf-os-hero-title-row">
+										<?php // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage ?>
+										<img class="wtpf-os-hero-icon"
+											src="<?php echo esc_url( $wtpf_img_base . '/' . $wtpf_hero['icon'] ); ?>"
+											alt="<?php echo esc_attr( $wtpf_hero['name'] ); ?>">
+										<div class="wtpf-os-hero-title-block">
+											<h3 class="wtpf-os-hero-name"><?php echo esc_html( $wtpf_hero['name'] ); ?></h3>
+											<div class="wtpf-os-hero-stars" aria-label="<?php esc_attr_e( '5 out of 5 stars', 'webtoffee-product-feed' ); ?>">
+												<?php for ( $i = 0; $i < 5; $i++ ) : ?>
+													<span class="wtpf-os-star">&#9733;</span>
+												<?php endfor; ?>
+											</div>
+										</div>
+									</div>
+									<div class="wtpf-os-hero-divider"></div>
+									<p class="wtpf-os-hero-desc"><?php echo esc_html( $wtpf_hero['desc'] ); ?></p>
+									<?php if ( $wtpf_hero_is_installed && current_user_can( 'activate_plugins' ) ) : ?>
+										<?php
+										$wtpf_hero_activate_url = wp_nonce_url(
+											self_admin_url( 'plugins.php?action=activate&plugin=' . rawurlencode( $wtpf_hero_plugin_file ) ),
+											'activate-plugin_' . $wtpf_hero_plugin_file
+										);
+										?>
+										<a href="<?php echo esc_url( $wtpf_hero_activate_url ); ?>"
+											class="wtpf-os-btn-premium wtpf-os-btn-premium--block">
+											<?php esc_html_e( 'Activate', 'webtoffee-product-feed' ); ?>
+										</a>
+									<?php else : ?>
+										<a href="<?php echo esc_url( $wtpf_hero['url'] ); ?>"
+											target="_blank"
+											rel="noopener noreferrer"
+											class="wtpf-os-btn-premium wtpf-os-btn-premium--block">
+											<span class="dashicons dashicons-star-filled"></span>
+											<?php esc_html_e( 'Get premium', 'webtoffee-product-feed' ); ?>
+										</a>
+									<?php endif; ?>
+								</div>
+								<?php if ( ! empty( $wtpf_hero['pdf_cluster'] ) ) : ?>
+									<div class="wtpf-os-hero-right wtpf-os-hero-right--pdf-cluster">
+										<?php // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage ?>
+										<img class="wtpf-os-pdf wtpf-os-pdf--left"
+											src="<?php echo esc_url( $wtpf_img_base . '/pdf-invoice-left.svg' ); ?>"
+											alt="">
+										<?php // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage ?>
+										<img class="wtpf-os-pdf wtpf-os-pdf--center"
+											src="<?php echo esc_url( $wtpf_img_base . '/pdf-invoice-center.svg' ); ?>"
+											alt="">
+										<?php // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage ?>
+										<img class="wtpf-os-pdf wtpf-os-pdf--right"
+											src="<?php echo esc_url( $wtpf_img_base . '/pdf-invoice-right.svg' ); ?>"
+											alt="">
+									</div>
+								<?php elseif ( ! empty( $wtpf_hero['image'] ) ) : ?>
+									<div class="wtpf-os-hero-right">
+										<?php // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage ?>
+										<img src="<?php echo esc_url( $wtpf_img_base . '/' . $wtpf_hero['image'] ); ?>"
+											alt="<?php echo esc_attr( $wtpf_hero['name'] ); ?>">
+									</div>
+								<?php endif; ?>
+							</div>
+								<?php
+							endif;
+						endif;
+						?>
+
+						<?php /* -- Plugin card grid -- */ ?>
+						<?php if ( ! empty( $wtpf_cat['plugins'] ) ) : ?>
+							<?php
+							// Filter out plugins that are already active — the card is only useful when the plugin is missing or inactive.
+							// is_plugin_active() is guaranteed available here — required at the top of the file.
+							$wtpf_visible_plugins = array_values(
+								array_filter(
+									$wtpf_cat['plugins'],
+									static function ( $wtpf_p ) {
+										if ( empty( $wtpf_p['plugin_file'] ) ) {
+											return true;
+										}
+										return ! is_plugin_active( $wtpf_p['plugin_file'] );
+									}
+								)
+							);
+							$wtpf_chunks          = array_chunk( $wtpf_visible_plugins, 3 );
+							foreach ( $wtpf_chunks as $wtpf_row ) :
+								?>
+								<div class="wtpf-os-card-grid">
+									<?php foreach ( $wtpf_row as $wtpf_plugin ) : ?>
+
+										<?php if ( 'image' === $wtpf_plugin['type'] ) : ?>
+
+											<div class="wtpf-os-card-image">
+												<?php // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage ?>
+												<img src="<?php echo esc_url( $wtpf_img_base . '/' . $wtpf_plugin['src'] ); ?>"
+													alt="">
+											</div>
+
+											<?php
+										else :
+											$wtpf_with_image = ( 'standard-with-image' === $wtpf_plugin['type'] && ! empty( $wtpf_plugin['image_src'] ) );
+											$wtpf_card_class = 'wtpf-os-card';
+											if ( $wtpf_with_image ) {
+												$wtpf_card_class .= ' wtpf-os-card--with-image';
+											}
+											if ( ! empty( $wtpf_plugin['card_class'] ) ) {
+												$wtpf_card_class .= ' ' . sanitize_html_class( $wtpf_plugin['card_class'] );
+											}
+											?>
+
+											<div class="<?php echo esc_attr( $wtpf_card_class ); ?>">
+												<div class="wtpf-os-card-body">
+													<?php if ( $wtpf_with_image ) : ?>
+														<div class="wtpf-os-card-header wtpf-os-card-header--stacked">
+															<?php // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage ?>
+															<img class="wtpf-os-card-icon"
+																src="<?php echo esc_url( $wtpf_img_base . '/' . $wtpf_plugin['icon'] ); ?>"
+																alt="<?php echo esc_attr( $wtpf_plugin['name'] ); ?>">
+															<div class="wtpf-os-card-title-block">
+																<span class="wtpf-os-card-name"><?php echo esc_html( $wtpf_plugin['name'] ); ?></span>
+																<?php if ( 'stars' === $wtpf_plugin['rating'] ) : ?>
+																	<span class="wtpf-os-card-rating wtpf-os-card-rating--stars" aria-label="<?php esc_attr_e( '5 out of 5 stars', 'webtoffee-product-feed' ); ?>">
+																		<?php for ( $i = 0; $i < 5; $i++ ) : ?>
+																			<span class="wtpf-os-star">&#9733;</span>
+																		<?php endfor; ?>
+																	</span>
+																<?php else : ?>
+																	<span class="wtpf-os-card-rating">
+																		<?php echo esc_html( $wtpf_plugin['rating'] ); ?>
+																		<span class="wtpf-os-star">&#9733;</span>
+																	</span>
+																<?php endif; ?>
+															</div>
+														</div>
+													<?php else : ?>
+														<div class="wtpf-os-card-header">
+															<div class="wtpf-os-card-icon-name">
+																<?php // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage ?>
+																<img class="wtpf-os-card-icon"
+																	src="<?php echo esc_url( $wtpf_img_base . '/' . $wtpf_plugin['icon'] ); ?>"
+																	alt="<?php echo esc_attr( $wtpf_plugin['name'] ); ?>">
+																<span class="wtpf-os-card-name"><?php echo esc_html( $wtpf_plugin['name'] ); ?></span>
+															</div>
+															<?php if ( 'stars' === $wtpf_plugin['rating'] ) : ?>
+																<span class="wtpf-os-card-rating wtpf-os-card-rating--stars">
+																	<span class="wtpf-os-star">&#9733;</span>
+																	<span class="wtpf-os-star">&#9733;</span>
+																	<span class="wtpf-os-star">&#9733;</span>
+																	<span class="wtpf-os-star">&#9733;</span>
+																	<span class="wtpf-os-star">&#9733;</span>
+																</span>
+															<?php else : ?>
+																<span class="wtpf-os-card-rating">
+																	<?php echo esc_html( $wtpf_plugin['rating'] ); ?>
+																	<span class="wtpf-os-star">&#9733;</span>
+																</span>
+															<?php endif; ?>
+														</div>
+													<?php endif; ?>
+													<ul class="wtpf-os-card-features<?php echo ( count( $wtpf_plugin['features'] ) > 3 ) ? ' wtpf-os-card-features--collapsible' : ''; ?>">
+														<?php foreach ( $wtpf_plugin['features'] as $wtpf_feature ) : ?>
+															<li>
+																<span class="dashicons dashicons-yes-alt"></span>
+																<?php echo esc_html( $wtpf_feature ); ?>
+															</li>
+														<?php endforeach; ?>
+													</ul>
+													<?php if ( count( $wtpf_plugin['features'] ) > 3 ) : ?>
+														<div class="wtpf-os-show-more-less">
+															<a href="#" class="wtpf-os-show-more"><?php esc_html_e( 'Show More', 'webtoffee-product-feed' ); ?></a>
+															<a href="#" class="wtpf-os-show-less"><?php esc_html_e( 'Show Less', 'webtoffee-product-feed' ); ?></a>
+														</div>
+													<?php endif; ?>
+													<?php
+													$wtpf_plugin_file      = ! empty( $wtpf_plugin['plugin_file'] ) ? $wtpf_plugin['plugin_file'] : '';
+													$wtpf_plugin_installed = $wtpf_plugin_file && file_exists( WP_PLUGIN_DIR . '/' . $wtpf_plugin_file );
+													if ( $wtpf_plugin_installed && current_user_can( 'activate_plugins' ) ) :
+														$wtpf_activate_url = wp_nonce_url(
+															self_admin_url( 'plugins.php?action=activate&plugin=' . rawurlencode( $wtpf_plugin_file ) ),
+															'activate-plugin_' . $wtpf_plugin_file
+														);
+														?>
+														<a href="<?php echo esc_url( $wtpf_activate_url ); ?>"
+															class="wtpf-os-btn-premium">
+															<?php esc_html_e( 'Activate', 'webtoffee-product-feed' ); ?>
+														</a>
+													<?php else : ?>
+														<a href="<?php echo esc_url( $wtpf_plugin['url'] ); ?>"
+															target="_blank"
+															rel="noopener noreferrer"
+															class="wtpf-os-btn-premium">
+															<span class="dashicons dashicons-star-filled"></span>
+															<?php esc_html_e( 'Get premium', 'webtoffee-product-feed' ); ?>
+														</a>
+													<?php endif; ?>
+												</div>
+												<?php if ( $wtpf_with_image ) : ?>
+													<div class="wtpf-os-card-image-side">
+														<?php // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage ?>
+														<img src="<?php echo esc_url( $wtpf_img_base . '/' . $wtpf_plugin['image_src'] ); ?>"
+															alt="">
+													</div>
+												<?php endif; ?>
+											</div>
+
+										<?php endif; ?>
+
+									<?php endforeach; ?>
+								</div>
+							<?php endforeach; ?>
+						<?php endif; ?>
+
+						<?php /* -- Bundle section (renders BEFORE the standalone, per Figma order) -- */ ?>
+						<?php
+						if ( ! empty( $wtpf_cat['bundle'] ) ) :
+							$wtpf_bundle    = $wtpf_cat['bundle'];
+							$wtpf_tag_color = ! empty( $wtpf_bundle['tag_color'] ) ? $wtpf_bundle['tag_color'] : 'green';
+							?>
+							<div class="wtpf-os-bundle">
+								<div class="wtpf-os-bundle-content">
+									<span class="wtpf-os-bundle-tag wtpf-os-bundle-tag--<?php echo esc_attr( $wtpf_tag_color ); ?>">
+										<?php if ( ! empty( $wtpf_bundle['tag_emoji'] ) ) : ?>
+											<span class="wtpf-os-bundle-tag-emoji"><?php echo esc_html( $wtpf_bundle['tag_emoji'] ); ?></span>
+										<?php endif; ?>
+										<?php echo esc_html( $wtpf_bundle['tag'] ); ?>
+									</span>
+									<div class="wtpf-os-bundle-title">
+										<a href="<?php echo esc_url( $wtpf_bundle['url'] ); ?>"
+											target="_blank"
+											rel="noopener noreferrer">
+											<?php echo esc_html( $wtpf_bundle['title'] ); ?>
+										</a>
+										<span class="dashicons dashicons-external"></span>
+									</div>
+									<p class="wtpf-os-bundle-desc"><?php echo esc_html( $wtpf_bundle['desc'] ); ?></p>
+									<div class="wtpf-os-bundle-pills">
+										<?php foreach ( $wtpf_bundle['pills'] as $wtpf_pill ) : ?>
+											<span class="wtpf-os-bundle-pill">
+												<span class="dashicons dashicons-yes-alt"></span>
+												<?php echo esc_html( $wtpf_pill ); ?>
+											</span>
+										<?php endforeach; ?>
+									</div>
+									<p class="wtpf-os-bundle-pricing">
+										<?php
+										printf(
+											wp_kses(
+												/* translators: 1: strikethrough original price, 2: bold sale price, 3: green savings text */
+												__( 'Total: <s>%1$s</s> <strong>%2$s</strong> <span class="wtpf-os-savings">(%3$s)</span>', 'webtoffee-product-feed' ),
+												array(
+													's'    => array(),
+													'strong' => array(),
+													'span' => array( 'class' => array() ),
+												)
+											),
+											esc_html( $wtpf_bundle['price_orig'] ),
+											esc_html( $wtpf_bundle['price_sale'] ),
+											esc_html( $wtpf_bundle['savings'] )
+										);
+										?>
+									</p>
+									<a href="<?php echo esc_url( $wtpf_bundle['url'] ); ?>"
+										target="_blank"
+										rel="noopener noreferrer"
+										class="wtpf-os-btn-bundle">
+										<?php esc_html_e( 'View Bundle', 'webtoffee-product-feed' ); ?>
+										<span class="dashicons dashicons-external"></span>
+									</a>
+								</div>
+								<?php if ( ! empty( $wtpf_bundle['illustration'] ) ) : ?>
+									<div class="wtpf-os-bundle-illustration">
+										<?php // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage ?>
+										<img src="<?php echo esc_url( $wtpf_img_base . '/' . $wtpf_bundle['illustration'] ); ?>"
+											alt="<?php echo esc_attr( $wtpf_bundle['title'] ); ?>">
+									</div>
+								<?php endif; ?>
+							</div>
+						<?php endif; ?>
+
+						<?php /* -- Standalone card (e.g. EMA App) — renders AFTER the bundle, per Figma order -- */ ?>
+						<?php
+						if ( ! empty( $wtpf_cat['standalone'] ) ) :
+							$wtpf_solo = $wtpf_cat['standalone'];
+
+							/*
+							 * Tri-state install/active check:
+							 *   active         → hide banner
+							 *   installed only → show "Activate" button (nonce-protected activate URL)
+							 *   not installed  → show default "Try Now" button
+							 *
+							 * is_plugin_active() is guaranteed available here — required at the top of the file.
+							 */
+							$wtpf_solo_plugin_file  = isset( $wtpf_solo['plugin_file'] ) ? $wtpf_solo['plugin_file'] : '';
+							$wtpf_solo_is_active    = $wtpf_solo_plugin_file && is_plugin_active( $wtpf_solo_plugin_file );
+							$wtpf_solo_is_installed = $wtpf_solo_plugin_file && file_exists( WP_PLUGIN_DIR . '/' . $wtpf_solo_plugin_file );
+
+							if ( ! $wtpf_solo_is_active ) :
+								?>
+							<div class="wtpf-os-standalone">
+								<div class="wtpf-os-standalone-content">
+									<div class="wtpf-os-standalone-header">
+										<?php // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage ?>
+										<img class="wtpf-os-standalone-icon"
+											src="<?php echo esc_url( $wtpf_img_base . '/' . $wtpf_solo['icon'] ); ?>"
+											alt="<?php echo esc_attr( $wtpf_solo['name'] ); ?>">
+										<h3 class="wtpf-os-standalone-name"><?php echo esc_html( $wtpf_solo['name'] ); ?></h3>
+									</div>
+									<p class="wtpf-os-standalone-desc"><?php echo esc_html( $wtpf_solo['desc'] ); ?></p>
+									<?php if ( $wtpf_solo_is_installed && current_user_can( 'activate_plugins' ) ) : ?>
+										<?php
+										$wtpf_solo_activate_url = wp_nonce_url(
+											self_admin_url( 'plugins.php?action=activate&plugin=' . rawurlencode( $wtpf_solo_plugin_file ) ),
+											'activate-plugin_' . $wtpf_solo_plugin_file
+										);
+										?>
+										<a href="<?php echo esc_url( $wtpf_solo_activate_url ); ?>"
+											class="wtpf-os-btn-premium wtpf-os-btn-premium--block">
+											<?php esc_html_e( 'Activate', 'webtoffee-product-feed' ); ?>
+										</a>
+									<?php else : ?>
+										<a href="<?php echo esc_url( $wtpf_solo['url'] ); ?>"
+											target="_blank"
+											rel="noopener noreferrer"
+											class="wtpf-os-btn-premium wtpf-os-btn-premium--block">
+											<?php esc_html_e( 'Try Now', 'webtoffee-product-feed' ); ?>
+										</a>
+									<?php endif; ?>
+								</div>
+								<?php if ( ! empty( $wtpf_solo['screenshot'] ) ) : ?>
+									<div class="wtpf-os-standalone-screenshot">
+										<?php // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage ?>
+										<img src="<?php echo esc_url( $wtpf_img_base . '/' . $wtpf_solo['screenshot'] ); ?>"
+											alt="<?php echo esc_attr( $wtpf_solo['name'] ); ?>">
+									</div>
+								<?php endif; ?>
+							</div>
+								<?php
+							endif;
+						endif;
+						?>
+
+					</div>
+				<?php endforeach; ?>
+
+			</div>
+		</div>
+	</div>
 </div>

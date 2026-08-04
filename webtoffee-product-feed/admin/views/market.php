@@ -21,7 +21,7 @@ if (!defined('ABSPATH')) {
                     <div class="wt-feed-why-premium">
                         <div class="why-premium-inner-box" style="padding-right: 0px;">
 						<?php // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage ?>
-						<img style="width:50px;" src="<?php echo esc_url( WT_PRODUCT_FEED_PLUGIN_URL ); ?>/images/crown.svg" alt="alt"/>
+						<img style="width:50px;" src="<?php echo esc_url( WT_PRODUCT_FEED_PLUGIN_URL ); ?>/images/crown.svg" alt="<?php esc_attr_e( 'Premium features', 'webtoffee-product-feed' ); ?>"/>
                         </div>
 			<div class="why-premium-inner-box" style="padding-left: 0px;">	
                             <?php if( isset( $fb_sync_tab ) ){ ?>
@@ -63,14 +63,14 @@ if (!defined('ABSPATH')) {
 		<div class="wt-feed-cs-rating-money-back">
 			<div class="wt-feed-money-back">
 				<?php // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage ?>
-				<img src="<?php echo esc_url( WT_PRODUCT_FEED_PLUGIN_URL ); ?>assets/images/gopro/wt-money-back.svg" alt="alt"/>
+				<img src="<?php echo esc_url( WT_PRODUCT_FEED_PLUGIN_URL ); ?>assets/images/gopro/wt-money-back.svg" alt="<?php esc_attr_e( '30-day money back guarantee', 'webtoffee-product-feed' ); ?>"/>
 				<p><?php 
 				// translators: %1$s is the opening bold tag, %2$s is the closing bold tag
 				echo sprintf(esc_html__('You are covered by our %1$s 30-day money back guarantee %2$s', 'webtoffee-product-feed'), '<b>', '</b>'); ?></p>
 			</div>
 			<div class="wt-feed-cs-rating">
 				<?php // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage ?>
-				<img src="<?php echo esc_url( WT_PRODUCT_FEED_PLUGIN_URL ); ?>assets/images/gopro/wt-satisfaction-rating.svg"" alt="alt"/>
+				<img src="<?php echo esc_url( WT_PRODUCT_FEED_PLUGIN_URL ); ?>assets/images/gopro/wt-satisfaction-rating.svg"" alt="<?php esc_attr_e( 'Customer satisfaction rating', 'webtoffee-product-feed' ); ?>"/>
 				<p><?php 
 				// translators: %1$s is the opening bold tag, %2$s is the percentage value, %3$s is the closing bold tag
 				echo sprintf(esc_html__('Supported by a team with %1$s %2$s customer satisfaction %3$s score', 'webtoffee-product-feed'), '<b>', '99%', '</b>'); ?></p>

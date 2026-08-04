@@ -10,7 +10,7 @@ if (!defined('WPINC')) {
                 <span style="font-size:14px;"><?php esc_html_e('Developed by', 'webtoffee-product-feed'); ?></span>
                 <a target="_blank" href="https://www.webtoffee.com">
                     <?php // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage ?>
-                    <img src="<?php echo esc_url(WT_PRODUCT_FEED_PLUGIN_URL . '/assets/images/webtoffee-logo_small.png'); ?>" style="max-width:100px;" alt="WebToffee Logo" loading="lazy">
+                    <img src="<?php echo esc_url(WT_PRODUCT_FEED_PLUGIN_URL . '/assets/images/webtoffee-logo_small.png'); ?>" style="max-width:100px;" alt="<?php esc_attr_e( 'WebToffee Logo', 'webtoffee-product-feed' ); ?>" loading="lazy">
                 </a>
             </span>
         </h2>

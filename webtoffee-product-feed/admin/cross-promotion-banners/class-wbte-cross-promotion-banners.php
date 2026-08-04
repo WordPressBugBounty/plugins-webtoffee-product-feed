@@ -25,13 +25,6 @@ if ( version_compare( WBTE_PF_FREE_CROSS_PROMO_BANNER_VERSION, get_option( 'wbft
 		 * Constructor.
 		 */
 		public function __construct() {
-			/**
-			 * Class includes helper functions for accessibility cta banner
-			 */
-			if ( ! get_option( 'cya11y_hide_accessyes_cta_banner' ) && ! defined( 'CYA11Y_ACCESSYES_BANNER_DISPLAYED' ) ) {
-				define( 'CYA11Y_ACCESSYES_BANNER_DISPLAYED', true );
-				require_once plugin_dir_path( __FILE__ ) . 'class-wbte-accessibility-banner.php';
-			}
 		}
 
 		/**

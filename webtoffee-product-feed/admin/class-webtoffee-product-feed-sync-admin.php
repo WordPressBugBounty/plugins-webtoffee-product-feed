@@ -107,6 +107,7 @@ class Webtoffee_Product_Feed_Sync_Admin {
 		}
 		if(Webtoffee_Product_Feed_Sync_Common_Helper::wt_is_screen_allowed()){
                 wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/wt-product-feed-admin.css', array(), $this->version, 'all' );
+                wp_enqueue_style( 'wt-pf-other-solutions', plugin_dir_url( __FILE__ ) . 'css/wt-pf-other-solutions.css', array( 'dashicons' ), $this->version, 'all' );
         }
 	}
 
@@ -141,12 +142,17 @@ class Webtoffee_Product_Feed_Sync_Admin {
 			'ajax_url' => admin_url('admin-ajax.php'),
 			'plugin_id' =>WEBTOFFEE_PRODUCT_FEED_ID,
 			'msgs'=>array(
-				
+
 				'error'=>__('Error.', 'webtoffee-product-feed'),
 				'success'=>__('Success.', 'webtoffee-product-feed'),
 				'loading'=>__('Loading...', 'webtoffee-product-feed'),
 				'process' => __('Processing Sync...', 'webtoffee-product-feed'),
                 'sync_completed_success' => __('All the products have been synced successfully.', 'webtoffee-product-feed'),
+                'sync_completed' => __('Product sync completed.', 'webtoffee-product-feed'),
+                'check_fb_catalog' => __('Check FB Catalog', 'webtoffee-product-feed'),
+                /* translators: %s: number of products found */
+                'products_found' => __('%s products (including variations) found.', 'webtoffee-product-feed'),
+                'finish_label' => __('Map FB categories and Sync', 'webtoffee-product-feed'),
 
 			)
 		);
@@ -205,6 +211,7 @@ class Webtoffee_Product_Feed_Sync_Admin {
 			)
                 );
 		wp_localize_script($this->plugin_name, 'wt_pf_basic_params', $params);
+		wp_enqueue_script( 'wt-pf-other-solutions', plugin_dir_url( __FILE__ ) . 'js/wt-pf-other-solutions.js', array( 'jquery' ), $this->version, true );
             }
 		
 		

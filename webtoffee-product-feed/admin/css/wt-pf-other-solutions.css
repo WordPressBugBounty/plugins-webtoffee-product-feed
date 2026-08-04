@@ -1,0 +1,1134 @@
+/**
+ * Styles for the "Other Solutions" admin tab.
+ *
+ * Ported from wt-woocommerce-related-products' "You May Also Need" template.
+ * Class prefix renamed wt-crp-os-* → wtpf-os-* to keep both plugins collision-free.
+ *
+ * @package WebToffee_Product_Feed
+ */
+
+/* -----------------------------------------------------------------------
+   Page wrapper — white canvas matching Figma (#FFFFFF)
+----------------------------------------------------------------------- */
+.wtpf-os-page {
+	padding: 20px 20px 30px;
+	background: #FFFFFF;
+	margin: 10px -20px 0;
+	min-height: calc( 100vh - 100px );
+}
+
+/* -----------------------------------------------------------------------
+   Page header (above the two-panel layout)
+----------------------------------------------------------------------- */
+.wtpf-os-header {
+	margin: 0 0 18px;
+	padding: 0 4px;
+}
+
+.wtpf-os-page-title {
+	font-size: 22px;
+	font-weight: 700;
+	color: #212121;
+	margin: 0 0 4px;
+	line-height: 1.3;
+}
+
+.wtpf-os-page-subtitle {
+	font-size: 14px;
+	color: #6B7280;
+	margin: 0;
+	line-height: 1.5;
+}
+
+/* -----------------------------------------------------------------------
+   Two-panel layout
+----------------------------------------------------------------------- */
+.wtpf-os-layout {
+	display: flex;
+	gap: 20px;
+	align-items: flex-start;
+}
+
+/* -----------------------------------------------------------------------
+   Sidebar
+----------------------------------------------------------------------- */
+.wtpf-os-sidebar {
+	width: 240px;
+	flex-shrink: 0;
+	background: #fff;
+	border: 1px solid #ECECEC;
+	border-radius: 10px;
+	overflow: hidden;
+	box-shadow: 0 1px 3px rgba( 0, 0, 0, 0.04 );
+}
+
+.wtpf-os-sidebar-nav {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.wtpf-os-sidebar-nav li {
+	margin: 0;
+	padding: 0;
+	border-bottom: 1px solid #ECECEC;
+}
+
+.wtpf-os-sidebar-nav li:last-child {
+	border-bottom: none;
+}
+
+.wtpf-os-cat-link {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	padding: 20px 20px;
+	color: #212121;
+	text-decoration: none;
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 1.3;
+	cursor: pointer;
+	transition: color 0.15s ease, background 0.15s ease;
+}
+
+.wtpf-os-cat-link:hover {
+	color: #2369FF;
+	background: #F8F8FE;
+	text-decoration: none;
+}
+
+.wtpf-os-cat-link.active {
+	color: #2369FF;
+	font-weight: 600;
+}
+
+.wtpf-os-cat-icon {
+	width: 18px;
+	height: 18px;
+	flex-shrink: 0;
+	display: block;
+}
+
+.wtpf-os-cat-link.active .wtpf-os-cat-icon,
+.wtpf-os-cat-link:hover .wtpf-os-cat-icon {
+	filter: invert(32%) sepia(82%) saturate(2956%) hue-rotate(213deg) brightness(101%) contrast(101%);
+}
+
+/* Trust badges (inside the same sidebar card) */
+.wtpf-os-trust-badges {
+	border-top: 1px solid #ECECEC;
+}
+
+.wtpf-os-trust-badge {
+	display: flex;
+	align-items: center;
+	gap: 14px;
+	padding: 16px 20px;
+	font-size: 12px;
+	color: #212121;
+	line-height: 1.3;
+	border-bottom: 1px solid #ECECEC;
+	box-sizing: border-box;
+}
+
+.wtpf-os-trust-badge:last-child {
+	border-bottom: none;
+}
+
+.wtpf-os-trust-badge img {
+	width: 44px;
+	height: 44px;
+	flex-shrink: 0;
+}
+
+/* -----------------------------------------------------------------------
+   Main content area
+----------------------------------------------------------------------- */
+.wtpf-os-main {
+	flex: 1;
+	min-width: 0;
+}
+
+.wtpf-os-category-panel {
+	display: none;
+}
+
+.wtpf-os-category-panel.active {
+	display: block;
+}
+
+.wtpf-os-panel-title {
+	font-size: 20px;
+	font-weight: 700;
+	color: #212121;
+	margin: 0 0 16px;
+}
+
+/* -----------------------------------------------------------------------
+   Card grid (3-column)
+----------------------------------------------------------------------- */
+.wtpf-os-card-grid {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 16px;
+	margin-bottom: 16px;
+	align-items: start;
+}
+
+/* -----------------------------------------------------------------------
+   Standard plugin card
+----------------------------------------------------------------------- */
+.wtpf-os-card {
+	background: #fff;
+	border: 1px solid #ECECEC;
+	border-radius: 10px;
+	display: flex;
+	flex-direction: column;
+	box-shadow: 0 1px 3px rgba( 0, 0, 0, 0.04 );
+	overflow: hidden;
+}
+
+.wtpf-os-card-body {
+	padding: 16px;
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+}
+
+.wtpf-os-card--with-image {
+	grid-column: span 2;
+	flex-direction: row;
+	align-items: stretch;
+}
+
+/* Full-width variant — spans all 3 grid columns, keeps body/image row layout. */
+.wtpf-os-card--with-image.wtpf-os-card--full-width {
+	grid-column: 1 / -1;
+}
+
+/* Body/image ratio for the full-width variant — matches Figma (~60% body, ~40% image). */
+.wtpf-os-card--full-width .wtpf-os-card-body {
+	flex: 0 0 60%;
+}
+
+.wtpf-os-card--full-width .wtpf-os-card-image-side {
+	flex: 1 1 auto;
+}
+
+/* Button keeps a fixed comfortable width, left-aligned, matching Figma. */
+.wtpf-os-card--full-width .wtpf-os-btn-premium {
+	width: 280px;
+	align-self: flex-start;
+}
+
+/* Show More/Less link container mirrors the button's width & alignment so
+   the link sits centered directly above the button. */
+.wtpf-os-card--full-width .wtpf-os-show-more-less {
+	align-self: flex-start;
+	width: 280px;
+	text-align: center;
+}
+
+/* Full-width variant image handling.
+   The illustration SVG has a baked-in solid background rect (#D6EFFE) that
+   fills its entire canvas. We set the image-side background to that same
+   colour so any letterbox area created by object-fit: contain blends
+   invisibly into the SVG — the full illustration stays visible (no crop),
+   and there's no colour seam between the SVG and its container. */
+.wtpf-os-card--full-width .wtpf-os-card-image-side {
+	position: relative;
+	overflow: hidden;
+	background: #D6EFFE;
+}
+
+.wtpf-os-card--full-width .wtpf-os-card-image-side img {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	max-width: none;
+	max-height: none;
+	object-fit: contain;
+	object-position: center;
+	display: block;
+}
+
+.wtpf-os-card--with-image .wtpf-os-card-body {
+	flex: 1 1 24%;
+	min-width: 0;
+}
+
+/* Import Export Suite — wider body so the title fits on one line (matches Figma). */
+.wtpf-os-card--ie-suite .wtpf-os-card-body {
+	background: #F0F6FF;
+	flex: 0 0 47%;
+}
+
+.wtpf-os-card--ie-suite .wtpf-os-card-image-side {
+	flex: 1 1 auto;
+}
+
+.wtpf-os-card-image-side {
+	flex: 1 1 41%;
+	background: #F0F6FF;
+	position: relative;
+	overflow: hidden;
+	min-width: 0;
+}
+
+.wtpf-os-card-image-side img {
+	position: absolute;
+	top: 22px;
+	left: 0;
+	width: 180%;
+	height: auto;
+	max-width: none;
+	max-height: none;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+/* Gift Cards card — image centered, proportional to Figma (313×253 in a 304-wide column). */
+.wtpf-os-card--gift-cards {
+	background: #FFFFFF;
+}
+
+.wtpf-os-card--gift-cards .wtpf-os-card-body {
+	background: transparent;
+	flex: 0 0 45%;
+}
+
+.wtpf-os-card--gift-cards .wtpf-os-card-image-side {
+	background: transparent;
+	flex: 1 1 auto;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	overflow: hidden;
+	position: relative;
+}
+
+/* Blurred gradient glow behind the mockup (matches Figma Rectangle 1798). */
+.wtpf-os-card--gift-cards .wtpf-os-card-image-side::before {
+	content: '';
+	position: absolute;
+	width: min( 303px, 100% );
+	height: 304px;
+	top: 50%;
+	right: -40px;
+	transform: translateY(-50%) rotate(-180deg);
+	background: linear-gradient(146.79deg, #D6E3FF -3.98%, #FAF8FF 33.43%);
+	filter: blur(12px);
+	border-radius: 10px;
+	z-index: 0;
+	pointer-events: none;
+}
+
+.wtpf-os-card--gift-cards .wtpf-os-card-image-side img {
+	position: static;
+	width: 95%;
+	height: auto;
+	max-width: min( 323px, 95% );
+	max-height: 100%;
+	object-fit: contain;
+	z-index: 1;
+}
+
+/* Sequential Order Numbers card — mockup illustration on the right (matches Figma). */
+.wtpf-os-card--seq-orders .wtpf-os-card-body {
+	flex: 0 0 45%;
+	background: #FFFFFF;
+}
+
+.wtpf-os-card--seq-orders .wtpf-os-card-image-side {
+	background: #FFFFFF;
+	flex: 1 1 auto;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	overflow: hidden;
+	padding: 0;
+	box-sizing: border-box;
+	position: relative;
+}
+
+/* Blurred gradient glow behind the mockup (matches Figma Rectangle 1798). */
+.wtpf-os-card--seq-orders .wtpf-os-card-image-side::before {
+	content: '';
+	position: absolute;
+	width: min( 343px, 100% );
+	height: 238px;
+	top: 50%;
+	right: -40px;
+	transform: translateY(-50%) rotate(-180deg);
+	background: linear-gradient(146.79deg, #D6E3FF -3.98%, #FAF8FF 33.43%);
+	filter: blur(12px);
+	border-radius: 10px;
+	z-index: 0;
+	pointer-events: none;
+}
+
+.wtpf-os-card--seq-orders .wtpf-os-card-image-side img {
+	position: static;
+	width: 111%;
+	height: auto;
+	max-width: min( 360px, 100% );
+	max-height: 100%;
+	object-fit: contain;
+	display: block;
+	z-index: 1;
+}
+
+.wtpf-os-card-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 6px;
+	background: #F8F8FF;
+	margin: -16px -16px 12px;
+	padding: 8px 8px 8px 8px;
+	border-bottom: 1px solid #ECECEC;
+	/* Static min-height sized for a 3-line title (the longest in the data) —
+	   guarantees uniform header height across the row without JS. Stacked
+	   variant overrides this since it uses a different layout. */
+	min-height: 78px;
+	box-sizing: border-box;
+}
+
+/* Rating stays pinned to the top-right corner even when the icon-name group
+   is centered vertically within a taller header. */
+.wtpf-os-card-header .wtpf-os-card-rating {
+	align-self: flex-start;
+}
+
+/* Stacked header (icon on left, title above stars on right) — used by --with-image cards */
+.wtpf-os-card-header--stacked {
+	justify-content: flex-start;
+	gap: 12px;
+	align-items: center;
+	background: transparent;
+	/* min-height: 0; */
+}
+
+.wtpf-os-card-header--stacked .wtpf-os-card-icon {
+	margin-top: 0;
+}
+
+.wtpf-os-card-title-block {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	min-width: 0;
+	flex: 1;
+}
+
+.wtpf-os-card-header--stacked .wtpf-os-card-name {
+	font-size: 14px;
+	font-weight: 600;
+	color: #212121;
+	line-height: 1.4;
+	margin: 0;
+	min-height: 0;
+	display: block;
+}
+
+.wtpf-os-card-header--stacked .wtpf-os-card-rating--stars {
+	align-self: flex-start;
+}
+
+.wtpf-os-card-icon-name {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	flex: 1;
+	min-width: 0;
+}
+
+.wtpf-os-card-icon {
+	width: 36px;
+	height: 36px;
+	flex-shrink: 0;
+}
+
+.wtpf-os-card-name {
+	font-size: 14px;
+	font-weight: 600;
+	color: #212121;
+	line-height: 1.4;
+	/* margin-top: 2px; */
+	min-height: 2.8em;
+	display: flex;
+	align-items: center;
+}
+
+.wtpf-os-card-rating {
+	display: inline-flex;
+	align-items: center;
+	gap: 3px;
+	font-size: 13px;
+	font-weight: 600;
+	color: #212121;
+	white-space: nowrap;
+	flex-shrink: 0;
+	background: #fff;
+	border: 1px solid #ECECEC;
+	border-radius: 6px;
+	padding: 4px 8px;
+	box-shadow: 0 1px 2px rgba( 0, 0, 0, 0.04 );
+}
+
+.wtpf-os-star {
+	color: #FFB900;
+	font-size: 13px;
+	line-height: 1;
+}
+
+.wtpf-os-card-rating--stars {
+	background: transparent;
+	border: 0;
+	box-shadow: none;
+	padding: 0;
+	gap: 2px;
+}
+
+.wtpf-os-card-rating--stars .wtpf-os-star {
+	font-size: 16px;
+}
+
+.wtpf-os-card-features {
+	list-style: none;
+	margin: 0 0 8px;
+	padding: 0;
+}
+
+.wtpf-os-card-features li {
+	font-size: 14px;
+	color: #434343;
+	padding: 4px 0;
+	display: flex;
+	align-items: flex-start;
+	gap: 6px;
+	line-height: 1.45;
+}
+
+.wtpf-os-card-features li .dashicons {
+	color: #18c01d;
+	font-size: 16px;
+	width: 16px;
+	height: 16px;
+	flex-shrink: 0;
+	margin-top: 1px;
+}
+
+/* Collapsible features list — items 4+ hidden initially, animated via jQuery slide. */
+.wtpf-os-card-features--collapsible li:nth-of-type(n+4) {
+	display: none;
+}
+
+/* Show More / Show Less toggle. */
+.wtpf-os-show-more-less {
+	text-align: center;
+	margin: 0 0 12px;
+}
+
+.wtpf-os-show-more-less a {
+	display: inline-block;
+	font-size: 13px;
+	font-weight: 500;
+	color: #3171FB;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.wtpf-os-show-more-less a:hover {
+	text-decoration: underline;
+}
+
+.wtpf-os-show-more-less .wtpf-os-show-less {
+	display: none;
+}
+
+.wtpf-os-show-more-less.is-expanded .wtpf-os-show-more {
+	display: none;
+}
+
+.wtpf-os-show-more-less.is-expanded .wtpf-os-show-less {
+	display: inline-block;
+}
+
+.wtpf-os-btn-premium {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	width: 100%;
+	padding: 11px 12px;
+	background: #2369FF;
+	color: #fff;
+	border-radius: 3.28px;
+	text-decoration: none;
+	font-size: 15px;
+	font-weight: 600;
+	margin-top: auto;
+	box-sizing: border-box;
+	transition: background 0.15s ease;
+}
+
+.wtpf-os-btn-premium:hover,
+.wtpf-os-btn-premium:focus {
+	background: #1A55D6;
+	color: #fff;
+	text-decoration: none;
+}
+
+.wtpf-os-btn-premium .dashicons {
+	font-size: 14px;
+	width: 14px;
+	height: 14px;
+}
+
+/* -----------------------------------------------------------------------
+   Image column card (screenshot placeholder in mixed rows)
+----------------------------------------------------------------------- */
+.wtpf-os-card-image {
+	background: #F0F6FF;
+	border: 1px solid #e0e0e0;
+	border-radius: 10px;
+	overflow: hidden;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	aspect-ratio: 312.96 / 252.74;
+	min-height: 0;
+}
+
+.wtpf-os-card-image img {
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	padding: 12px;
+	box-sizing: border-box;
+}
+
+/* -----------------------------------------------------------------------
+   Hero / featured card (full-width with screenshot)
+----------------------------------------------------------------------- */
+.wtpf-os-hero-card {
+	background: #fff;
+	border: 1px solid #ECECEC;
+	border-radius: 10px;
+	display: flex;
+	overflow: hidden;
+	margin-bottom: 16px;
+	box-shadow: 0 1px 3px rgba( 0, 0, 0, 0.04 );
+	min-height: 250px;
+}
+
+.wtpf-os-hero-left {
+	flex: 1;
+	padding: 16px 0px 16px 8px;
+	min-width: 0;
+}
+
+/* Hero-right: explicit flex basis so the container has a deterministic size
+   at every zoom level. Previously it had flex-shrink:0 with no width, and the
+   img inside used width:100% — a circular sizing definition that browsers
+   resolve inconsistently. The GDPR SVG (cookie-consent.svg) has no baked
+   background, so we keep a neutral white surface and use object-fit: contain
+   for aspect-safe scaling. Position: relative anchors the absolutely-filled
+   img so it can't affect the container's intrinsic size. */
+.wtpf-os-hero-right {
+	flex: 0 0 40%;
+	background: #FFFFFF;
+	position: relative;
+	overflow: hidden;
+	min-width: 0;
+}
+
+.wtpf-os-hero-right img {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	max-width: none;
+	max-height: none;
+	object-fit: contain;
+	object-position: center;
+	display: block;
+}
+
+/* PDF cluster variant — 3 SVGs positioned per Figma design (lavender box 332×194). */
+.wtpf-os-hero-right--pdf-cluster {
+	display: block;
+	min-height: 190px;
+	/* width: 27%; */
+	height: auto;
+	aspect-ratio: 332 / 194;
+	align-self: center;
+	overflow: visible;
+	position: relative;
+	border-top-left-radius: 11px;
+	border-bottom-left-radius: 11px;
+	background: #F9F1FF;
+}
+
+.wtpf-os-hero-right--pdf-cluster::before {
+	content: '';
+	position: absolute;
+	left: 18.98%;
+	top: 51.03%;
+	width: 81.02%;
+	height: 0;
+	border-top: 1px dashed #033370;
+	z-index: 0;
+	pointer-events: none;
+}
+
+.wtpf-os-hero-right--pdf-cluster .wtpf-os-pdf {
+	position: absolute;
+	display: block;
+	height: auto;
+	max-height: none;
+	object-fit: contain;
+	top: 50%;
+	transform: translateY(-50%);
+	z-index: 1;
+}
+
+.wtpf-os-hero-right--pdf-cluster .wtpf-os-pdf--left {
+	left: -9.34%;
+	width: 27.42%;
+}
+
+.wtpf-os-hero-right--pdf-cluster .wtpf-os-pdf--center {
+	left: 23.90%;
+	width: 38.53%;
+	background: transparent;
+}
+
+.wtpf-os-hero-right--pdf-cluster .wtpf-os-pdf--right {
+	left: 68.24%;
+	width: 27.42%;
+	background: transparent;
+}
+
+.wtpf-os-hero-title-row {
+	display: flex;
+	align-items: flex-start;
+	gap: 19px;
+	margin-bottom: 0;
+}
+
+.wtpf-os-hero-icon {
+	width: 39px;
+	height: 39px;
+	flex-shrink: 0;
+	/* border-radius: 8px; */
+}
+
+.wtpf-os-hero-title-block {
+	display: flex;
+	flex-direction: column;
+	gap: 7px;
+	min-width: 0;
+}
+
+.wtpf-os-hero-name {
+	font-size: 14px;
+	font-weight: 600;
+	color: #212121;
+	line-height: 1;
+	margin: 0;
+}
+
+.wtpf-os-hero-divider {
+	height: 1px;
+	background: #EBEBEB;
+	margin: 18px 0;
+}
+
+.wtpf-os-hero-stars {
+	display: flex;
+	gap: 2px;
+	margin: 0;
+}
+
+.wtpf-os-hero-stars .wtpf-os-star {
+	color: #FFD703;
+	font-size: 18px;
+	line-height: 1;
+}
+
+.wtpf-os-hero-desc {
+	font-size: 14px;
+	color: #434343;
+	margin: 0 0 18px;
+	line-height: 1.55;
+	max-width: 500px;
+}
+
+.wtpf-os-btn-premium--block {
+	width: 280px;
+	align-self: flex-start;
+}
+
+/* -----------------------------------------------------------------------
+   Bundle offer section
+----------------------------------------------------------------------- */
+.wtpf-os-bundle {
+	background: radial-gradient(circle at 100% 100%, #F7FFCA 0%, #F9FFD8 4%, #FFF 30%, #FFF 100%);
+	border: 1px solid #ECECEC;
+	border-radius: 9.46px;
+	padding: 24px 24px;
+	margin-bottom: 16px;
+	display: flex;
+	align-items: center;
+	gap: 28px;
+}
+
+.wtpf-os-bundle-content {
+	flex: 1;
+	min-width: 0;
+}
+
+.wtpf-os-bundle-illustration {
+	flex-shrink: 0;
+	width: 240px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.wtpf-os-bundle-illustration img {
+	max-width: 100%;
+	max-height: 220px;
+	object-fit: contain;
+}
+
+@media ( max-width: 780px ) {
+	.wtpf-os-bundle {
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+	.wtpf-os-bundle-illustration {
+		width: 100%;
+		max-height: 200px;
+	}
+}
+
+.wtpf-os-bundle-tag {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	color: #212121;
+	border-radius: 10px;
+	padding: 6px 14px;
+	font-size: 13px;
+	font-weight: 600;
+	margin-bottom: 14px;
+	border-width: 1.5px;
+	border-style: solid;
+}
+
+.wtpf-os-bundle-tag--green {
+	background: #DFFAD9;
+	border: none;
+}
+
+.wtpf-os-bundle-tag--yellow {
+	background: #FFF4C2;
+	border: none;
+}
+
+.wtpf-os-bundle-tag-emoji {
+	font-size: 14px;
+	line-height: 1;
+}
+
+.wtpf-os-bundle-title {
+	font-size: 20px;
+	font-weight: 700;
+	color: #212121;
+	margin-bottom: 8px;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.wtpf-os-bundle-title a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.wtpf-os-bundle-title a:hover {
+	color: #007FFF;
+}
+
+.wtpf-os-bundle-title .dashicons {
+	font-size: 14px;
+	width: 14px;
+	height: 14px;
+	color: #007FFF;
+}
+
+.wtpf-os-bundle-desc {
+	font-size: 13px;
+	color: #434343;
+	margin-bottom: 12px;
+	line-height: 1.5;
+}
+
+.wtpf-os-bundle-pills {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	margin-bottom: 12px;
+}
+
+.wtpf-os-bundle-pill {
+	background: #F1F5FB;
+	border: 1px solid #E2E8F0;
+	border-radius: 20px;
+	padding: 6px 14px;
+	font-size: 13px;
+	color: #212121;
+	font-weight: 500;
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+}
+
+.wtpf-os-bundle-pill .dashicons {
+	color: #18c01d;
+	font-size: 14px;
+	width: 14px;
+	height: 14px;
+}
+
+.wtpf-os-bundle-pricing {
+	font-size: 16px;
+	color: #212121;
+	margin-bottom: 16px;
+	font-weight: 500;
+}
+
+.wtpf-os-bundle-pricing s {
+	color: #9CA3AF;
+	margin-right: 6px;
+	font-weight: 400;
+}
+
+.wtpf-os-bundle-pricing strong {
+	color: #2369FF;
+	font-weight: 700;
+	font-size: 22px;
+	margin-right: 8px;
+}
+
+.wtpf-os-savings {
+	color: #F5811F;
+	font-weight: 600;
+}
+
+.wtpf-os-btn-bundle {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	min-width: 280px;
+	padding: 11px 12px;
+	background: #2369FF;
+	color: #fff;
+	border-radius: 6px;
+	text-decoration: none;
+	font-size: 15px;
+	font-weight: 600;
+	box-sizing: border-box;
+	transition: background 0.15s ease;
+	align-self: flex-start;
+}
+
+.wtpf-os-btn-bundle:hover,
+.wtpf-os-btn-bundle:focus {
+	background: #1A55D6;
+	color: #fff;
+	text-decoration: none;
+}
+
+/* -----------------------------------------------------------------------
+   Standalone app card (e.g. EMA app)
+----------------------------------------------------------------------- */
+.wtpf-os-standalone {
+	background: #fff;
+	border: 1px solid #ECECEC;
+	border-radius: 10px;
+	margin-bottom: 16px;
+	display: flex;
+	overflow: hidden;
+	box-shadow: 0 1px 3px rgba( 0, 0, 0, 0.04 );
+}
+
+.wtpf-os-standalone-content {
+	flex: 1;
+	padding: 18px 22px;
+	min-width: 0;
+	display: flex;
+	flex-direction: column;
+}
+
+.wtpf-os-standalone-header {
+	display: flex;
+	align-items: center;
+	gap: 14px;
+	padding-bottom: 12px;
+	margin-bottom: 12px;
+	border-bottom: 1px solid #ECECEC;
+}
+
+.wtpf-os-standalone-icon {
+	width: 44px;
+	height: 44px;
+	flex-shrink: 0;
+	border-radius: 8px;
+}
+
+.wtpf-os-standalone-name {
+	font-size: 18px;
+	font-weight: 700;
+	color: #212121;
+	line-height: 1.3;
+	margin: 0;
+}
+
+.wtpf-os-standalone-desc {
+	font-size: 16px;
+	color: #434343;
+	line-height: 1.55;
+	margin: 0 0 14px;
+}
+
+.wtpf-os-standalone-screenshot {
+	width: 40%;
+	position: relative;
+	overflow: hidden;
+	flex-shrink: 0;
+	align-self: stretch;
+}
+
+.wtpf-os-standalone-screenshot::before {
+	content: '';
+	position: absolute;
+	left: 10.8%;
+	top: 20.3%;
+	width: 99.5%;
+	height: 82.5%;
+	background: rgba(234, 238, 255, 0.4);
+	pointer-events: none;
+	z-index: 0;
+	border-radius: 16px;
+}
+
+.wtpf-os-standalone-screenshot img {
+	position: absolute;
+	top: 50%;
+	left: 8%;
+	transform: translateY(-50%);
+	/* width: 115%; */
+	height: auto;
+	max-width: none;
+	max-height: none;
+	display: block;
+	z-index: 1;
+}
+
+@media ( max-width: 780px ) {
+	.wtpf-os-standalone {
+		flex-direction: column;
+	}
+
+	.wtpf-os-standalone-screenshot {
+		width: 100%;
+		max-height: 220px;
+	}
+}
+
+/* -----------------------------------------------------------------------
+   Responsive
+----------------------------------------------------------------------- */
+@media ( max-width: 900px ) {
+	.wtpf-os-card-grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	.wtpf-os-hero-right {
+		display: none;
+	}
+
+	.wtpf-os-card--with-image {
+		flex-direction: column;
+	}
+
+	.wtpf-os-card--with-image .wtpf-os-card-image-side {
+		min-height: 180px;
+	}
+}
+
+@media ( max-width: 960px ) {
+	.wtpf-os-sidebar {
+		width: 180px;
+	}
+}
+
+@media ( max-width: 782px ) {
+	.wtpf-os-layout {
+		flex-direction: column;
+	}
+
+	.wtpf-os-sidebar {
+		width: 100%;
+	}
+
+	.wtpf-os-sidebar-nav {
+		display: flex;
+		flex-wrap: wrap;
+		padding: 8px;
+		gap: 4px;
+	}
+
+	.wtpf-os-cat-link {
+		border-left: none;
+		border-bottom: 3px solid transparent;
+		border-radius: 4px;
+		padding: 8px 12px;
+	}
+
+	.wtpf-os-cat-link.active {
+		border-left: none;
+		border-bottom-color: #007FFF;
+	}
+
+	.wtpf-os-trust-badges {
+		display: none;
+	}
+}
+
+@media ( max-width: 600px ) {
+	.wtpf-os-card-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.wtpf-os-card-image {
+		display: none;
+	}
+
+	.wtpf-os-card--with-image {
+		grid-column: span 1;
+	}
+
+	.wtpf-os-standalone {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+}

@@ -1,23 +1,22 @@
-# Copyright (C) 2024 WebToffee
+# Copyright (C) 2026 WebToffee
 # This file is distributed under the GPL-3.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: WebToffee WooCommerce Product Feed & Sync Manager 2.2.6\n"
+"Project-Id-Version: WebToffee WooCommerce Product Feeds - Google Shopping, Pinterest, TikTok Ads, & More 2.4.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/webtoffee-product-feed\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-12-17T10:35:18+00:00\n"
+"POT-Creation-Date: 2026-08-04T05:00:42+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.10.0\n"
+"X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: webtoffee-product-feed\n"
 
 #. Plugin Name of the plugin
 #: webtoffee-product-feed.php
-#: admin/views/admin-settings-other-solutions.php:44
-msgid "WebToffee WooCommerce Product Feed & Sync Manager"
+msgid "WebToffee WooCommerce Product Feeds - Google Shopping, Pinterest, TikTok Ads, & More"
 msgstr ""
 
 #. Plugin URI of the plugin
@@ -40,502 +39,1512 @@ msgstr ""
 msgid "https://www.webtoffee.com"
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:141
+#: admin/banner/class-wbte-ema-banner.php:146
+#: admin/banner/class-wt-bfcm-twenty-twenty-five.php:134
+msgid "Did you know?"
+msgstr ""
+
+#: admin/banner/class-wbte-ema-banner.php:147
+msgid "You can boost your store revenue and recover lost sales with automated email campaigns, cart recovery, and upsell popups using the WebToffee Marketing Automation App."
+msgstr ""
+
+#: admin/banner/class-wbte-ema-banner.php:150
+msgid "Sign Up for Free"
+msgstr ""
+
+#: admin/banner/class-wbte-ema-banner.php:152
+msgid "Dismiss this notice."
+msgstr ""
+
+#. translators: 1: a tag opening, 2: a tag closing.
+#: admin/banner/class-wt-bfcm-twenty-twenty-five.php:137
+msgid "With the %1$s Smart Coupons %2$s plugin, you can create Buy One Get One offers and advanced coupons that boost sales during BFCM."
+msgstr ""
+
+#: admin/banner/class-wt-bfcm-twenty-twenty-five.php:142
+msgid "Get Plugin Now"
+msgstr ""
+
+#: admin/banner/class-wt-bfcm-twenty-twenty-five.php:143
+msgid "Maybe later"
+msgstr ""
+
+#: admin/banner/class-wt-bfcm-twenty-twenty-five.php:200
+msgid "Black Friday Cyber Monday 2025"
+msgstr ""
+
+#: admin/banner/class-wt-bfcm-twenty-twenty-five.php:204
+msgid "Never Miss This Deal"
+msgstr ""
+
+#. translators: 1: Discount text with span wrapper, e.g. <span>30% OFF</span>.
+#: admin/banner/class-wt-bfcm-twenty-twenty-five.php:211
+msgid "Your Last Chance to Avail %1$s on WebToffee Plugins. Grab the deal before it`s gone!"
+msgstr ""
+
+#: admin/banner/class-wt-bfcm-twenty-twenty-five.php:212
+msgid "OFF"
+msgstr ""
+
+#: admin/banner/class-wt-bfcm-twenty-twenty-five.php:218
+msgid "View plugins"
+msgstr ""
+
+#: admin/class-webtoffee-product-feed-sync-admin.php:146
 msgid "Error."
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:142
-#: admin/class-webtoffee-product-feed-sync-admin.php:193
+#: admin/class-webtoffee-product-feed-sync-admin.php:147
+#: admin/class-webtoffee-product-feed-sync-admin.php:204
 msgid "Success."
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:143
-#: admin/class-webtoffee-product-feed-sync-admin.php:194
+#: admin/class-webtoffee-product-feed-sync-admin.php:148
+#: admin/class-webtoffee-product-feed-sync-admin.php:205
 msgid "Loading..."
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:144
+#: admin/class-webtoffee-product-feed-sync-admin.php:149
 msgid "Processing Sync..."
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:145
+#: admin/class-webtoffee-product-feed-sync-admin.php:150
 msgid "All the products have been synced successfully."
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:186
-msgid "Settings updated."
+#: admin/class-webtoffee-product-feed-sync-admin.php:151
+msgid "Product sync completed."
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:187
-msgid "All fields are mandatory"
+#: admin/class-webtoffee-product-feed-sync-admin.php:152
+msgid "Check FB Catalog"
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:188
-msgid "Unable to update Settingss."
+#. translators: %s: number of products found
+#: admin/class-webtoffee-product-feed-sync-admin.php:154
+msgid "%s products (including variations) found."
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:189
-msgid "Unable to delete template"
-msgstr ""
-
-#: admin/class-webtoffee-product-feed-sync-admin.php:190
-msgid "Deleting template..."
-msgstr ""
-
-#: admin/class-webtoffee-product-feed-sync-admin.php:191
-msgid "Value is empty."
-msgstr ""
-
-#: admin/class-webtoffee-product-feed-sync-admin.php:192
-msgid "Something went wrong. Please reload and check or %s contact our support %s for easy troubleshooting."
-msgstr ""
-
-#: admin/class-webtoffee-product-feed-sync-admin.php:195
-#: admin/modules/cron/cron.php:513
-msgid "Are you sure?"
+#: admin/class-webtoffee-product-feed-sync-admin.php:155
+msgid "Map FB categories and Sync"
 msgstr ""
 
 #: admin/class-webtoffee-product-feed-sync-admin.php:196
-msgid "Use expression as value."
+msgid "Settings updated."
 msgstr ""
 
 #: admin/class-webtoffee-product-feed-sync-admin.php:197
-#: includes/class-wt-productfeed-uninstall-feedback.php:96
-msgid "Cancel"
+msgid "All fields are mandatory"
 msgstr ""
 
 #: admin/class-webtoffee-product-feed-sync-admin.php:198
-msgid "Feed creation cancelled"
+msgid "Unable to update Settingss."
 msgstr ""
 
 #: admin/class-webtoffee-product-feed-sync-admin.php:199
+msgid "Unable to delete template"
+msgstr ""
+
+#: admin/class-webtoffee-product-feed-sync-admin.php:200
+msgid "Deleting template..."
+msgstr ""
+
+#: admin/class-webtoffee-product-feed-sync-admin.php:201
+msgid "Value is empty."
+msgstr ""
+
+#. translators: %1$s is the opening HTML tag, %2$s is the closing HTML tag for the support link
+#: admin/class-webtoffee-product-feed-sync-admin.php:203
+msgid "Something went wrong. Please reload and check or %1$s contact our support %2$s for easy troubleshooting."
+msgstr ""
+
+#: admin/class-webtoffee-product-feed-sync-admin.php:206
+#: admin/modules/cron/cron.php:554
+#: admin/modules/history/history.php:402
+msgid "Are you sure?"
+msgstr ""
+
+#: admin/class-webtoffee-product-feed-sync-admin.php:207
+msgid "Use expression as value."
+msgstr ""
+
+#: admin/class-webtoffee-product-feed-sync-admin.php:208
+#: admin/modules/cron/views/_schedule_now.php:146
+#: admin/modules/cron/views/_schedule_update.php:168
+#: admin/modules/export/views/main.php:111
+#: admin/views/_save_template_popup.php:29
+#: includes/class-wt-productfeed-uninstall-feedback.php:100
+msgid "Cancel"
+msgstr ""
+
+#: admin/class-webtoffee-product-feed-sync-admin.php:209
+msgid "Feed creation cancelled"
+msgstr ""
+
+#: admin/class-webtoffee-product-feed-sync-admin.php:210
+#: admin/modules/history/history.php:404
 msgid "URL copied to clipboard"
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:233
+#: admin/class-webtoffee-product-feed-sync-admin.php:245
+#: admin/partials/webtoffee-product-feed-admin-display.php:10
 msgid "Settings"
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:234
+#: admin/class-webtoffee-product-feed-sync-admin.php:246
 msgid "FB Sync"
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:235
+#: admin/class-webtoffee-product-feed-sync-admin.php:247
 msgid "Support"
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:236
+#: admin/class-webtoffee-product-feed-sync-admin.php:248
 msgid "Documentation"
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:237
+#: admin/class-webtoffee-product-feed-sync-admin.php:249
 msgid "Review"
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:238
+#: admin/class-webtoffee-product-feed-sync-admin.php:250
 msgid "Upgrade"
 msgstr ""
 
 #. translators: 1: Product Feed 2:: five stars
-#: admin/class-webtoffee-product-feed-sync-admin.php:264
+#: admin/class-webtoffee-product-feed-sync-admin.php:276
 msgid "If you like %1$s please leave us a %2$s rating. A huge thanks in advance!"
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:265
+#: admin/class-webtoffee-product-feed-sync-admin.php:277
 msgid "Product Feed for WooCommerce"
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:266
+#: admin/class-webtoffee-product-feed-sync-admin.php:278
 msgid "Thanks :)"
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:284
+#: admin/class-webtoffee-product-feed-sync-admin.php:296
 msgid "Manage Connection"
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:288
+#: admin/class-webtoffee-product-feed-sync-admin.php:300
 msgid "Sync Products"
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:289
+#: admin/class-webtoffee-product-feed-sync-admin.php:301
 msgid "FB Category map"
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:290
-#: admin/class-webtoffee-product-feed-sync-admin.php:1242
+#: admin/class-webtoffee-product-feed-sync-admin.php:302
+#: admin/class-webtoffee-product-feed-sync-admin.php:1270
 msgid "Logs"
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:367
+#: admin/class-webtoffee-product-feed-sync-admin.php:379
 msgid "You do not have permission to uninstall Facebook Business Extension."
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:405
+#: admin/class-webtoffee-product-feed-sync-admin.php:417
 msgid "You do not have permission to view"
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:452
+#: admin/class-webtoffee-product-feed-sync-admin.php:464
 msgid "Grow your store with Facebook Shops & Dynamic Ads"
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:458
+#: admin/class-webtoffee-product-feed-sync-admin.php:470
 msgid "You must connect with your FB business account as a pre-requisite to start synchronizing your products with Facebook."
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:460
+#: admin/class-webtoffee-product-feed-sync-admin.php:472
 msgid "If you haven't already set up a Facebook shop in your business account visit"
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:460
+#: admin/class-webtoffee-product-feed-sync-admin.php:472
 msgid "this link"
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:460
+#: admin/class-webtoffee-product-feed-sync-admin.php:472
 msgid "to set up one."
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:461
-#: admin/class-webtoffee-product-feed-sync-admin.php:528
+#: admin/class-webtoffee-product-feed-sync-admin.php:473
+#: admin/class-webtoffee-product-feed-sync-admin.php:532
 msgid "Use"
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:461
-#: admin/class-webtoffee-product-feed-sync-admin.php:528
+#: admin/class-webtoffee-product-feed-sync-admin.php:473
+#: admin/class-webtoffee-product-feed-sync-admin.php:532
+#: admin/modules/export/views/_export_mapping_page.php:7
+msgid "this"
+msgstr ""
+
+#: admin/class-webtoffee-product-feed-sync-admin.php:473
+#: admin/class-webtoffee-product-feed-sync-admin.php:532
 msgid "reference to see which product fields will be synchronised by this plugin."
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:468
+#: admin/class-webtoffee-product-feed-sync-admin.php:480
 msgid "Connect Facebook"
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:503
+#: admin/class-webtoffee-product-feed-sync-admin.php:514
 msgid "Catalogs associated with your FB account:"
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:522
+#: admin/class-webtoffee-product-feed-sync-admin.php:526
 msgid "Something went wrong with the connection establishment to catalogs, please refresh or try disconnecting and connect again to FB"
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:540
+#: admin/class-webtoffee-product-feed-sync-admin.php:544
 msgid "The connection with your Facebook business account has expired. Please reconnect to enable product syncing."
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:550
+#: admin/class-webtoffee-product-feed-sync-admin.php:554
 msgid "Reconnect FB"
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:552
+#: admin/class-webtoffee-product-feed-sync-admin.php:556
 msgid "Disconnect FB"
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:573
+#: admin/class-webtoffee-product-feed-sync-admin.php:577
 msgid "Fetching the product categories, tags for sync with your FB Catalog ..."
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:582
+#: admin/class-webtoffee-product-feed-sync-admin.php:586
 msgid "Filter Products"
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:585
+#: admin/class-webtoffee-product-feed-sync-admin.php:589
 msgid "Filter products for FB sync"
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:586
+#: admin/class-webtoffee-product-feed-sync-admin.php:590
 msgid "Filter data necessary for sync with my FB Catalog as per the below criteria by excluding non-relevant products."
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:592
+#: admin/class-webtoffee-product-feed-sync-admin.php:596
 msgid "Select FB Catalog"
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:608
+#: admin/class-webtoffee-product-feed-sync-admin.php:612
 msgid "Exclude Product Categories"
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:610
-#: admin/class-webtoffee-product-feed-sync-admin.php:626
+#: admin/class-webtoffee-product-feed-sync-admin.php:614
+#: admin/class-webtoffee-product-feed-sync-admin.php:630
 msgid "Search for a product category&hellip;"
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:624
+#: admin/class-webtoffee-product-feed-sync-admin.php:628
 msgid "Only include specific categories"
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:640
+#: admin/class-webtoffee-product-feed-sync-admin.php:644
 msgid "Exclude Product Tags"
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:642
+#: admin/class-webtoffee-product-feed-sync-admin.php:646
 msgid "Search for a product tag&hellip;"
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:657
+#: admin/class-webtoffee-product-feed-sync-admin.php:661
 msgid "Product description type"
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:662
+#: admin/class-webtoffee-product-feed-sync-admin.php:666
 msgid "Short"
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:663
+#: admin/class-webtoffee-product-feed-sync-admin.php:667
 msgid "Long"
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:679
+#: admin/class-webtoffee-product-feed-sync-admin.php:683
 msgid "Products per batch"
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:683
+#: admin/class-webtoffee-product-feed-sync-admin.php:687
 msgid "The number of records that the server will process for every iteration within the available server timeout interval. If the process fails you can lower this number accordingly and try again. Defaulted to 10 records. Maximum number allowed as per the Facebook limits is 5000."
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:691
+#: admin/class-webtoffee-product-feed-sync-admin.php:695
 msgid "Map Categories"
-msgstr ""
-
-#: admin/class-webtoffee-product-feed-sync-admin.php:853
-#: admin/class-webtoffee-product-feed-sync-admin.php:991
-#: admin/class-webtoffee-product-feed-sync-admin.php:1392
-#: includes/fbcatalog/class-wt-catalog-manager-settings.php:101
-msgid "Mapping Added Successfully"
 msgstr ""
 
 #: admin/class-webtoffee-product-feed-sync-admin.php:857
 #: admin/class-webtoffee-product-feed-sync-admin.php:995
-#: admin/class-webtoffee-product-feed-sync-admin.php:1395
+#: admin/class-webtoffee-product-feed-sync-admin.php:1478
+#: includes/fbcatalog/class-wt-catalog-manager-settings.php:101
+msgid "Mapping Added Successfully"
+msgstr ""
+
+#: admin/class-webtoffee-product-feed-sync-admin.php:861
+#: admin/class-webtoffee-product-feed-sync-admin.php:999
+#: admin/class-webtoffee-product-feed-sync-admin.php:1481
 #: includes/fbcatalog/class-wt-catalog-manager-settings.php:105
 msgid "Failed To Add Mapping"
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:1244
+#: admin/class-webtoffee-product-feed-sync-admin.php:1018
+#: admin/class-webtoffee-product-feed-sync-admin.php:1379
+msgid "You do not have sufficient permissions to access this feature."
+msgstr ""
+
+#: admin/class-webtoffee-product-feed-sync-admin.php:1272
 msgid "Lists log of failed product syncs, mostly required for debugging purposes."
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:1245
+#: admin/class-webtoffee-product-feed-sync-admin.php:1273
 msgid "Uploaded data logs"
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:1245
+#: admin/class-webtoffee-product-feed-sync-admin.php:1273
 msgid "The log file name starts with wt-feed-upload"
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:1264
+#: admin/class-webtoffee-product-feed-sync-admin.php:1300
+msgid "Batch Started at"
+msgstr ""
+
+#: admin/class-webtoffee-product-feed-sync-admin.php:1301
 msgid "Action"
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:1295
+#: admin/class-webtoffee-product-feed-sync-admin.php:1317
+msgid "Catalog: "
+msgstr ""
+
+#: admin/class-webtoffee-product-feed-sync-admin.php:1317
+msgid "Started at:"
+msgstr ""
+
+#: admin/class-webtoffee-product-feed-sync-admin.php:1332
 msgid "View Status"
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:1314
+#: admin/class-webtoffee-product-feed-sync-admin.php:1351
 msgid "No logs found."
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:1322
+#: admin/class-webtoffee-product-feed-sync-admin.php:1359
 msgid "View log"
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:1356
+#: admin/class-webtoffee-product-feed-sync-admin.php:1401
 msgid "The request could not be handled"
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:1420
-#: admin/class-webtoffee-product-feed-sync-admin.php:1421
-#: admin/class-webtoffee-product-feed-sync-admin.php:1443
-#: admin/class-webtoffee-product-feed-sync-admin.php:1444
+#: admin/class-webtoffee-product-feed-sync-admin.php:1422
+msgid "Invalid request."
+msgstr ""
+
+#: admin/class-webtoffee-product-feed-sync-admin.php:1436
+#: admin/class-webtoffee-product-feed-sync-admin.php:1446
+#: admin/class-webtoffee-product-feed-sync-admin.php:1455
+msgid "Access denied. Unable to save mapping."
+msgstr ""
+
+#: admin/class-webtoffee-product-feed-sync-admin.php:1506
+#: admin/class-webtoffee-product-feed-sync-admin.php:1507
+#: admin/class-webtoffee-product-feed-sync-admin.php:1529
+#: admin/class-webtoffee-product-feed-sync-admin.php:1530
 msgid "General Settings"
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:1453
+#: admin/class-webtoffee-product-feed-sync-admin.php:1539
 msgid "Facebook/Instagram Catalog Sync"
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:1454
+#: admin/class-webtoffee-product-feed-sync-admin.php:1540
 msgid "FB/Insta Catalog"
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:1540
-#: admin/class-webtoffee-product-feed-sync-admin.php:1597
-msgid "Settings Updated"
+#: admin/class-webtoffee-product-feed-sync-admin.php:1561
+msgid "Pro upgrade"
 msgstr ""
 
-#: admin/class-webtoffee-product-feed-sync-admin.php:1611
-#: admin/modules/cron/cron.php:197
+#: admin/class-webtoffee-product-feed-sync-admin.php:1599
+#: admin/class-webtoffee-product-feed-sync-admin.php:1641
+#: admin/class-webtoffee-product-feed-sync-admin.php:1699
+#: admin/modules/cron/cron.php:234
+#: admin/modules/export/export.php:325
+#: admin/modules/export/export.php:639
+#: admin/modules/history/history.php:95
 msgid "Error"
 msgstr ""
 
-#: admin/modules/bing/bing.php:171
+#: admin/class-webtoffee-product-feed-sync-admin.php:1627
+#: admin/class-webtoffee-product-feed-sync-admin.php:1685
+msgid "Settings Updated"
+msgstr ""
+
+#: admin/class-webtoffee-product-feed-sync-admin.php:1713
+msgid "Template deleted successfully"
+msgstr ""
+
+#: admin/modules/bing/bing.php:85
+#: admin/modules/google/data/wt-feed-category-mapping.php:150
+#: admin/modules/google/google.php:91
+#: admin/modules/heureka/heureka.php:81
+#: admin/modules/yandex/yandex.php:82
+msgid "Google Category"
+msgstr ""
+
+#: admin/modules/bing/bing.php:99
+#: admin/modules/google/google.php:105
+#: admin/modules/heureka/heureka.php:95
+#: admin/modules/yandex/yandex.php:96
+msgid "The Google Category corresponding to this category in the website."
+msgstr ""
+
+#: admin/modules/bing/bing.php:179
 msgid "Bing Shopping"
 msgstr ""
 
-#: admin/modules/bing/bing.php:527
-#: admin/modules/fruugo/fruugo.php:568
-#: admin/modules/idealo/idealo.php:508
-#: admin/modules/leguide/leguide.php:492
-#: admin/modules/onbuy/onbuy.php:665
-#: admin/modules/pinterest/pinterest.php:452
-#: admin/modules/pricerunner/pricerunner.php:476
-#: admin/modules/pricespy/pricespy.php:528
-#: admin/modules/shopzilla/shopzilla.php:538
-#: admin/modules/skroutz/skroutz.php:553
-#: admin/modules/snapchat/snapchat.php:425
-#: admin/modules/tiktok/tiktok.php:436
-#: admin/modules/tiktokshop/tiktokshop.php:473
+#: admin/modules/bing/bing.php:265
+#: admin/modules/facebook/facebook.php:253
+#: admin/modules/google/google.php:302
+#: admin/modules/idealo/idealo.php:254
+#: admin/modules/leguide/leguide.php:209
+#: admin/modules/pricerunner/pricerunner.php:226
+#: admin/modules/pricespy/pricespy.php:210
+#: admin/modules/rakuten/rakuten.php:209
+#: admin/modules/shopzilla/shopzilla.php:217
+#: admin/modules/skroutz/skroutz.php:278
+#: admin/modules/snapchat/snapchat.php:210
+msgid "Availability & Price"
+msgstr ""
+
+#: admin/modules/bing/bing.php:266
+#: admin/modules/facebook/facebook.php:255
+#: admin/modules/google/google.php:303
+#: admin/modules/heureka/heureka.php:276
+#: admin/modules/idealo/idealo.php:255
+#: admin/modules/leguide/leguide.php:210
+#: admin/modules/pinterest/pinterest.php:212
+#: admin/modules/pricerunner/pricerunner.php:227
+#: admin/modules/pricespy/pricespy.php:211
+#: admin/modules/rakuten/rakuten.php:210
+#: admin/modules/shopzilla/shopzilla.php:218
+#: admin/modules/skroutz/skroutz.php:280
+#: admin/modules/snapchat/snapchat.php:211
+#: admin/modules/tiktok/tiktok.php:212
+#: admin/modules/yandex/yandex.php:275
+msgid "Unique Product Identifiers"
+msgstr ""
+
+#: admin/modules/bing/bing.php:267
+#: admin/modules/facebook/facebook.php:256
+#: admin/modules/google/google.php:304
+#: admin/modules/idealo/idealo.php:256
+#: admin/modules/leguide/leguide.php:211
+#: admin/modules/pinterest/pinterest.php:213
+#: admin/modules/pricerunner/pricerunner.php:228
+#: admin/modules/pricespy/pricespy.php:212
+#: admin/modules/rakuten/rakuten.php:211
+#: admin/modules/shopzilla/shopzilla.php:219
+#: admin/modules/skroutz/skroutz.php:281
+#: admin/modules/snapchat/snapchat.php:212
+#: admin/modules/tiktok/tiktok.php:213
+msgid "Detailed Product Attributes"
+msgstr ""
+
+#: admin/modules/bing/bing.php:268
+#: admin/modules/pricerunner/pricerunner.php:229
+#: helpers/class-wt-common-helper.php:282
+msgid "Shipping"
+msgstr ""
+
+#: admin/modules/bing/bing.php:269
+#: admin/modules/google/google.php:306
+#: admin/modules/pricerunner/pricerunner.php:230
+#: admin/modules/pricespy/pricespy.php:214
+#: admin/modules/shopzilla/shopzilla.php:221
+msgid "Product Combinations"
+msgstr ""
+
+#: admin/modules/bing/bing.php:270
+#: admin/modules/google/google.php:307
+#: admin/modules/pinterest/pinterest.php:215
+#: admin/modules/pricerunner/pricerunner.php:231
+#: admin/modules/pricespy/pricespy.php:215
+#: admin/modules/shopzilla/shopzilla.php:222
+msgid "Adult Products"
+msgstr ""
+
+#: admin/modules/bing/bing.php:271
+#: admin/modules/google/google.php:308
+#: admin/modules/pricerunner/pricerunner.php:232
+#: admin/modules/pricespy/pricespy.php:216
+#: admin/modules/shopzilla/shopzilla.php:223
+msgid "Ads Attributes"
+msgstr ""
+
+#: admin/modules/bing/bing.php:272
+#: admin/modules/facebook/facebook.php:257
+#: admin/modules/google/google.php:309
+#: admin/modules/leguide/leguide.php:213
+#: admin/modules/pinterest/pinterest.php:216
+#: admin/modules/pricerunner/pricerunner.php:233
+#: admin/modules/pricespy/pricespy.php:217
+#: admin/modules/rakuten/rakuten.php:213
+#: admin/modules/shopzilla/shopzilla.php:224
+#: admin/modules/snapchat/snapchat.php:213
+#: admin/modules/tiktok/tiktok.php:215
+msgid "Custom Label Attributes"
+msgstr ""
+
+#: admin/modules/bing/bing.php:273
+#: admin/modules/facebook/facebook.php:258
+#: admin/modules/google/google.php:310
+#: admin/modules/leguide/leguide.php:214
+#: admin/modules/pinterest/pinterest.php:217
+#: admin/modules/pricerunner/pricerunner.php:234
+#: admin/modules/pricespy/pricespy.php:218
+#: admin/modules/shopzilla/shopzilla.php:225
+#: admin/modules/skroutz/skroutz.php:282
+#: admin/modules/tiktok/tiktok.php:216
+msgid "Additional Attributes"
+msgstr ""
+
+#: admin/modules/bing/bing.php:274
+#: admin/modules/google/google.php:311
+#: admin/modules/leguide/leguide.php:215
+#: admin/modules/pricerunner/pricerunner.php:235
+#: admin/modules/pricespy/pricespy.php:219
+#: admin/modules/shopzilla/shopzilla.php:226
+msgid "Unit Prices (EU Countries and Switzerland Only)"
+msgstr ""
+
+#: admin/modules/bing/bing.php:275
+#: admin/modules/google/google.php:312
+#: admin/modules/idealo/idealo.php:258
+#: admin/modules/leguide/leguide.php:216
+#: admin/modules/pricerunner/pricerunner.php:236
+#: admin/modules/pricespy/pricespy.php:220
+#: admin/modules/shopzilla/shopzilla.php:227
+msgid "Energy Labels"
+msgstr ""
+
+#: admin/modules/bing/bing.php:419
+#: admin/modules/buyon_google/buyon_google.php:195
+#: admin/modules/export/export.php:94
+#: admin/modules/export/export.php:1008
+#: admin/modules/facebook/facebook.php:406
+#: admin/modules/fruugo/fruugo.php:477
+#: admin/modules/google/google.php:519
+#: admin/modules/google_local_inventory_ads/google_local_inventory_ads.php:195
+#: admin/modules/google_local_product_inventory/google_local_product_inventory.php:195
+#: admin/modules/google_product_reviews/google_product_reviews.php:74
+#: admin/modules/google_product_reviews/google_product_reviews.php:226
+#: admin/modules/google_promotions/google_promotions.php:195
+#: admin/modules/heureka/heureka.php:389
+#: admin/modules/idealo/idealo.php:412
+#: admin/modules/leguide/leguide.php:397
+#: admin/modules/onbuy/onbuy.php:555
+#: admin/modules/pinterest/pinterest.php:354
+#: admin/modules/pinterest_rss/pinterest_rss.php:263
+#: admin/modules/pricerunner/pricerunner.php:379
+#: admin/modules/pricespy/pricespy.php:432
+#: admin/modules/rakuten/rakuten.php:353
+#: admin/modules/shopmania/shopmania.php:307
+#: admin/modules/shopzilla/shopzilla.php:443
+#: admin/modules/skroutz/skroutz.php:79
+#: admin/modules/skroutz/skroutz.php:457
+#: admin/modules/snapchat/snapchat.php:327
+#: admin/modules/tiktok/tiktok.php:340
+#: admin/modules/vivino/vivino.php:227
+#: admin/modules/yandex/yandex.php:384
+msgid "XML"
+msgstr ""
+
+#: admin/modules/bing/bing.php:420
+#: admin/modules/export/export.php:98
+#: admin/modules/export/export.php:1012
+#: admin/modules/google/google.php:521
+#: admin/modules/google_local_inventory_ads/google_local_inventory_ads.php:196
+#: admin/modules/google_local_product_inventory/google_local_product_inventory.php:196
+#: admin/modules/idealo/idealo.php:411
+#: admin/modules/leguide/leguide.php:396
+#: admin/modules/rakuten/rakuten.php:355
+#: admin/modules/shopzilla/shopzilla.php:442
+#: admin/modules/snapchat/snapchat.php:329
+msgid "TXT"
+msgstr ""
+
+#: admin/modules/bing/bing.php:423
+#: admin/modules/buyon_google/buyon_google.php:72
+#: admin/modules/facebook/facebook.php:413
+#: admin/modules/google/google.php:525
+#: admin/modules/google_local_inventory_ads/google_local_inventory_ads.php:72
+#: admin/modules/google_local_inventory_ads/google_local_inventory_ads.php:199
+#: admin/modules/google_local_product_inventory/google_local_product_inventory.php:72
+#: admin/modules/google_local_product_inventory/google_local_product_inventory.php:199
+#: admin/modules/google_promotions/google_promotions.php:72
+#: admin/modules/google_promotions/google_promotions.php:199
+#: admin/modules/idealo/idealo.php:416
+#: admin/modules/leguide/leguide.php:400
+#: admin/modules/pinterest/pinterest.php:359
+#: admin/modules/pinterest_rss/pinterest_rss.php:268
+#: admin/modules/pricerunner/pricerunner.php:384
+#: admin/modules/pricespy/pricespy.php:437
+#: admin/modules/rakuten/rakuten.php:359
+#: admin/modules/shopzilla/shopzilla.php:447
+#: admin/modules/skroutz/skroutz.php:462
+#: admin/modules/snapchat/snapchat.php:333
+#: admin/modules/tiktok/tiktok.php:344
+#: admin/modules/twitter/twitter.php:402
+#: helpers/class-pf-catalog-export-helper.php:21
+msgid "Tab"
+msgstr ""
+
+#: admin/modules/bing/bing.php:424
+#: admin/modules/buyon_google/buyon_google.php:198
+#: admin/modules/facebook/facebook.php:412
+#: admin/modules/fruugo/fruugo.php:482
+#: admin/modules/google/google.php:526
+#: admin/modules/google_local_inventory_ads/google_local_inventory_ads.php:200
+#: admin/modules/google_local_product_inventory/google_local_product_inventory.php:200
+#: admin/modules/google_product_reviews/google_product_reviews.php:229
+#: admin/modules/google_promotions/google_promotions.php:200
+#: admin/modules/heureka/heureka.php:392
+#: admin/modules/idealo/idealo.php:415
+#: admin/modules/leguide/leguide.php:401
+#: admin/modules/onbuy/onbuy.php:558
+#: admin/modules/pinterest/pinterest.php:360
+#: admin/modules/pinterest_rss/pinterest_rss.php:269
+#: admin/modules/pricerunner/pricerunner.php:383
+#: admin/modules/pricespy/pricespy.php:436
+#: admin/modules/rakuten/rakuten.php:360
+#: admin/modules/skroutz/skroutz.php:461
+#: admin/modules/snapchat/snapchat.php:332
+#: admin/modules/tiktok/tiktok.php:343
+#: admin/modules/tiktokshop/tiktokshop.php:377
+#: admin/modules/twitter/twitter.php:401
+#: admin/modules/vivino/vivino.php:232
+#: admin/modules/yandex/yandex.php:387
+#: helpers/class-pf-catalog-export-helper.php:22
+msgid "Comma"
+msgstr ""
+
+#: admin/modules/bing/bing.php:441
+#: admin/modules/facebook/facebook.php:429
+#: admin/modules/fruugo/fruugo.php:499
+#: admin/modules/google/google.php:542
+#: admin/modules/heureka/heureka.php:408
+#: admin/modules/idealo/idealo.php:433
+#: admin/modules/leguide/leguide.php:418
+#: admin/modules/onbuy/onbuy.php:599
+#: admin/modules/pinterest/pinterest.php:377
+#: admin/modules/pinterest_rss/pinterest_rss.php:286
+#: admin/modules/pricerunner/pricerunner.php:401
+#: admin/modules/pricespy/pricespy.php:454
+#: admin/modules/rakuten/rakuten.php:377
+#: admin/modules/shopzilla/shopzilla.php:464
+#: admin/modules/skroutz/skroutz.php:478
+#: admin/modules/snapchat/snapchat.php:351
+#: admin/modules/tiktok/tiktok.php:361
+#: admin/modules/tiktokshop/tiktokshop.php:393
+#: admin/modules/twitter/twitter.php:419
+#: admin/modules/yandex/yandex.php:403
+msgid "Total number of products to export"
+msgstr ""
+
+#: admin/modules/bing/bing.php:442
+#: admin/modules/facebook/facebook.php:430
+#: admin/modules/fruugo/fruugo.php:500
+#: admin/modules/google/google.php:543
+#: admin/modules/heureka/heureka.php:409
+#: admin/modules/idealo/idealo.php:434
+#: admin/modules/leguide/leguide.php:419
+#: admin/modules/onbuy/onbuy.php:600
+#: admin/modules/pinterest/pinterest.php:378
+#: admin/modules/pinterest_rss/pinterest_rss.php:287
+#: admin/modules/pricerunner/pricerunner.php:402
+#: admin/modules/pricespy/pricespy.php:455
+#: admin/modules/rakuten/rakuten.php:378
+#: admin/modules/shopzilla/shopzilla.php:465
+#: admin/modules/skroutz/skroutz.php:479
+#: admin/modules/snapchat/snapchat.php:352
+#: admin/modules/tiktok/tiktok.php:362
+#: admin/modules/tiktokshop/tiktokshop.php:394
+#: admin/modules/twitter/twitter.php:420
+#: admin/modules/yandex/yandex.php:404
+msgid "Exports specified number of products. e.g. Entering 500 with a skip count of 10 will export products from 11th to 510th position."
+msgstr ""
+
+#: admin/modules/bing/bing.php:443
+#: admin/modules/facebook/facebook.php:431
+#: admin/modules/fruugo/fruugo.php:501
+#: admin/modules/google/google.php:544
+#: admin/modules/heureka/heureka.php:410
+#: admin/modules/idealo/idealo.php:435
+#: admin/modules/leguide/leguide.php:420
+#: admin/modules/onbuy/onbuy.php:601
+#: admin/modules/pinterest/pinterest.php:379
+#: admin/modules/pinterest_rss/pinterest_rss.php:288
+#: admin/modules/pricerunner/pricerunner.php:403
+#: admin/modules/pricespy/pricespy.php:456
+#: admin/modules/rakuten/rakuten.php:379
+#: admin/modules/shopzilla/shopzilla.php:466
+#: admin/modules/skroutz/skroutz.php:480
+#: admin/modules/snapchat/snapchat.php:353
+#: admin/modules/tiktok/tiktok.php:363
+#: admin/modules/tiktokshop/tiktokshop.php:395
+#: admin/modules/twitter/twitter.php:421
+#: admin/modules/yandex/yandex.php:405
+msgid "Skip first <i>n</i> products"
+msgstr ""
+
+#: admin/modules/bing/bing.php:444
+#: admin/modules/facebook/facebook.php:432
+#: admin/modules/fruugo/fruugo.php:502
+#: admin/modules/google/google.php:545
+#: admin/modules/heureka/heureka.php:411
+#: admin/modules/idealo/idealo.php:436
+#: admin/modules/leguide/leguide.php:421
+#: admin/modules/onbuy/onbuy.php:602
+#: admin/modules/pinterest/pinterest.php:380
+#: admin/modules/pinterest_rss/pinterest_rss.php:289
+#: admin/modules/pricerunner/pricerunner.php:404
+#: admin/modules/pricespy/pricespy.php:457
+#: admin/modules/rakuten/rakuten.php:380
+#: admin/modules/shopzilla/shopzilla.php:467
+#: admin/modules/skroutz/skroutz.php:481
+#: admin/modules/snapchat/snapchat.php:354
+#: admin/modules/tiktok/tiktok.php:364
+#: admin/modules/tiktokshop/tiktokshop.php:396
+#: admin/modules/twitter/twitter.php:422
+#: admin/modules/yandex/yandex.php:406
+msgid "Skips specified number of products from the beginning of the database. e.g. Enter 10 to skip first 10 products from export."
+msgstr ""
+
+#: admin/modules/bing/bing.php:447
+#: admin/modules/facebook/facebook.php:435
+#: admin/modules/fruugo/fruugo.php:505
+#: admin/modules/google/google.php:548
+#: admin/modules/heureka/heureka.php:414
+#: admin/modules/idealo/idealo.php:439
+#: admin/modules/leguide/leguide.php:424
+#: admin/modules/onbuy/onbuy.php:605
+#: admin/modules/pinterest/pinterest.php:383
+#: admin/modules/pinterest_rss/pinterest_rss.php:292
+#: admin/modules/pricerunner/pricerunner.php:407
+#: admin/modules/pricespy/pricespy.php:460
+#: admin/modules/rakuten/rakuten.php:383
+#: admin/modules/shopzilla/shopzilla.php:470
+#: admin/modules/skroutz/skroutz.php:484
+#: admin/modules/snapchat/snapchat.php:357
+#: admin/modules/tiktok/tiktok.php:367
+#: admin/modules/tiktokshop/tiktokshop.php:399
+#: admin/modules/twitter/twitter.php:425
+#: admin/modules/yandex/yandex.php:409
+msgid "Products"
+msgstr ""
+
+#: admin/modules/bing/bing.php:448
+#: admin/modules/facebook/facebook.php:436
+#: admin/modules/fruugo/fruugo.php:506
+#: admin/modules/google/google.php:549
+#: admin/modules/heureka/heureka.php:415
+#: admin/modules/idealo/idealo.php:440
+#: admin/modules/leguide/leguide.php:425
+#: admin/modules/onbuy/onbuy.php:606
+#: admin/modules/pinterest/pinterest.php:384
+#: admin/modules/pinterest_rss/pinterest_rss.php:293
+#: admin/modules/pricerunner/pricerunner.php:408
+#: admin/modules/pricespy/pricespy.php:461
+#: admin/modules/rakuten/rakuten.php:384
+#: admin/modules/shopzilla/shopzilla.php:471
+#: admin/modules/skroutz/skroutz.php:485
+#: admin/modules/snapchat/snapchat.php:358
+#: admin/modules/tiktok/tiktok.php:368
+#: admin/modules/tiktokshop/tiktokshop.php:400
+#: admin/modules/twitter/twitter.php:426
+#: admin/modules/yandex/yandex.php:410
+msgid "All products"
+msgstr ""
+
+#: admin/modules/bing/bing.php:452
+#: admin/modules/facebook/facebook.php:440
+#: admin/modules/fruugo/fruugo.php:510
+#: admin/modules/google/google.php:553
+#: admin/modules/heureka/heureka.php:419
+#: admin/modules/idealo/idealo.php:444
+#: admin/modules/leguide/leguide.php:429
+#: admin/modules/onbuy/onbuy.php:610
+#: admin/modules/pinterest/pinterest.php:388
+#: admin/modules/pinterest_rss/pinterest_rss.php:297
+#: admin/modules/pricerunner/pricerunner.php:412
+#: admin/modules/pricespy/pricespy.php:465
+#: admin/modules/rakuten/rakuten.php:388
+#: admin/modules/shopzilla/shopzilla.php:475
+#: admin/modules/skroutz/skroutz.php:489
+#: admin/modules/snapchat/snapchat.php:362
+#: admin/modules/tiktok/tiktok.php:372
+#: admin/modules/tiktokshop/tiktokshop.php:404
+#: admin/modules/twitter/twitter.php:430
+#: admin/modules/yandex/yandex.php:414
+msgid "Export specific products. Keyin the product names to export multiple products."
+msgstr ""
+
+#: admin/modules/bing/bing.php:458
+#: admin/modules/facebook/facebook.php:446
+#: admin/modules/fruugo/fruugo.php:516
+#: admin/modules/google/google.php:559
+#: admin/modules/heureka/heureka.php:425
+#: admin/modules/idealo/idealo.php:450
+#: admin/modules/leguide/leguide.php:435
+#: admin/modules/onbuy/onbuy.php:616
+#: admin/modules/pinterest/pinterest.php:394
+#: admin/modules/pinterest_rss/pinterest_rss.php:303
+#: admin/modules/pricerunner/pricerunner.php:418
+#: admin/modules/pricespy/pricespy.php:471
+#: admin/modules/rakuten/rakuten.php:394
+#: admin/modules/shopzilla/shopzilla.php:481
+#: admin/modules/skroutz/skroutz.php:495
+#: admin/modules/snapchat/snapchat.php:368
+#: admin/modules/tiktok/tiktok.php:378
+#: admin/modules/tiktokshop/tiktokshop.php:410
+#: admin/modules/twitter/twitter.php:436
+#: admin/modules/yandex/yandex.php:420
+msgid "Stock status"
+msgstr ""
+
+#: admin/modules/bing/bing.php:459
+#: admin/modules/bing/bing.php:461
+#: admin/modules/facebook/facebook.php:447
+#: admin/modules/facebook/facebook.php:449
+#: admin/modules/fruugo/fruugo.php:517
+#: admin/modules/fruugo/fruugo.php:519
+#: admin/modules/google/google.php:560
+#: admin/modules/google/google.php:562
+#: admin/modules/heureka/heureka.php:426
+#: admin/modules/heureka/heureka.php:428
+#: admin/modules/idealo/idealo.php:451
+#: admin/modules/idealo/idealo.php:453
+#: admin/modules/leguide/leguide.php:436
+#: admin/modules/leguide/leguide.php:438
+#: admin/modules/onbuy/onbuy.php:617
+#: admin/modules/onbuy/onbuy.php:619
+#: admin/modules/pinterest/pinterest.php:395
+#: admin/modules/pinterest/pinterest.php:397
+#: admin/modules/pinterest_rss/pinterest_rss.php:304
+#: admin/modules/pinterest_rss/pinterest_rss.php:306
+#: admin/modules/pricerunner/pricerunner.php:419
+#: admin/modules/pricerunner/pricerunner.php:421
+#: admin/modules/pricespy/pricespy.php:472
+#: admin/modules/pricespy/pricespy.php:474
+#: admin/modules/rakuten/rakuten.php:395
+#: admin/modules/rakuten/rakuten.php:397
+#: admin/modules/shopzilla/shopzilla.php:482
+#: admin/modules/shopzilla/shopzilla.php:484
+#: admin/modules/skroutz/skroutz.php:496
+#: admin/modules/skroutz/skroutz.php:498
+#: admin/modules/snapchat/snapchat.php:369
+#: admin/modules/snapchat/snapchat.php:371
+#: admin/modules/tiktok/tiktok.php:379
+#: admin/modules/tiktok/tiktok.php:381
+#: admin/modules/tiktokshop/tiktokshop.php:411
+#: admin/modules/tiktokshop/tiktokshop.php:413
+#: admin/modules/twitter/twitter.php:437
+#: admin/modules/twitter/twitter.php:439
+#: admin/modules/yandex/yandex.php:421
+#: admin/modules/yandex/yandex.php:423
+msgid "All status"
+msgstr ""
+
+#: admin/modules/bing/bing.php:461
+#: admin/modules/facebook/facebook.php:449
+#: admin/modules/fruugo/fruugo.php:519
+#: admin/modules/google/google.php:562
+#: admin/modules/heureka/heureka.php:428
+#: admin/modules/idealo/idealo.php:453
+#: admin/modules/leguide/leguide.php:438
+#: admin/modules/onbuy/onbuy.php:619
+#: admin/modules/pinterest/pinterest.php:397
+#: admin/modules/pinterest_rss/pinterest_rss.php:306
+#: admin/modules/pricerunner/pricerunner.php:421
+#: admin/modules/pricespy/pricespy.php:474
+#: admin/modules/rakuten/rakuten.php:397
+#: admin/modules/shopzilla/shopzilla.php:484
+#: admin/modules/skroutz/skroutz.php:498
+#: admin/modules/snapchat/snapchat.php:371
+#: admin/modules/tiktok/tiktok.php:381
+#: admin/modules/tiktokshop/tiktokshop.php:413
+#: admin/modules/twitter/twitter.php:439
+#: admin/modules/yandex/yandex.php:423
+msgid "In Stock"
+msgstr ""
+
+#: admin/modules/bing/bing.php:461
+#: admin/modules/facebook/facebook.php:449
+#: admin/modules/fruugo/fruugo.php:519
+#: admin/modules/google/google.php:562
+#: admin/modules/heureka/heureka.php:428
+#: admin/modules/idealo/idealo.php:453
+#: admin/modules/leguide/leguide.php:438
+#: admin/modules/onbuy/onbuy.php:619
+#: admin/modules/pinterest/pinterest.php:397
+#: admin/modules/pinterest_rss/pinterest_rss.php:306
+#: admin/modules/pricerunner/pricerunner.php:421
+#: admin/modules/pricespy/pricespy.php:474
+#: admin/modules/rakuten/rakuten.php:397
+#: admin/modules/shopzilla/shopzilla.php:484
+#: admin/modules/skroutz/skroutz.php:498
+#: admin/modules/snapchat/snapchat.php:371
+#: admin/modules/tiktok/tiktok.php:381
+#: admin/modules/tiktokshop/tiktokshop.php:413
+#: admin/modules/twitter/twitter.php:439
+#: admin/modules/yandex/yandex.php:423
+msgid "Out of Stock"
+msgstr ""
+
+#: admin/modules/bing/bing.php:461
+#: admin/modules/facebook/facebook.php:449
+#: admin/modules/fruugo/fruugo.php:519
+#: admin/modules/google/google.php:562
+#: admin/modules/heureka/heureka.php:428
+#: admin/modules/idealo/idealo.php:453
+#: admin/modules/leguide/leguide.php:438
+#: admin/modules/onbuy/onbuy.php:619
+#: admin/modules/pinterest/pinterest.php:397
+#: admin/modules/pinterest_rss/pinterest_rss.php:306
+#: admin/modules/pricerunner/pricerunner.php:421
+#: admin/modules/pricespy/pricespy.php:474
+#: admin/modules/rakuten/rakuten.php:397
+#: admin/modules/shopzilla/shopzilla.php:484
+#: admin/modules/skroutz/skroutz.php:498
+#: admin/modules/snapchat/snapchat.php:371
+#: admin/modules/tiktok/tiktok.php:381
+#: admin/modules/tiktokshop/tiktokshop.php:413
+#: admin/modules/twitter/twitter.php:439
+#: admin/modules/yandex/yandex.php:423
+msgid "On backorder"
+msgstr ""
+
+#: admin/modules/bing/bing.php:462
+#: admin/modules/facebook/facebook.php:450
+#: admin/modules/fruugo/fruugo.php:520
+#: admin/modules/google/google.php:563
+#: admin/modules/heureka/heureka.php:429
+#: admin/modules/idealo/idealo.php:454
+#: admin/modules/leguide/leguide.php:439
+#: admin/modules/onbuy/onbuy.php:620
+#: admin/modules/pinterest/pinterest.php:398
+#: admin/modules/pinterest_rss/pinterest_rss.php:307
+#: admin/modules/pricerunner/pricerunner.php:422
+#: admin/modules/pricespy/pricespy.php:475
+#: admin/modules/rakuten/rakuten.php:398
+#: admin/modules/shopzilla/shopzilla.php:485
+#: admin/modules/skroutz/skroutz.php:499
+#: admin/modules/snapchat/snapchat.php:372
+#: admin/modules/tiktok/tiktok.php:382
+#: admin/modules/tiktokshop/tiktokshop.php:414
+#: admin/modules/twitter/twitter.php:440
+#: admin/modules/yandex/yandex.php:424
+msgid "Export products based on stock status."
+msgstr ""
+
+#: admin/modules/bing/bing.php:467
+#: admin/modules/bing/bing.php:468
+#: admin/modules/facebook/facebook.php:455
+#: admin/modules/facebook/facebook.php:456
+#: admin/modules/fruugo/fruugo.php:525
+#: admin/modules/fruugo/fruugo.php:526
+#: admin/modules/google/google.php:568
+#: admin/modules/google/google.php:569
+#: admin/modules/heureka/heureka.php:434
+#: admin/modules/heureka/heureka.php:435
+#: admin/modules/idealo/idealo.php:459
+#: admin/modules/idealo/idealo.php:460
+#: admin/modules/leguide/leguide.php:444
+#: admin/modules/leguide/leguide.php:445
+#: admin/modules/onbuy/onbuy.php:625
+#: admin/modules/onbuy/onbuy.php:626
+#: admin/modules/pinterest/pinterest.php:403
+#: admin/modules/pinterest/pinterest.php:404
+#: admin/modules/pinterest_rss/pinterest_rss.php:312
+#: admin/modules/pinterest_rss/pinterest_rss.php:313
+#: admin/modules/pricerunner/pricerunner.php:427
+#: admin/modules/pricerunner/pricerunner.php:428
+#: admin/modules/pricespy/pricespy.php:480
+#: admin/modules/pricespy/pricespy.php:481
+#: admin/modules/rakuten/rakuten.php:403
+#: admin/modules/rakuten/rakuten.php:404
+#: admin/modules/shopzilla/shopzilla.php:490
+#: admin/modules/shopzilla/shopzilla.php:491
+#: admin/modules/skroutz/skroutz.php:504
+#: admin/modules/skroutz/skroutz.php:505
+#: admin/modules/snapchat/snapchat.php:377
+#: admin/modules/snapchat/snapchat.php:378
+#: admin/modules/tiktok/tiktok.php:387
+#: admin/modules/tiktok/tiktok.php:388
+#: admin/modules/tiktokshop/tiktokshop.php:419
+#: admin/modules/tiktokshop/tiktokshop.php:420
+#: admin/modules/twitter/twitter.php:445
+#: admin/modules/twitter/twitter.php:446
+#: admin/modules/yandex/yandex.php:429
+#: admin/modules/yandex/yandex.php:430
+msgid "Exclude products"
+msgstr ""
+
+#: admin/modules/bing/bing.php:472
+#: admin/modules/facebook/facebook.php:460
+#: admin/modules/fruugo/fruugo.php:530
+#: admin/modules/google/google.php:573
+#: admin/modules/heureka/heureka.php:439
+#: admin/modules/idealo/idealo.php:464
+#: admin/modules/leguide/leguide.php:449
+#: admin/modules/onbuy/onbuy.php:630
+#: admin/modules/pinterest/pinterest.php:408
+#: admin/modules/pinterest_rss/pinterest_rss.php:317
+#: admin/modules/pricerunner/pricerunner.php:432
+#: admin/modules/pricespy/pricespy.php:485
+#: admin/modules/rakuten/rakuten.php:408
+#: admin/modules/shopzilla/shopzilla.php:495
+#: admin/modules/skroutz/skroutz.php:509
+#: admin/modules/snapchat/snapchat.php:382
+#: admin/modules/tiktok/tiktok.php:392
+#: admin/modules/tiktokshop/tiktokshop.php:424
+#: admin/modules/twitter/twitter.php:450
+#: admin/modules/yandex/yandex.php:434
+msgid "Use this if you need to exclude a specific or multiple products from your export list."
+msgstr ""
+
+#: admin/modules/bing/bing.php:479
+#: admin/modules/facebook/facebook.php:467
+#: admin/modules/fruugo/fruugo.php:537
+#: admin/modules/google/google.php:580
+#: admin/modules/heureka/heureka.php:446
+#: admin/modules/idealo/idealo.php:471
+#: admin/modules/leguide/leguide.php:456
+#: admin/modules/onbuy/onbuy.php:637
+#: admin/modules/pinterest/pinterest.php:415
+#: admin/modules/pinterest_rss/pinterest_rss.php:324
+#: admin/modules/pricerunner/pricerunner.php:439
+#: admin/modules/pricespy/pricespy.php:492
+#: admin/modules/rakuten/rakuten.php:415
+#: admin/modules/shopzilla/shopzilla.php:502
+#: admin/modules/skroutz/skroutz.php:516
+#: admin/modules/snapchat/snapchat.php:389
+#: admin/modules/tiktok/tiktok.php:399
+#: admin/modules/tiktokshop/tiktokshop.php:431
+#: admin/modules/twitter/twitter.php:457
+#: admin/modules/yandex/yandex.php:441
+msgid "Product categories"
+msgstr ""
+
+#: admin/modules/bing/bing.php:480
+#: admin/modules/facebook/facebook.php:468
+#: admin/modules/fruugo/fruugo.php:538
+#: admin/modules/google/google.php:581
+#: admin/modules/heureka/heureka.php:447
+#: admin/modules/idealo/idealo.php:472
+#: admin/modules/leguide/leguide.php:457
+#: admin/modules/onbuy/onbuy.php:638
+#: admin/modules/pinterest/pinterest.php:416
+#: admin/modules/pinterest_rss/pinterest_rss.php:325
+#: admin/modules/pricerunner/pricerunner.php:440
+#: admin/modules/pricespy/pricespy.php:493
+#: admin/modules/rakuten/rakuten.php:416
+#: admin/modules/shopzilla/shopzilla.php:503
+#: admin/modules/skroutz/skroutz.php:517
+#: admin/modules/snapchat/snapchat.php:390
+#: admin/modules/tiktok/tiktok.php:400
+#: admin/modules/tiktokshop/tiktokshop.php:432
+#: admin/modules/twitter/twitter.php:458
+#: admin/modules/yandex/yandex.php:442
+msgid "Any category"
+msgstr ""
+
+#: admin/modules/bing/bing.php:483
+#: admin/modules/facebook/facebook.php:471
+#: admin/modules/fruugo/fruugo.php:541
+#: admin/modules/google/google.php:584
+#: admin/modules/heureka/heureka.php:450
+#: admin/modules/idealo/idealo.php:475
+#: admin/modules/leguide/leguide.php:460
+#: admin/modules/onbuy/onbuy.php:641
+#: admin/modules/pinterest/pinterest.php:419
+#: admin/modules/pinterest_rss/pinterest_rss.php:328
+#: admin/modules/pricerunner/pricerunner.php:443
+#: admin/modules/pricespy/pricespy.php:496
+#: admin/modules/rakuten/rakuten.php:419
+#: admin/modules/shopzilla/shopzilla.php:506
+#: admin/modules/skroutz/skroutz.php:520
+#: admin/modules/snapchat/snapchat.php:393
+#: admin/modules/tiktok/tiktok.php:403
+#: admin/modules/tiktokshop/tiktokshop.php:435
+#: admin/modules/twitter/twitter.php:461
+#: admin/modules/yandex/yandex.php:445
+msgid "Export products belonging to a particular or from multiple categories. Just select the respective categories."
+msgstr ""
+
+#: admin/modules/bing/bing.php:490
+#: admin/modules/facebook/facebook.php:478
+#: admin/modules/fruugo/fruugo.php:548
+#: admin/modules/google/google.php:591
+#: admin/modules/heureka/heureka.php:457
+#: admin/modules/idealo/idealo.php:482
+#: admin/modules/leguide/leguide.php:467
+#: admin/modules/onbuy/onbuy.php:648
+#: admin/modules/pinterest/pinterest.php:426
+#: admin/modules/pinterest_rss/pinterest_rss.php:335
+#: admin/modules/pricerunner/pricerunner.php:450
+#: admin/modules/pricespy/pricespy.php:503
+#: admin/modules/rakuten/rakuten.php:426
+#: admin/modules/shopzilla/shopzilla.php:513
+#: admin/modules/skroutz/skroutz.php:527
+#: admin/modules/snapchat/snapchat.php:400
+#: admin/modules/tiktok/tiktok.php:410
+#: admin/modules/tiktokshop/tiktokshop.php:442
+#: admin/modules/twitter/twitter.php:468
+#: admin/modules/yandex/yandex.php:452
+msgid "Product tags"
+msgstr ""
+
+#: admin/modules/bing/bing.php:491
+#: admin/modules/facebook/facebook.php:479
+#: admin/modules/fruugo/fruugo.php:549
+#: admin/modules/google/google.php:592
+#: admin/modules/heureka/heureka.php:458
+#: admin/modules/idealo/idealo.php:483
+#: admin/modules/leguide/leguide.php:468
+#: admin/modules/onbuy/onbuy.php:649
+#: admin/modules/pinterest/pinterest.php:427
+#: admin/modules/pinterest_rss/pinterest_rss.php:336
+#: admin/modules/pricerunner/pricerunner.php:451
+#: admin/modules/pricespy/pricespy.php:504
+#: admin/modules/rakuten/rakuten.php:427
+#: admin/modules/shopzilla/shopzilla.php:514
+#: admin/modules/skroutz/skroutz.php:528
+#: admin/modules/snapchat/snapchat.php:401
+#: admin/modules/tiktok/tiktok.php:411
+#: admin/modules/tiktokshop/tiktokshop.php:443
+#: admin/modules/twitter/twitter.php:469
+#: admin/modules/yandex/yandex.php:453
+msgid "Any tag"
+msgstr ""
+
+#: admin/modules/bing/bing.php:494
+#: admin/modules/facebook/facebook.php:482
+#: admin/modules/fruugo/fruugo.php:552
+#: admin/modules/google/google.php:595
+#: admin/modules/heureka/heureka.php:461
+#: admin/modules/idealo/idealo.php:486
+#: admin/modules/leguide/leguide.php:471
+#: admin/modules/onbuy/onbuy.php:652
+#: admin/modules/pinterest/pinterest.php:430
+#: admin/modules/pinterest_rss/pinterest_rss.php:339
+#: admin/modules/pricerunner/pricerunner.php:454
+#: admin/modules/pricespy/pricespy.php:507
+#: admin/modules/rakuten/rakuten.php:430
+#: admin/modules/shopzilla/shopzilla.php:517
+#: admin/modules/skroutz/skroutz.php:531
+#: admin/modules/snapchat/snapchat.php:404
+#: admin/modules/tiktok/tiktok.php:414
+#: admin/modules/tiktokshop/tiktokshop.php:446
+#: admin/modules/twitter/twitter.php:472
+#: admin/modules/yandex/yandex.php:456
+msgid "Enter the product tags to export only the respective products that have been tagged accordingly."
+msgstr ""
+
+#: admin/modules/bing/bing.php:501
+#: admin/modules/facebook/facebook.php:489
+#: admin/modules/fruugo/fruugo.php:559
+#: admin/modules/google/google.php:602
+#: admin/modules/heureka/heureka.php:468
+#: admin/modules/idealo/idealo.php:493
+#: admin/modules/leguide/leguide.php:478
+#: admin/modules/onbuy/onbuy.php:659
+#: admin/modules/pinterest/pinterest.php:437
+#: admin/modules/pinterest_rss/pinterest_rss.php:346
+#: admin/modules/pricerunner/pricerunner.php:461
+#: admin/modules/pricespy/pricespy.php:514
+#: admin/modules/rakuten/rakuten.php:437
+#: admin/modules/shopzilla/shopzilla.php:524
+#: admin/modules/skroutz/skroutz.php:538
+#: admin/modules/snapchat/snapchat.php:411
+#: admin/modules/tiktok/tiktok.php:421
+#: admin/modules/tiktokshop/tiktokshop.php:453
+#: admin/modules/twitter/twitter.php:479
+#: admin/modules/yandex/yandex.php:463
+msgid "Product status"
+msgstr ""
+
+#: admin/modules/bing/bing.php:502
+#: admin/modules/facebook/facebook.php:490
+#: admin/modules/fruugo/fruugo.php:560
+#: admin/modules/google/google.php:603
+#: admin/modules/heureka/heureka.php:469
+#: admin/modules/idealo/idealo.php:494
+#: admin/modules/leguide/leguide.php:479
+#: admin/modules/onbuy/onbuy.php:660
+#: admin/modules/pinterest/pinterest.php:438
+#: admin/modules/pinterest_rss/pinterest_rss.php:347
+#: admin/modules/pricerunner/pricerunner.php:462
+#: admin/modules/pricespy/pricespy.php:515
+#: admin/modules/rakuten/rakuten.php:438
+#: admin/modules/shopzilla/shopzilla.php:525
+#: admin/modules/skroutz/skroutz.php:539
+#: admin/modules/snapchat/snapchat.php:412
+#: admin/modules/tiktok/tiktok.php:422
+#: admin/modules/tiktokshop/tiktokshop.php:454
+#: admin/modules/twitter/twitter.php:480
+#: admin/modules/yandex/yandex.php:464
+msgid "Any status"
+msgstr ""
+
+#: admin/modules/bing/bing.php:505
+#: admin/modules/facebook/facebook.php:493
+#: admin/modules/fruugo/fruugo.php:563
+#: admin/modules/google/google.php:606
+#: admin/modules/heureka/heureka.php:472
+#: admin/modules/idealo/idealo.php:497
+#: admin/modules/leguide/leguide.php:482
+#: admin/modules/onbuy/onbuy.php:663
+#: admin/modules/pinterest/pinterest.php:441
+#: admin/modules/pinterest_rss/pinterest_rss.php:350
+#: admin/modules/pricerunner/pricerunner.php:465
+#: admin/modules/pricespy/pricespy.php:518
+#: admin/modules/rakuten/rakuten.php:441
+#: admin/modules/shopzilla/shopzilla.php:528
+#: admin/modules/skroutz/skroutz.php:542
+#: admin/modules/snapchat/snapchat.php:415
+#: admin/modules/tiktok/tiktok.php:425
+#: admin/modules/tiktokshop/tiktokshop.php:457
+#: admin/modules/twitter/twitter.php:483
+#: admin/modules/yandex/yandex.php:467
+msgid "Filter products by their status."
+msgstr ""
+
+#: admin/modules/bing/bing.php:539
+#: admin/modules/fruugo/fruugo.php:577
+#: admin/modules/heureka/heureka.php:485
+#: admin/modules/idealo/idealo.php:510
+#: admin/modules/leguide/leguide.php:495
+#: admin/modules/onbuy/onbuy.php:676
+#: admin/modules/pinterest/pinterest.php:455
+#: admin/modules/pinterest_rss/pinterest_rss.php:385
+#: admin/modules/pricerunner/pricerunner.php:478
+#: admin/modules/pricespy/pricespy.php:531
+#: admin/modules/rakuten/rakuten.php:454
+#: admin/modules/shopmania/shopmania.php:322
+#: admin/modules/shopzilla/shopzilla.php:541
+#: admin/modules/skroutz/skroutz.php:556
+#: admin/modules/snapchat/snapchat.php:428
+#: admin/modules/tiktok/tiktok.php:439
+#: admin/modules/tiktokshop/tiktokshop.php:471
+#: admin/modules/twitter/twitter.php:496
 #: admin/modules/vivino/vivino.php:241
-#: helpers/class-wt-common-helper.php:487
+#: admin/modules/yandex/yandex.php:480
+#: helpers/class-wt-common-helper.php:513
 msgctxt "product condition"
 msgid "New"
 msgstr ""
 
-#: admin/modules/bing/bing.php:528
-#: admin/modules/fruugo/fruugo.php:569
-#: admin/modules/idealo/idealo.php:509
-#: admin/modules/leguide/leguide.php:493
-#: admin/modules/onbuy/onbuy.php:666
-#: admin/modules/pinterest/pinterest.php:453
-#: admin/modules/pricerunner/pricerunner.php:477
-#: admin/modules/pricespy/pricespy.php:529
-#: admin/modules/shopzilla/shopzilla.php:539
-#: admin/modules/skroutz/skroutz.php:554
-#: admin/modules/snapchat/snapchat.php:426
-#: admin/modules/tiktok/tiktok.php:437
-#: admin/modules/tiktokshop/tiktokshop.php:474
+#: admin/modules/bing/bing.php:540
+#: admin/modules/fruugo/fruugo.php:578
+#: admin/modules/heureka/heureka.php:486
+#: admin/modules/idealo/idealo.php:511
+#: admin/modules/leguide/leguide.php:496
+#: admin/modules/onbuy/onbuy.php:677
+#: admin/modules/pinterest/pinterest.php:456
+#: admin/modules/pinterest_rss/pinterest_rss.php:386
+#: admin/modules/pricerunner/pricerunner.php:479
+#: admin/modules/pricespy/pricespy.php:532
+#: admin/modules/rakuten/rakuten.php:455
+#: admin/modules/shopmania/shopmania.php:323
+#: admin/modules/shopzilla/shopzilla.php:542
+#: admin/modules/skroutz/skroutz.php:557
+#: admin/modules/snapchat/snapchat.php:429
+#: admin/modules/tiktok/tiktok.php:440
+#: admin/modules/tiktokshop/tiktokshop.php:472
+#: admin/modules/twitter/twitter.php:497
 #: admin/modules/vivino/vivino.php:242
-#: helpers/class-wt-common-helper.php:488
+#: admin/modules/yandex/yandex.php:481
+#: helpers/class-wt-common-helper.php:514
 msgctxt "product condition"
 msgid "Refurbished"
 msgstr ""
 
-#: admin/modules/bing/bing.php:529
-#: admin/modules/fruugo/fruugo.php:570
-#: admin/modules/idealo/idealo.php:510
-#: admin/modules/leguide/leguide.php:494
-#: admin/modules/onbuy/onbuy.php:667
-#: admin/modules/pinterest/pinterest.php:454
-#: admin/modules/pricerunner/pricerunner.php:478
-#: admin/modules/pricespy/pricespy.php:530
-#: admin/modules/shopzilla/shopzilla.php:540
-#: admin/modules/skroutz/skroutz.php:555
-#: admin/modules/snapchat/snapchat.php:427
-#: admin/modules/tiktok/tiktok.php:438
-#: admin/modules/tiktokshop/tiktokshop.php:475
+#: admin/modules/bing/bing.php:541
+#: admin/modules/fruugo/fruugo.php:579
+#: admin/modules/heureka/heureka.php:487
+#: admin/modules/idealo/idealo.php:512
+#: admin/modules/leguide/leguide.php:497
+#: admin/modules/onbuy/onbuy.php:678
+#: admin/modules/pinterest/pinterest.php:457
+#: admin/modules/pinterest_rss/pinterest_rss.php:387
+#: admin/modules/pricerunner/pricerunner.php:480
+#: admin/modules/pricespy/pricespy.php:533
+#: admin/modules/rakuten/rakuten.php:456
+#: admin/modules/shopmania/shopmania.php:324
+#: admin/modules/shopzilla/shopzilla.php:543
+#: admin/modules/skroutz/skroutz.php:558
+#: admin/modules/snapchat/snapchat.php:430
+#: admin/modules/tiktok/tiktok.php:441
+#: admin/modules/tiktokshop/tiktokshop.php:473
+#: admin/modules/twitter/twitter.php:498
 #: admin/modules/vivino/vivino.php:243
-#: helpers/class-wt-common-helper.php:489
+#: admin/modules/yandex/yandex.php:482
+#: helpers/class-wt-common-helper.php:515
 msgctxt "product condition"
 msgid "Used"
 msgstr ""
 
-#: admin/modules/bing/bing.php:537
-#: admin/modules/fruugo/fruugo.php:578
-#: admin/modules/idealo/idealo.php:518
-#: admin/modules/leguide/leguide.php:502
-#: admin/modules/onbuy/onbuy.php:675
-#: admin/modules/pinterest/pinterest.php:462
-#: admin/modules/pricerunner/pricerunner.php:486
-#: admin/modules/pricespy/pricespy.php:538
-#: admin/modules/shopzilla/shopzilla.php:548
+#: admin/modules/bing/bing.php:549
+#: admin/modules/fruugo/fruugo.php:587
+#: admin/modules/heureka/heureka.php:495
+#: admin/modules/idealo/idealo.php:520
+#: admin/modules/leguide/leguide.php:505
+#: admin/modules/onbuy/onbuy.php:686
+#: admin/modules/pinterest/pinterest.php:465
+#: admin/modules/pinterest_rss/pinterest_rss.php:395
+#: admin/modules/pricerunner/pricerunner.php:488
+#: admin/modules/pricespy/pricespy.php:541
+#: admin/modules/rakuten/rakuten.php:464
+#: admin/modules/shopmania/shopmania.php:332
+#: admin/modules/shopzilla/shopzilla.php:551
 #: admin/modules/skroutz/skroutz.php:181
-#: admin/modules/snapchat/snapchat.php:435
-#: admin/modules/tiktok/tiktok.php:446
-#: admin/modules/tiktokshop/tiktokshop.php:483
+#: admin/modules/snapchat/snapchat.php:438
+#: admin/modules/tiktok/tiktok.php:449
+#: admin/modules/tiktokshop/tiktokshop.php:481
+#: admin/modules/twitter/twitter.php:506
 #: admin/modules/vivino/vivino.php:251
-#: helpers/class-wt-common-helper.php:475
+#: admin/modules/yandex/yandex.php:490
+#: helpers/class-wt-common-helper.php:501
 msgid "Adult"
 msgstr ""
 
-#: admin/modules/bing/bing.php:538
-#: admin/modules/fruugo/fruugo.php:579
-#: admin/modules/idealo/idealo.php:519
-#: admin/modules/leguide/leguide.php:503
-#: admin/modules/onbuy/onbuy.php:676
-#: admin/modules/pinterest/pinterest.php:463
-#: admin/modules/pricerunner/pricerunner.php:487
-#: admin/modules/pricespy/pricespy.php:539
-#: admin/modules/shopzilla/shopzilla.php:549
+#: admin/modules/bing/bing.php:550
+#: admin/modules/fruugo/fruugo.php:588
+#: admin/modules/heureka/heureka.php:496
+#: admin/modules/idealo/idealo.php:521
+#: admin/modules/leguide/leguide.php:506
+#: admin/modules/onbuy/onbuy.php:687
+#: admin/modules/pinterest/pinterest.php:466
+#: admin/modules/pinterest_rss/pinterest_rss.php:396
+#: admin/modules/pricerunner/pricerunner.php:489
+#: admin/modules/pricespy/pricespy.php:542
+#: admin/modules/rakuten/rakuten.php:465
+#: admin/modules/shopmania/shopmania.php:333
+#: admin/modules/shopzilla/shopzilla.php:552
 #: admin/modules/skroutz/skroutz.php:183
-#: admin/modules/snapchat/snapchat.php:436
-#: admin/modules/tiktok/tiktok.php:447
-#: admin/modules/tiktokshop/tiktokshop.php:484
+#: admin/modules/snapchat/snapchat.php:439
+#: admin/modules/tiktok/tiktok.php:450
+#: admin/modules/tiktokshop/tiktokshop.php:482
+#: admin/modules/twitter/twitter.php:509
 #: admin/modules/vivino/vivino.php:252
-#: helpers/class-wt-common-helper.php:477
+#: admin/modules/yandex/yandex.php:491
+#: helpers/class-wt-common-helper.php:503
 msgid "Kids"
 msgstr ""
 
-#: admin/modules/bing/bing.php:539
-#: admin/modules/fruugo/fruugo.php:580
-#: admin/modules/idealo/idealo.php:520
-#: admin/modules/leguide/leguide.php:504
-#: admin/modules/onbuy/onbuy.php:677
-#: admin/modules/pinterest/pinterest.php:464
-#: admin/modules/pricerunner/pricerunner.php:488
-#: admin/modules/pricespy/pricespy.php:540
-#: admin/modules/shopzilla/shopzilla.php:550
+#: admin/modules/bing/bing.php:551
+#: admin/modules/fruugo/fruugo.php:589
+#: admin/modules/heureka/heureka.php:497
+#: admin/modules/idealo/idealo.php:522
+#: admin/modules/leguide/leguide.php:507
+#: admin/modules/onbuy/onbuy.php:688
+#: admin/modules/pinterest/pinterest.php:467
+#: admin/modules/pinterest_rss/pinterest_rss.php:397
+#: admin/modules/pricerunner/pricerunner.php:490
+#: admin/modules/pricespy/pricespy.php:543
+#: admin/modules/rakuten/rakuten.php:466
+#: admin/modules/shopmania/shopmania.php:334
+#: admin/modules/shopzilla/shopzilla.php:553
 #: admin/modules/skroutz/skroutz.php:184
-#: admin/modules/snapchat/snapchat.php:437
-#: admin/modules/tiktok/tiktok.php:448
-#: admin/modules/tiktokshop/tiktokshop.php:485
+#: admin/modules/snapchat/snapchat.php:440
+#: admin/modules/tiktok/tiktok.php:451
+#: admin/modules/tiktokshop/tiktokshop.php:483
+#: admin/modules/twitter/twitter.php:510
 #: admin/modules/vivino/vivino.php:253
-#: helpers/class-wt-common-helper.php:478
+#: admin/modules/yandex/yandex.php:492
+#: helpers/class-wt-common-helper.php:504
 msgid "Toddler"
 msgstr ""
 
-#: admin/modules/bing/bing.php:540
-#: admin/modules/fruugo/fruugo.php:581
-#: admin/modules/idealo/idealo.php:521
-#: admin/modules/leguide/leguide.php:505
-#: admin/modules/onbuy/onbuy.php:678
-#: admin/modules/pinterest/pinterest.php:465
-#: admin/modules/pricerunner/pricerunner.php:489
-#: admin/modules/pricespy/pricespy.php:541
-#: admin/modules/shopzilla/shopzilla.php:551
+#: admin/modules/bing/bing.php:552
+#: admin/modules/fruugo/fruugo.php:590
+#: admin/modules/heureka/heureka.php:498
+#: admin/modules/idealo/idealo.php:523
+#: admin/modules/leguide/leguide.php:508
+#: admin/modules/onbuy/onbuy.php:689
+#: admin/modules/pinterest/pinterest.php:468
+#: admin/modules/pinterest_rss/pinterest_rss.php:398
+#: admin/modules/pricerunner/pricerunner.php:491
+#: admin/modules/pricespy/pricespy.php:544
+#: admin/modules/rakuten/rakuten.php:467
+#: admin/modules/shopmania/shopmania.php:335
+#: admin/modules/shopzilla/shopzilla.php:554
 #: admin/modules/skroutz/skroutz.php:185
-#: admin/modules/snapchat/snapchat.php:438
-#: admin/modules/tiktok/tiktok.php:449
-#: admin/modules/tiktokshop/tiktokshop.php:486
+#: admin/modules/snapchat/snapchat.php:441
+#: admin/modules/tiktok/tiktok.php:452
+#: admin/modules/tiktokshop/tiktokshop.php:484
+#: admin/modules/twitter/twitter.php:511
 #: admin/modules/vivino/vivino.php:254
-#: helpers/class-wt-common-helper.php:479
+#: admin/modules/yandex/yandex.php:493
+#: helpers/class-wt-common-helper.php:505
 msgid "Infant"
 msgstr ""
 
-#: admin/modules/bing/bing.php:541
-#: admin/modules/fruugo/fruugo.php:582
-#: admin/modules/idealo/idealo.php:522
-#: admin/modules/leguide/leguide.php:506
-#: admin/modules/onbuy/onbuy.php:679
-#: admin/modules/pinterest/pinterest.php:466
-#: admin/modules/pricerunner/pricerunner.php:490
-#: admin/modules/pricespy/pricespy.php:542
-#: admin/modules/shopzilla/shopzilla.php:552
+#: admin/modules/bing/bing.php:553
+#: admin/modules/fruugo/fruugo.php:591
+#: admin/modules/heureka/heureka.php:499
+#: admin/modules/idealo/idealo.php:524
+#: admin/modules/leguide/leguide.php:509
+#: admin/modules/onbuy/onbuy.php:690
+#: admin/modules/pinterest/pinterest.php:469
+#: admin/modules/pinterest_rss/pinterest_rss.php:399
+#: admin/modules/pricerunner/pricerunner.php:492
+#: admin/modules/pricespy/pricespy.php:545
+#: admin/modules/rakuten/rakuten.php:468
+#: admin/modules/shopmania/shopmania.php:336
+#: admin/modules/shopzilla/shopzilla.php:555
 #: admin/modules/skroutz/skroutz.php:186
-#: admin/modules/snapchat/snapchat.php:439
-#: admin/modules/tiktok/tiktok.php:450
-#: admin/modules/tiktokshop/tiktokshop.php:487
+#: admin/modules/snapchat/snapchat.php:442
+#: admin/modules/tiktok/tiktok.php:453
+#: admin/modules/tiktokshop/tiktokshop.php:485
+#: admin/modules/twitter/twitter.php:512
 #: admin/modules/vivino/vivino.php:255
-#: helpers/class-wt-common-helper.php:480
+#: admin/modules/yandex/yandex.php:494
+#: helpers/class-wt-common-helper.php:506
 msgid "Newborn"
 msgstr ""
 
-#: admin/modules/bing/export/export.php:329
-#: admin/modules/fruugo/export/export.php:370
-#: admin/modules/google_product_reviews/export/export.php:168
-#: admin/modules/idealo/export/export.php:293
-#: admin/modules/leguide/export/export.php:307
-#: admin/modules/pinterest/export/export.php:314
-#: admin/modules/pricerunner/export/export.php:306
-#: admin/modules/pricespy/export/export.php:292
-#: admin/modules/shopzilla/export/export.php:293
-#: admin/modules/skroutz/export/export.php:291
-#: admin/modules/snapchat/export/export.php:314
-#: admin/modules/tiktok/export/export.php:314
-#: admin/modules/tiktokshop/export/export.php:357
+#: admin/modules/bing/export/export.php:344
+#: admin/modules/buyon_google/export/export.php:242
+#: admin/modules/facebook/export/export.php:238
+#: admin/modules/fruugo/export/export.php:385
+#: admin/modules/google/export/export.php:254
+#: admin/modules/google_local_inventory_ads/export/export.php:241
+#: admin/modules/google_local_product_inventory/export/export.php:239
+#: admin/modules/google_product_reviews/export/export.php:206
+#: admin/modules/google_promotions/export/export.php:239
+#: admin/modules/heureka/export/export.php:368
+#: admin/modules/idealo/export/export.php:305
+#: admin/modules/leguide/export/export.php:319
+#: admin/modules/onbuy/export/export.php:264
+#: admin/modules/pinterest/export/export.php:329
+#: admin/modules/pinterest_rss/export/export.php:342
+#: admin/modules/pricerunner/export/export.php:318
+#: admin/modules/pricespy/export/export.php:304
+#: admin/modules/rakuten/export/export.php:255
+#: admin/modules/shopmania/export/export.php:248
+#: admin/modules/shopzilla/export/export.php:305
+#: admin/modules/skroutz/export/export.php:303
+#: admin/modules/snapchat/export/export.php:329
+#: admin/modules/tiktok/export/export.php:329
+#: admin/modules/tiktokshop/export/export.php:372
+#: admin/modules/twitter/export/export.php:252
+#: admin/modules/vivino/export/export.php:275
+#: admin/modules/yandex/export/export.php:273
 msgid "Nothing to export under the selected criteria. Please try adjusting the filters."
-msgstr ""
-
-#: admin/modules/buyon_google/buyon_google.php:72
-#: admin/modules/google_local_inventory_ads/google_local_inventory_ads.php:72
-#: admin/modules/google_local_product_inventory/google_local_product_inventory.php:72
-#: admin/modules/google_promotions/google_promotions.php:72
-msgid "Tab"
 msgstr ""
 
 #: admin/modules/buyon_google/buyon_google.php:78
@@ -548,95 +1557,127 @@ msgstr ""
 msgid "Buy on Google"
 msgstr ""
 
-#: admin/modules/cron/cron.php:46
+#: admin/modules/cron/cron.php:110
 msgid "Not started"
 msgstr ""
 
-#: admin/modules/cron/cron.php:47
+#: admin/modules/cron/cron.php:111
+#: admin/modules/export/export.php:652
+#: admin/modules/history/history.php:59
 msgid "Finished"
 msgstr ""
 
-#: admin/modules/cron/cron.php:48
+#: admin/modules/cron/cron.php:112
 msgid "Disabled"
 msgstr ""
 
-#: admin/modules/cron/cron.php:49
+#: admin/modules/cron/cron.php:113
 msgid "Running"
 msgstr ""
 
-#: admin/modules/cron/cron.php:50
+#: admin/modules/cron/cron.php:114
 msgid "Uploading"
 msgstr ""
 
-#: admin/modules/cron/cron.php:51
+#: admin/modules/cron/cron.php:115
 msgid "Downloading"
 msgstr ""
 
-#: admin/modules/cron/cron.php:118
+#: admin/modules/cron/cron.php:146
 msgid "Catalog refresh has been initiated and processing in the background"
 msgstr ""
 
-#: admin/modules/cron/cron.php:144
+#: admin/modules/cron/cron.php:151
+msgid "Permission denied"
+msgstr ""
+
+#: admin/modules/cron/cron.php:180
 msgid "Feed duplicated"
 msgstr ""
 
-#: admin/modules/cron/cron.php:173
+#: admin/modules/cron/cron.php:210
 msgid "Switch to website timezone"
 msgstr ""
 
-#: admin/modules/cron/cron.php:179
+#: admin/modules/cron/cron.php:216
 msgid "Turn on to switch to your wesbite\\'s timezone (local timezone). By default the timezone will be in UTC."
 msgstr ""
 
-#: admin/modules/cron/cron.php:226
-#: admin/modules/cron/cron.php:227
+#: admin/modules/cron/cron.php:264
+#: admin/modules/cron/cron.php:265
 #: admin/modules/cron/views/settings.php:17
 msgid "Scheduled Actions"
 msgstr ""
 
-#: admin/modules/cron/cron.php:405
+#: admin/modules/cron/cron.php:444
 msgid "Every 5 second"
 msgstr ""
 
-#: admin/modules/cron/cron.php:509
+#: admin/modules/cron/cron.php:549
 msgid "Chosen date is invalid"
 msgstr ""
 
-#: admin/modules/cron/cron.php:511
+#. translators: %d is the selected date
+#: admin/modules/cron/cron.php:551
+msgid "You have selected %d as the date but this date is not available in all months. In that case, last date of the month will be taken. Proceed?"
+msgstr ""
+
+#: admin/modules/cron/cron.php:552
 msgid "Please specify a file name."
 msgstr ""
 
-#: admin/modules/cron/cron.php:512
+#: admin/modules/cron/cron.php:553
 msgid "Saving"
 msgstr ""
 
-#: admin/modules/cron/cron.php:514
+#: admin/modules/cron/cron.php:555
 msgid "Please enter a valid interval."
 msgstr ""
 
-#: admin/modules/cron/cron.php:515
+#: admin/modules/cron/cron.php:556
 msgid "Please enter a valid time in hours(1-12)."
 msgstr ""
 
-#: admin/modules/cron/cron.php:516
+#: admin/modules/cron/cron.php:557
 msgid "Please enter a valid time in minutes(0-60)."
 msgstr ""
 
-#: admin/modules/cron/cron.php:517
+#: admin/modules/cron/cron.php:558
+#: admin/modules/cron/views/_schedule_now.php:139
+#: admin/modules/cron/views/_schedule_update.php:157
 msgid "Use the generated URL to run cron."
 msgstr ""
 
-#: admin/modules/cron/cron.php:548
+#: admin/modules/cron/cron.php:589
 msgid "Import/Schedule"
 msgstr ""
 
-#: admin/modules/cron/cron.php:553
-#: admin/modules/cron/cron.php:592
+#: admin/modules/cron/cron.php:594
+#: admin/modules/cron/cron.php:633
 msgid "Schedule"
 msgstr ""
 
-#: admin/modules/cron/cron.php:587
+#: admin/modules/cron/cron.php:628
 msgid "Export/Schedule"
+msgstr ""
+
+#: admin/modules/cron/cron.php:1163
+#: admin/modules/cron/cron.php:1262
+msgid "Success"
+msgstr ""
+
+#: admin/modules/cron/cron.php:1347
+msgid "Couldn't find selected schedule."
+msgstr ""
+
+#: admin/modules/cron/cron.php:1402
+msgid "Schedule updated successfully"
+msgstr ""
+
+#: admin/modules/cron/views/settings.php:17
+#: admin/modules/cron/views/_schedule_now.php:30
+#: admin/modules/cron/views/_schedule_update.php:34
+msgid "Current server time:"
 msgstr ""
 
 #: admin/modules/cron/views/settings.php:23
@@ -656,10 +1697,13 @@ msgid "Feed name"
 msgstr ""
 
 #: admin/modules/cron/views/_schedule_list.php:15
+#: admin/modules/export/views/_export_post_type_page.php:50
+#: admin/modules/history/views/_history_list.php:44
 msgid "Channel"
 msgstr ""
 
 #: admin/modules/cron/views/_schedule_list.php:17
+#: admin/modules/history/history.php:249
 msgid "Status"
 msgstr ""
 
@@ -669,87 +1713,467 @@ msgid "Time"
 msgstr ""
 
 #: admin/modules/cron/views/_schedule_list.php:20
+#: admin/modules/history/views/_history_list.php:49
 msgid "Actions"
 msgstr ""
 
+#: admin/modules/cron/views/_schedule_list.php:46
+msgid "Unknown"
+msgstr ""
+
+#: admin/modules/cron/views/_schedule_list.php:61
+msgid " Done"
+msgstr ""
+
+#: admin/modules/cron/views/_schedule_list.php:73
+#: admin/modules/cron/views/_schedule_list.php:89
+msgid "Last run: "
+msgstr ""
+
+#: admin/modules/cron/views/_schedule_list.php:81
+msgid "Next run: "
+msgstr ""
+
+#: admin/modules/cron/views/_schedule_list.php:92
+msgid "Started at: "
+msgstr ""
+
+#: admin/modules/cron/views/_schedule_list.php:98
+msgid "Will start at: "
+msgstr ""
+
+#: admin/modules/cron/views/_schedule_list.php:107
+msgid "Disable"
+msgstr ""
+
+#: admin/modules/cron/views/_schedule_list.php:112
+msgid "Enable"
+msgstr ""
+
+#: admin/modules/cron/views/_schedule_list.php:120
+#: admin/modules/history/views/_history_list.php:23
+#: admin/modules/history/views/_history_list.php:81
+msgid "Delete"
+msgstr ""
+
+#: admin/modules/cron/views/_schedule_list.php:126
+msgid "Generate new cron URL."
+msgstr ""
+
+#: admin/modules/cron/views/_schedule_list.php:126
+msgid "Cron URL"
+msgstr ""
+
+#: admin/modules/cron/views/_schedule_list.php:143
+msgid "No scheduled actions found."
+msgstr ""
+
+#: admin/modules/cron/views/_schedule_now.php:26
+#: admin/modules/cron/views/_schedule_now.php:148
+msgid "Schedule now"
+msgstr ""
+
+#: admin/modules/cron/views/_schedule_now.php:38
+#: admin/modules/cron/views/_schedule_update.php:42
+msgid "Schedule type"
+msgstr ""
+
+#: admin/modules/cron/views/_schedule_now.php:41
+#: admin/modules/cron/views/_schedule_update.php:47
+msgid "Wordpress Cron"
+msgstr ""
+
 #: admin/modules/cron/views/_schedule_now.php:42
+#: admin/modules/cron/views/_schedule_update.php:48
 msgid "This type of scheduler depends on the Wordpress for scheduling your job at the specified time. However this model is dependent on your website visitors. Upon a visit Wordpress cron will check to see if the time/date is later than the scheduled event/s, and if it is– it will fire those events."
 msgstr ""
 
 #: admin/modules/cron/views/_schedule_now.php:45
+#: admin/modules/cron/views/_schedule_update.php:51
 msgid "Server Cron"
 msgstr ""
 
 #: admin/modules/cron/views/_schedule_now.php:47
+#: admin/modules/cron/views/_schedule_update.php:53
 msgid "You can use this option if you have a separate system to trigger the scheduled events. This method will generate a unique URL which can be added to your system inorder to trigger the events. You may need to trigger the URL every minute depending on the volume of data to be processed."
 msgstr ""
 
 #: admin/modules/cron/views/_schedule_now.php:56
+#: admin/modules/cron/views/_schedule_update.php:62
 #: admin/modules/export/views/_export_post_type_page.php:13
 msgid "File name"
 msgstr ""
 
 #: admin/modules/cron/views/_schedule_now.php:60
+#: admin/modules/cron/views/_schedule_update.php:66
 msgid "Specify a filename for the exported file(the contents of this file will be overwritten for every export). If left blank the system generates a default name(a new filename is generated for every export)."
 msgstr ""
 
+#: admin/modules/cron/views/_schedule_now.php:66
+#: admin/modules/cron/views/_schedule_update.php:72
+msgid "Interval"
+msgstr ""
+
 #: admin/modules/cron/views/_schedule_now.php:69
+#: admin/modules/cron/views/_schedule_update.php:75
 msgid "Every day"
 msgstr ""
 
 #: admin/modules/cron/views/_schedule_now.php:70
+#: admin/modules/cron/views/_schedule_update.php:76
 msgid "Every week"
 msgstr ""
 
 #: admin/modules/cron/views/_schedule_now.php:71
+#: admin/modules/cron/views/_schedule_update.php:77
 msgid "Every month"
 msgstr ""
 
 #: admin/modules/cron/views/_schedule_now.php:72
+#: admin/modules/cron/views/_schedule_update.php:78
 msgid "Custom"
 msgstr ""
 
-#: admin/modules/export/export.php:385
-msgid "Export file format"
+#: admin/modules/cron/views/_schedule_now.php:75
+#: admin/modules/cron/views/_schedule_update.php:81
+msgid "Custom interval"
 msgstr ""
 
-#: admin/modules/export/export.php:395
-msgid "Delimiter"
+#: admin/modules/cron/views/_schedule_now.php:76
+#: admin/modules/cron/views/_schedule_update.php:82
+msgid "Interval in minutes."
 msgstr ""
 
-#: admin/modules/export/export.php:508
-msgid "Choosed template: "
+#: admin/modules/cron/views/_schedule_now.php:77
+#: admin/modules/cron/views/_schedule_update.php:83
+msgid "Recommended: Minimum 2 hour(120 minutes)"
 msgstr ""
 
-#: admin/modules/export/export.php:509
-msgid "Please select an export method."
+#: admin/modules/cron/views/_schedule_now.php:80
+#: admin/modules/cron/views/_schedule_update.php:86
+msgid "Which day?"
 msgstr ""
 
-#: admin/modules/export/export.php:510
-msgid "Please select an export template."
+#: admin/modules/cron/views/_schedule_now.php:96
+#: admin/modules/cron/views/_schedule_update.php:102
+msgid "Day of the Month?"
 msgstr ""
 
-#: admin/modules/export/export.php:511
+#: admin/modules/cron/views/_schedule_now.php:106
+#: admin/modules/cron/views/_schedule_update.php:113
+#: admin/modules/export/views/_export_post_type_page.php:169
+msgid "Last day"
+msgstr ""
+
+#: admin/modules/cron/views/_schedule_now.php:110
+#: admin/modules/cron/views/_schedule_update.php:128
+msgid "Start time"
+msgstr ""
+
+#: admin/modules/cron/views/_schedule_now.php:136
+#: admin/modules/cron/views/_schedule_update.php:154
+msgid "Trigger URL"
+msgstr ""
+
+#: admin/modules/cron/views/_schedule_update.php:26
+#: admin/modules/cron/views/_schedule_update.php:170
+msgid "Update Schedule"
+msgstr ""
+
+#: admin/modules/export/classes/class-export-ajax.php:121
+#: admin/modules/export/views/_export_cat_mapping_page.php:28
+#: admin/modules/export/views/_export_mapping_page.php:29
+msgid "Drag to rearrange the columns"
+msgstr ""
+
+#: admin/modules/export/classes/class-export-ajax.php:295
+msgid "Please enter a different name"
+msgstr ""
+
+#: admin/modules/export/classes/class-export-ajax.php:298
+msgid "Template with same name already exists"
+msgstr ""
+
+#: admin/modules/export/classes/class-export-ajax.php:335
+msgid "Template updated successfully"
+msgstr ""
+
+#: admin/modules/export/classes/class-export-ajax.php:352
+msgid "Template saved successfully"
+msgstr ""
+
+#: admin/modules/export/classes/class-export-ajax.php:371
+#: admin/modules/export/export.php:101
+#: admin/modules/export/export.php:268
+msgid "Edit feed"
+msgstr ""
+
+#: admin/modules/export/classes/class-export-ajax.php:371
+#: admin/modules/export/export.php:101
+#: admin/modules/export/export.php:257
+#: admin/modules/export/export.php:268
+#: admin/modules/export/export.php:269
+msgid "Create new feed"
+msgstr ""
+
+#. translators: %1$d is the current step number, %2$d is the total number of steps
+#: admin/modules/export/classes/class-export-ajax.php:748
+msgid "Step %1$d of %2$d"
+msgstr ""
+
+#: admin/modules/export/classes/class-export-ajax.php:771
+msgid "Back"
+msgstr ""
+
+#: admin/modules/export/classes/class-export-ajax.php:784
+#: admin/modules/export/export.php:523
 msgid "Step"
 msgstr ""
 
-#: admin/modules/export/export.php:512
+#: admin/modules/export/classes/class-export-ajax.php:791
+msgid "Or"
+msgstr ""
+
+#: admin/modules/export/classes/class-export-ajax.php:803
+msgid "Update"
+msgstr ""
+
+#: admin/modules/export/classes/class-export-ajax.php:803
+msgid "Generate"
+msgstr ""
+
+#: admin/modules/export/export.php:95
+#: admin/modules/export/export.php:1009
+#: admin/modules/facebook/facebook.php:407
+#: admin/modules/fruugo/fruugo.php:478
+#: admin/modules/google/google.php:522
+#: admin/modules/idealo/idealo.php:410
+#: admin/modules/onbuy/onbuy.php:553
+#: admin/modules/pinterest/pinterest.php:356
+#: admin/modules/pinterest_rss/pinterest_rss.php:265
+#: admin/modules/pricerunner/pricerunner.php:380
+#: admin/modules/pricespy/pricespy.php:433
+#: admin/modules/rakuten/rakuten.php:356
+#: admin/modules/shopmania/shopmania.php:308
+#: admin/modules/skroutz/skroutz.php:458
+#: admin/modules/snapchat/snapchat.php:326
+#: admin/modules/tiktok/tiktok.php:339
+#: admin/modules/twitter/twitter.php:398
+#: admin/modules/vivino/vivino.php:228
+msgid "CSV"
+msgstr ""
+
+#: admin/modules/export/export.php:96
+#: admin/modules/export/export.php:1010
+#: admin/modules/facebook/facebook.php:409
+#: admin/modules/onbuy/onbuy.php:554
+#: admin/modules/tiktokshop/tiktokshop.php:374
+msgid "XLSX"
+msgstr ""
+
+#: admin/modules/export/export.php:97
+#: admin/modules/export/export.php:1011
+#: admin/modules/facebook/facebook.php:408
+#: admin/modules/google/google.php:520
+#: admin/modules/google_promotions/google_promotions.php:196
+#: admin/modules/pinterest/pinterest.php:355
+#: admin/modules/pinterest_rss/pinterest_rss.php:264
+#: admin/modules/rakuten/rakuten.php:354
+#: admin/modules/shopzilla/shopzilla.php:444
+#: admin/modules/snapchat/snapchat.php:328
+msgid "TSV"
+msgstr ""
+
+#: admin/modules/export/export.php:108
+msgid "Fill the basic feed settings to proceed."
+msgstr ""
+
+#: admin/modules/export/export.php:122
+msgid "Attribute mapping"
+msgstr ""
+
+#: admin/modules/export/export.php:123
+msgid "Map the attributes of product feed corresponding to woocommerce fields. Required fields are already mapped."
+msgstr ""
+
+#: admin/modules/export/export.php:126
+msgid "Category mapping"
+msgstr ""
+
+#: admin/modules/export/export.php:127
+msgid "Map the categories of catalog feed corresponding to merchant."
+msgstr ""
+
+#: admin/modules/export/export.php:130
+msgid "Generate feed"
+msgstr ""
+
+#: admin/modules/export/export.php:136
+msgid "Quick export"
+msgstr ""
+
+#: admin/modules/export/export.php:136
+msgid "Exports all the basic fields."
+msgstr ""
+
+#: admin/modules/export/export.php:137
+msgid "Pre-saved template"
+msgstr ""
+
+#: admin/modules/export/export.php:137
+msgid "Exports data as per the specifications(filters,selective column,mapping etc) from the previously saved file."
+msgstr ""
+
+#: admin/modules/export/export.php:138
+msgid "Advanced export"
+msgstr ""
+
+#: admin/modules/export/export.php:138
+msgid "Exports data after a detailed process of filtration, column selection and advanced options. The configured settings can be saved as a template for future exports."
+msgstr ""
+
+#: admin/modules/export/export.php:218
+msgid "Default feed batch count"
+msgstr ""
+
+#: admin/modules/export/export.php:222
+msgid "Provide the default count for the records to be generated in a batch."
+msgstr ""
+
+#: admin/modules/export/export.php:227
+msgid "Google local product inventory store code"
+msgstr ""
+
+#: admin/modules/export/export.php:232
+msgid "The [store_code] attribute is case-sensitive and must match the store code entered in your Business Profiles."
+msgstr ""
+
+#: admin/modules/export/export.php:236
+msgid "Add shipping costs of all countries to the feed"
+msgstr ""
+
+#: admin/modules/export/export.php:242
+msgid "Enabling this option will add the shipping costs of all zone/countries to the feed."
+msgstr ""
+
+#: admin/modules/export/export.php:258
+#: admin/modules/export/views/html-product-variation-data-feed.php:11
+msgid "WebToffee Product Feed"
+msgstr ""
+
+#: admin/modules/export/export.php:344
+msgid "Limit"
+msgstr ""
+
+#: admin/modules/export/export.php:349
+msgid "The actual number of records you want to export. e.g. A limit of 500 with an offset 10 will export records from 11th to 510th position."
+msgstr ""
+
+#: admin/modules/export/export.php:354
+msgid "Offset"
+msgstr ""
+
+#: admin/modules/export/export.php:357
+msgid "0"
+msgstr ""
+
+#: admin/modules/export/export.php:358
+msgid "Specify the number of records that should be skipped from the beginning of the database. e.g. An offset of 10 skips the first 10 records."
+msgstr ""
+
+#: admin/modules/export/export.php:370
+msgid "Local"
+msgstr ""
+
+#: admin/modules/export/export.php:387
+msgid "Process in batches of"
+msgstr ""
+
+#. translators: %d is the default batch count number
+#: admin/modules/export/export.php:393
+msgid "The number of records that the server will process for every iteration within the configured timeout interval. If the process fails due to timeout you can lower this number accordingly and try again. Defaulted to %d records."
+msgstr ""
+
+#: admin/modules/export/export.php:397
+msgid "Export file format"
+msgstr ""
+
+#: admin/modules/export/export.php:407
+msgid "Delimiter"
+msgstr ""
+
+#: admin/modules/export/export.php:419
+msgid "Separator for differentiating the columns in the CSV file. Assumes TAB by default."
+msgstr ""
+
+#: admin/modules/export/export.php:520
+msgid "Choosed template: "
+msgstr ""
+
+#: admin/modules/export/export.php:521
+msgid "Please select an export method."
+msgstr ""
+
+#: admin/modules/export/export.php:522
+#: admin/modules/export/views/_export_method_export_page.php:14
+msgid "Please select an export template."
+msgstr ""
+
+#: admin/modules/export/export.php:524
 msgid "Please select an FTP profile."
 msgstr ""
 
-#: admin/modules/export/export.php:513
+#: admin/modules/export/export.php:525
 msgid "Are you sure to stop the product feed generation?"
 msgstr ""
 
-#: admin/modules/export/export.php:514
+#: admin/modules/export/export.php:526
 msgid "Please fill the file name"
 msgstr ""
 
-#: admin/modules/export/export.php:515
+#: admin/modules/export/export.php:527
 msgid "File name already exist"
 msgstr ""
 
-#: admin/modules/export/export.php:1037
+#. translators: %s is the file destination (e.g., FTP, local)
+#: admin/modules/export/export.php:882
+msgid "Uploading to %s"
+msgstr ""
+
+#: admin/modules/export/export.php:902
+msgid "Feed updated successfully!"
+msgstr ""
+
+#: admin/modules/export/export.php:905
+msgid "Feed generated successfully!"
+msgstr ""
+
+#: admin/modules/export/export.php:906
+#: admin/modules/history/views/_history_list.php:92
+msgid "Edit"
+msgstr ""
+
+#: admin/modules/export/export.php:913
+#: admin/modules/history/views/_history_list.php:102
+msgid "Download"
+msgstr ""
+
+#: admin/modules/export/export.php:915
+#: admin/modules/history/views/_history_list.php:19
+msgid "Manage feeds"
+msgstr ""
+
+#: admin/modules/export/export.php:916
+#: admin/modules/history/views/_history_list.php:75
+msgid "Copy URL"
+msgstr ""
+
+#. translators: %1$d is the current offset, %2$d is the total records
+#: admin/modules/export/export.php:954
+msgid "Exporting...(%1$d out of %2$d)"
+msgstr ""
+
+#: admin/modules/export/export.php:1148
 msgctxt "product data tab"
 msgid "WebToffee Product Feed"
 msgstr ""
@@ -779,7 +2203,8 @@ msgstr ""
 
 #: admin/modules/export/views/html-product-data-feed.php:57
 #: admin/modules/export/views/html-product-variation-data-feed.php:68
-#: helpers/class-wt-common-helper.php:255
+#: admin/views/admin-settings-custom-fields.php:143
+#: helpers/class-wt-common-helper.php:269
 msgid "GTIN"
 msgstr ""
 
@@ -791,7 +2216,8 @@ msgstr ""
 
 #: admin/modules/export/views/html-product-data-feed.php:70
 #: admin/modules/export/views/html-product-variation-data-feed.php:111
-#: helpers/class-wt-common-helper.php:256
+#: admin/views/admin-settings-custom-fields.php:145
+#: helpers/class-wt-common-helper.php:270
 msgid "MPN"
 msgstr ""
 
@@ -803,6 +2229,7 @@ msgstr ""
 
 #: admin/modules/export/views/html-product-data-feed.php:83
 #: admin/modules/export/views/html-product-variation-data-feed.php:82
+#: admin/views/admin-settings-custom-fields.php:147
 msgid "HAN"
 msgstr ""
 
@@ -814,6 +2241,7 @@ msgstr ""
 
 #: admin/modules/export/views/html-product-data-feed.php:96
 #: admin/modules/export/views/html-product-variation-data-feed.php:96
+#: admin/views/admin-settings-custom-fields.php:149
 msgid "EAN"
 msgstr ""
 
@@ -839,15 +2267,15 @@ msgstr ""
 #: admin/modules/export/views/html-product-data-feed.php:149
 #: admin/modules/export/views/html-product-data-feed.php:302
 #: admin/modules/export/views/html-product-data-feed.php:327
-#: admin/modules/export/views/html-product-data-feed.php:427
-#: admin/modules/export/views/html-product-data-feed.php:443
+#: admin/modules/export/views/html-product-data-feed.php:428
+#: admin/modules/export/views/html-product-data-feed.php:445
 #: admin/modules/export/views/html-product-variation-data-feed.php:132
 #: admin/modules/export/views/html-product-variation-data-feed.php:151
 #: admin/modules/export/views/html-product-variation-data-feed.php:169
 #: admin/modules/export/views/html-product-variation-data-feed.php:329
 #: admin/modules/export/views/html-product-variation-data-feed.php:356
-#: admin/modules/export/views/html-product-variation-data-feed.php:462
-#: admin/modules/export/views/html-product-variation-data-feed.php:481
+#: admin/modules/export/views/html-product-variation-data-feed.php:463
+#: admin/modules/export/views/html-product-variation-data-feed.php:483
 msgctxt "setting option"
 msgid "Default"
 msgstr ""
@@ -1129,26 +2557,24 @@ msgctxt "product data setting title"
 msgid "Google Product category"
 msgstr ""
 
-#: admin/modules/export/views/html-product-data-feed.php:425
-#: admin/modules/export/views/html-product-variation-data-feed.php:460
+#. translators: %1$s is the opening link tag, %2$s is the closing link tag
+#: admin/modules/export/views/html-product-data-feed.php:426
+#: admin/modules/export/views/html-product-variation-data-feed.php:461
 msgctxt "product data setting desc"
 msgid "A product category value provided by %1$s Google %2$s feed."
 msgstr ""
 
-#: admin/modules/export/views/html-product-data-feed.php:440
-#: admin/modules/export/views/html-product-variation-data-feed.php:478
+#: admin/modules/export/views/html-product-data-feed.php:441
+#: admin/modules/export/views/html-product-variation-data-feed.php:479
 msgctxt "product data setting title"
 msgid "Facebook Product category"
 msgstr ""
 
-#: admin/modules/export/views/html-product-data-feed.php:441
-#: admin/modules/export/views/html-product-variation-data-feed.php:479
+#. translators: %1$s is the opening link tag, %2$s is the closing link tag
+#: admin/modules/export/views/html-product-data-feed.php:443
+#: admin/modules/export/views/html-product-variation-data-feed.php:481
 msgctxt "product data setting desc"
 msgid "A product category value provided by %1$s Facebook %2$s feed."
-msgstr ""
-
-#: admin/modules/export/views/html-product-variation-data-feed.php:11
-msgid "WebToffee Product Feed"
 msgstr ""
 
 #: admin/modules/export/views/html-product-variation-data-feed.php:32
@@ -1164,6 +2590,123 @@ msgstr ""
 #: admin/modules/export/views/html-product-variation-data-feed.php:354
 msgctxt "product data setting desc"
 msgid "The product Pickup SLA, used in google local product inventory."
+msgstr ""
+
+#: admin/modules/export/views/main.php:72
+#: admin/modules/history/views/_history_list.php:8
+msgid "Product Feed"
+msgstr ""
+
+#: admin/modules/export/views/main.php:76
+#: admin/modules/history/views/_history_list.php:10
+msgid "Developed by"
+msgstr ""
+
+#: admin/modules/export/views/main.php:91
+msgid "Unable to handle Re-Run request."
+msgstr ""
+
+#: admin/modules/export/views/main.php:102
+msgid "Generating feed..."
+msgstr ""
+
+#: admin/modules/export/views/main.php:104
+msgid "out of"
+msgstr ""
+
+#. translators: %1$s is the opening link tag, %2$s is the closing link tag
+#: admin/modules/export/views/main.php:145
+msgid " %1$s Documentation %2$s "
+msgstr ""
+
+#. translators: %1$s is the opening link tag, %2$s is the closing link tag
+#: admin/modules/export/views/main.php:149
+msgid " %1$s Video tutorial %2$s "
+msgstr ""
+
+#. translators: %1$s is the opening link tag, %2$s is the closing link tag
+#: admin/modules/export/views/main.php:153
+msgid " %1$s Contact Support %2$s "
+msgstr ""
+
+#: admin/modules/export/views/_export_cat_mapping_page.php:11
+#: admin/modules/export/views/_export_mapping_page.php:11
+msgid "Default fields"
+msgstr ""
+
+#: admin/modules/export/views/_export_cat_mapping_page.php:12
+#: admin/modules/export/views/_export_cat_mapping_page.php:89
+#: admin/modules/export/views/_export_mapping_page.php:12
+#: admin/modules/export/views/_export_mapping_page.php:89
+msgid " columns(s) selected"
+msgstr ""
+
+#: admin/modules/export/views/_export_cat_mapping_page.php:22
+#: admin/modules/export/views/_export_meta_step_page.php:16
+msgid "Column"
+msgstr ""
+
+#: admin/modules/export/views/_export_cat_mapping_page.php:23
+#: admin/modules/export/views/_export_meta_step_page.php:17
+msgid "Column name"
+msgstr ""
+
+#: admin/modules/export/views/_export_cat_mapping_page.php:56
+#: admin/modules/export/views/_export_mapping_page.php:57
+#: admin/modules/export/views/_export_meta_step_page.php:53
+msgid "No fields found."
+msgstr ""
+
+#: admin/modules/export/views/_export_mapping_page.php:7
+msgid "To learn about adding static values refer to"
+msgstr ""
+
+#: admin/modules/export/views/_export_mapping_page.php:7
+msgid "article."
+msgstr ""
+
+#: admin/modules/export/views/_export_mapping_page.php:22
+msgid "Catalog"
+msgstr ""
+
+#: admin/modules/export/views/_export_mapping_page.php:22
+msgid "Attributes"
+msgstr ""
+
+#: admin/modules/export/views/_export_mapping_page.php:23
+msgid "WooCommerce Product Fields"
+msgstr ""
+
+#: admin/modules/export/views/_export_method_export_page.php:10
+msgid "Please select an export method"
+msgstr ""
+
+#: admin/modules/export/views/_export_method_export_page.php:16
+msgid "The free version of this plugin exports and imports only WooCommerce Simple, Grouped and External/Affiliate product types."
+msgstr ""
+
+#: admin/modules/export/views/_export_method_export_page.php:19
+msgid "Select an export method"
+msgstr ""
+
+#: admin/modules/export/views/_export_method_export_page.php:42
+msgid "Include fields from the respective groups"
+msgstr ""
+
+#: admin/modules/export/views/_export_method_export_page.php:67
+msgid "Enabling any of these ensures that all the fields from the respective groups are included in your export."
+msgstr ""
+
+#: admin/modules/export/views/_export_method_export_page.php:73
+msgid "Export template"
+msgstr ""
+
+#: admin/modules/export/views/_export_method_export_page.php:76
+msgid "Select a template"
+msgstr ""
+
+#: admin/modules/export/views/_export_post_type_page.php:9
+msgid "Please select a post type"
 msgstr ""
 
 #: admin/modules/export/views/_export_post_type_page.php:16
@@ -1204,6 +2747,10 @@ msgstr ""
 
 #: admin/modules/export/views/_export_post_type_page.php:104
 msgid "Search and add one or more categories."
+msgstr ""
+
+#: admin/modules/export/views/_export_post_type_page.php:111
+msgid "Auto-refresh"
 msgstr ""
 
 #: admin/modules/export/views/_export_post_type_page.php:116
@@ -1247,22 +2794,51 @@ msgid "Minute"
 msgstr ""
 
 #: admin/modules/facebook/data/wt-feed-category-mapping.php:98
-#: includes/fbcatalog/wt-fbfeed-category-map-helper.php:73
+msgid "Search for a category..."
+msgstr ""
+
+#: admin/modules/facebook/data/wt-feed-category-mapping.php:112
+#: admin/modules/fruugo/data/wt-feed-category-mapping.php:100
+#: admin/modules/google/data/wt-feed-category-mapping.php:96
+#: admin/modules/onbuy/data/wt-feed-category-mapping.php:115
+#: includes/fbcatalog/wt-fbfeed-category-map-helper.php:88
 msgid "All categories have already been mapped"
 msgstr ""
 
-#: admin/modules/facebook/data/wt-feed-category-mapping.php:130
+#: admin/modules/facebook/data/wt-feed-category-mapping.php:144
 #: includes/fbcatalog/partials/wt-fbfeed-category-mapping.php:20
 msgid "Map WooCommerce categories with Facebook categories."
 msgstr ""
 
-#: admin/modules/facebook/data/wt-feed-category-mapping.php:138
+#: admin/modules/facebook/data/wt-feed-category-mapping.php:145
+#: includes/fbcatalog/partials/wt-fbfeed-category-mapping.php:21
+msgid "Facebook has a"
+msgstr ""
+
+#: admin/modules/facebook/data/wt-feed-category-mapping.php:145
+#: includes/fbcatalog/partials/wt-fbfeed-category-mapping.php:21
+msgid "pre-defined set of categories."
+msgstr ""
+
+#: admin/modules/facebook/data/wt-feed-category-mapping.php:145
+#: includes/fbcatalog/partials/wt-fbfeed-category-mapping.php:21
+msgid "Mapping your store categories with the Facebook categories will give more visibility to your products in Facebook shops and dynamic ads. To edit the mapping go to the respective"
+msgstr ""
+
+#: admin/modules/facebook/data/wt-feed-category-mapping.php:145
+#: includes/fbcatalog/partials/wt-fbfeed-category-mapping.php:21
+msgid "categories page."
+msgstr ""
+
+#: admin/modules/facebook/data/wt-feed-category-mapping.php:152
+#: admin/modules/fruugo/data/wt-feed-category-mapping.php:128
 #: admin/modules/google/data/wt-feed-category-mapping.php:149
+#: admin/modules/onbuy/data/wt-feed-category-mapping.php:188
 #: includes/fbcatalog/partials/wt-fbfeed-category-mapping.php:30
 msgid "Store Categories"
 msgstr ""
 
-#: admin/modules/facebook/data/wt-feed-category-mapping.php:139
+#: admin/modules/facebook/data/wt-feed-category-mapping.php:153
 #: includes/fbcatalog/partials/wt-fbfeed-category-mapping.php:31
 msgid "Facebook Category"
 msgstr ""
@@ -1271,20 +2847,127 @@ msgstr ""
 msgid "Facebook / Instagram catalog"
 msgstr ""
 
-#: admin/modules/fruugo/fruugo.php:221
+#: admin/modules/facebook/facebook.php:254
+#: admin/modules/google/google.php:305
+#: admin/modules/leguide/leguide.php:212
+#: admin/modules/pinterest/pinterest.php:214
+#: admin/modules/pricespy/pricespy.php:213
+#: admin/modules/rakuten/rakuten.php:212
+#: admin/modules/shopzilla/shopzilla.php:220
+#: admin/modules/skroutz/skroutz.php:279
+#: admin/modules/tiktok/tiktok.php:214
+msgid "Tax & Shipping"
+msgstr ""
+
+#: admin/modules/facebook/facebook.php:414
+#: admin/modules/idealo/idealo.php:417
+#: admin/modules/pinterest/pinterest.php:361
+#: admin/modules/pinterest_rss/pinterest_rss.php:270
+#: admin/modules/pricerunner/pricerunner.php:385
+#: admin/modules/pricespy/pricespy.php:438
+#: admin/modules/skroutz/skroutz.php:463
+#: admin/modules/snapchat/snapchat.php:334
+#: admin/modules/tiktok/tiktok.php:345
+#: helpers/class-pf-catalog-export-helper.php:23
+msgid "Semicolon"
+msgstr ""
+
+#: admin/modules/fruugo/data/wt-feed-category-mapping.php:119
+msgid "Map WooCommerce categories with Fruugo categories."
+msgstr ""
+
+#: admin/modules/fruugo/data/wt-feed-category-mapping.php:120
+msgid "Fruugo has it's own"
+msgstr ""
+
+#: admin/modules/fruugo/data/wt-feed-category-mapping.php:120
+msgid "category list"
+msgstr ""
+
+#: admin/modules/fruugo/data/wt-feed-category-mapping.php:120
+msgid " It is mandatory to map the store categories against Fruugo categories. To edit the mapping go to the respective"
+msgstr ""
+
+#: admin/modules/fruugo/data/wt-feed-category-mapping.php:120
+#: admin/modules/google/data/wt-feed-category-mapping.php:139
+#: admin/modules/google/data/wt-feed-category-mapping.php:141
+#: admin/modules/onbuy/data/wt-feed-category-mapping.php:177
+#: admin/modules/onbuy/data/wt-feed-category-mapping.php:179
+msgid "categories page"
+msgstr ""
+
+#: admin/modules/fruugo/data/wt-feed-category-mapping.php:129
+#: admin/modules/fruugo/fruugo.php:103
+msgid "Fruugo Category"
+msgstr ""
+
+#: admin/modules/fruugo/fruugo.php:117
+msgid "The Fruugo Category corresponding to this category in the website."
+msgstr ""
+
+#: admin/modules/fruugo/fruugo.php:229
 msgid "Fruugo"
+msgstr ""
+
+#: admin/modules/fruugo/fruugo.php:314
+#: admin/modules/tiktokshop/tiktokshop.php:210
+#: admin/modules/vivino/vivino.php:121
+msgid "Product Details"
+msgstr ""
+
+#: admin/modules/fruugo/fruugo.php:484
+#: admin/modules/vivino/vivino.php:234
+msgid "Separator for differentiating the columns in the CSV file. Assumes comma by default."
 msgstr ""
 
 #: admin/modules/google/data/wt-feed-category-mapping.php:125
 msgid "Map WooCommerce categories with Google categories."
 msgstr ""
 
-#: admin/modules/google/data/wt-feed-category-mapping.php:150
-msgid "Google Category"
+#: admin/modules/google/data/wt-feed-category-mapping.php:139
+msgid "Google has a"
 msgstr ""
 
-#: admin/modules/google/google.php:210
+#: admin/modules/google/data/wt-feed-category-mapping.php:139
+msgid "pre-defined set of categories"
+msgstr ""
+
+#: admin/modules/google/data/wt-feed-category-mapping.php:139
+msgid "Mapping your store categories with the Google categories will give more visibility to your products in Google ads and listings. To edit the mapping go to the respective"
+msgstr ""
+
+#: admin/modules/google/data/wt-feed-category-mapping.php:141
+#: admin/modules/onbuy/data/wt-feed-category-mapping.php:179
+msgid "uses"
+msgstr ""
+
+#: admin/modules/google/data/wt-feed-category-mapping.php:141
+msgid "Google categories"
+msgstr ""
+
+#: admin/modules/google/data/wt-feed-category-mapping.php:141
+msgid "Mapping your store categories with the Google categories will give more visibility to your products in"
+msgstr ""
+
+#: admin/modules/google/data/wt-feed-category-mapping.php:141
+#: admin/modules/onbuy/data/wt-feed-category-mapping.php:179
+msgid "ads. To edit the mapping go to the respective"
+msgstr ""
+
+#: admin/modules/google/google.php:218
 msgid "Google Shop"
+msgstr ""
+
+#: admin/modules/google/google.php:313
+#: admin/modules/pricespy/pricespy.php:221
+#: admin/modules/shopzilla/shopzilla.php:228
+msgid "Loyalty Points (Japan Only)"
+msgstr ""
+
+#: admin/modules/google/google.php:314
+#: admin/modules/pricespy/pricespy.php:222
+#: admin/modules/shopzilla/shopzilla.php:229
+msgid "Multiple Installments (Brazil Only)"
 msgstr ""
 
 #: admin/modules/google_local_inventory_ads/google_local_inventory_ads.php:133
@@ -1293,11 +2976,6 @@ msgstr ""
 
 #: admin/modules/google_local_product_inventory/google_local_product_inventory.php:133
 msgid "Google Local Product Inventory"
-msgstr ""
-
-#: admin/modules/google_product_reviews/google_product_reviews.php:74
-#: admin/modules/skroutz/skroutz.php:79
-msgid "XML"
 msgstr ""
 
 #: admin/modules/google_product_reviews/google_product_reviews.php:129
@@ -1312,172 +2990,334 @@ msgstr ""
 msgid "Google Promotions"
 msgstr ""
 
-#: admin/modules/heureka/heureka.php:173
+#: admin/modules/heureka/heureka.php:174
 msgid "Heureka"
 msgstr ""
 
-#: admin/modules/history/views/_history_list.php:21
-msgid "Bulk Actions"
+#: admin/modules/history/history.php:58
+msgid "Running/Incomplete"
+msgstr ""
+
+#: admin/modules/history/history.php:60
+msgid "Failed"
+msgstr ""
+
+#: admin/modules/history/history.php:64
+msgid "Export"
+msgstr ""
+
+#: admin/modules/history/history.php:65
+msgid "Import"
+msgstr ""
+
+#: admin/modules/history/history.php:66
+msgid "Image Export"
+msgstr ""
+
+#: admin/modules/history/history.php:77
+#: admin/modules/history/history.php:78
+msgid "Manage Feeds"
+msgstr ""
+
+#: admin/modules/history/history.php:235
+msgid "Post type"
+msgstr ""
+
+#: admin/modules/history/history.php:242
+msgid "Action type"
+msgstr ""
+
+#: admin/modules/history/history.php:269
+msgid "Date descending"
+msgstr ""
+
+#: admin/modules/history/history.php:270
+msgid "Date ascending"
+msgstr ""
+
+#: admin/modules/history/history.php:753
+msgid " record(s)"
+msgstr ""
+
+#: admin/modules/history/views/_history_list.php:13
+msgid "WebToffee Logo"
 msgstr ""
 
 #: admin/modules/history/views/_history_list.php:22
-msgid "Delete"
-msgstr ""
-
-#: admin/modules/history/views/_history_list.php:24
-msgid "Apply"
+msgid "Bulk Actions"
 msgstr ""
 
 #: admin/modules/history/views/_history_list.php:25
+msgid "Apply"
+msgstr ""
+
+#: admin/modules/history/views/_history_list.php:26
 msgid "Add new feed"
 msgstr ""
 
-#: admin/modules/history/views/_history_list.php:40
+#: admin/modules/history/views/_history_list.php:41
+#: admin/partials/_form_field_generator.php:313
 msgid "No"
 msgstr ""
 
-#: admin/modules/idealo/idealo.php:129
+#: admin/modules/history/views/_history_list.php:43
+msgid "Name"
+msgstr ""
+
+#: admin/modules/history/views/_history_list.php:45
+msgid "File type"
+msgstr ""
+
+#: admin/modules/history/views/_history_list.php:46
+msgid "URL"
+msgstr ""
+
+#: admin/modules/history/views/_history_list.php:47
+msgid "Refresh interval"
+msgstr ""
+
+#: admin/modules/history/views/_history_list.php:48
+msgid "Last updated"
+msgstr ""
+
+#: admin/modules/history/views/_history_list.php:108
+msgid "Refresh"
+msgstr ""
+
+#: admin/modules/history/views/_history_list.php:111
+msgid "Duplicate"
+msgstr ""
+
+#: admin/modules/history/views/_history_list.php:123
+msgid "No records found."
+msgstr ""
+
+#: admin/modules/idealo/idealo.php:128
 msgid "Idealo"
 msgstr ""
 
-#: admin/modules/idealo/idealo.php:306
-msgid "deliveryTime"
-msgstr ""
-
-#: admin/modules/idealo/idealo.php:307
-msgid "paymentCosts_credit_card"
+#: admin/modules/idealo/idealo.php:257
+msgid "Payment and Delivery"
 msgstr ""
 
 #: admin/modules/idealo/idealo.php:308
-msgid "paymentCosts_cash_in_advance"
+msgid "deliveryTime"
 msgstr ""
 
 #: admin/modules/idealo/idealo.php:309
-msgid "paymentCosts_cash_on_delivery"
+msgid "paymentCosts_credit_card"
 msgstr ""
 
 #: admin/modules/idealo/idealo.php:310
-msgid "paymentCosts_direct_debit"
+msgid "paymentCosts_cash_in_advance"
 msgstr ""
 
 #: admin/modules/idealo/idealo.php:311
-msgid "paymentCosts_paypal"
+msgid "paymentCosts_cash_on_delivery"
 msgstr ""
 
 #: admin/modules/idealo/idealo.php:312
-msgid "paymentCosts_giropay"
+msgid "paymentCosts_direct_debit"
 msgstr ""
 
 #: admin/modules/idealo/idealo.php:313
-msgid "paymentCosts_google_checkout"
+msgid "paymentCosts_paypal"
 msgstr ""
 
 #: admin/modules/idealo/idealo.php:314
-msgid "paymentCosts_invoice"
+msgid "paymentCosts_giropay"
 msgstr ""
 
 #: admin/modules/idealo/idealo.php:315
-msgid "paymentCosts_postal_order"
+msgid "paymentCosts_google_checkout"
 msgstr ""
 
 #: admin/modules/idealo/idealo.php:316
-msgid "paymentCosts_paysafecard"
+msgid "paymentCosts_invoice"
 msgstr ""
 
 #: admin/modules/idealo/idealo.php:317
-msgid "paymentCosts_sofortueberweisung"
+msgid "paymentCosts_postal_order"
 msgstr ""
 
 #: admin/modules/idealo/idealo.php:318
-msgid "paymentCosts_amazon_payment"
+msgid "paymentCosts_paysafecard"
 msgstr ""
 
 #: admin/modules/idealo/idealo.php:319
-msgid "paymentCosts_electronical_payment_standard"
+msgid "paymentCosts_sofortueberweisung"
 msgstr ""
 
 #: admin/modules/idealo/idealo.php:320
-msgid "paymentCosts_ecotax"
+msgid "paymentCosts_amazon_payment"
+msgstr ""
+
+#: admin/modules/idealo/idealo.php:321
+msgid "paymentCosts_electronical_payment_standard"
 msgstr ""
 
 #: admin/modules/idealo/idealo.php:322
-msgid "deliveryCost_spedition"
-msgstr ""
-
-#: admin/modules/idealo/idealo.php:323
-msgid "deliveryCost_trans_o_flex"
+msgid "paymentCosts_ecotax"
 msgstr ""
 
 #: admin/modules/idealo/idealo.php:324
-msgid "deliveryCost_tnt"
+msgid "deliveryCost_spedition"
 msgstr ""
 
 #: admin/modules/idealo/idealo.php:325
-msgid "deliveryCost_pick_point"
+msgid "deliveryCost_trans_o_flex"
 msgstr ""
 
 #: admin/modules/idealo/idealo.php:326
-msgid "deliveryCost_hermes"
+msgid "deliveryCost_tnt"
 msgstr ""
 
 #: admin/modules/idealo/idealo.php:327
-msgid "deliveryCost_gls_think_green"
+msgid "deliveryCost_pick_point"
 msgstr ""
 
 #: admin/modules/idealo/idealo.php:328
-msgid "deliveryCost_gls"
+msgid "deliveryCost_hermes"
 msgstr ""
 
 #: admin/modules/idealo/idealo.php:329
-msgid "deliveryCost_german_express_logistics"
+msgid "deliveryCost_gls_think_green"
 msgstr ""
 
 #: admin/modules/idealo/idealo.php:330
-msgid "deliveryCost_dpd"
+msgid "deliveryCost_gls"
 msgstr ""
 
 #: admin/modules/idealo/idealo.php:331
-msgid "deliveryCost_download"
+msgid "deliveryCost_german_express_logistics"
 msgstr ""
 
 #: admin/modules/idealo/idealo.php:332
-msgid "deliveryCost_dhl_go_green"
+msgid "deliveryCost_dpd"
 msgstr ""
 
 #: admin/modules/idealo/idealo.php:333
-msgid "deliveryCost_dhl"
+msgid "deliveryCost_download"
 msgstr ""
 
 #: admin/modules/idealo/idealo.php:334
-msgid "deliveryCost_deutsche_post"
+msgid "deliveryCost_dhl_go_green"
 msgstr ""
 
 #: admin/modules/idealo/idealo.php:335
-msgid "deliveryCost_fedex"
+msgid "deliveryCost_dhl"
 msgstr ""
 
 #: admin/modules/idealo/idealo.php:336
+msgid "deliveryCost_deutsche_post"
+msgstr ""
+
+#: admin/modules/idealo/idealo.php:337
+msgid "deliveryCost_fedex"
+msgstr ""
+
+#: admin/modules/idealo/idealo.php:338
 msgid "deliveryCost_ups"
 msgstr ""
 
-#: admin/modules/onbuy/onbuy.php:223
+#: admin/modules/leguide/leguide.php:123
+msgid "Leguide"
+msgstr ""
+
+#: admin/modules/onbuy/data/wt-feed-category-mapping.php:163
+msgid "Map WooCommerce categories with OnBuy categories."
+msgstr ""
+
+#: admin/modules/onbuy/data/wt-feed-category-mapping.php:177
+msgid "OnBuy has a pre-defined set of categories"
+msgstr ""
+
+#: admin/modules/onbuy/data/wt-feed-category-mapping.php:177
+msgid "Mapping your store categories with the OnBuy categories will give more visibility to your products in OnBuy ads and listings. To edit the mapping go to the respective"
+msgstr ""
+
+#: admin/modules/onbuy/data/wt-feed-category-mapping.php:179
+msgid "OnBuy categories"
+msgstr ""
+
+#: admin/modules/onbuy/data/wt-feed-category-mapping.php:179
+msgid "Mapping your store categories with the OnBuy categories will give more visibility to your products in"
+msgstr ""
+
+#: admin/modules/onbuy/data/wt-feed-category-mapping.php:189
+#: admin/modules/onbuy/onbuy.php:103
+msgid "OnBuy Category"
+msgstr ""
+
+#: admin/modules/onbuy/onbuy.php:117
+msgid "The OnBuy Category corresponding to this category in the website."
+msgstr ""
+
+#: admin/modules/onbuy/onbuy.php:231
 msgid "OnBuy"
+msgstr ""
+
+#: admin/modules/onbuy/onbuy.php:363
+msgid "Listing Details"
+msgstr ""
+
+#: admin/modules/onbuy/onbuy.php:364
+msgid "Recommended Details"
+msgstr ""
+
+#: admin/modules/onbuy/onbuy.php:365
+msgid "Variation Data"
+msgstr ""
+
+#: admin/modules/onbuy/onbuy.php:366
+#: admin/views/freevspro.php:68
+msgid "Features"
+msgstr ""
+
+#: admin/modules/onbuy/onbuy.php:367
+msgid "Additional product data"
+msgstr ""
+
+#: admin/modules/onbuy/onbuy.php:368
+msgid "Optional Listing Details"
 msgstr ""
 
 #: admin/modules/pinterest/pinterest.php:125
 msgid "Pinterest"
 msgstr ""
 
+#: admin/modules/pinterest/pinterest.php:211
+#: admin/modules/tiktok/tiktok.php:211
+msgid "Price Details"
+msgstr ""
+
 #: admin/modules/pinterest_rss/pinterest_rss.php:110
 msgid "Pinterest RSS"
 msgstr ""
 
-#: admin/modules/pricerunner/pricerunner.php:126
+#: admin/modules/pricerunner/pricerunner.php:125
 msgid "PriceRunner"
 msgstr ""
 
 #: admin/modules/pricespy/pricespy.php:124
 msgid "PriceSpy"
+msgstr ""
+
+#: admin/modules/pricespy/pricespy.php:223
+#: admin/modules/shopzilla/shopzilla.php:230
+msgid "Shopping Action Attributes"
+msgstr ""
+
+#: admin/modules/rakuten/rakuten.php:123
+msgid "Rakuten"
+msgstr ""
+
+#: admin/modules/shopmania/shopmania.php:136
+msgid "Shopmania"
+msgstr ""
+
+#: admin/modules/shopmania/shopmania.php:311
+msgid "Pipe"
 msgstr ""
 
 #: admin/modules/shopzilla/shopzilla.php:128
@@ -1501,29 +3341,31 @@ msgid "Skroutz"
 msgstr ""
 
 #: admin/modules/skroutz/skroutz.php:180
-#: helpers/class-wt-common-helper.php:474
+#: admin/modules/twitter/twitter.php:507
+#: helpers/class-wt-common-helper.php:500
 msgid "All ages"
 msgstr ""
 
 #: admin/modules/skroutz/skroutz.php:182
-#: helpers/class-wt-common-helper.php:476
+#: admin/modules/twitter/twitter.php:508
+#: helpers/class-wt-common-helper.php:502
 msgid "Teen"
 msgstr ""
 
-#: admin/modules/skroutz/skroutz.php:556
-#: helpers/class-wt-common-helper.php:490
+#: admin/modules/skroutz/skroutz.php:559
+#: helpers/class-wt-common-helper.php:516
 msgctxt "product condition"
 msgid "Used like new"
 msgstr ""
 
-#: admin/modules/skroutz/skroutz.php:557
-#: helpers/class-wt-common-helper.php:491
+#: admin/modules/skroutz/skroutz.php:560
+#: helpers/class-wt-common-helper.php:517
 msgctxt "product condition"
 msgid "Used good"
 msgstr ""
 
-#: admin/modules/skroutz/skroutz.php:558
-#: helpers/class-wt-common-helper.php:492
+#: admin/modules/skroutz/skroutz.php:561
+#: helpers/class-wt-common-helper.php:518
 msgctxt "product condition"
 msgid "Used fair"
 msgstr ""
@@ -1540,196 +3382,968 @@ msgstr ""
 msgid "TikTok Shop"
 msgstr ""
 
-#: admin/views/admin-settings-other-solutions.php:32
-msgid "More Plugins To Make Your Store Stand Out"
+#: admin/modules/tiktokshop/tiktokshop.php:262
+msgid "Variations"
 msgstr ""
 
-#: admin/views/admin-settings-other-solutions.php:33
-msgid "Check out our other plugins that are perfectly suited for WooCommerce store needs."
+#: admin/modules/twitter/twitter.php:186
+msgid "X(Twitter)"
 msgstr ""
 
-#: admin/views/admin-settings-other-solutions.php:45
-msgid "Generate WooCommerce product feeds for Google Merchant Center and Facebook Business Manager. Use the Facebook catalog sync manager to sync WooCommerce products with Facebook and Instagram shops."
+#: admin/modules/twitter/twitter.php:272
+msgid "Optional specs"
 msgstr ""
 
-#: admin/views/admin-settings-other-solutions.php:53
-msgid "WebToffee Woocommerce Request a Quote"
+#: admin/modules/vivino/vivino.php:110
+msgid "Vivino"
 msgstr ""
 
-#: admin/views/admin-settings-other-solutions.php:54
-msgid "Configure a fully optimized WooCommerce quote request set up in your store. Allow customers to request quotes and store managers to respond to them. Hide product prices, set up email alerts, and more."
+#: admin/modules/yandex/yandex.php:173
+msgid "Yandex"
 msgstr ""
 
-#: admin/views/admin-settings-other-solutions.php:62
-msgid "WebToffee WooCommerce Gift Cards"
+#: admin/partials/webtoffee-product-feed-admin-display.php:15
+msgid "General"
 msgstr ""
 
-#: admin/views/admin-settings-other-solutions.php:63
-msgid "Create and manage advanced gift cards for WooCommerce stores. Enable your customers to buy, redeem, and share gift cards from your store."
+#: admin/partials/webtoffee-product-feed-admin-display.php:16
+msgid "Additional Fields"
 msgstr ""
 
-#: admin/views/admin-settings-other-solutions.php:71
-msgid "Frequently Bought Together for WooCommerce"
+#: admin/partials/webtoffee-product-feed-admin-display.php:17
+msgid "Free vs Premium"
 msgstr ""
 
-#: admin/views/admin-settings-other-solutions.php:72
-msgid "Boost the visibility of the products by displaying them as ‘Frequently bought together’ items in your store. You may also set up discounts for Frequently Bought Together bundles with this plugin."
+#: admin/partials/webtoffee-product-feed-admin-display.php:18
+msgid "Other Solutions"
 msgstr ""
 
-#: admin/views/admin-settings-other-solutions.php:80
-msgid "WooCommerce Product Recommendations"
+#: admin/partials/webtoffee-product-feed-admin-display.php:22
+msgid "Debug"
 msgstr ""
 
-#: admin/views/admin-settings-other-solutions.php:81
-msgid "Generate Intelligent Product Recommendations For Your WooCommerce Store. Offer WooCommerce smart product recommendations to your customers & maximize the average cart value."
+#. translators: $1: user name, $2 user id, $3: user email
+#: admin/partials/_form_field_generator.php:244
+msgid "%1$s (#%2$s &ndash; %3$s)"
 msgstr ""
 
-#: admin/views/admin-settings-other-solutions.php:89
-msgid "Product Import Export Plugin For WooCommerce"
+#: admin/partials/_form_field_generator.php:312
+msgid "Yes"
 msgstr ""
 
-#: admin/views/admin-settings-other-solutions.php:90
-msgid "Seamlessly import/export your WooCommerce products including simple, variable, custom products and subscriptions. You may also import and export product images, tags, categories, reviews, and ratings."
+#: admin/partials/_form_field_generator.php:353
+msgid "Choose a file."
 msgstr ""
 
-#: admin/views/admin-settings-other-solutions.php:98
-msgid "WordPress Users & WooCommerce Customers Import Export"
+#: admin/partials/_form_field_generator.php:353
+msgid "Select"
 msgstr ""
 
-#: admin/views/admin-settings-other-solutions.php:99
-msgid "Easily import and export your WordPress users and WooCommerce customers using the Import Export plugin for WooCommerce. The plugin supports the use of CSV, XML, TSV, XLS, and XLSX file formats."
+#: admin/partials/_form_field_generator.php:353
+msgid "Upload"
 msgstr ""
 
-#: admin/views/admin-settings-other-solutions.php:107
-msgid "Order, Coupon, Subscription Export Import for WooCommerce"
+#: admin/partials/_form_field_generator.php:365
+msgid "Drag and Drop"
 msgstr ""
 
-#: admin/views/admin-settings-other-solutions.php:108
-msgid "Export and Import your WooCommerce orders, subscriptions, and discount coupons using a single Import Export plugin. You may customize the export and import files with advanced filters and settings."
+#: admin/partials/_form_field_generator.php:366
+msgid "or"
 msgstr ""
 
-#: admin/views/admin-settings-other-solutions.php:116
-msgid "Import Export Suite for WooCommerce"
+#: admin/partials/_form_field_generator.php:367
+msgid " Click and Upload"
 msgstr ""
 
-#: admin/views/admin-settings-other-solutions.php:117
-msgid "An all-in-one plugin to import and export WooCommerce store data. You can import and export products, product reviews, orders, customers, discount coupons, and subscriptions using this single plugin."
+#: admin/views/admin-settings-custom-fields.php:130
+msgid " Manage product additional fields for feed"
 msgstr ""
 
-#: admin/views/admin-settings-other-solutions.php:129
+#: admin/views/admin-settings-custom-fields.php:139
+msgid "Exclude From Feed"
+msgstr ""
+
+#: admin/views/admin-settings-custom-fields.php:140
+msgid "Unit Price Measure"
+msgstr ""
+
+#: admin/views/admin-settings-custom-fields.php:141
+#: helpers/class-wt-common-helper.php:268
+msgid "Brand"
+msgstr ""
+
+#: admin/views/admin-settings-custom-fields.php:142
+msgid "Unit Pricing Base Measure"
+msgstr ""
+
+#: admin/views/admin-settings-custom-fields.php:144
+msgid "Energy Efficiency Class"
+msgstr ""
+
+#: admin/views/admin-settings-custom-fields.php:146
+msgid "Min Energy Efficiency Class"
+msgstr ""
+
+#: admin/views/admin-settings-custom-fields.php:148
+msgid "Max Energy Efficiency Class"
+msgstr ""
+
+#: admin/views/admin-settings-custom-fields.php:150
+msgid "Google Local Inventory Pickup Method"
+msgstr ""
+
+#: admin/views/admin-settings-custom-fields.php:151
+#: helpers/class-wt-common-helper.php:94
+msgid "Condition"
+msgstr ""
+
+#: admin/views/admin-settings-custom-fields.php:152
+msgid "Google Local Inventory Pickup SLA"
+msgstr ""
+
+#: admin/views/admin-settings-custom-fields.php:153
+#: helpers/class-wt-common-helper.php:271
+msgid "Age group"
+msgstr ""
+
+#: admin/views/admin-settings-custom-fields.php:154
+msgid "Google Product category"
+msgstr ""
+
+#: admin/views/admin-settings-custom-fields.php:155
+#: helpers/class-wt-common-helper.php:272
+msgid "Gender"
+msgstr ""
+
+#: admin/views/admin-settings-custom-fields.php:156
+msgid "Facebook Product category"
+msgstr ""
+
+#: admin/views/admin-settings-custom-fields.php:157
+#: helpers/class-wt-common-helper.php:274
+msgid "Size"
+msgstr ""
+
+#: admin/views/admin-settings-custom-fields.php:158
+msgid "Custom Label 0"
+msgstr ""
+
+#: admin/views/admin-settings-custom-fields.php:159
+#: helpers/class-wt-common-helper.php:273
+msgid "Color"
+msgstr ""
+
+#: admin/views/admin-settings-custom-fields.php:160
+msgid "Custom Label 1"
+msgstr ""
+
+#: admin/views/admin-settings-custom-fields.php:161
+#: helpers/class-wt-common-helper.php:275
+msgid "Material"
+msgstr ""
+
+#: admin/views/admin-settings-custom-fields.php:162
+msgid "Custom Label 2"
+msgstr ""
+
+#: admin/views/admin-settings-custom-fields.php:163
+#: helpers/class-wt-common-helper.php:276
+msgid "Pattern"
+msgstr ""
+
+#: admin/views/admin-settings-custom-fields.php:164
+msgid "Custom Label 3"
+msgstr ""
+
+#: admin/views/admin-settings-custom-fields.php:165
+msgid "Availability Date"
+msgstr ""
+
+#: admin/views/admin-settings-custom-fields.php:166
+msgid "Custom Label 4"
+msgstr ""
+
+#: admin/views/admin-settings-custom-fields.php:197
+msgid "Update settings"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:18
+msgid "E-commerce Promotions"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:19
+msgid "Create and run successful promotional campaigns with the best marketing tools for WooCommerce"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:25
 msgid "Smart Coupons for WooCommerce"
 msgstr ""
 
-#: admin/views/admin-settings-other-solutions.php:130
-msgid "Create coupons to offer discounts and free products to your customers with Smart Coupons for WooCommerce. You can set up BOGO coupons, giveaways, gift cards, store credits, and more with this plugin."
+#: admin/views/admin-settings-other-solutions.php:29
+msgid "Advanced BOGO Coupons"
 msgstr ""
 
-#: admin/views/admin-settings-other-solutions.php:138
+#: admin/views/admin-settings-other-solutions.php:30
+msgid "Offer store credits"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:31
+msgid "Create attractive gift cards"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:32
+msgid "Give away product coupons"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:33
+msgid "Coupons based on past purchases"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:34
+msgid "Restrict coupons by country"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:35
+msgid "Create and offer sign-up discount coupons"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:36
+msgid "Cart abandonment coupons"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:37
+msgid "Customizable countdown sales banner"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:38
+msgid "Bulk generate coupons"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:39
+msgid "Import and export coupons"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:40
+msgid "Coupon embeds"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:41
+msgid "Allow coupon combinations"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:47
 msgid "URL Coupons for WooCommerce"
 msgstr ""
 
+#: admin/views/admin-settings-other-solutions.php:51
+msgid "Generate custom coupon URLs"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:52
+msgid "Set up a redirect page"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:53
+msgid "Automatically add products"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:54
+msgid "Create QR code coupons"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:60
+msgid "WooCommerce Product Recommendations"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:64
+msgid "Automatically generate suggestions based on order history"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:65
+msgid "Display recommended products on the product pages"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:66
+msgid "Quick setup page to add & edit recommendations"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:67
+msgid "Multiple product recommendation layouts"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:68
+msgid "Set up discounts on the recommended product bundle"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:69
+msgid "Manually create a bought-together list"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:70
+msgid "Use upsells, cross-sells, & related products as frequently bought products"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:71
+msgid "Customize the title, button, and label texts"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:72
+msgid "Customize the display of the recommended products"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:78
+msgid "WooCommerce Coupon Generator"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:82
+msgid "Bulk generate WooCommerce coupons"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:83
+msgid "Bulk export WooCommerce coupons to CSV"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:84
+msgid "Add usage restrictions to coupons"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:90
+msgid "WooCommerce Gift Cards"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:94
+msgid "Create unlimited gift cards"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:95
+msgid "Email gift cards to customers"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:96
+msgid "Provide refunds to store credit"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:97
+msgid "20+ predefined gift card templates"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:98
+msgid "Category wise template listing"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:99
+msgid "Add custom templates for gift cards"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:100
+msgid "Generate gift cards based on order status"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:101
+msgid "Manage user credit balance"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:102
+msgid "Fixed and custom gift card amounts"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:103
+msgid "Add usage restrictions for gift cards"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:112
+msgid "ECommerce Marketing Automation App"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:114
+msgid "Create signup forms, popups, and automated email campaigns with pre-built workflow templates to capture leads, recover abandoned carts, and grow sales."
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:122
+msgid "Promotion Bundle"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:123
+msgid "WooCommerce Promotion Bundle"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:125
+msgid "Make powerful promotional campaigns with our WooCommerce promotion bundle. Create coupon promotions, set up gift cards, and implement popular product recommendation strategies."
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:127
+msgid "Smart Coupons"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:128
+msgid "Product recommendation"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:129
+msgid "Gift cards"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:133
+#: admin/views/admin-settings-other-solutions.php:441
+msgid "Save up to 30% off"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:138
+msgid "Privacy Compliance"
+msgstr ""
+
 #: admin/views/admin-settings-other-solutions.php:139
-msgid "Generate custom URLs and QR codes for every discount coupon in your WooCommerce store. These unique coupons are easy to share and can even be set to add new products to the cart upon application."
+msgid "Ensure compliance with major cookie laws, including, GDPR, CCPA, LGPD, CNIL, and more"
 msgstr ""
 
-#: admin/views/admin-settings-other-solutions.php:147
-msgid "PayPal Express Checkout Payment Gateway for WooCommerce"
+#: admin/views/admin-settings-other-solutions.php:142
+msgid "GDPR Cookie Consent Plugin (CCPA Ready)"
 msgstr ""
 
-#: admin/views/admin-settings-other-solutions.php:148
-msgid "Offer a fast checkout experience to your customers with PayPal Payment Gateway. You can set up the PayPal Express Checkout option on the product pages to reduce the clicks to complete the checkout."
+#: admin/views/admin-settings-other-solutions.php:146
+msgid "This Google-certified CMP lets you create a customizable cookie banner, manage user consent, and ensure global privacy compliance with automatic script blocking."
 msgstr ""
 
-#: admin/views/admin-settings-other-solutions.php:156
-msgid "WooCommerce Stripe Payment Gateway"
+#: admin/views/admin-settings-other-solutions.php:154
+msgid "EU Order Withdrawal Button Plugin for WooCommerce"
 msgstr ""
 
-#: admin/views/admin-settings-other-solutions.php:157
-msgid "Ensure a fast and secure checkout experience for your users with WooCommerce Stripe Payment Gateway. Stripe accepts credit/debit cards and offers integrations with Apple Pay, SEPA, Alipay, and more."
+#: admin/views/admin-settings-other-solutions.php:158
+msgid "Add \"Request Withdrawal\" button to WooCommerce"
 msgstr ""
 
-#: admin/views/admin-settings-other-solutions.php:165
-msgid "Subscriptions for WooCommerce"
+#: admin/views/admin-settings-other-solutions.php:159
+msgid "Supports guest withdrawal option"
 msgstr ""
 
-#: admin/views/admin-settings-other-solutions.php:166
-msgid "Enable subscriptions on your WooCommerce store to sell products (physical and digital) and services that require accepting recurring payments. Supports both simple and variable subscription products."
+#: admin/views/admin-settings-other-solutions.php:160
+msgid "Two-step confirmation to prevent errors"
 msgstr ""
 
-#: admin/views/admin-settings-other-solutions.php:174
-msgid "Sequential Order Numbers for WooCommerce"
+#: admin/views/admin-settings-other-solutions.php:161
+msgid "Full or partial order withdrawal support"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:162
+msgid "Dedicated admin dashboard for all requests"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:163
+msgid "Send email confirmation to customers"
 msgstr ""
 
 #: admin/views/admin-settings-other-solutions.php:175
-msgid "Number your WooCommerce orders in a custom, sequential & manageable format. The Sequential Order Number plugin lets your orders follow a custom & unique numbering sequence suitable for your business."
+msgid "Data Import & Export"
 msgstr ""
 
-#: admin/views/admin-settings-other-solutions.php:183
-msgid "WooCommerce PDF Invoices, Packing Slips and Credit Notes"
+#: admin/views/admin-settings-other-solutions.php:176
+msgid "The best-in-class import, export, and migration solutions for your WooCommerce data"
 msgstr ""
 
-#: admin/views/admin-settings-other-solutions.php:184
-msgid "Easily generate & print fully customized PDF Invoices, Packing Slips, and Credit Notes for your orders. Automatically send the documents to the recipients by attaching them to the order status emails."
+#: admin/views/admin-settings-other-solutions.php:185
+msgid "Product Import Export Plugin"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:189
+#: admin/views/admin-settings-other-solutions.php:209
+#: admin/views/admin-settings-other-solutions.php:230
+#: admin/views/admin-settings-other-solutions.php:253
+msgid "Supports Excel, XML, CSV, and TSV file formats"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:190
+#: admin/views/admin-settings-other-solutions.php:231
+msgid "Schedule automated import and export"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:191
+msgid "Support for multiple product types"
 msgstr ""
 
 #: admin/views/admin-settings-other-solutions.php:192
-msgid "WooCommerce Shipping Labels, Dispatch Labels and Delivery Notes"
+msgid "Export product images in a separate zip file"
 msgstr ""
 
 #: admin/views/admin-settings-other-solutions.php:193
-msgid "Automatically generate WooCommerce Shipping Labels, Dispatch Labels, and Delivery Notes with custom settings and layouts. Customize the label sizes and add extra product or order fields as required."
+#: admin/views/admin-settings-other-solutions.php:214
+#: admin/views/admin-settings-other-solutions.php:236
+#: admin/views/admin-settings-other-solutions.php:255
+msgid "Import from URL, Google Sheets, FTP/SFTP"
 msgstr ""
 
-#: admin/views/admin-settings-other-solutions.php:201
-msgid "WooCommerce Picklists"
+#: admin/views/admin-settings-other-solutions.php:194
+#: admin/views/admin-settings-other-solutions.php:215
+#: admin/views/admin-settings-other-solutions.php:237
+#: admin/views/admin-settings-other-solutions.php:256
+msgid "Export to FTP/SFTP"
 msgstr ""
 
-#: admin/views/admin-settings-other-solutions.php:202
-msgid "Customize, generate and print WooCommerce picklists for all orders on your store and automatically attach them to the order status emails. Add product variation data and other fields to the document."
+#: admin/views/admin-settings-other-solutions.php:195
+msgid "Advanced filters and customizations for import and export"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:196
+#: admin/views/admin-settings-other-solutions.php:259
+msgid "Add and update data while importing"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:197
+#: admin/views/admin-settings-other-solutions.php:218
+#: admin/views/admin-settings-other-solutions.php:240
+#: admin/views/admin-settings-other-solutions.php:260
+msgid "Maintains action history and debug logs"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:198
+#: admin/views/admin-settings-other-solutions.php:219
+#: admin/views/admin-settings-other-solutions.php:241
+#: admin/views/admin-settings-other-solutions.php:261
+msgid "Compatible with major 3rd-party plugins"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:205
+msgid "Order, Coupon, Subscription Export Import"
 msgstr ""
 
 #: admin/views/admin-settings-other-solutions.php:210
-msgid "WooCommerce Proforma Invoices"
+#: admin/views/admin-settings-other-solutions.php:254
+msgid "Schedule automated import & export"
 msgstr ""
 
 #: admin/views/admin-settings-other-solutions.php:211
-msgid "Automate the generation of WooCommerce proforma invoices when new orders are placed and send them to your customers via order emails. Customize the layout and content of the invoice as per your needs."
+msgid "Email customers on order status change"
 msgstr ""
 
-#: admin/views/admin-settings-other-solutions.php:219
-msgid "WooCommerce Address Labels"
+#: admin/views/admin-settings-other-solutions.php:212
+msgid "Create users on order import"
 msgstr ""
 
-#: admin/views/admin-settings-other-solutions.php:220
-msgid "Generate address labels for all orders in your store and easily print them in bulk. Customize the label layout and create labels of different types (shipping, billing, return, from address) with ease."
+#: admin/views/admin-settings-other-solutions.php:213
+msgid "Filter export by products, order status, email, date, etc"
 msgstr ""
 
-#: admin/views/admin-settings-other-solutions.php:228
-msgid "WebToffee WP Backup and Migration"
-msgstr ""
-
-#: admin/views/admin-settings-other-solutions.php:229
-msgid "A complete WordPress backup and migration plugin to easily back up and migrate your WordPress website and database. This fast and flexible backup solution makes creating and restoring backups easy."
-msgstr ""
-
-#: admin/views/admin-settings-other-solutions.php:237
-msgid "CookieYes – Cookie Banner for Cookie Consent (Easy to setup GDPR/CCPA Compliant Cookie Notice)"
-msgstr ""
-
+#: admin/views/admin-settings-other-solutions.php:216
 #: admin/views/admin-settings-other-solutions.php:238
-msgid "The plugin helps you get compliant with GDPR, CCPA, and other major cookie laws. You can create and manage cookie consent banners, scan website cookies, and generate cookie policies with this plugin."
+#: admin/views/admin-settings-other-solutions.php:258
+msgid "Advanced filters and customizations for import & export"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:217
+#: admin/views/admin-settings-other-solutions.php:239
+msgid "Add & update data while importing"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:226
+msgid "User Import Export Plugin"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:232
+msgid "Customize and send emails to new users on import"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:233
+msgid "Retain user passwords on import/export"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:234
+msgid "Export and import custom fields and third-party plugin fields"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:235
+msgid "Filter by user role, email, date, etc"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:248
+msgid "Import Export Suite for WooCommerce"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:252
+msgid "Import/export Products, Orders, Subscriptions, Coupons, Customers, WordPress Users, Categories & Tags, Reviews"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:257
+msgid "Import & export custom fields and values"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:272
+msgid "Accounting & Invoicing"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:273
+msgid "Automatically generate professional WooCommerce invoices and documents for all your orders"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:276
+msgid "PDF Invoices, Packing Slips, & Credit Notes"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:280
+msgid "Automatically generate, customize, and manage professional WooCommerce PDF invoices, packing slips, and credit notes with advanced automation and tax compliance features."
 msgstr ""
 
 #: admin/views/admin-settings-other-solutions.php:287
-msgid " Get Premium"
+msgid "Shipping Labels, Dispatch Labels, & Delivery Notes"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:291
+msgid "Create delivery notes, shipping & dispatch labels"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:292
+msgid "Enable customers to print the documents from order emails"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:293
+msgid "Customize shipping label size"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:294
+msgid "Add multiple shipping labels on one page"
 msgstr ""
 
 #: admin/views/admin-settings-other-solutions.php:295
-msgid "Installed"
+#: admin/views/admin-settings-other-solutions.php:313
+msgid "Show product variation data"
 msgstr ""
 
-#: admin/views/freevspro.php:68
-msgid "Features"
+#: admin/views/admin-settings-other-solutions.php:296
+msgid "Add extra product & order data fields"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:297
+msgid "Pre-built layouts & customizable templates"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:298
+msgid "Group products by 'Category'"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:299
+msgid "Sort products based on Name or SKU"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:300
+#: admin/views/admin-settings-other-solutions.php:317
+#: admin/views/admin-settings-other-solutions.php:347
+#: admin/views/admin-settings-other-solutions.php:366
+msgid "Multilingual support"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:306
+msgid "WooCommerce Picklists plugin"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:310
+msgid "Bulk print picklists from the admin order page"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:311
+msgid "Automatically email picklists based on order status"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:312
+msgid "Create or customize picklist templates"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:314
+msgid "Group products in picklist by order/category"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:315
+msgid "Add product meta fields & attributes"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:316
+msgid "Exclude virtual products from picklists"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:323
+msgid "Customizer for WooCommerce PDF Invoices"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:327
+msgid "Drag-and-drop easy customization"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:328
+msgid "Advanced visual and code editor"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:329
+#: admin/views/admin-settings-other-solutions.php:359
+msgid "Easy invoice layout customization"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:330
+msgid "Customize individual elements using block editors"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:331
+msgid "View live preview of customization"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:332
+msgid "Change color, text, background, border & more"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:338
+msgid "WooCommerce Address Labels plugin"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:342
+msgid "Generate 'Shipping Address', 'Billing Address', 'From Address', and 'Return Address' labels"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:343
+msgid "Customize label sizes"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:344
+msgid "Bulk print address labels"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:345
+msgid "Offers built-in label templates"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:346
+msgid "Change address label layout"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:353
+#: admin/views/admin-settings-other-solutions.php:437
+msgid "Proforma Invoice"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:357
+msgid "Create proforma invoices automatically"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:358
+msgid "Pre-built proforma invoice layouts"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:360
+msgid "Attach proforma invoice PDF to order emails"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:361
+msgid "Allow customers to print invoices"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:362
+msgid "Set custom proforma invoice number"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:363
+msgid "Add additional product & order data fields"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:364
+msgid "Attach special notes with proforma invoices"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:365
+msgid "Attach transport & sales terms"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:372
+msgid "QR Code Add-on for WooCommerce PDF Invoices"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:376
+msgid "Assign QR codes to all generated invoices"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:377
+msgid "Create QR code that reads order or invoice number"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:378
+msgid "Add custom data to invoices"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:379
+msgid "Compatible with WooCommerce PDF Invoice, Packing Slip & Credit Note (Premium)"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:380
+msgid "Compatible with WooCommerce PDF Invoices, Packing Slips, Delivery Notes, and Shipping Labels (Free)"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:386
+msgid "WooCommerce Request a Quote"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:390
+msgid "Add quote button to the product & shop pages"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:391
+msgid "Enable quotation request for selected products"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:392
+msgid "Automatically send quotes to users"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:393
+msgid "Disable guest users from asking for quote"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:394
+msgid "Hide prices and 'add to cart' button"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:395
+msgid "Automatic email alerts for admin & users"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:396
+msgid "Easy button and form customization"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:397
+msgid "Set quote expiry period"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:398
+msgid "Limit spams with reCAPTCHA"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:405
+msgid "Sequential Order Numbers"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:409
+msgid "Auto reset sequence per month/year etc"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:410
+msgid "Add a custom suffix for order numbers"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:411
+msgid "Date suffix in order numbers"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:412
+msgid "Custom sequence for free orders"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:413
+msgid "Increment sequence in custom series"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:414
+msgid "More order number templates"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:425
+msgid "Invoice Bundle"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:426
+msgid "All in one Invoice bundle"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:428
+msgid "A complete suite of invoices and shipping documents bundle to create and print PDF invoices, packing slips, shipping and delivery documents in WooCommerce."
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:430
+msgid "Invoice"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:431
+msgid "Packing Slip"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:432
+msgid "Address Labels"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:433
+msgid "Dispatch Labels"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:434
+msgid "Shipping Labels"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:435
+msgid "Delivery Notes"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:436
+msgid "Picklists"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:509
+msgid "You're all set!"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:510
+msgid "All recommended plugins are already active on your store."
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:552
+#: admin/views/freevspro.php:190
+#: admin/views/freevspro.php:208
+msgid "30 Day Money Back Guarantee"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:553
+msgid "30 Day No Risk Money Back Guarantee"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:558
+msgid "99% Satisfaction Rating"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:559
+msgid "Fast Support with 99% Satisfaction Rating"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:592
+#: admin/views/admin-settings-other-solutions.php:703
+msgid "5 out of 5 stars"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:610
+#: admin/views/admin-settings-other-solutions.php:766
+#: admin/views/admin-settings-other-solutions.php:899
+msgid "Activate"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:618
+#: admin/views/admin-settings-other-solutions.php:774
+msgid "Get premium"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:751
+msgid "Show More"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:752
+msgid "Show Less"
+msgstr ""
+
+#. translators: 1: strikethrough original price, 2: bold sale price, 3: green savings text
+#: admin/views/admin-settings-other-solutions.php:830
+msgid "Total: <s>%1$s</s> <strong>%2$s</strong> <span class=\"wtpf-os-savings\">(%3$s)</span>"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:847
+msgid "View Bundle"
+msgstr ""
+
+#: admin/views/admin-settings-other-solutions.php:906
+msgid "Try Now"
+msgstr ""
+
+#: admin/views/admin-settings-save-button.php:6
+msgid "Update Settings"
 msgstr ""
 
 #: admin/views/freevspro.php:69
@@ -1773,364 +4387,788 @@ msgid "Auto-feed update"
 msgstr ""
 
 #: admin/views/freevspro.php:115
-#: admin/views/freevspro.php:206
-msgid "Advanced product filters"
+msgid "Computed price, stock, availability, etc."
 msgstr ""
 
 #: admin/views/freevspro.php:120
-#: admin/views/freevspro.php:205
-msgid "Dynamic price & feed update"
+#: admin/views/freevspro.php:223
+msgid "Advanced product filters"
 msgstr ""
 
 #: admin/views/freevspro.php:125
-#: admin/views/freevspro.php:207
-msgid "Choose from lowest priced/highest priced/default/all variations"
+#: admin/views/freevspro.php:222
+msgid "Dynamic price & feed update"
 msgstr ""
 
 #: admin/views/freevspro.php:130
-msgid "Custom template/feed support"
+#: admin/views/freevspro.php:224
+msgid "Choose from lowest priced/highest priced/default/all variations"
 msgstr ""
 
 #: admin/views/freevspro.php:135
-msgid "WPML multi-lingual support "
+msgid "Custom template/feed support"
 msgstr ""
 
 #: admin/views/freevspro.php:140
-msgid "Compatibility with Multicurrency plugins "
+msgid "WPML multi-lingual support "
 msgstr ""
 
 #: admin/views/freevspro.php:145
-msgid "Compatibility with Dokan Multivendor"
+msgid "Compatibility with Multicurrency plugins "
 msgstr ""
 
 #: admin/views/freevspro.php:150
-#: admin/views/freevspro.php:209
-msgid "Compatibility with popular brand plugins"
+msgid "Compatibility with Dokan Multivendor"
 msgstr ""
 
 #: admin/views/freevspro.php:155
-#: admin/views/freevspro.php:212
+#: admin/views/freevspro.php:226
+msgid "Compatibility with popular brand plugins"
+msgstr ""
+
+#: admin/views/freevspro.php:160
+#: admin/views/freevspro.php:229
 msgid "Server cron support for feed auto refresh"
 msgstr ""
 
-#: admin/views/freevspro.php:166
-#: admin/views/freevspro.php:186
-msgid "WebToffee WooCommerce Product Feed & Sync Manager(Pro)"
+#: admin/views/freevspro.php:173
+#: admin/views/market.php:16
+msgid "Black Friday Discount"
 msgstr ""
 
-#: admin/views/freevspro.php:171
-#: admin/views/freevspro.php:195
+#: admin/views/freevspro.php:180
+#: admin/views/freevspro.php:201
+msgid "Featured image"
+msgstr ""
+
+#: admin/views/freevspro.php:182
+#: admin/views/freevspro.php:203
+msgid "WooCommerce Product Feed & Sync Manager(Pro)"
+msgstr ""
+
+#: admin/views/freevspro.php:187
+#: admin/views/freevspro.php:212
 msgid "GET THE PLUGIN"
 msgstr ""
 
-#: admin/views/freevspro.php:174
 #: admin/views/freevspro.php:191
-msgid "30 Day Money Back Guarantee"
-msgstr ""
-
-#: admin/views/freevspro.php:175
-#: admin/views/freevspro.php:192
+#: admin/views/freevspro.php:209
 msgid "Fast and Superior Support"
 msgstr ""
 
-#: admin/views/freevspro.php:202
+#: admin/views/freevspro.php:219
 msgid "Upgrade to premium for the advanced features listed below:"
 msgstr ""
 
-#: admin/views/freevspro.php:208
+#: admin/views/freevspro.php:225
 msgid "WPML multilanguage support"
 msgstr ""
 
-#: admin/views/freevspro.php:210
+#: admin/views/freevspro.php:227
 msgid "Compatibility with Multicurrency plugins"
 msgstr ""
 
-#: admin/views/freevspro.php:211
+#: admin/views/freevspro.php:228
 msgid "Compatibility with Dokan Multivendor plugin"
 msgstr ""
 
-#: admin/views/market.php:28
-msgid "Enable auto-sync for the Facebook catalog"
+#: admin/views/market.php:24
+msgid "Premium features"
 msgstr ""
 
-#: admin/views/market.php:29
-msgid "Add fields like condition, color, gender, material, etc., to products."
+#: admin/views/market.php:28
+msgid "What's in premium?"
 msgstr ""
 
 #: admin/views/market.php:30
-msgid "Exclude out-of-stock products from syncing"
-msgstr ""
-
-#: admin/views/market.php:31
-msgid "Exclude specific products/variations from the sync."
-msgstr ""
-
-#: admin/views/market.php:33
-msgid "Make feeds live faster"
-msgstr ""
-
-#: admin/views/market.php:34
-msgid "unwanted (out of stock, price missing, description missing, etc.) products from your feed for better ad performance"
-msgstr ""
-
-#: admin/views/market.php:35
-msgid "Variations:"
-msgstr ""
-
-#: admin/views/market.php:35
-msgid "Option to choose lowest priced/highest priced/default variant"
-msgstr ""
-
-#: admin/views/market.php:36
-msgid "Multilingual & Multicurrency support"
-msgstr ""
-
-#: admin/views/market.php:37
-msgid "plugin compatibility"
-msgstr ""
-
-#: admin/views/market.php:38
-msgid ", etc."
+msgid "Why use premium?"
 msgstr ""
 
 #: admin/views/market.php:39
-msgid "compatibility"
+msgid "Enable auto-sync for the Facebook catalog"
 msgstr ""
 
 #: admin/views/market.php:40
-msgid "& Perfect Brands for WooCommerce plugins"
+msgid "Add fields like condition, color, gender, material, etc., to products."
+msgstr ""
+
+#: admin/views/market.php:41
+msgid "Exclude out-of-stock products from syncing"
+msgstr ""
+
+#: admin/views/market.php:42
+msgid "Exclude specific products/variations from the sync."
+msgstr ""
+
+#: admin/views/market.php:44
+msgid "Priority support:"
+msgstr ""
+
+#: admin/views/market.php:44
+msgid "Make feeds live faster"
+msgstr ""
+
+#: admin/views/market.php:45
+msgid "Filter"
+msgstr ""
+
+#: admin/views/market.php:45
+msgid "unwanted (out of stock, price missing, description missing, etc.) products from your feed for better ad performance"
 msgstr ""
 
 #: admin/views/market.php:46
+msgid "Variations:"
+msgstr ""
+
+#: admin/views/market.php:46
+msgid "Option to choose lowest priced/highest priced/default variant"
+msgstr ""
+
+#: admin/views/market.php:47
+msgid "WPML"
+msgstr ""
+
+#: admin/views/market.php:47
+msgid "Multilingual & Multicurrency support"
+msgstr ""
+
 #: admin/views/market.php:48
+msgid "Aelia, Curcy, Fox"
+msgstr ""
+
+#: admin/views/market.php:48
+msgid "currency switcher"
+msgstr ""
+
+#: admin/views/market.php:48
+msgid "plugin compatibility"
+msgstr ""
+
+#: admin/views/market.php:49
+msgid "Bulk update price"
+msgstr ""
+
+#: admin/views/market.php:49
+msgid "in the feed (without changing it in the store), allow channel wise "
+msgstr ""
+
+#: admin/views/market.php:49
+msgid "discount"
+msgstr ""
+
+#: admin/views/market.php:49
+msgid ", etc."
+msgstr ""
+
+#: admin/views/market.php:50
+msgid "Multi-vendor"
+msgstr ""
+
+#: admin/views/market.php:50
+msgid "compatibility"
+msgstr ""
+
+#: admin/views/market.php:51
+msgid "Supports"
+msgstr ""
+
+#: admin/views/market.php:51
+msgid "WooCommerce Brands"
+msgstr ""
+
+#: admin/views/market.php:51
+msgid ", YITH WooCommerce Brands Add-on & Perfect Brands for WooCommerce plugins"
+msgstr ""
+
+#: admin/views/market.php:57
+#: admin/views/market.php:59
 msgid "Unlock Pro features"
 msgstr ""
 
-#: helpers/class-wt-common-helper.php:252
-msgid "Facebook Product Category"
+#: admin/views/market.php:66
+msgid "30-day money back guarantee"
 msgstr ""
 
-#: helpers/class-wt-common-helper.php:253
-msgid "Google Product Category"
+#. translators: %1$s is the opening bold tag, %2$s is the closing bold tag
+#: admin/views/market.php:69
+msgid "You are covered by our %1$s 30-day money back guarantee %2$s"
 msgstr ""
 
-#: helpers/class-wt-common-helper.php:254
-msgid "Brand"
+#: admin/views/market.php:73
+msgid "Customer satisfaction rating"
 msgstr ""
 
-#: helpers/class-wt-common-helper.php:257
-msgid "Age group"
+#. translators: %1$s is the opening bold tag, %2$s is the percentage value, %3$s is the closing bold tag
+#: admin/views/market.php:76
+msgid "Supported by a team with %1$s %2$s customer satisfaction %3$s score"
 msgstr ""
 
-#: helpers/class-wt-common-helper.php:258
-msgid "Gender"
+#: admin/views/_save_template_popup.php:13
+msgid "Save"
 msgstr ""
 
-#: helpers/class-wt-common-helper.php:259
-msgid "Color"
+#: admin/views/_save_template_popup.php:13
+msgid "Save as"
 msgstr ""
 
-#: helpers/class-wt-common-helper.php:260
-msgid "Size"
+#: admin/views/_save_template_popup.php:21
+msgid "Please enter name"
 msgstr ""
 
-#: helpers/class-wt-common-helper.php:261
-msgid "Material"
+#: admin/views/_save_template_popup.php:25
+msgid "Template name"
 msgstr ""
 
-#: helpers/class-wt-common-helper.php:262
-msgid "Pattern"
+#: helpers/class-pf-catalog-export-helper.php:193
+msgid "Refresh the step"
 msgstr ""
 
-#: helpers/class-wt-common-helper.php:263
-msgid "Unit pricing measure"
+#: helpers/class-pf-catalog-export-helper.php:198
+msgid "Console form data"
 msgstr ""
 
-#: helpers/class-wt-common-helper.php:264
-msgid "Unit pricing base measure"
+#: helpers/class-pf-catalog-export-helper.php:209
+msgid "For debugging process"
 msgstr ""
 
-#: helpers/class-wt-common-helper.php:265
-msgid "Energy efficiency class"
+#: helpers/class-pf-catalog-export-helper.php:210
+msgid "Debug panel"
+msgstr ""
+
+#. translators: %1$s is the post type title, %2$s is the plugin name, %3$s is the minimum version, %4$s is the plugin name again
+#: helpers/class-wt-common-helper.php:21
+msgid "The %1$s requires a minimum version of %2$s %3$s. Please upgrade the %4$s accordingly."
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:85
+msgid "Product Id"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:86
+#: helpers/class-wt-common-helper.php:133
+msgid "Product Title"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:87
+msgid "Parent Title"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:88
+msgid "Product Description"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:89
+msgid "Product Short Description"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:90
+msgid "Parent Description"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:91
+msgid "Product Local Category"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:92
+msgid "Product URL"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:93
+msgid "External Product URL"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:95
+msgid "Parent Id [Group Id]"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:96
+msgid "SKU"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:97
+msgid "SKU+ID[sku_id]"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:98
+msgid "Parent SKU"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:99
+msgid "Availability"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:100
+msgid "Availability date"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:101
+msgid "Quantity"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:102
+msgid "Regular Price"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:103
+msgid "Price"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:104
+msgid "Sale Price"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:105
+msgid "Regular Price With Tax"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:106
+msgid "Price With Tax"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:107
+msgid "Sale Price With Tax"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:108
+msgid "Sale Start Date"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:109
+msgid "Sale End Date"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:110
+msgid "Weight"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:111
+msgid "Weight+Unit"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:112
+msgid "Width"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:113
+msgid "Width+Unit"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:114
+msgid "Height"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:115
+msgid "Height+Unit"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:116
+msgid "Length"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:117
+msgid "Length+Unit"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:118
+msgid "Shipping Class"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:119
+msgid "Product Type"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:120
+msgid "Variation Type"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:121
+msgid "Visibility"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:122
+msgid "Total Rating"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:123
+msgid "Average Rating"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:124
+msgid "Tags"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:125
+msgid "Sale Price Effective Date"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:126
+msgid "Is Bundle"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:127
+msgid "Author Name"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:128
+msgid "Author Email"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:129
+msgid "Date Created"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:130
+msgid "Date Updated"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:131
+msgid "Identifier Exists"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:132
+msgid "Product Id / Promotion Id"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:134
+msgid "Promotion effective dates"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:168
+msgid "Main Image"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:169
+msgid "Featured Image"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:170
+msgid "Images [Comma Separated]"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:171
+msgid "Additional Image 1"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:172
+msgid "Additional Image 2"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:173
+msgid "Additional Image 3"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:174
+msgid "Additional Image 4"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:175
+msgid "Additional Image 5"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:176
+msgid "Additional Image 6"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:177
+msgid "Additional Image 7"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:178
+msgid "Additional Image 8"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:179
+msgid "Additional Image 9"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:180
+msgid "Additional Image 10"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:184
+msgid "Constant"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:185
+msgid "Static value"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:189
+msgid "Primary Attributes"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:197
+msgid "Image Attributes"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:208
+msgid "Custom Fields/Post Meta"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:220
+msgid "Product Attributes"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:232
+msgid "Product Custom Attributes"
 msgstr ""
 
 #: helpers/class-wt-common-helper.php:266
-msgid "Min energy efficiencycclass"
+msgid "Facebook Product Category"
 msgstr ""
 
 #: helpers/class-wt-common-helper.php:267
-msgid "Max energy efficiency class"
-msgstr ""
-
-#: helpers/class-wt-common-helper.php:268
-msgid "Shipping"
-msgstr ""
-
-#: helpers/class-wt-common-helper.php:269
-msgid "Quantity to sell on facebook"
-msgstr ""
-
-#: helpers/class-wt-common-helper.php:271
-msgid "Pickup Method"
-msgstr ""
-
-#: helpers/class-wt-common-helper.php:272
-msgid "Pickup SLA"
-msgstr ""
-
-#: helpers/class-wt-common-helper.php:274
-msgid "Custom label 0"
-msgstr ""
-
-#: helpers/class-wt-common-helper.php:275
-msgid "Custom label 1"
-msgstr ""
-
-#: helpers/class-wt-common-helper.php:276
-msgid "Custom label 2"
+msgid "Google Product Category"
 msgstr ""
 
 #: helpers/class-wt-common-helper.php:277
-msgid "Custom label 3"
+msgid "Unit pricing measure"
 msgstr ""
 
 #: helpers/class-wt-common-helper.php:278
-msgid "Custom label 4"
+msgid "Unit pricing base measure"
 msgstr ""
 
 #: helpers/class-wt-common-helper.php:279
+msgid "Energy efficiency class"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:280
+msgid "Min energy efficiencycclass"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:281
+msgid "Max energy efficiency class"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:283
+msgid "Quantity to sell on facebook"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:285
+msgid "Pickup Method"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:286
+msgid "Pickup SLA"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:288
+msgid "Custom label 0"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:289
+msgid "Custom label 1"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:290
+msgid "Custom label 2"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:291
+msgid "Custom label 3"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:292
+msgid "Custom label 4"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:293
 msgid "additional_variant_attribute"
 msgstr ""
 
-#: helpers/class-wt-common-helper.php:464
+#: helpers/class-wt-common-helper.php:295
+msgid "Link template"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:296
+msgid "Mobile Link template"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:297
+msgid "Store code"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:298
+msgid "VAT"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:392
+msgid "Yoast Title"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:393
+msgid "Yoast Description"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:394
+msgid "All in One SEO Title"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:395
+msgid "All in One SEO Description"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:396
+msgid "Rank Math SEO Title"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:397
+msgid "Rank Math SEO Description"
+msgstr ""
+
+#: helpers/class-wt-common-helper.php:490
 msgctxt "product gender"
 msgid "Male"
 msgstr ""
 
-#: helpers/class-wt-common-helper.php:465
+#: helpers/class-wt-common-helper.php:491
 msgctxt "product gender"
 msgid "Female"
 msgstr ""
 
-#: helpers/class-wt-common-helper.php:466
+#: helpers/class-wt-common-helper.php:492
 msgctxt "product gender"
 msgid "Unisex"
 msgstr ""
 
-#: includes/class-webtoffee-product-feed-sync-review-request.php:54
-msgid "Hey, we at %sWebToffee%s would like to thank you for using our plugin. We would really appreciate if you could take a moment to drop a quick review that will inspire us to keep going."
+#: helpers/class-wt-security-helper.php:193
+#: helpers/class-wt-security-helper.php:196
+msgid "Access denied."
 msgstr ""
 
-#: includes/class-webtoffee-product-feed-sync-review-request.php:57
+#: helpers/class-wt-security-helper.php:230
+#: helpers/class-wt-security-helper.php:233
+msgid "You do not have sufficient permissions to perform this operation."
+msgstr ""
+
+#. translators: %1$s is the opening HTML tag, %2$s is the closing HTML tag for WebToffee
+#: includes/class-webtoffee-product-feed-sync-review-request.php:62
+msgid "Hey, we at %1$sWebToffee%2$s would like to thank you for using our plugin. We would really appreciate if you could take a moment to drop a quick review that will inspire us to keep going."
+msgstr ""
+
+#: includes/class-webtoffee-product-feed-sync-review-request.php:65
 msgid "Remind me later"
 msgstr ""
 
-#: includes/class-webtoffee-product-feed-sync-review-request.php:58
+#: includes/class-webtoffee-product-feed-sync-review-request.php:66
 msgid "Not interested"
 msgstr ""
 
-#: includes/class-webtoffee-product-feed-sync-review-request.php:59
+#: includes/class-webtoffee-product-feed-sync-review-request.php:67
 msgid "Review now"
 msgstr ""
 
-#: includes/class-webtoffee-product-feed-sync-review-request.php:60
+#: includes/class-webtoffee-product-feed-sync-review-request.php:68
 msgid "Report a bug"
 msgstr ""
 
-#: includes/class-wt-productfeed-uninstall-feedback.php:19
+#: includes/class-webtoffee-product-feed-sync-review-request.php:236
+msgid "Dismiss"
+msgstr ""
+
+#: includes/class-wt-productfeed-uninstall-feedback.php:22
 msgid "Feature missing"
 msgstr ""
 
-#: includes/class-wt-productfeed-uninstall-feedback.php:21
+#: includes/class-wt-productfeed-uninstall-feedback.php:24
 msgid "Could you specify the feature?"
 msgstr ""
 
-#: includes/class-wt-productfeed-uninstall-feedback.php:25
+#: includes/class-wt-productfeed-uninstall-feedback.php:28
 msgid "Template/Channel missing"
 msgstr ""
 
-#: includes/class-wt-productfeed-uninstall-feedback.php:27
+#: includes/class-wt-productfeed-uninstall-feedback.php:30
 msgid "Could you specify the template or the channel?"
 msgstr ""
 
-#: includes/class-wt-productfeed-uninstall-feedback.php:31
+#: includes/class-wt-productfeed-uninstall-feedback.php:34
 msgid "I couldn't understand how to make it work"
 msgstr ""
 
-#: includes/class-wt-productfeed-uninstall-feedback.php:33
+#: includes/class-wt-productfeed-uninstall-feedback.php:36
 msgid "Could you tell us which step you found difficult?"
 msgstr ""
 
-#: includes/class-wt-productfeed-uninstall-feedback.php:37
+#: includes/class-wt-productfeed-uninstall-feedback.php:40
 msgid "Found it difficult to use"
 msgstr ""
 
-#: includes/class-wt-productfeed-uninstall-feedback.php:39
+#: includes/class-wt-productfeed-uninstall-feedback.php:42
 msgid "Could you specify the step or functionality that you found difficult?"
 msgstr ""
 
-#: includes/class-wt-productfeed-uninstall-feedback.php:43
+#: includes/class-wt-productfeed-uninstall-feedback.php:46
 msgid "Found better tool"
 msgstr ""
 
-#: includes/class-wt-productfeed-uninstall-feedback.php:45
+#: includes/class-wt-productfeed-uninstall-feedback.php:48
 msgid "Could you specify the tool?"
 msgstr ""
 
-#: includes/class-wt-productfeed-uninstall-feedback.php:49
+#: includes/class-wt-productfeed-uninstall-feedback.php:52
 msgid "The plugin didn’t work as expected"
 msgstr ""
 
-#: includes/class-wt-productfeed-uninstall-feedback.php:51
+#: includes/class-wt-productfeed-uninstall-feedback.php:54
 msgid "Could you tell us what went wrong?"
 msgstr ""
 
-#: includes/class-wt-productfeed-uninstall-feedback.php:55
+#: includes/class-wt-productfeed-uninstall-feedback.php:58
 msgid "Other"
 msgstr ""
 
-#: includes/class-wt-productfeed-uninstall-feedback.php:57
+#: includes/class-wt-productfeed-uninstall-feedback.php:60
 msgid "Could you tell us a bit more?"
 msgstr ""
 
-#: includes/class-wt-productfeed-uninstall-feedback.php:75
+#: includes/class-wt-productfeed-uninstall-feedback.php:79
 msgid "If you have a moment, please let us know why you are deactivating:"
 msgstr ""
 
-#: includes/class-wt-productfeed-uninstall-feedback.php:91
-msgid "I rather wouldn't say"
+#: includes/class-wt-productfeed-uninstall-feedback.php:90
+msgid "We do not collect any personal data when you submit this form. It's your feedback that we value."
 msgstr ""
 
-#: includes/class-wt-productfeed-uninstall-feedback.php:94
-msgid "Get quick help"
+#: includes/class-wt-productfeed-uninstall-feedback.php:91
+msgid "Privacy Policy"
 msgstr ""
 
 #: includes/class-wt-productfeed-uninstall-feedback.php:95
+msgid "I rather wouldn't say"
+msgstr ""
+
+#: includes/class-wt-productfeed-uninstall-feedback.php:98
+msgid "Get quick help"
+msgstr ""
+
+#: includes/class-wt-productfeed-uninstall-feedback.php:99
 msgid "Submit & Deactivate"
 msgstr ""
 
-#: includes/class-wt-productfeed-uninstall-feedback.php:181
+#: includes/class-wt-productfeed-uninstall-feedback.php:185
 msgid "Please contact the"
 msgstr ""
 
-#: includes/class-wt-productfeed-uninstall-feedback.php:181
 #: includes/class-wt-productfeed-uninstall-feedback.php:185
+#: includes/class-wt-productfeed-uninstall-feedback.php:189
 msgid "support"
 msgstr ""
 
-#: includes/class-wt-productfeed-uninstall-feedback.php:181
+#: includes/class-wt-productfeed-uninstall-feedback.php:185
 msgid "and let us fix the issue for you."
 msgstr ""
 
-#: includes/class-wt-productfeed-uninstall-feedback.php:185
+#: includes/class-wt-productfeed-uninstall-feedback.php:189
 msgid "Please go through the"
 msgstr ""
 
-#: includes/class-wt-productfeed-uninstall-feedback.php:185
+#: includes/class-wt-productfeed-uninstall-feedback.php:189
 msgid "documentation"
 msgstr ""
 
-#: includes/class-wt-productfeed-uninstall-feedback.php:185
+#: includes/class-wt-productfeed-uninstall-feedback.php:189
 msgid "or contact us via"
 msgstr ""
 
@@ -2155,20 +5193,15 @@ msgstr ""
 msgid "Category Mapping"
 msgstr ""
 
-#: includes/fbcatalog/wt-fbfeed-category-helper.php:25
+#: includes/fbcatalog/wt-fbfeed-category-helper.php:28
 msgid " Facebook Category"
 msgstr ""
 
-#: includes/fbcatalog/wt-fbfeed-category-helper.php:31
+#: includes/fbcatalog/wt-fbfeed-category-helper.php:42
 msgid " The Facebook Category corresponding to this category in the website."
 msgstr ""
 
-#: helpers/class-wt-security-helper.php:193
-#: helpers/class-wt-security-helper.php:196
-msgid "Access denied."
-msgstr ""
-
-#: helpers/class-wt-security-helper.php:230
-#: helpers/class-wt-security-helper.php:233
-msgid "You do not have sufficient permissions to perform this operation."
+#. translators: %1$s is the post type (e.g., Product), %2$s is the install URL
+#: webtoffee-product-feed.php:111
+msgid "The <b>WooCommerce</b> plugin must be active for <b> WebToffee WooCommerce %1$s Feed & Sync Manager</b> plugin to work.  Please <a href=\"%2$s\" target=\"_blank\">install & activate WooCommerce</a>."
 msgstr ""
