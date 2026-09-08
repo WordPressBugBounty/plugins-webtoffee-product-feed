@@ -900,6 +900,36 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Tiktok_Export')) {
         }
 
         /**
+         * Get product additional image URLs as a comma-separated string.
+         *
+         * Emits the value expected by TikTok Ads' Catalog Product Parameters
+         * spec for the `additional_image_link` field: a comma-separated list
+         * of gallery image URLs (TikTok accepts up to 10).
+         *
+         * @param string $catalog_attr   Catalog attribute name.
+         * @param string $product_attr   Product attribute name.
+         * @param array  $export_columns Full export column map.
+         * @param mixed  $additionalImg  Optional 1-based gallery index for a single slot.
+         * @return mixed|void
+         */
+        public function additional_image_link($catalog_attr, $product_attr, $export_columns, $additionalImg = '') {
+            $imgUrls = self::get_product_gallery($this->product);
+            $separator = apply_filters('wt_feed_filter_tiktok_additional_image_separator', ',', $this->product);
+
+            if ('' !== $additionalImg) {
+                if (array_key_exists($additionalImg, $imgUrls)) {
+                    $images = $imgUrls[$additionalImg];
+                } else {
+                    $images = '';
+                }
+            } else {
+                $images = implode($separator, array_filter($imgUrls));
+            }
+
+            return apply_filters('wt_feed_filter_product_images', $images, $this->product);
+        }
+
+        /**
          * Get product images (comma separated URLs).
          *
          * @return mixed|void

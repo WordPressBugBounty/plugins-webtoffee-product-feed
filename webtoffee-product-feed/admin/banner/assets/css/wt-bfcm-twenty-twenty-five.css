@@ -16,15 +16,15 @@
 
 /* Smart Coupon Banner 2025 */
 
-.wbte_sc_promotion_banner_div{ position: relative; padding: 20px 10px; background: #E3E3FF; border-left: solid 3px #5454A5; margin: 10px 0px; }
-.wbte_sc_promotion_banner_title{ color: #5454A5; font-size: 16px; font-weight: 500; }
+.wbte_sc_promotion_banner_div{ position: relative; padding: 12px 20px; background: #FFE8D8; border-left: solid 4px #E36A00; margin: 10px 0px; border-radius: 1px; }
+.wbte_sc_promotion_banner_title{ color: #E36A00; font-size: 15px; font-weight: 500; font-family: 'Roboto', Arial, sans-serif; }
 .wbte_sc_promotion_banner_close_btn{ position: absolute; right: 8px; top: 8px; color: #505050; cursor: pointer; }
 
 /* Hide CTA banners on coupon edit page if coupons are not created yet */
 .wrap:has(.woocommerce-BlankState) .wbte_sc_promotion_banner_div, .wrap:has(.woocommerce-BlankState) #wbte_sc_gc_promo_banner, .wrap:has(.woocommerce-BlankState) .wt-gdpr-promotion-banner { display: none !important; }
 .wbte_sc_promotion_banner_content{ display: flex; align-items: center; justify-content: space-between; margin-top: 10px; }
-.wbte_sc_promotion_banner_later{ height: 30px; background: #E3E3FF !important; color: #5454A5 !important; border: 1px solid #5454A5 !important; }
-.wbte_sc_promotion_banner_link_btn{ height: 30px; background: #5454A5 !important; color: #fff !important; border: none !important; display: flex !important; align-items: center; justify-content: space-between; }
+.wbte_sc_promotion_banner_later{ height: 30px; background: #FFE8D8 !important; color: #E36A00 !important; border: 1px solid #E36A00 !important; }
+.wbte_sc_promotion_banner_link_btn{ height: 32px; background: #E36A00 !important; color: #fff !important; border: 1px solid #FF8B00 !important; border-radius: 2px !important; font-family: 'Roboto', Arial, sans-serif; font-weight: 500 !important; font-size: 12px !important; display: flex !important; align-items: center; justify-content: space-between; }
 .wbte_sc_promotion_banner_actions{ display: flex; align-items: center; margin-left: 10px; }
 @media (max-width: 650px) {
   .wbte_sc_promotion_banner_content{ flex-direction: column; align-items: flex-start; }

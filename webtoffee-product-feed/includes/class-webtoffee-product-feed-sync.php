@@ -85,7 +85,7 @@ class Webtoffee_Product_Feed_Sync {
 		if ( defined( 'WEBTOFFEE_PRODUCT_FEED_SYNC_VERSION' ) ) {
 			$this->version = WEBTOFFEE_PRODUCT_FEED_SYNC_VERSION;
 		} else {
-			$this->version = '2.4.1';
+			$this->version = '2.4.2';
 		}
 		$this->plugin_name = 'webtoffee-product-feed';
 		$this->plugin_base_name	 = WT_PRODUCT_FEED_BASE_NAME;
@@ -170,9 +170,9 @@ class Webtoffee_Product_Feed_Sync {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/banner/class-wt-bfcm-twenty-twenty-five.php';
 
 		/**
-		 * Includes the EMA banner for the analytics page
+		 * Includes the Smart Coupons CTA banner for the Analytics Revenue page
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/banner/class-wbte-ema-banner.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/banner/class-wbte-smart-coupons-analytics-banner.php';
 
 		/**
 		 * Includes cross promotion banner main class file.

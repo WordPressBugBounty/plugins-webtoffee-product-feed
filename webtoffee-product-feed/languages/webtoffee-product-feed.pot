@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-08-04T05:00:42+00:00\n"
+"POT-Creation-Date: 2026-08-10T08:54:24+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: webtoffee-product-feed\n"
@@ -39,30 +39,34 @@ msgstr ""
 msgid "https://www.webtoffee.com"
 msgstr ""
 
-#: admin/banner/class-wbte-ema-banner.php:146
+#: admin/banner/class-wbte-smart-coupons-analytics-banner.php:146
 #: admin/banner/class-wt-bfcm-twenty-twenty-five.php:134
 msgid "Did you know?"
 msgstr ""
 
-#: admin/banner/class-wbte-ema-banner.php:147
-msgid "You can boost your store revenue and recover lost sales with automated email campaigns, cart recovery, and upsell popups using the WebToffee Marketing Automation App."
+#: admin/banner/class-wbte-smart-coupons-analytics-banner.php:147
+msgid "WebToffee Smart Coupons lets you create BOGO offers, giveaways, and store credits to help grow your store's revenue."
 msgstr ""
 
-#: admin/banner/class-wbte-ema-banner.php:150
-msgid "Sign Up for Free"
+#: admin/banner/class-wbte-smart-coupons-analytics-banner.php:150
+#: admin/banner/class-wt-bfcm-twenty-twenty-five.php:142
+msgid "Get Plugin Now"
 msgstr ""
 
-#: admin/banner/class-wbte-ema-banner.php:152
+#: admin/banner/class-wbte-smart-coupons-analytics-banner.php:152
 msgid "Dismiss this notice."
 msgstr ""
 
-#. translators: 1: a tag opening, 2: a tag closing.
 #: admin/banner/class-wt-bfcm-twenty-twenty-five.php:137
-msgid "With the %1$s Smart Coupons %2$s plugin, you can create Buy One Get One offers and advanced coupons that boost sales during BFCM."
+msgid "WebToffee Smart Coupons lets you create advanced %1$s and %2$s to boost sales and revenue."
 msgstr ""
 
-#: admin/banner/class-wt-bfcm-twenty-twenty-five.php:142
-msgid "Get Plugin Now"
+#: admin/banner/class-wt-bfcm-twenty-twenty-five.php:138
+msgid "BOGO offers"
+msgstr ""
+
+#: admin/banner/class-wt-bfcm-twenty-twenty-five.php:139
+msgid "condition-based coupons"
 msgstr ""
 
 #: admin/banner/class-wt-bfcm-twenty-twenty-five.php:143

@@ -414,7 +414,7 @@ $wtpf_categories = array(
 					__( 'More order number templates', 'webtoffee-product-feed' ),
 				),
 				'url'        => 'https://www.webtoffee.com/product/woocommerce-sequential-order-numbers/?utm_source=other_solution_page&utm_medium=free_plugin_product_feed&utm_campaign=Sequential_Order_Numbers',
-				'image_src'  => 'seq-orders-illustration.svg',
+				'image_src'  => 'seq-orders-illustration.png',
 				'card_class' => 'wtpf-os-card--seq-orders',
 			),
 		),

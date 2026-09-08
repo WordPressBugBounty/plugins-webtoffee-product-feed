@@ -1,3 +1,7 @@
+= 2.4.2 2026-09-08 =
+* [Compatibility] - Tested OK with WordPress 7.1
+* [Compatibility] - Tested OK with WooCommerce 11.0.1
+
 = 2.4.1 2026-08-04 =
 * [Tweak] - Translation updates.
 * [Compatibility] - Tested OK with WordPress 7.0.2

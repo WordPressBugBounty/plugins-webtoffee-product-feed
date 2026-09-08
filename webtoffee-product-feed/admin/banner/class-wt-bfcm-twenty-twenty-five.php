@@ -126,17 +126,17 @@ if ( ! class_exists( 'Wt_Bfcm_Twenty_Twenty_Five' ) ) {
 					if ( ! defined( 'WBTE_BFCM_SC_COUPONS_PAGE' ) && ! in_array( 'sc_cpns_page', $hidden_banners, true ) ) {
 						define( 'WBTE_BFCM_SC_COUPONS_PAGE', true );
 
-						$campaign_url = 'https://www.webtoffee.com/product/smart-coupons-for-woocommerce/?utm_source=free_plugin_add_coupon_menu&utm_medium=product_feed_free&utm_campaign=smart_coupons';
+						$campaign_url = 'https://www.webtoffee.com/product/smart-coupons-for-woocommerce/?utm_source=free_plugin_add_coupon_menu&utm_medium=product_feed_basic&utm_campaign=smart_coupons';
 
 						$bulk_plugin_text = sprintf(
-							'<div data-wbte-sc-promotion-banner-id="sc_cpns_page" class="wbte_sc_promotion_banner_div"><span><img src="%s" style="width: 16px;" /></span>&nbsp;<span class="wbte_sc_promotion_banner_title">%s</span><div class="wbte_sc_promotion_banner_content"><p style="margin: 0; font-size: 14px;"> %s </p><div class="wbte_sc_promotion_banner_actions"> <a class="button button-secondary wbte_sc_promotion_banner_link_btn" href="%s" target="_blank"> %s <span class="dashicons dashicons-arrow-right-alt" style="font-size: 14px; line-height: 1.5;"></span> </a>&ensp;<button type="button" class="button button-secondary wbte_sc_promotion_banner_close wbte_sc_promotion_banner_later"> %s </button></div></div><span class="dashicons dashicons-no-alt wbte_sc_promotion_banner_close wbte_sc_promotion_banner_close_btn"></span></div>',
-                            esc_url( plugin_dir_url(__FILE__) . 'assets/images/idea_bulb_purple.svg' ),
+							'<div data-wbte-sc-promotion-banner-id="sc_cpns_page" class="wbte_sc_promotion_banner_div"><span><img src="%s" style="width: 16px;" /></span>&nbsp;<span class="wbte_sc_promotion_banner_title">%s</span><div class="wbte_sc_promotion_banner_content"><p style="margin: 0; font-size: 14px;"> %s </p><div class="wbte_sc_promotion_banner_actions"> <a class="button button-secondary wbte_sc_promotion_banner_link_btn" href="%s" target="_blank"> %s <span class="dashicons dashicons-arrow-right-alt" style="font-size: 14px; line-height: 1.5;"></span> </a>&ensp;<button type="button" style="display:none;" class="button button-secondary wbte_sc_promotion_banner_close wbte_sc_promotion_banner_later"> %s </button></div></div><span class="dashicons dashicons-no-alt wbte_sc_promotion_banner_close wbte_sc_promotion_banner_close_btn"></span></div>',
+                            esc_url( plugin_dir_url(__FILE__) . 'assets/images/idea_bulb_orange.svg' ),
 							esc_html__( 'Did you know?', 'webtoffee-product-feed' ),
+							// translators: %1$s = <strong>BOGO offers</strong>, %2$s = <strong>condition-based coupons</strong>. Highlighted phrases must remain wrapped so they render bold in the banner.
 							sprintf(
-								// translators: 1: a tag opening, 2: a tag closing.
-								__( 'With the %1$s Smart Coupons %2$s plugin, you can create Buy One Get One offers and advanced coupons that boost sales during BFCM.', 'webtoffee-product-feed' ),
-								'<a href="' . esc_url( $campaign_url ) . '" target="_blank"><b>',
-								'</b></a>'
+								__( 'WebToffee Smart Coupons lets you create advanced %1$s and %2$s to boost sales and revenue.', 'webtoffee-product-feed' ),
+								'<strong>' . esc_html__( 'BOGO offers', 'webtoffee-product-feed' ) . '</strong>',
+								'<strong>' . esc_html__( 'condition-based coupons', 'webtoffee-product-feed' ) . '</strong>'
 							),
 							esc_url( $campaign_url ),
 							esc_html__( 'Get Plugin Now', 'webtoffee-product-feed' ),
