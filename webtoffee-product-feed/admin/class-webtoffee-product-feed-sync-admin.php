@@ -1837,29 +1837,47 @@ class Webtoffee_Product_Feed_Sync_Admin {
 		 *  @param array $screen_ids Array of screen ids.
 		 *  @return array            Array of screen ids.
 		 */
-		public function wt_bfcm_banner_screens( $screen_ids ) {
+		public function wt_pf_bfcm_banner_screens( $screen_ids ) {
 			$screen_ids[] = 'toplevel_page_webtoffee_product_feed_main_export';
 			$screen_ids[] = 'webtoffee-product-feed_page_webtoffee_product_feed_main_history';
 			$screen_ids[] = 'webtoffee-product-feed_page_webtoffee_product_feed';
+			$screen_ids[] = 'webtoffee-product-feed_page_webtoffee_product_feed_main_cron';
+			$screen_ids[] = 'webtoffee-product-feed_page_webtoffee-product-feed';
 			return $screen_ids;
 		}
 
 		/**
-		 * To Check if the current date is on or between the start and end date of black friday and cyber monday banner for 2025.
+		 * To Check if the current date is on or between the start and end date of black friday and cyber monday banner for 2026.
 		 *
-		 * @since 2.2.4
+		 * @since 2.4.3
 		 */
 		public static function is_bfcm_season() {
 
-			$start_date   = new DateTime( '17-NOV-2025, 12:00 AM', new DateTimeZone( 'Asia/Kolkata' ) ); // Start date.
+			$start_date   = new DateTime( '11-NOV-2026, 12:00 AM', new DateTimeZone( 'Asia/Kolkata' ) ); // Start date.
 			$current_date = new DateTime( 'now', new DateTimeZone( 'Asia/Kolkata' ) ); // Current date.
-			$end_date     = new DateTime( '04-DEC-2025, 11:59 PM', new DateTimeZone( 'Asia/Kolkata' ) ); // End date.
+			$end_date     = new DateTime( '04-DEC-2026, 11:59 PM', new DateTimeZone( 'Asia/Kolkata' ) ); // End date.
 
-			// Check if the date is on or between the start and end date of black friday and cyber monday banner for 2025.
+			// Check if the date is on or between the start and end date of black friday and cyber monday banner for 2026.
 			if ( $current_date < $start_date || $current_date > $end_date ) {
 				return false;
 			}
 			return true;
+		}
+
+		/**
+		 * Whether the 2026 BFCM campaign window has fully ended (current date is past the end date).
+		 *
+		 * Returns false while the window is still in the future or active. The banner class uses this
+		 * to decide when to persist a one-way "expired" state so the date comparison is skipped on
+		 * subsequent requests — without that guard, a pre-start visit would silence the banner before
+		 * the campaign begins.
+		 *
+		 * @since 2.4.3
+		 */
+		public static function is_bfcm_season_ended() {
+			$current_date = new DateTime( 'now', new DateTimeZone( 'Asia/Kolkata' ) );
+			$end_date     = new DateTime( '04-DEC-2026, 11:59 PM', new DateTimeZone( 'Asia/Kolkata' ) );
+			return $current_date > $end_date;
 		}
     }
 }

@@ -95,7 +95,7 @@ var wt_productfeed_cron_js = ( function ( $ ) {
 
                        		    this.ajx_dta = {
 			'_wpnonce': wt_productfeed_params.nonces.main,
-			'action': "pf_schedule_ajax",
+			'action': "pf_schedule_ajax_basic",
 			'cron_id': jQuery('[name="requested_cron_edit_id"]').val(),
 			'pf_schedule_action': 'update_schedule',
 		    };
@@ -108,7 +108,7 @@ var wt_productfeed_cron_js = ( function ( $ ) {
 			this.ajx_dta['form_data']=wt_productfeed_export.form_data;
                     }
 			this.ajx_dta['schedule_data']={'schedule_type':schedule_type, 'interval':interval_vl, 'date_vl':date_vl, 'start_time':start_time, 'custom_interval':custom_interval, 'day_vl':day_vl, 'file_name':file_name};			
-			this.ajx_dta['action']='pf_schedule_ajax';
+			this.ajx_dta['action']='pf_schedule_ajax_basic';
 			this.ajx_dta['pf_schedule_action']='update_schedule';
 			wt_productfeed_cron_js.update_schedule(this.ajx_dta, schedule_type);
 		});
@@ -181,7 +181,7 @@ var wt_productfeed_cron_js = ( function ( $ ) {
 		    wt_productfeed_popup.showPopup( jQuery( '.wt_productfeed_schedule_now' ) );
 		    this.ajax_data = {
 			'_wpnonce': wt_productfeed_params.nonces.main,
-			'action': "pf_schedule_ajax",
+			'action': "pf_schedule_ajax_basic",
 			'cron_id': response.data.id,
 			'pf_schedule_action': 'update_schedule',
 		    };
@@ -254,7 +254,7 @@ var wt_productfeed_cron_js = ( function ( $ ) {
 		$( '.cron_list_wrapper' ).html( '<div class="wt_productfeed_ftp_loader">' + wt_productfeed_params.msgs.loading + '</div>' );
 		$.ajax( {
 		    url: wt_productfeed_params.ajax_url,
-		    data: { 'action': 'pf_schedule_ajax', _wpnonce: wt_productfeed_params.nonces.main, 'pf_schedule_action': 'list_cron' },
+		    data: { 'action': 'pf_schedule_ajax_basic', _wpnonce: wt_productfeed_params.nonces.main, 'pf_schedule_action': 'list_cron' },
 		    type: 'post',
 		    dataType: "html",
 		    success: function ( data )

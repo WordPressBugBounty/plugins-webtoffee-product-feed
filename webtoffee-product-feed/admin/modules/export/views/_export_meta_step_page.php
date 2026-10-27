@@ -29,6 +29,7 @@ if (!defined('ABSPATH')) {
 			{
 				$val=is_array($val) ? $val : array($val, 0);
 				$label=$val[0];
+				$default_product_attr = isset( $val['default_product_attr'] ) ? $val['default_product_attr'] : $key;
 
 				if(isset($current_meta_step_form_data[$key])) /* forma data/template data available */
 				{
@@ -38,7 +39,7 @@ if (!defined('ABSPATH')) {
 					$val[1]=$is_checked; //parent is checked
 				}
 
-				$selected_val = !empty($current_meta_step_form_data[$key][0]) ? $current_meta_step_form_data[$key][0] : $key;
+				$selected_val = !empty($current_meta_step_form_data[$key][0]) ? $current_meta_step_form_data[$key][0] : $default_product_attr;
 				$wc_prod_attributes = Webtoffee_Product_Feed_Sync_Common_Helper::attribute_dropdown( $this->to_export, $selected_val);
 				include "_export_mapping_tr_html.php";
 				$tr_count++;

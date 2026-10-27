@@ -3,8 +3,8 @@ Contributors: webtoffee
 Donate link: https://www.webtoffee.com/product/woocommerce-product-feed/
 Tags: woocommerce product feed, google shopping, google merchant center, facebook catalog, instagram feed
 Requires at least: 4.0
-Tested up to: 7.1
-Stable tag: 2.4.2
+Tested up to: 7.1.3
+Stable tag: 2.4.3
 Requires PHP: 5.6
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -17,7 +17,7 @@ Create unlimited WooCommerce product feeds for Google Shopping, Facebook, Instag
 
 Promote and get more eyeballs on your WooCommerce products on Google Merchant Center, Facebook, Instagram, TikTok Ads, Pinterest, Snapchat, Bing, Idealo, Pricespy, Skroutz, Shopzilla, and more.
 
-This product feed WooCommerce plugin will help you generate optimized WooCommerce product feeds in XML, CSV, XLSX, TXT formats and integrate them with popular sales channels.
+This product feed WooCommerce plugin will help you generate optimized WooCommerce product feeds in XML, CSV, XLSX, TXT formats and integrate them with popular sales channels, marketplaces and comparison shopping engines.
 
 Turn your Facebook page or Instagram account into a perfect sales channel for your WooCommerce products. 
 
@@ -32,7 +32,7 @@ For Google Shopping, this WooCommerce Google shopping feed plugin lets you conne
 
 == Key Features of Product Feed WooCommerce Plugin (Free Version) ==
 
-&#128312; **Sales Channels** - Supports 25+ eCommerce channels to expand your reach. Easily create and customize product feeds for multiple platforms. Ensure free listings and clear product visibility to drive more sales.
+&#128312; **Sales Channels** -  Create and customize product feeds for major eCommerce and shopping channels. Ensure free listings and clear product visibility to drive more sales.
 
 &#128312; **Unlimited Products** - No product count restrictions. List your entire WooCommerce product catalog without worrying about limitations. Maximize visibility and reach more shoppers across multiple sales channels effortlessly.
 
@@ -58,8 +58,8 @@ For Google Shopping, this WooCommerce Google shopping feed plugin lets you conne
 
 &#128312; **Product Feed Refresh Status** - Keep track of the real-time status of your product feed updates, ensuring that your product listings always reflect the latest changes. Know when your product feeds was last updated and check whether they are running as scheduled.
 
-&#9989; Tested OK with WordPress 7.1
-&#9989; Tested OK with WooCommerce 11.0.1
+&#9989; Tested OK with WordPress 7.1.3
+&#9989; Tested OK with WooCommerce 11.2.1
 
 == Why Choose WooCommerce Product Feed Plugin? ==
 
@@ -105,7 +105,11 @@ It also supports WCML, allowing you to show product prices in different currenci
 - <a rel="nofollow" href="https://wpml.org/">WPML</a>
 - <a rel="nofollow" href="https://translatepress.com/">Translatepress</a>
 
-🟢 **Create Custom Product Feeds** - </li>
+🟢 **OpenAI Agentic Commerce Feed** </li>
+
+Generate an AI-ready WooCommerce product feed for OpenAI Agentic Commerce and make your catalog discoverable in ChatGPT shopping experiences. Map product attributes and categories to the OpenAI feed schema and keep product data updated through scheduled feed refreshes.
+
+🟢 **Create Custom Product Feeds** </li>
 
 Beyond standard sales channels, you can also generate custom product data feeds files tailored to any platform. This gives you endless flexibility to format your product data exactly as needed, making it easy to list your products on regional marketplaces, or other sales channels that require a specific WooCommerce product feeds structure.
 
@@ -161,7 +165,10 @@ Our product feed WooCommerce plugin is fully compatible with popular currency sw
 
 Enhance your WooCommerce store’s sales potential by seamlessly integrating with Discount Rules for WooCommerce and YITH WooCommerce Dynamic Pricing & Discounts. With this seamless compatibility, you can easily set up custom discounts, promotions, and upsell strategies to attract more customers and increase conversions. Whether it’s bulk discounts, BOGO deals, or personalized offers, this integration helps you sell more while keeping shoppers happy!
 
-== 👉 Create Product Feeds for 25+ Sales Channels. Power your Multi-Channel Strategy ==
+== 👉 Create Product Feeds for 30+ Sales & Comparison Shopping Channels ==
+
+**AI Commerce**
+OpenAI Agentic Commerce (Premium)
 
 **Google Shopping Feed**
 Google Shopping, Google Local Product Inventory, Google Local Inventory Ads, Google Merchant Promotions, Buy on Google, Google Manufacturer Center(Premium)
@@ -172,11 +179,13 @@ Facebook product feed, Instagram product feed, TikTok Ads, Pinterest Product Fee
 **Shopping & Comparison**
 Bing Shopping Feed(Microsoft Ads), Idealo Product Feed, PriceSpy Feed (Prisjakt), PriceRunner Feed, Shopzilla Feed, Skroutz Data Feed, Bizrate Product Feed, Shopmania, LeGuide, Become Shop Feed
 
+**Premium channels:** Ceneo.pl, Trovaprezzi.it, Idealo.fr, Geizhals.de, Billiger.de, Stylight
+
 **European Marketplaces**
 Heureka, Fruugo, Vivino, OnBuy, Yandex, Rakuten
 
 **Other**
-Custom Feed(Premium)
+Custom Feed (Premium)
 
 Please visit <a rel="dofollow" href="https://www.webtoffee.com/product/woocommerce-product-feed/?utm_source=free_plugin_readme&utm_medium=product_feed&utm_campaign=WooCommerce_Product_Feed">WooCommerce Product Feed Plugin </a> for more details.
 
@@ -305,14 +314,14 @@ function wt_modify_product_description_mode( $mode ) {
 
 == Changelog ==
 
-= 2.4.2 2026-09-08 =
-* [Compatibility] - Tested OK with WordPress 7.1
-* [Compatibility] - Tested OK with WooCommerce 11.0.1
+= 2.4.3 2026-10-27 =
+* [Compatibility] - Tested OK with WordPress 7.1.3
+* [Compatibility] - Tested OK with WooCommerce 11.2.1
 
 [See changelog for all versions](https://plugins.svn.wordpress.org/webtoffee-product-feed/trunk/changelog.txt)
 
 == Upgrade Notice ==
 
-= 2.4.2 =
-* [Compatibility] - Tested OK with WordPress 7.1
-* [Compatibility] - Tested OK with WooCommerce 11.0.1
+= 2.4.3 =
+* [Compatibility] - Tested OK with WordPress 7.1.3
+* [Compatibility] - Tested OK with WooCommerce 11.2.1

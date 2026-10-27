@@ -78,7 +78,7 @@ if(!class_exists('Webtoffee_Product_Feed_Sync_Common_Helper')){
 		 */
 		public static function attribute_dropdown( $export_channel, $selected = '' ) {
 			
-			$attribute_dropdown = wp_cache_get( 'wt_feed_dropdown_product_attributes_v11' );
+			$attribute_dropdown = wp_cache_get( 'wt_feed_dropdown_product_attributes_v12' );
 
 			if ( false === $attribute_dropdown ) {
 				$attributes = array(
@@ -200,7 +200,19 @@ if(!class_exists('Webtoffee_Product_Feed_Sync_Common_Helper')){
 					}
 					$attribute_dropdown .= '</optgroup>';
 				}
-				
+
+				$videos = array(
+					'gallery_video_url'  => esc_attr__( 'Gallery Video URL (WC 11.1+)', 'webtoffee-product-feed' ),
+					'gallery_video_urls' => esc_attr__( 'Gallery Video URLs (WC 11.1+)', 'webtoffee-product-feed' ),
+				);
+				if ( is_array( $videos ) && ! empty( $videos ) ) {
+					$attribute_dropdown .= sprintf( '<optgroup label="%s">', esc_attr__( 'Video Attributes', 'webtoffee-product-feed' ) );
+					foreach ( $videos as $key => $value ) {
+						$attribute_dropdown .= sprintf( '<option value="%s">%s</option>', esc_attr( $key ), $value );
+					}
+					$attribute_dropdown .= '</optgroup>';
+				}
+
 				$meta_in_mapping = apply_filters('wt_pf_allow_meta_in_mapping', true);
 				if($meta_in_mapping){
 					$product_metas = self::get_product_metakeys();
@@ -237,7 +249,7 @@ if(!class_exists('Webtoffee_Product_Feed_Sync_Common_Helper')){
 					}
 				}                        
 							
-				wp_cache_add( 'wt_feed_dropdown_product_attributes_v11', $attribute_dropdown, '', WEEK_IN_SECONDS );
+				wp_cache_add( 'wt_feed_dropdown_product_attributes_v12', $attribute_dropdown, '', WEEK_IN_SECONDS );
 			}
 			
 			if( $selected && strpos($selected, 'wt_static_map_vl:') !== false ){

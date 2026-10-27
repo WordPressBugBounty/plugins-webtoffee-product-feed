@@ -1011,7 +1011,7 @@ var wt_pf_basic_export=(function( $ ) {
                                           return {
                                              'term' : params.term,
                                             '_wpnonce': wt_pf_basic_params.nonces.main,
-                                            'action': "populate_cat_mapping",
+                                            'action': "populate_cat_mapping_basic",
                                             'export_action': 'populate_cat_mapping',
                                             'selected_template': wt_pf_basic_export.selected_template,
                                             'to_export': wt_pf_basic_export.to_export,

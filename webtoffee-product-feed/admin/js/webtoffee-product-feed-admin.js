@@ -38,7 +38,7 @@ jQuery( function ()
 	    url: ajaxurl,
 	    data: {
 		form: data,
-		action: 'wt_fbfeed_ajax_upload',
+		action: 'wt_fbfeed_ajax_upload_basic',
 		step: step,
 	    },
 	    dataType: "json",
@@ -114,7 +114,7 @@ jQuery( function ()
 	    url: ajaxurl,
 	    data: {
 		form: data,
-		action: 'wt_fbfeed_ajax_save_category',
+		action: 'wt_fbfeed_ajax_save_category_basic',
 
 	    },
 	    dataType: "json",
@@ -167,7 +167,7 @@ jQuery( document ).ready( function () {
 	    url: ajaxurl,
 	    data: {
 		form: data,
-		action: 'wt_fbfeed_ajax_upload',
+		action: 'wt_fbfeed_ajax_upload_basic',
 		step: step,
 	    },
 	    dataType: "json",
@@ -242,7 +242,7 @@ var wt_fbfeed_history = ( function ( $ ) {
 		$( '.wt_fbfeed_log_container' ).html( '<div class="wt_fbfeed_log_loader">'+wt_feed_params.msgs.loading+'</div>' );
 		$.ajax( {
 		    url: ajaxurl,
-		    data: { 'action': 'fbfeed_batch_status_ajax', 'batch_handle': batch_handle, 'catalog_id': batch_handle_catalog, _wpnonce:wt_feed_params.nonces.main, },
+		    data: { 'action': 'fbfeed_batch_status_ajax_basic', 'batch_handle': batch_handle, 'catalog_id': batch_handle_catalog, _wpnonce:wt_feed_params.nonces.main, },
 		    type: 'post',
 		    dataType: "json",
 		    success: function (data)

@@ -11,7 +11,7 @@ if (!class_exists('ProductFeed_Uninstall_Feedback')) :
 
         public function __construct() {
             add_action('admin_footer', array($this, 'deactivate_scripts'));
-            add_action('wp_ajax_productfeed_submit_uninstall_reason', array($this, "send_uninstall_reason"));
+            add_action('wp_ajax_productfeed_submit_uninstall_reason_basic', array($this, "send_uninstall_reason"));
         }
 
         private function get_uninstall_reasons() {
@@ -217,7 +217,7 @@ if (!class_exists('ProductFeed_Uninstall_Feedback')) :
                                 url: ajaxurl,
                                 type: 'POST',
                                 data: {
-                                    action: 'productfeed_submit_uninstall_reason',
+                                    action: 'productfeed_submit_uninstall_reason_basic',
                                     reason_id: (0 === $radio.length) ? 'none' : $radio.val(),
                                     reason_info: (0 !== $input.length) ? $input.val().trim() : '',
                                     _wpnonce: '<?php echo esc_js($nonce); ?>'

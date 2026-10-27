@@ -973,40 +973,6 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_TiktokShop_Export')) {
         public function variation_6($catalog_attr, $product_attr, $export_columns) {
             return $this->wt_variation_option($catalog_attr, $product_attr, $export_columns, 6);
         }
-        
-        public static function get_product_gallery($product) {
-            $imgUrls = [];
-            $attachmentIds = [];
-
-            if ($product->is_type('variation')) {
-
-                /**
-                 * If any Variation Gallery Image plugin not installed then get Variable Product Additional Image Ids .
-                 */
-                $parent_prod = wc_get_product($product->get_parent_id());
-                if (is_object($parent_prod)) {
-                    $attachmentIds = $parent_prod->get_gallery_image_ids();
-                }
-            }
-
-            /**
-             * Get Variable Product Gallery Image ids if Product is not a variation
-             * or variation does not have any gallery images
-             */
-            if (empty($attachmentIds)) {
-                $attachmentIds = $product->get_gallery_image_ids();
-            }
-
-            if ($attachmentIds && is_array($attachmentIds)) {
-                $mKey = 1;
-                foreach ($attachmentIds as $attachmentId) {
-                    $imgUrls[$mKey] = Wt_Pf_IE_Basic_Helper::feed_get_formatted_url(wp_get_attachment_url($attachmentId));
-                    $mKey++;
-                }
-            }
-
-            return $imgUrls;
-        }
 
         /**
          * Get product images (comma separated URLs).

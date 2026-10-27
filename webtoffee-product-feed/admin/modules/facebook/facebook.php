@@ -318,7 +318,7 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Facebook')) {
 						$fields[$key]['fields']['inventory'] = 'Facebook Inventory[inventory]';
 						$fields[$key]['fields']['override'] = 'Facebook Override[override]';
 						$fields[$key]['fields']['status'] = 'Status [status]';
-						$fields[$key]['fields']['video'] = 'Video [video]';
+						$fields[$key]['fields']['video'] = array( 'Video [video]', 0, 'default_product_attr' => 'gallery_video_url' );
 						$fields[$key]['fields']['unit_price_value'] = 'Unit Price > Value [unit_price_value]';
 						$fields[$key]['fields']['unit_price_currency'] = 'Unit Price > Currency [unit_price_currency]';
 						$fields[$key]['fields']['unit_price_unit'] = 'Unit Price > Unit [unit_price_unit]';

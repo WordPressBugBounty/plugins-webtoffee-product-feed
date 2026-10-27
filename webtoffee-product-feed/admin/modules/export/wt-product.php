@@ -556,9 +556,107 @@ if (!class_exists('Webtoffee_Product_Feed_Product')) {
 
                 return $name;
         }
-        
 
-    }
+
+	/**
+	 * Get product gallery image URLs with variation-first priority (WC 11.1+).
+	 *
+	 * @param WC_Product $product Product object.
+	 * @return array Keyed 1..n array of formatted gallery image URLs.
+	 */
+	public static function get_product_gallery( $product ) {
+		$img_urls       = array();
+		$attachment_ids = $product->get_gallery_image_ids();
+
+		if ( empty( $attachment_ids ) && $product->is_type( 'variation' ) ) {
+			$parent_prod = wc_get_product( $product->get_parent_id() );
+			if ( is_object( $parent_prod ) ) {
+				$attachment_ids = $parent_prod->get_gallery_image_ids();
+			}
+		}
+
+		if ( $attachment_ids && is_array( $attachment_ids ) ) {
+			$m_key = 1;
+			foreach ( $attachment_ids as $attachment_id ) {
+				$img_urls[ $m_key ] = Wt_Pf_IE_Basic_Helper::feed_get_formatted_url( wp_get_attachment_url( $attachment_id ) );
+				++$m_key;
+			}
+		}
+
+		return $img_urls;
+	}
+
+	/**
+	 * Get product gallery video URLs from WC 11.1 native _wc_video_gallery meta.
+	 *
+	 * @param WC_Product $product Product object.
+	 * @return array Keyed 1..n array of esc_url_raw'd video URLs sorted by position.
+	 */
+	public static function get_product_gallery_videos( $product ) {
+		$product_id = $product->is_type( 'variation' ) ? $product->get_parent_id() : $product->get_id();
+		$raw        = get_post_meta( $product_id, '_wc_video_gallery', true );
+
+		if ( empty( $raw ) ) {
+			return array();
+		}
+
+		$entries = json_decode( $raw, true );
+
+		if ( ! is_array( $entries ) || empty( $entries ) ) {
+			return array();
+		}
+
+		usort(
+			$entries,
+			static function ( $a, $b ) {
+				return (int) ( $a['position'] ?? 0 ) - (int) ( $b['position'] ?? 0 );
+			}
+		);
+
+		$video_urls = array();
+		$m_key      = 1;
+		foreach ( $entries as $entry ) {
+			$attachment_id = isset( $entry['id'] ) ? absint( $entry['id'] ) : 0;
+			if ( $attachment_id ) {
+				$url = wp_get_attachment_url( $attachment_id );
+				if ( $url ) {
+					$video_urls[ $m_key ] = esc_url_raw( $url );
+					++$m_key;
+				}
+			}
+		}
+
+		return $video_urls;
+	}
+
+	/**
+	 * Return the first WC 11.1 gallery video URL for feed mapping.
+	 *
+	 * @param string $catalog_attr  Catalog attribute key.
+	 * @param string $product_attr  Mapped product attribute.
+	 * @param array  $export_columns All export columns.
+	 * @return string
+	 */
+	public function gallery_video_url( $catalog_attr, $product_attr, $export_columns ) {
+		$video_urls = self::get_product_gallery_videos( $this->product );
+		return ! empty( $video_urls ) ? reset( $video_urls ) : '';
+	}
+
+	/**
+	 * Return all WC 11.1 gallery video URLs pipe-separated for feed mapping.
+	 *
+	 * @param string $catalog_attr  Catalog attribute key.
+	 * @param string $product_attr  Mapped product attribute.
+	 * @param array  $export_columns All export columns.
+	 * @return string
+	 */
+	public function gallery_video_urls( $catalog_attr, $product_attr, $export_columns ) {
+		$video_urls = self::get_product_gallery_videos( $this->product );
+		$separator  = apply_filters( 'wt_feed_filter_category_separator', ' | ', $this->product );
+		return ! empty( $video_urls ) ? implode( $separator, $video_urls ) : '';
+	}
+
+}
 
 }
 

@@ -155,7 +155,7 @@ var wt_productfeed_cron=
 			ajx_dta['schedule_action']=action_arr[1]; /* what action need to do in schedule Eg: export, import */
 			ajx_dta['schedule_data']={'schedule_type':schedule_type, 'interval':interval_vl, 'date_vl':date_vl, 'start_time':start_time, 'custom_interval':custom_interval, 'day_vl':day_vl, 'file_name':file_name};
 			
-			ajx_dta['action']='pf_schedule_ajax';
+			ajx_dta['action']='pf_schedule_ajax_basic';
 			ajx_dta['pf_schedule_action']='save_schedule';
 			wt_productfeed_cron.save_schedule(ajx_dta, action, id, schedule_type);
 		});

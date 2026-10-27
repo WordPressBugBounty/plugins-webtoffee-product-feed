@@ -96,7 +96,7 @@ if (!defined('WPINC')) {
                                         }
 
                                         if ($action_type == 'export' && Webtoffee_Product_Feed_Sync_Admin::module_exists($action_type)) {
-                                            $export_download_url = wp_nonce_url(admin_url('admin.php?wt_pf_export_download=true&file=' . $history_item['file_name']), WEBTOFFEE_PRODUCT_FEED_ID);
+                                            $export_download_url = wp_nonce_url(admin_url('admin.php?wt_pf_export_download_basic=true&file=' . $history_item['file_name']), WEBTOFFEE_PRODUCT_FEED_ID);
                                             ?>
                                             <?php // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage ?>
                                             <a class="wt_manage_feed_icons wt_pf_export_download_btn" target="_blank" href="<?php echo esc_url($export_download_url); ?>"><img src="<?php echo esc_url(WT_PRODUCT_FEED_PLUGIN_URL . '/assets/images/wt_fi_download.svg'); ?>" alt="<?php esc_html_e('Download', 'webtoffee-product-feed'); ?>" title="<?php esc_html_e('Download', 'webtoffee-product-feed'); ?>"/></a>

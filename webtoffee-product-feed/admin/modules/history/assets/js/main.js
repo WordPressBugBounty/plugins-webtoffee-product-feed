@@ -37,7 +37,7 @@ var wt_pf_basic_history=(function( $ ) {
 			$('.wt_pf_log_container').html('<div class="wt_pf_log_loader">'+wt_pf_basic_params.msgs.loading+'</div>');
 			$.ajax({
 				url:wt_pf_basic_params.ajax_url,
-				data:{'action':'iew_history_ajax_basic', _wpnonce:wt_pf_basic_params.nonces.main, 'history_action':'view_log', 'log_file':log_file, 'data_type':'json'},
+				data:{'action':'wt_pf_history_ajax_basic', _wpnonce:wt_pf_basic_params.nonces.main, 'history_action':'view_log', 'log_file':log_file, 'data_type':'json'},
 				type:'post',
 				dataType:"json",
 				success:function(data)
@@ -84,7 +84,7 @@ var wt_pf_basic_history=(function( $ ) {
 			}
 			$.ajax({
 				url:wt_pf_basic_params.ajax_url,
-				data:{'action':'iew_history_ajax_basic', _wpnonce:wt_pf_basic_params.nonces.main, 'history_action':'view_log', 'offset': offset, 'history_id':history_id, 'data_type':'json'},
+				data:{'action':'wt_pf_history_ajax_basic', _wpnonce:wt_pf_basic_params.nonces.main, 'history_action':'view_log', 'offset': offset, 'history_id':history_id, 'data_type':'json'},
 				type:'post',
 				dataType:"json",
 				success:function(data)
@@ -143,7 +143,7 @@ var wt_pf_basic_history=(function( $ ) {
                             var cron_id = jQuery(this).attr('data-cron_id');		
                             $.ajax({
 				url:wt_pf_basic_params.ajax_url,
-				data:{'action':'pf_schedule_refresh', _wpnonce:wt_pf_basic_params.nonces.main, 'cron_id':cron_id, 'force_refresh': true},
+				data:{'action':'pf_schedule_refresh_basic', _wpnonce:wt_pf_basic_params.nonces.main, 'cron_id':cron_id, 'force_refresh': true},
 				type:'post',
 				dataType:"json",
 				success:function(data)

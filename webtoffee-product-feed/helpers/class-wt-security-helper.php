@@ -144,14 +144,15 @@ if(!class_exists('Wt_Pf_Sh'))
 		/**
 		* 	User accessibility. Function checks user logged in status, nonce and role access.
 		*
-		*	@param string $plugin_id unique plugin id. Note: This id is used as an identifier in filter name so please use characters allowed in filters 
+		*	@param string $plugin_id unique plugin id. Note: This id is used as an identifier in filter name so please use characters allowed in filters
 		*	@param string $nonce_id Nonce id. If not specified then uses plugin id
+		*	@param bool $silent When true, failed checks return false quietly instead of ending the request. Use for handlers attached to shared action hooks so other plugins' handlers can still run.
 		*	@return boolean if user allowed or not
 		*/
-		public static function check_write_access($plugin_id, $nonce_id = '')
+		public static function check_write_access($plugin_id, $nonce_id = '', $silent = false)
 		{
 			$er = true;
-			
+
 	    	if(!is_user_logged_in()) //checks user is logged in
 	    	{
 	    		$er = false;
@@ -159,12 +160,12 @@ if(!class_exists('Wt_Pf_Sh'))
 
 	    	if($er === true) //no error then proceed
 	    	{
-	    		if(!(self::verify_nonce($plugin_id, $nonce_id))) //verifying nonce
+	    		if(!(self::verify_nonce($plugin_id, $nonce_id, $silent))) //verifying nonce
 		        {
 		            $er = false;
 		        }else
 		        {
-		        	if(!self::check_role_access($plugin_id)) //Check user role
+		        	if(!self::check_role_access($plugin_id, $silent)) //Check user role
 		            {
 		            	$er = false;
 		            }
@@ -176,17 +177,21 @@ if(!class_exists('Wt_Pf_Sh'))
 		/**
 		* 	Verifying nonce
 		*
-		*	@param string $plugin_id unique plugin id. Note: This id is used as an identifier in filter name so please use characters allowed in filters 
+		*	@param string $plugin_id unique plugin id. Note: This id is used as an identifier in filter name so please use characters allowed in filters
 		*	@param string $nonce_id Nonce id. If not specified then uses plugin id
+		*	@param bool $silent When true, return false on failure instead of emitting a 403 and calling exit.
 		*	@return boolean if user allowed or not
 		*/
-		public static function verify_nonce($plugin_id, $nonce_id = '')
+		public static function verify_nonce($plugin_id, $nonce_id = '', $silent = false)
 		{
 			$nonce = (isset($_REQUEST['_wpnonce']) ? sanitize_text_field(wp_unslash($_REQUEST['_wpnonce'])) : '');
     		$nonce = (is_array($nonce) ? $nonce[0] : $nonce); //in some cases multiple nonces are declared
     		$nonce_id = ($nonce_id == "" ? $plugin_id : $nonce_id); //if nonce id not provided then uses plugin id as nonce id
-    		
+
     		if (!$nonce || !(wp_verify_nonce($nonce, $nonce_id))) { //verifying nonce
+				if ($silent) {
+					return false;
+				}
 				if (defined('DOING_AJAX') && DOING_AJAX) {
 					wp_send_json_error([
 						'status' => 0,
@@ -204,19 +209,20 @@ if(!class_exists('Wt_Pf_Sh'))
 		/**
 		* 	Checks if user role has access
 		*
-		*	@param string $plugin_id unique plugin id. Note: This id is used as an identifier in filter name so please use characters allowed in filters 
+		*	@param string $plugin_id unique plugin id. Note: This id is used as an identifier in filter name so please use characters allowed in filters
+		*	@param bool $silent When true, return false on failure instead of emitting a 403 and calling exit.
 		*	@return boolean if user allowed or not
 		*/
-		public static function check_role_access($plugin_id)
+		public static function check_role_access($plugin_id, $silent = false)
 		{
-		$roles = array('manage_options', 'shop_manager'); 
-	    	$roles = apply_filters('wt_'.$plugin_id.'_alter_role_access_basic', $roles); //dynamic filter based on plugin id to alter roles 
+		$roles = array('manage_options', 'shop_manager');
+	    	$roles = apply_filters('wt_'.$plugin_id.'_alter_role_access_basic', $roles); //dynamic filter based on plugin id to alter roles
 	    	$roles = (!is_array($roles) ? array() : $roles);
 	    	$is_allowed = false;
 
 	    	foreach($roles as $role) //loop through roles
 	    	{
-	    		if(current_user_can($role))  
+	    		if(current_user_can($role))
 	    		{
 	    			$is_allowed = true;
 	    			break;
@@ -224,6 +230,9 @@ if(!class_exists('Wt_Pf_Sh'))
 	    	}
 
 			if (!$is_allowed) {
+				if ($silent) {
+					return false;
+				}
 				if (defined('DOING_AJAX') && DOING_AJAX) {
 					wp_send_json_error(array(
 						'status' => 0,

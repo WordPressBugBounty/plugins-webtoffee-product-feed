@@ -80,7 +80,7 @@ class Webtoffee_Product_Feed_Sync_Export
 		add_action( 'admin_enqueue_scripts', array( $this,'wt_feed_tab_styles'), 11 );
 		
 		
-		add_action('wp_ajax_populate_cat_mapping', array($this, 'populate_cat_mapping'), 11);
+		add_action('wp_ajax_populate_cat_mapping_basic', array($this, 'populate_cat_mapping'), 11);
                 
 	}
      
@@ -999,21 +999,21 @@ class Webtoffee_Product_Feed_Sync_Export
 	*/
 	public function download_file()
 	{
-		if(isset($_GET['wt_pf_export_download'])) //phpcs:ignore
-		{ 
+		if(isset($_GET['wt_pf_export_download_basic'])) //phpcs:ignore
+		{
 			// Initialize allowed_export_file_type if not already set
 			if(empty($this->allowed_export_file_type))
 			{
 				$this->allowed_export_file_type=array(
-					'xml'=>__('XML', 'webtoffee-product-feed'),			
+					'xml'=>__('XML', 'webtoffee-product-feed'),
 					'csv'=>__('CSV', 'webtoffee-product-feed'),
 					'xlsx'=>__('XLSX', 'webtoffee-product-feed'),
 					'tsv'=>__('TSV', 'webtoffee-product-feed'),
 					'txt'=>__('TXT', 'webtoffee-product-feed')
 				);
 			}
-			
-			// phpcs:ignore Nonce and user role check handled by check_write_access method. 
+
+			// phpcs:ignore Nonce and user role check handled by check_write_access method.
 			if(Wt_Pf_Sh::check_write_access(WEBTOFFEE_PRODUCT_FEED_ID))
 			{
 				$file_name=(isset($_GET['file']) ? sanitize_file_name(wp_unslash($_GET['file'])) : ''); //phpcs:ignore
@@ -1137,7 +1137,7 @@ class Webtoffee_Product_Feed_Sync_Export
 	*/
 	private function get_file_url($file_name)
 	{
-		return wp_nonce_url(admin_url('admin.php?wt_pf_export_download=true&file='.$file_name), WEBTOFFEE_PRODUCT_FEED_ID);
+		return wp_nonce_url(admin_url('admin.php?wt_pf_export_download_basic=true&file='.$file_name), WEBTOFFEE_PRODUCT_FEED_ID);
 	}
         
         

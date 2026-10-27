@@ -40,7 +40,7 @@ class Webtoffee_Product_Feed_Sync_History
 		add_filter('wt_pf_advanced_setting_fields_basic', array($this, 'advanced_setting_fields'), 12);
 
 		/* main ajax hook. The callback function will decide which action is to execute. */
-		add_action('wp_ajax_iew_history_ajax_basic', array($this, 'ajax_main'), 11);
+		add_action('wp_ajax_wt_pf_history_ajax_basic', array($this, 'ajax_main'), 11);
 
 		/* Hook to perform actions after advanced settings was updated */
 		add_action('wt_pf_after_advanced_setting_update_basic', array($this, 'after_advanced_setting_update'), 11);
@@ -85,8 +85,9 @@ class Webtoffee_Product_Feed_Sync_History
 
 	public function ajax_main()
 	{
-		// phpcs:ignore Nonce and user role check handled by check_write_access method. 
-		if(Wt_Pf_Sh::check_write_access(WEBTOFFEE_PRODUCT_FEED_ID))
+		// Silent mode: shared action histories should bail without killing the request if the nonce isn't ours.
+		// phpcs:ignore Nonce and user role check handled by check_write_access method.
+		if(Wt_Pf_Sh::check_write_access(WEBTOFFEE_PRODUCT_FEED_ID, '', true))
 		{
 		$allowed_ajax_actions=array('view_log');
 

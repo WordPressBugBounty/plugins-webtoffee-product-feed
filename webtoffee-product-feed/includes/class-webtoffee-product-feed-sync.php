@@ -85,7 +85,7 @@ class Webtoffee_Product_Feed_Sync {
 		if ( defined( 'WEBTOFFEE_PRODUCT_FEED_SYNC_VERSION' ) ) {
 			$this->version = WEBTOFFEE_PRODUCT_FEED_SYNC_VERSION;
 		} else {
-			$this->version = '2.4.2';
+			$this->version = '2.4.3';
 		}
 		$this->plugin_name = 'webtoffee-product-feed';
 		$this->plugin_base_name	 = WT_PRODUCT_FEED_BASE_NAME;
@@ -165,9 +165,9 @@ class Webtoffee_Product_Feed_Sync {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-webtoffee-product-feed-sync-review-request.php';
 
 		/**
-		 * Includes the Black Friday and Cyber Monday CTA banners for 2025
+		 * Includes the Black Friday and Cyber Monday CTA banners for 2026
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/banner/class-wt-bfcm-twenty-twenty-five.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/banner/class-wt-bfcm-twenty-twenty-six-pf.php';
 
 		/**
 		 * Includes the Smart Coupons CTA banner for the Analytics Revenue page
@@ -228,10 +228,10 @@ class Webtoffee_Product_Feed_Sync {
         $this->loader->add_action('wp_ajax_wt_pf_save_settings_custom_fields',$plugin_admin,'save_settings_custom_fields');
 		
 		$this->loader->add_action( 'admin_action_' . WT_Fb_Catalog_Manager_Settings::DISCONNECT_ACTION, $plugin_admin, 'handle_disconnect' );
-		$this->loader->add_action( 'wp_ajax_wt_fbfeed_ajax_upload', $plugin_admin, 'wt_fbfeed_ajax_upload' );
-		$this->loader->add_action( 'wp_ajax_fbfeed_batch_status_ajax', $plugin_admin, 'wt_fbfeed_batch_status' );
-		
-		$this->loader->add_action( 'wp_ajax_wt_fbfeed_ajax_save_category', $plugin_admin, 'wt_fbfeed_ajax_save_category' );
+		$this->loader->add_action( 'wp_ajax_wt_fbfeed_ajax_upload_basic', $plugin_admin, 'wt_fbfeed_ajax_upload' );
+		$this->loader->add_action( 'wp_ajax_fbfeed_batch_status_ajax_basic', $plugin_admin, 'wt_fbfeed_batch_status' );
+
+		$this->loader->add_action( 'wp_ajax_wt_fbfeed_ajax_save_category_basic', $plugin_admin, 'wt_fbfeed_ajax_save_category' );
 		$this->loader->add_filter( 'plugin_action_links_' . $this->get_plugin_base_name(), $plugin_admin, 'add_productfeed_action_links' );   
                 
         $this->loader->add_filter( 'admin_footer_text', $plugin_admin, 'admin_footer_text', 1 );
@@ -239,7 +239,7 @@ class Webtoffee_Product_Feed_Sync {
 		/**
 		 *  Set screens to show promotional banner
 		 */
-		$this->loader->add_filter( 'wt_bfcm_banner_screens', $plugin_admin, 'wt_bfcm_banner_screens' );
+		$this->loader->add_filter( 'wt_pf_bfcm_banner_screens', $plugin_admin, 'wt_pf_bfcm_banner_screens' );
                 
 	}
 

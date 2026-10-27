@@ -79,8 +79,8 @@ class Webtoffee_Product_Feed_Sync_Cron
 		add_filter('wt_productfeed_advanced_setting_fields', array($this, 'advanced_setting_fields'), 11);
 
 		/* schedule main ajax hook */
-		add_action('wp_ajax_pf_schedule_ajax', array($this, 'ajax_main'));
-		add_action('wp_ajax_pf_schedule_refresh', array($this, 'refresh_catalog'));
+		add_action('wp_ajax_pf_schedule_ajax_basic', array($this, 'ajax_main'));
+		add_action('wp_ajax_pf_schedule_refresh_basic', array($this, 'refresh_catalog'));
 		add_action('wp_ajax_pf_feed_duplicate', array($this, 'duplicate_feed'));
 
 		/* add interval time for cron */

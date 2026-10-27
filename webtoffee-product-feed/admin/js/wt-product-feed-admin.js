@@ -828,6 +828,15 @@ jQuery(document).ready(function(){
 	wt_pf_file_attacher.Set();
 	wt_pf_form_toggler.Set();
 	wt_field_group.Set();
-        wt_saved_templates.Set();    
+        wt_saved_templates.Set();
         wt_pf_settings_custom_fields.Set('#'+wt_pf_basic_params.plugin_id);
+
+	// BFCM 2026 — "Why use premium?" sidebar Show more / Show less toggle.
+	jQuery(document).on('click', '.wt-profeed-market-toggle', function(e){
+		e.preventDefault();
+		var $toggle  = jQuery(this);
+		var $wrapper = $toggle.closest('.wt-profeed-upsell-wrapper');
+		var expanded = $wrapper.toggleClass('wt-profeed-market-expanded').hasClass('wt-profeed-market-expanded');
+		$toggle.text(expanded ? $toggle.data('hide-text') : $toggle.data('show-text'));
+	});
 });
