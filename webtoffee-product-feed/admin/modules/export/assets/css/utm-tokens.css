@@ -1,0 +1,155 @@
+/**
+ * UTM token selector + full-URL preview styles.
+ * Used in the Advanced step of the feed wizard.
+ */
+
+/* Toggle switch for utm_enabled. */
+.wt_pf_toggle_switch {
+	position: relative;
+	display: inline-block;
+	width: 44px;
+	height: 24px;
+	vertical-align: middle;
+}
+
+.wt_pf_toggle_switch input {
+	opacity: 0;
+	width: 0;
+	height: 0;
+	position: absolute;
+}
+
+.wt_pf_toggle_slider {
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #c3c4c7;
+	border-radius: 24px;
+	transition: background-color 0.2s;
+}
+
+.wt_pf_toggle_slider::before {
+	content: "";
+	position: absolute;
+	height: 18px;
+	width: 18px;
+	left: 3px;
+	top: 3px;
+	background-color: #fff;
+	border-radius: 50%;
+	transition: transform 0.2s;
+	box-shadow: 0 1px 2px rgba( 0, 0, 0, 0.15 );
+}
+
+.wt_pf_toggle_switch input:checked + .wt_pf_toggle_slider {
+	background-color: #2271b1;
+}
+
+.wt_pf_toggle_switch input:checked + .wt_pf_toggle_slider::before {
+	transform: translateX( 20px );
+}
+
+.wt_pf_toggle_switch input:focus + .wt_pf_toggle_slider {
+	box-shadow: 0 0 0 2px #fff, 0 0 0 4px #2271b1;
+}
+
+/* Keep input + token button on the same line. */
+input#wt_pf_utm_campaign,
+input#wt_pf_utm_content {
+	display: inline-block;
+	width: calc( 100% - 90px );
+	vertical-align: middle;
+}
+
+.wt_pf_utm_token_wrap {
+	position: relative;
+	display: inline-block;
+	vertical-align: middle;
+	margin-left: 6px;
+}
+
+.wt_pf_utm_token_button.button {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	font-size: 12px;
+	line-height: 1.6;
+	padding: 2px 10px;
+	vertical-align: middle;
+}
+
+.wt_pf_utm_token_menu {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	z-index: 20;
+	margin: 4px 0 0;
+	padding: 4px 0;
+	min-width: 220px;
+	max-height: 260px;
+	overflow-y: auto;
+	background: #fff;
+	border: 1px solid #c3c4c7;
+	border-radius: 4px;
+	box-shadow: 0 2px 6px rgba( 0, 0, 0, 0.08 );
+	list-style: none;
+}
+
+.wt_pf_utm_token_menu[hidden] {
+	display: none !important;
+}
+
+.wt_pf_utm_token_menu li {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+	padding: 6px 12px;
+	font-family: Menlo, Consolas, monospace;
+	font-size: 12px;
+	color: #1d2327;
+	cursor: pointer;
+	margin: 0;
+}
+
+.wt_pf_utm_token_menu li:hover,
+.wt_pf_utm_token_menu li:focus {
+	background: #f0f0f1;
+}
+
+.wt_pf_utm_token_menu li span {
+	margin-left: 12px;
+	font-family: inherit;
+	font-size: 11px;
+	color: #646970;
+}
+
+/* Full-URL preview (single box at the bottom of the UTM section). */
+.wt_pf_utm_full_preview {
+	display: block;
+	width: 100%;
+	box-sizing: border-box;
+	padding: 10px 12px;
+	background: #f6f7f7;
+	border-left: 3px solid #2271b1;
+	border-radius: 2px;
+}
+
+.wt_pf_utm_full_preview_note {
+	font-size: 12px;
+	color: #646970;
+	margin-bottom: 6px;
+}
+
+.wt_pf_utm_full_preview_url {
+	display: block;
+	background: transparent;
+	padding: 0;
+	font-family: Menlo, Consolas, monospace;
+	font-size: 12px;
+	color: #1d2327;
+	word-break: break-all;
+	white-space: normal;
+}

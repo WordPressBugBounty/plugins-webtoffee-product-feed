@@ -33,6 +33,8 @@ class Webtoffee_Product_Feed_Sync_Facebook_Export extends Webtoffee_Product_Feed
         $include_products = !empty($form_data['filter_form_data']['wt_pf_product']) ? $form_data['filter_form_data']['wt_pf_product'] : '';
         $exclude_products = !empty($form_data['filter_form_data']['wt_pf_exclude_product']) ? $form_data['filter_form_data']['wt_pf_exclude_product'] : '';
 	$exp_stock_status = !empty($form_data['filter_form_data']['wt_pf_stock_status']) ? $form_data['filter_form_data']['wt_pf_stock_status'] : '';
+        $include_variations_type = !empty($form_data['post_type_form_data']['wt_pf_include_variations_type']) ? $form_data['post_type_form_data']['wt_pf_include_variations_type'] : '';
+
 		
         $prod_exc_categories = !empty($form_data['post_type_form_data']['item_exc_cat']) ? $form_data['post_type_form_data']['item_exc_cat'] : array();            
         $prod_inc_categories = !empty($form_data['post_type_form_data']['item_inc_cat']) ? $form_data['post_type_form_data']['item_inc_cat'] : array();
@@ -188,6 +190,30 @@ class Webtoffee_Product_Feed_Sync_Facebook_Export extends Webtoffee_Product_Feed
                             continue;
                     }
 
+                }
+
+                //Skip variation other than default when Only include default product variation is checked.
+                if ($product->is_type('variation') && in_array($include_variations_type, array('default', 'lowest', 'highest'), true) ) {
+                    continue;
+                }
+
+                if ($product->is_type('variable') && 'default' === $include_variations_type ) {
+                    $default_variation_id = Webtoffee_Product_Feed_Sync_Common_Helper::get_export_default_variation_id($product);
+                    if ($default_variation_id) {
+                        $product = wc_get_product($default_variation_id);
+                    }
+                }
+                if ($product->is_type('variable') && 'lowest' === $include_variations_type ) {
+                    $lowest_variation_id = Webtoffee_Product_Feed_Sync_Common_Helper::get_export_lowest_priced_variation_id($product);
+                    if ($lowest_variation_id) {
+                        $product = wc_get_product($lowest_variation_id);
+                    }
+                }
+                if ($product->is_type('variable') && 'highest' === $include_variations_type ) {
+                    $highest_variation_id = Webtoffee_Product_Feed_Sync_Common_Helper::get_export_highest_priced_variation_id($product);
+                    if ($highest_variation_id) {
+                        $product = wc_get_product($highest_variation_id);
+                    }
                 }
                 
                 if( $product->is_type( 'variation' ) ){
@@ -453,18 +479,6 @@ class Webtoffee_Product_Feed_Sync_Facebook_Export extends Webtoffee_Product_Feed
 				
 		$link = apply_filters( 'wt_feed_filter_product_parent_link', $link, $this->product);
                 return apply_filters( "wt_feed_{$this->parent_module->module_base}_product_parent_link", $link, $this->product, $this->form_data );
-	}
-	
-	/**
-	 * Get product Canonical URL.
-	 *
-	 * @return mixed|void
-	 */
-	public function canonical_link($catalog_attr, $product_attr, $export_columns) {
-		//TODO: check if SEO plugin installed then return SEO canonical URL
-		$canonical_link = $this->parent_link();
-				
-                return apply_filters( "wt_feed_{$this->parent_module->module_base}_product_canonical_link", $canonical_link, $this->product, $this->form_data );
 	}
 	
 	/**

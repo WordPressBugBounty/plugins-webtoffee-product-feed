@@ -43,7 +43,10 @@ class Webtoffee_Product_Feed_Sync_Export
 		add_action( 'init', array( $this, 'wt_product_feed_load_translations_export' ) );
 
 		$this->validation_rule=array(
-			'post_type'=>array(), /* no validation rule. So default sanitization text */
+			// Explicit rule needed: Pro's Wt_Pf_Sh (wins class_exists when both plugins are active) omits 'inc_exc_cat' from its short-list, so an empty rule routes the slug array to sanitize_text_field() and destroys it.
+			'post_type'=>array(
+				'inc_exc_cat' => array('type' => 'sanitize_title_with_dashes_arr'),
+			),
 			'method_export'=>array(
 				'mapping_enabled_fields' => array('type'=>'text_arr') //in case of quick export
 			)
@@ -528,6 +531,45 @@ class Webtoffee_Product_Feed_Sync_Export
 			),
 		);
 		wp_localize_script($this->module_id, 'wt_pf_export_basic_params', $params);
+
+			/* UTM token-selector + live preview assets (Advanced step). */
+			wp_enqueue_script( $this->module_id . '-utm-tokens', plugin_dir_url( __FILE__ ) . 'assets/js/utm-tokens.js', array( 'jquery' ), WEBTOFFEE_PRODUCT_FEED_SYNC_VERSION, true );
+			wp_enqueue_style( $this->module_id . '-utm-tokens', plugin_dir_url( __FILE__ ) . 'assets/css/utm-tokens.css', array(), WEBTOFFEE_PRODUCT_FEED_SYNC_VERSION );
+			$utm_channel_defaults = class_exists( 'Wt_Pf_Utm_Tracking' ) ? Wt_Pf_Utm_Tracking::get_channel_defaults( $this->to_export ) : array(
+				'source' => '',
+				'medium' => '',
+			);
+			$sample_product_url = home_url( '/?p=1' );
+			$sample_product_id  = '1';
+			$sample_product_sku = 'SAMPLE-SKU';
+			if ( function_exists( 'wc_get_products' ) ) {
+				$sample_products = wc_get_products(
+					array(
+						'status'  => 'publish',
+						'limit'   => 1,
+						'orderby' => 'date',
+						'order'   => 'DESC',
+					)
+				);
+				if ( ! empty( $sample_products ) && is_object( $sample_products[0] ) ) {
+					$sample_product_url = $sample_products[0]->get_permalink();
+					$sample_product_id  = (string) $sample_products[0]->get_id();
+					$sku                = (string) $sample_products[0]->get_sku();
+					$sample_product_sku = '' !== $sku ? $sku : $sample_product_id;
+				}
+			}
+			wp_localize_script(
+				$this->module_id . '-utm-tokens',
+				'wt_pf_utm_preview_params',
+				array(
+					'channel'     => is_string( $this->to_export ) ? $this->to_export : '',
+					'source'      => isset( $utm_channel_defaults['source'] ) ? $utm_channel_defaults['source'] : '',
+					'medium'      => isset( $utm_channel_defaults['medium'] ) ? $utm_channel_defaults['medium'] : '',
+					'product_url' => $sample_product_url,
+					'product_id'  => $sample_product_id,
+					'sku'         => $sample_product_sku,
+				)
+			);
 
 		$this->add_select2_lib(); //adding select2 JS, It checks the availibility of woocommerce
             }

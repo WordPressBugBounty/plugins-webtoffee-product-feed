@@ -3,8 +3,8 @@ Contributors: webtoffee
 Donate link: https://www.webtoffee.com/product/woocommerce-product-feed/
 Tags: woocommerce product feed, google shopping, google merchant center, facebook catalog, instagram feed
 Requires at least: 4.0
-Tested up to: 7.1.3
-Stable tag: 2.4.3
+Tested up to: 7.2
+Stable tag: 2.4.4
 Requires PHP: 5.6
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -58,8 +58,8 @@ For Google Shopping, this WooCommerce Google shopping feed plugin lets you conne
 
 &#128312; **Product Feed Refresh Status** - Keep track of the real-time status of your product feed updates, ensuring that your product listings always reflect the latest changes. Know when your product feeds was last updated and check whether they are running as scheduled.
 
-&#9989; Tested OK with WordPress 7.1.3
-&#9989; Tested OK with WooCommerce 11.2.1
+&#9989; Tested OK with WordPress 7.2
+&#9989; Tested OK with WooCommerce 11.3
 
 == Why Choose WooCommerce Product Feed Plugin? ==
 
@@ -314,14 +314,18 @@ function wt_modify_product_description_mode( $mode ) {
 
 == Changelog ==
 
-= 2.4.3 2026-10-27 =
-* [Compatibility] - Tested OK with WordPress 7.1.3
-* [Compatibility] - Tested OK with WooCommerce 11.2.1
+= 2.4.4 2026-11-19 =
+* [Compatibility] - Tested OK with WordPress 7.2-RC2
+* [Compatibility] - Tested OK with WooCommerce 11.3.0
+* [Add] - Added configurable, per-feed UTM parameters (source, medium, campaign, and content) that can be appended to product links in the generated feed. Supports dynamic tokens such as {product_id} and {sku} for per-product attribution.
+* [Add] - Product Variations selector (All / Default / Lowest / Highest priced) in the feed-creation flow.
 
 [See changelog for all versions](https://plugins.svn.wordpress.org/webtoffee-product-feed/trunk/changelog.txt)
 
 == Upgrade Notice ==
 
-= 2.4.3 =
-* [Compatibility] - Tested OK with WordPress 7.1.3
-* [Compatibility] - Tested OK with WooCommerce 11.2.1
+= 2.4.4 =
+* [Compatibility] - Tested OK with WordPress 7.2-RC2
+* [Compatibility] - Tested OK with WooCommerce 11.3.0
+* [Add] - Added configurable, per-feed UTM parameters (source, medium, campaign, and content) that can be appended to product links in the generated feed. Supports dynamic tokens such as {product_id} and {sku} for per-product attribution.
+* [Add] - Product Variations selector (All / Default / Lowest / Highest priced) in the feed-creation flow.

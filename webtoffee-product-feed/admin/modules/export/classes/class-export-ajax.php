@@ -302,7 +302,7 @@ class Webtoffee_Product_Feed_Sync_Export_Ajax
 			}			
 
 			$tb=$wpdb->prefix. Webtoffee_Product_Feed_Sync::$template_tb;
-			
+
 			/* decode data */
 			$form_data = isset( $_POST['form_data'] ) ? Webtoffee_Product_Feed_Sync_Common_Helper::wt_decode_data( $_POST['form_data'] ) : array(); //phpcs:ignore
 			/* process form data */
@@ -387,7 +387,8 @@ class Webtoffee_Product_Feed_Sync_Export_Ajax
                 
                 $item_cat_filter_type = 'include_cat';
                 $inc_exc_cat = array();
-		
+                $variations_type_selected = '';
+
 		if ($this->rerun_id > 0) {
 
 				$item_filename = isset( $this->export_obj->form_data['post_type_form_data']['item_filename'] ) ? $this->export_obj->form_data['post_type_form_data']['item_filename'] : '';
@@ -414,8 +415,10 @@ class Webtoffee_Product_Feed_Sync_Export_Ajax
                                     $inc_exc_cat = isset($this->export_obj->form_data['post_type_form_data']['inc_exc_cat']) ? $this->export_obj->form_data['post_type_form_data']['inc_exc_cat'] : array();
                                 } elseif (isset($this->export_obj->form_data['post_type_form_data']['wt_pf_inc_exc_category'])) {
                                     $inc_exc_cat = isset($this->export_obj->form_data['post_type_form_data']['wt_pf_inc_exc_category']) ? $this->export_obj->form_data['post_type_form_data']['wt_pf_inc_exc_category'] : array();
-                                }                                
-                                
+                                }
+
+                                $variations_type_selected = isset( $this->export_obj->form_data['post_type_form_data']['wt_pf_include_variations_type'] ) ? $this->export_obj->form_data['post_type_form_data']['wt_pf_include_variations_type'] : '';
+
 			}
 
 		$this->prepare_step_summary();

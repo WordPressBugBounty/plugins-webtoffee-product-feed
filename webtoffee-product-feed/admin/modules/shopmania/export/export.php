@@ -35,6 +35,8 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Shopmania_Export')) {
             $include_products = !empty($form_data['filter_form_data']['wt_pf_product']) ? $form_data['filter_form_data']['wt_pf_product'] : '';
             $exclude_products = !empty($form_data['filter_form_data']['wt_pf_exclude_product']) ? $form_data['filter_form_data']['wt_pf_exclude_product'] : '';
         $exp_stock_status = !empty($form_data['filter_form_data']['wt_pf_stock_status']) ? $form_data['filter_form_data']['wt_pf_stock_status'] : '';
+            $include_variations_type = !empty($form_data['post_type_form_data']['wt_pf_include_variations_type']) ? $form_data['post_type_form_data']['wt_pf_include_variations_type'] : '';
+
             
             $prod_exc_categories = !empty($form_data['post_type_form_data']['item_exc_cat']) ? $form_data['post_type_form_data']['item_exc_cat'] : array();            
             $prod_inc_categories = !empty($form_data['post_type_form_data']['item_inc_cat']) ? $form_data['post_type_form_data']['item_inc_cat'] : array();
@@ -189,6 +191,30 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Shopmania_Export')) {
                         }
     
                     }
+
+                    //Skip variation other than default when Only include default product variation is checked.
+                    if ($product->is_type('variation') && in_array($include_variations_type, array('default', 'lowest', 'highest'), true) ) {
+                        continue;
+                    }
+
+                    if ($product->is_type('variable') && 'default' === $include_variations_type ) {
+                        $default_variation_id = Webtoffee_Product_Feed_Sync_Common_Helper::get_export_default_variation_id($product);
+                        if ($default_variation_id) {
+                            $product = wc_get_product($default_variation_id);
+                        }
+                    }
+                    if ($product->is_type('variable') && 'lowest' === $include_variations_type ) {
+                        $lowest_variation_id = Webtoffee_Product_Feed_Sync_Common_Helper::get_export_lowest_priced_variation_id($product);
+                        if ($lowest_variation_id) {
+                            $product = wc_get_product($lowest_variation_id);
+                        }
+                    }
+                    if ($product->is_type('variable') && 'highest' === $include_variations_type ) {
+                        $highest_variation_id = Webtoffee_Product_Feed_Sync_Common_Helper::get_export_highest_priced_variation_id($product);
+                        if ($highest_variation_id) {
+                            $product = wc_get_product($highest_variation_id);
+                        }
+                    }
                     
                     if( $product->is_type( 'variation' ) ){
                         $parent_id = $product->get_parent_id();
@@ -199,7 +225,7 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Shopmania_Export')) {
                     }
     
                     if( $product->is_type( 'variation' ) ){
-                        $to_exclude = get_post_meta( $product_id, '_wt_feed_discard', true);
+                        $to_exclude = get_post_meta( $product->get_id(), '_wt_feed_discard', true);
                         if('yes' === $to_exclude ){
                             continue;
                         }
@@ -249,30 +275,6 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Shopmania_Export')) {
             }
             return $return_products;
     
-        }
-
-        public function get_default_variation($product) {
-
-            $variation_id = false;
-
-            foreach ($product->get_available_variations() as $variation_values) {
-                foreach ($variation_values['attributes'] as $key => $attribute_value) {
-                    $attribute_name = str_replace('attribute_', '', $key);
-                    $default_value = $product->get_variation_default_attribute($attribute_name);
-                    if ($default_value == $attribute_value) {
-                        $is_default_variation = true;
-                    } else {
-                        $is_default_variation = false;
-                        break; // Stop this loop to start next main lopp
-                    }
-                }
-
-                if ($is_default_variation) {
-                    $variation_id = $variation_values['variation_id'];
-                    break; // Stop the main loop
-                }
-            }
-            return $variation_id;
         }
 
         protected function generate_row_data_wc_lower($product_object) {
@@ -580,18 +582,6 @@ if (!class_exists('Webtoffee_Product_Feed_Sync_Shopmania_Export')) {
             }
 
             return apply_filters('wt_feed_filter_product_parent_link', $link, $this->product);
-        }
-
-        /**
-         * Get product Canonical URL.
-         *
-         * @return mixed|void
-         */
-        public function canonical_link($catalog_attr, $product_attr, $export_columns) {
-            //TODO: check if SEO plugin installed then return SEO canonical URL
-            $canonical_link = $this->parent_link();
-
-            return apply_filters('wt_feed_filter_product_canonical_link', $canonical_link, $this->product);
         }
 
         /**

@@ -95,18 +95,60 @@ if (!defined('ABSPATH')) {
                 $product_categories = Webtoffee_Product_Feed_Sync_Common_Helper::get_product_categories();
                 foreach ($product_categories as $key => $category ) {
                     ?>
-                    <option value="<?php echo esc_attr( $category['slug'] ); ?>" <?php if( !empty($inc_exc_cat) && in_array($category['slug'], $inc_exc_cat) ){ echo 'selected'; }else{ echo ''; } ?> ><?php echo esc_attr($category['name']); ?></option>								
+                    <option value="<?php echo esc_attr( $category['slug'] ); ?>" <?php if( !empty($inc_exc_cat) && in_array($category['slug'], $inc_exc_cat) ){ echo 'selected'; }else{ echo ''; } ?> ><?php echo esc_attr($category['name']); ?></option>
                     <?php
                 }
                 ?>
 
                 </select>
                 <span class="wt-pfd_form_help"><?php esc_html_e('Search and add one or more categories.', 'webtoffee-product-feed'); ?></span>
-            </td>                                                    
-        </tr>        
-                
-                
-                
+            </td>
+        </tr>
+
+        <tr>
+            <th><label><?php esc_html_e( 'Product Variations', 'webtoffee-product-feed' ); ?></label></th>
+            <td>
+                <?php
+                $include_variations_type_options = apply_filters( 'wt_pf_catalog_include_variations_type', array(
+                    ''        => __( 'All variations', 'webtoffee-product-feed' ),
+                    'default' => __( 'Default variation', 'webtoffee-product-feed' ),
+                    'lowest'  => __( 'Lowest priced variation', 'webtoffee-product-feed' ),
+                    'highest' => __( 'Highest priced variation', 'webtoffee-product-feed' ),
+                ) );
+
+                $include_variations_type_help = array(
+                    ''        => __( 'Export every variation of each variable product as a separate row.', 'webtoffee-product-feed' ),
+                    'default' => __( 'Export only the variation marked as default in WooCommerce. Variable products without a default set will be skipped.', 'webtoffee-product-feed' ),
+                    'lowest'  => __( 'Export one row per variable product using its cheapest variation.', 'webtoffee-product-feed' ),
+                    'highest' => __( 'Export one row per variable product using its most expensive variation.', 'webtoffee-product-feed' ),
+                );
+                ?>
+                <select name="wt_pf_include_variations_type" id="wt_pf_include_variations_type">
+                    <?php
+                    foreach ( $include_variations_type_options as $key => $value ) {
+                        $help = isset( $include_variations_type_help[ $key ] ) ? $include_variations_type_help[ $key ] : '';
+                        ?>
+                        <option value="<?php echo esc_attr( $key ); ?>" data-help="<?php echo esc_attr( $help ); ?>" <?php echo ( $variations_type_selected === $key ? 'selected' : '' ); ?>><?php echo esc_html( $value ); ?></option>
+                        <?php
+                    }
+                    ?>
+                </select>
+                <span class="wt-pfd_form_help" id="wt_pf_include_variations_type_help"><?php echo esc_html( isset( $include_variations_type_help[ $variations_type_selected ] ) ? $include_variations_type_help[ $variations_type_selected ] : $include_variations_type_help[''] ); ?></span>
+                <script>
+                    (function($){
+                        $(function(){
+                            var $select = $('#wt_pf_include_variations_type');
+                            var $help   = $('#wt_pf_include_variations_type_help');
+                            $select.off('change.wtpfVariationsHelp').on('change.wtpfVariationsHelp', function(){
+                                $help.text($(this).find('option:selected').data('help') || '');
+                            });
+                        });
+                    })(jQuery);
+                </script>
+            </td>
+        </tr>
+
+
 		<tr>
 			<th><label><?php esc_html_e('Auto-refresh', 'webtoffee-product-feed'); ?></label></th>
 			<td>

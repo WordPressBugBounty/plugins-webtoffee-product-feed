@@ -490,14 +490,15 @@ var wt_pf_basic_export=(function( $ ) {
 		{
 
 			if(this.current_step=='post_type')
-			{	
+			{
                         this.form_data['post_type_form_data'] = JSON.stringify(
                                 {
                                     'item_type': wt_pf_basic_export.to_export,
                                     'item_filename': $('#wt_pf_export_catalog_name').val(),
                                     'item_country': $('#wt_pf_export_catalog_country').find(":selected").val(),
                                     'cat_filter_type': jQuery('#wt_pf_export_cat_filter_type').val(),
-                                    'inc_exc_cat': jQuery('#wt_pf_inc_exc_category').val(),                                      
+                                    'inc_exc_cat': jQuery('#wt_pf_inc_exc_category').val(),
+                                    'wt_pf_include_variations_type': $('#wt_pf_include_variations_type').find(":selected").val(),
                                     'item_gen_interval': $('#wt_pf_export_catalog_interval').find(":selected").val(),
                                     'item_gen_cron_day': $('#wt_pf_schedule_cron_day').find(":selected").val(),
                                     'item_gen_cron_date': $('#wt_pf_cron_interval_date').find(":selected").val(),
@@ -702,13 +703,14 @@ var wt_pf_basic_export=(function( $ ) {
                                     'item_filename': $('#wt_pf_export_catalog_name').val(),
                                     'item_country': $('#wt_pf_export_catalog_country').find(":selected").val(),
                                     'cat_filter_type': jQuery('#wt_pf_export_cat_filter_type').val(),
-                                    'inc_exc_cat': jQuery('#wt_pf_inc_exc_category').val(), 
+                                    'inc_exc_cat': jQuery('#wt_pf_inc_exc_category').val(),
+                                    'wt_pf_include_variations_type': $('#wt_pf_include_variations_type').find(":selected").val(),
                                     'item_gen_interval': $('#wt_pf_export_catalog_interval').find(":selected").val(),
                                     'item_gen_cron_day': $('#wt_pf_schedule_cron_day').find(":selected").val(),
                                     'item_gen_cron_date': $('#wt_pf_cron_interval_date').find(":selected").val(),
                                     'item_gen_cron_start_val': $('#wt_pf_cron_start_val').val(),
                                     'item_gen_cron_start_val_min': $('#wt_pf_cron_start_val_min').val(),
-                                    'item_gen_cron_ampm': $('#wt_pf_cron_start_ampm_val').find(":selected").val()                                    
+                                    'item_gen_cron_ampm': $('#wt_pf_cron_start_ampm_val').find(":selected").val()
                                 }
                                         );
 			}

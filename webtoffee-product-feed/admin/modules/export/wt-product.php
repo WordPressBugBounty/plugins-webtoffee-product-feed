@@ -656,6 +656,32 @@ if (!class_exists('Webtoffee_Product_Feed_Product')) {
 		return ! empty( $video_urls ) ? implode( $separator, $video_urls ) : '';
 	}
 
+	/**
+	 * Get product Canonical URL.
+	 *
+	 * Common implementation shared across all channels. Builds the canonical URL
+	 * directly from the product permalink (parent permalink for variations) instead
+	 * of routing through parent_link(), so UTM / dynamic URL parameters appended by
+	 * filters on parent_link never leak into the canonical column.
+	 *
+	 * Runs both the generic and channel-scoped filters, matching the pattern used
+	 * by title() / parent_title() in this base class.
+	 *
+	 * @param string $catalog_attr   Catalog attribute key (unused; kept for method signature parity).
+	 * @param string $product_attr   Mapped product attribute (unused; kept for method signature parity).
+	 * @param array  $export_columns All export columns (unused; kept for method signature parity).
+	 * @return string
+	 */
+	public function canonical_link( $catalog_attr, $product_attr, $export_columns ) {
+		// TODO: check if SEO plugin installed then return SEO canonical URL.
+		$canonical_link = $this->product->get_permalink();
+		if ( $this->product->is_type( 'variation' ) ) {
+			$canonical_link = $this->parent_product->get_permalink();
+		}
+		$canonical_link = apply_filters( 'wt_feed_filter_product_canonical_link', $canonical_link, $this->product );
+		return apply_filters( "wt_feed_{$this->parent_module->module_base}_product_canonical_link", $canonical_link, $this->product, $this->form_data );
+	}
+
 }
 
 }

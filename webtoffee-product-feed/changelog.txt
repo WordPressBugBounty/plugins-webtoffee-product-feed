@@ -1,3 +1,9 @@
+= 2.4.4 2026-11-19 =
+* [Compatibility] - Tested OK with WordPress 7.2-RC2
+* [Compatibility] - Tested OK with WooCommerce 11.3.0
+* [Add] - Added configurable, per-feed UTM parameters (source, medium, campaign, and content) that can be appended to product links in the generated feed. Supports dynamic tokens such as {product_id} and {sku} for per-product attribution.
+* [Add] - Product Variations selector (All / Default / Lowest / Highest priced) in the feed-creation flow.
+
 = 2.4.3 2026-10-27 =
 * [Compatibility] - Tested OK with WordPress 7.1.3
 * [Compatibility] - Tested OK with WooCommerce 11.2.1

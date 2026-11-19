@@ -379,6 +379,30 @@ foreach($form_fields as $key=>$value)
 							'style' => array(),
 							'type' => array(),
 						),
+						'button' => array(
+							'class' => array(),
+							'type' => array(),
+							'data-wt-pf-utm-target' => array(),
+						),
+						'div' => array(
+							'class' => array(),
+							'hidden' => array(),
+							'data-wt-pf-utm-preview-for' => array(),
+						),
+						'ul' => array(
+							'class' => array(),
+							'hidden' => array(),
+							'data-wt-pf-utm-target' => array(),
+						),
+						'li' => array(
+							'data-wt-pf-utm-token' => array(),
+						),
+						'span' => array(
+							'class' => array(),
+						),
+						'code' => array(
+							'class' => array(),
+						),
 					);
 					echo wp_kses( $after_form_field, $allowed_markup_tags );
 				}else

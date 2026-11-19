@@ -85,7 +85,7 @@ class Webtoffee_Product_Feed_Sync {
 		if ( defined( 'WEBTOFFEE_PRODUCT_FEED_SYNC_VERSION' ) ) {
 			$this->version = WEBTOFFEE_PRODUCT_FEED_SYNC_VERSION;
 		} else {
-			$this->version = '2.4.3';
+			$this->version = '2.4.4';
 		}
 		$this->plugin_name = 'webtoffee-product-feed';
 		$this->plugin_base_name	 = WT_PRODUCT_FEED_BASE_NAME;
@@ -163,6 +163,11 @@ class Webtoffee_Product_Feed_Sync {
 		
 
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-webtoffee-product-feed-sync-review-request.php';
+
+		/**
+		 * Adds per-feed UTM / URL tracking parameters to product links.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-wt-pf-utm-tracking.php';
 
 		/**
 		 * Includes the Black Friday and Cyber Monday CTA banners for 2026

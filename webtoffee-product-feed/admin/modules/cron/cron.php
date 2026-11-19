@@ -28,7 +28,6 @@ class Webtoffee_Product_Feed_Sync_Cron
 	private static $cron_scheduled_cache = array();
 
 	public $to_cron='';
-	private $cron_url_salt='Dyeb(DjCr<}P2c#s';
 
 	protected $export_obj=null;
 	
@@ -100,9 +99,10 @@ class Webtoffee_Product_Feed_Sync_Cron
 		/* Admin menu for cron listing */
 		add_filter('wt_pf_admin_menu_basic', array($this, 'add_admin_pages'), 10, 1);
 
-
-		add_action('init', array($this, 'test_cron'));
-
+		/* Debug cron trigger — only registered when the debug constant is defined. */
+		if (defined('WT_PF_DEBUG_BASIC') && WT_PF_DEBUG_BASIC) {
+			add_action('init', array($this, 'test_cron'));
+		}
 	}
 
 	public function translate_labels() {
@@ -189,6 +189,10 @@ class Webtoffee_Product_Feed_Sync_Cron
 	{
 		if(defined('WT_PF_DEBUG_BASIC') && WT_PF_DEBUG_BASIC)
 		{
+			// Defense-in-depth: require a privileged user.
+			if (!current_user_can('manage_woocommerce')) {
+				return;
+			}
 			$action_type=(isset($_GET['action_type']) ? sanitize_text_field(wp_unslash($_GET['action_type'])) : '');//phpcs:ignore
 			$trigger_cron=(isset($_GET['wt_productfeed_test_cron']) ? absint($_GET['wt_productfeed_test_cron']) : 0);//phpcs:ignore
 			if(($action_type=="import" || $action_type=="export") && $trigger_cron==1)
@@ -1424,9 +1428,9 @@ class Webtoffee_Product_Feed_Sync_Cron
 			
 			if($cron_id>0 && $action_type!="" && $item_type!="" && $hash!="" && $tme>0)
 			{
-				/* check the hash is matching */
+				/* Timing-safe HMAC compare (per-site secret, not the old shared salt). */
 				$expected_hash=$this->generate_hash_for_url($cron_id, $tme, $action_type);
-				if($expected_hash==$hash) 
+				if(hash_equals($expected_hash, $hash))
 				{
 					global $wpdb;
 					$tb=$wpdb->prefix.Webtoffee_Product_Feed_Sync::$cron_tb;
@@ -1435,9 +1439,10 @@ class Webtoffee_Product_Feed_Sync_Cron
 						"SELECT * FROM $tb WHERE status!=%d AND id=%d AND action_type=%s AND item_type=%s", //phpcs:ignore
 						$db_data_arr//phpcs:ignore
 					);//phpcs:ignore
-					//checking cron exists. 
+					//checking cron exists.
 					$cron_count_arr=$wpdb->get_row($qry, ARRAY_A); //phpcs:ignore
-					if(!is_wp_error($cron_count_arr))
+					/* Fail-open fix: $wpdb->get_row() returns NULL on no match (not a WP_Error). */
+					if(!empty($cron_count_arr))
 					{
 						$this->do_cron($action_type, $cron_id);
 					}
@@ -1448,12 +1453,36 @@ class Webtoffee_Product_Feed_Sync_Cron
 	}
 
 	/**
-	*
-	*	Generate hash for URL cron.
-	*/
+	 * Generate the signature for a URL-cron request.
+	 * Uses HMAC-SHA256 with a per-site secret so the hash cannot be forged
+	 * from the plugin source alone. Pipe separators prevent field-boundary
+	 * ambiguity between the three signed values.
+	 */
 	private function generate_hash_for_url($id, $tme, $action_type)
 	{
-		return md5($tme.'_'.$this->cron_url_salt.'-'.$id.$action_type);
+		$payload = $id . '|' . $action_type . '|' . $tme;
+		return hash_hmac('sha256', $payload, self::get_url_cron_secret());
+	}
+
+	/**
+	 * Lazy-generate and persist the per-site URL-cron HMAC secret.
+	 * Idempotent — only writes when the option is missing.
+	 */
+	private static function ensure_url_cron_secret()
+	{
+		if (false === get_option('wt_pf_cron_url_secret', false)) {
+			add_option('wt_pf_cron_url_secret', wp_generate_password(64, true, true), '', 'no');
+		}
+	}
+
+	/**
+	 * Fetch the per-site URL-cron HMAC secret, generating it on first use.
+	 * The `wtpf_cron_url_secret` filter lets advanced users override the stored value.
+	 */
+	private static function get_url_cron_secret()
+	{
+		self::ensure_url_cron_secret();
+		return (string) apply_filters('wtpf_cron_url_secret', get_option('wt_pf_cron_url_secret'));
 	}
 
 	/**

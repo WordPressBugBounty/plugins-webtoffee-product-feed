@@ -831,14 +831,159 @@ if(!class_exists('Webtoffee_Product_Feed_Sync_Common_Helper')){
 		public static function wt_decode_data($data) {
 			$data = is_serialized( $data ) ? self::wt_unserialize_safe( $data ) : $data;
 			$data = is_string( $data ) ? json_decode( $data, true ) : $data;
-		
+
 			if ( ! json_last_error() ) {
 				return $data;
 			}
-		
+
 			return $data;
 		}
-		
+
+		/**
+		 * Variations of a variable product for feed export.
+		 *
+		 * Shares the 'wt_product_feed_export_variations' filter with the Pro
+		 * plugin — a single filter written by a user hooks both exports.
+		 *
+		 * @param WC_Product $product Variable product.
+		 * @return WC_Product_Variation[]
+		 */
+		public static function get_export_variations( $product ) {
+			if ( ! $product instanceof WC_Product || ! $product->is_type( 'variable' ) ) {
+				return array();
+			}
+
+			static $cache = array();
+			$product_id = $product->get_id();
+			if ( array_key_exists( $product_id, $cache ) ) {
+				return $cache[ $product_id ];
+			}
+
+			$variation_ids = $product->get_children();
+			if ( ! empty( $variation_ids ) && function_exists( '_prime_post_caches' ) ) {
+				_prime_post_caches( $variation_ids );
+			}
+
+			$export_variations = array();
+
+			foreach ( $variation_ids as $variation_id ) {
+				$variation = wc_get_product( $variation_id );
+
+				if ( ! $variation || ! $variation->exists() ) {
+					continue;
+				}
+
+				$export_variations[] = $variation;
+			}
+
+			/**
+			 * Filters the variations selected for feed export.
+			 *
+			 * Shared with the Pro plugin so a single filter affects both.
+			 *
+			 * @param WC_Product_Variation[] $export_variations Variations selected for export.
+			 * @param WC_Product             $product           Parent variable product.
+			 */
+			$export_variations = apply_filters( 'wt_product_feed_export_variations', $export_variations, $product );
+
+			$cache[ $product_id ] = $export_variations;
+			return $export_variations;
+		}
+
+		/**
+		 * Get the WC default variation ID for a variable product.
+		 *
+		 * Iterates the product's variations and returns the ID of the one whose
+		 * attributes all match the parent's default-form-values attributes.
+		 *
+		 * @param WC_Product $product Variable product.
+		 * @return int|false Variation ID, or false if the product is not variable
+		 *                   or no default variation is set.
+		 */
+		public static function get_export_default_variation_id( $product ) {
+			if ( ! $product instanceof WC_Product || ! $product->is_type( 'variable' ) ) {
+				return false;
+			}
+
+			foreach ( self::get_export_variations( $product ) as $variation ) {
+				$is_default_variation = true;
+
+				foreach ( $variation->get_variation_attributes() as $key => $attribute_value ) {
+					$attribute_name = str_replace( 'attribute_', '', $key );
+					$default_value  = $product->get_variation_default_attribute( $attribute_name );
+					if ( $default_value !== $attribute_value ) {
+						$is_default_variation = false;
+						break;
+					}
+				}
+
+				if ( $is_default_variation ) {
+					return $variation->get_id();
+				}
+			}
+
+			return false;
+		}
+
+		/**
+		 * Get the lowest-priced variation ID for a variable product.
+		 *
+		 * Price basis is wc_get_price_to_display() so each variation's tax class
+		 * is factored in (via the shop's tax display setting) — matches Pro and
+		 * picks the variation that is cheapest to the customer.
+		 *
+		 * @param WC_Product $product Variable product.
+		 * @return int|false Variation ID, or false if the product is not variable
+		 *                   or has no priceable variations.
+		 */
+		public static function get_export_lowest_priced_variation_id( $product ) {
+			if ( ! $product instanceof WC_Product || ! $product->is_type( 'variable' ) ) {
+				return false;
+			}
+
+			$lowest_price = null;
+			$lowest_id    = false;
+
+			foreach ( self::get_export_variations( $product ) as $variation ) {
+				$price = (float) wc_get_price_to_display( $variation );
+				if ( null === $lowest_price || $price < $lowest_price ) {
+					$lowest_price = $price;
+					$lowest_id    = $variation->get_id();
+				}
+			}
+
+			return $lowest_id;
+		}
+
+		/**
+		 * Get the highest-priced variation ID for a variable product.
+		 *
+		 * Price basis is wc_get_price_to_display() so each variation's tax class
+		 * is factored in (via the shop's tax display setting) — matches Pro.
+		 *
+		 * @param WC_Product $product Variable product.
+		 * @return int|false Variation ID, or false if the product is not variable
+		 *                   or has no priceable variations.
+		 */
+		public static function get_export_highest_priced_variation_id( $product ) {
+			if ( ! $product instanceof WC_Product || ! $product->is_type( 'variable' ) ) {
+				return false;
+			}
+
+			$highest_price = null;
+			$highest_id    = false;
+
+			foreach ( self::get_export_variations( $product ) as $variation ) {
+				$price = (float) wc_get_price_to_display( $variation );
+				if ( null === $highest_price || $price > $highest_price ) {
+					$highest_price = $price;
+					$highest_id    = $variation->get_id();
+				}
+			}
+
+			return $highest_id;
+		}
+
 	}
 }
 

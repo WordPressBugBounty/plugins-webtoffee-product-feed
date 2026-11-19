@@ -162,23 +162,23 @@ if(!class_exists('Wt_Pf_IE_Basic_Helper'))
 					$current_form_data=(isset($form_data[$current_form_data_key]) ? $form_data[$current_form_data_key] : array());
 					if(in_array($step, $module_obj->step_need_validation_filter))
 					{
-						$validation_rule=self::get_validation_rules($step, $current_form_data, $module_obj); 
-						
-						foreach($current_form_data as $key => $value) 
+						$validation_rule=self::get_validation_rules($step, $current_form_data, $module_obj);
+
+						foreach($current_form_data as $key => $value)
 						{
 							$no_prefix_key=str_replace('wt_pf_', '', $key);
 							$current_form_data[$key]=Wt_Pf_Sh::sanitize_data($value, $no_prefix_key, $validation_rule);
 						}
 					}else
-					{	
-						$validation_rule=(isset($module_obj->validation_rule[$step]) ? $module_obj->validation_rule[$step] : array());				
-						foreach($current_form_data as $key => $value) 
+					{
+						$validation_rule=(isset($module_obj->validation_rule[$step]) ? $module_obj->validation_rule[$step] : array());
+						foreach($current_form_data as $key => $value)
 						{
 							$current_form_data[$key]=Wt_Pf_Sh::sanitize_data($value, $key, $validation_rule);
-						}					
+						}
 					}
 					$out[$current_form_data_key]=$current_form_data;
-				}				
+				}
 			}
 			$form_data=$current_form_data=$mapping_form_data=$meta_step_form_data=$module_obj=null;
 			unset($form_data, $current_form_data, $mapping_form_data, $meta_step_form_data, $module_obj);
