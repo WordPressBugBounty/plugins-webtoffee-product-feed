@@ -1,3 +1,8 @@
+= 2.4.5 2026-11-27 =
+* [Compatibility] - Tested OK with WordPress 7.2-RC3
+* [Compatibility] - Tested OK with WooCommerce 11.3.1
+* [Fix] - Security: Duplicated feed file names are now sanitised and restricted to the feed export folder. Thanks to Wordfence PRISM for responsibly reporting this issue.
+
 = 2.4.4 2026-11-19 =
 * [Compatibility] - Tested OK with WordPress 7.2-RC2
 * [Compatibility] - Tested OK with WooCommerce 11.3.0

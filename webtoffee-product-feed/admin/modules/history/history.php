@@ -440,7 +440,6 @@ class Webtoffee_Product_Feed_Sync_History
 		}
 
 		//first remove files associated with it. give argument as array then no need to check the result array type
-		$allowed_ext_arr=array('csv', 'xml'); //please update this array if new file types introduced
 		$list=self::get_history_entry_by_id($where_data);
 		if($list)
 		{
@@ -450,9 +449,15 @@ class Webtoffee_Product_Feed_Sync_History
 				{
 					if(Webtoffee_Product_Feed_Sync_Admin::module_exists('export'))
 					{
+						// Skip rows with tampered file_name (traversal sequences): wp_basename() would collapse
+						// `../../google-feed.csv` to `google-feed.csv` and could unlink a legitimate feed file.
+						if ( wp_basename( $listv['file_name'] ) !== $listv['file_name'] ) {
+							continue;
+						}
+						$allowed_ext_arr = Webtoffee_Product_Feed_Sync_Export::get_allowed_file_exts();
 						$ext_arr=explode('.', $listv['file_name']);
-						$ext=end($ext_arr);
-						if(in_array($ext, $allowed_ext_arr)) /* delete only allowed extensions */
+						$ext=strtolower(end($ext_arr));
+						if(in_array($ext, $allowed_ext_arr, true)) /* delete only allowed extensions */
 						{
 							$file_path=Webtoffee_Product_Feed_Sync_Export::get_file_path($listv['file_name']);
 							if($file_path && file_exists($file_path))

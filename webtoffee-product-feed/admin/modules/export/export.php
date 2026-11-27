@@ -93,13 +93,7 @@ class Webtoffee_Product_Feed_Sync_Export
 	public function wt_product_feed_load_translations_export() {
 
 		/* allowed file types */
-		$this->allowed_export_file_type=array(
-			'xml'=>__('XML', 'webtoffee-product-feed'),			
-			'csv'=>__('CSV', 'webtoffee-product-feed'),
-			'xlsx'=>__('XLSX', 'webtoffee-product-feed'),
-			'tsv'=>__('TSV', 'webtoffee-product-feed'),
-			'txt'=>__('TXT', 'webtoffee-product-feed')
-		);
+		$this->allowed_export_file_type = self::get_allowed_file_types();
 
         $feed_page_heading = isset( $_GET['wt_pf_rerun'] ) ? __('Edit feed', 'webtoffee-product-feed') : __('Create new feed', 'webtoffee-product-feed'); //phpcs:ignore
 		
@@ -508,7 +502,7 @@ class Webtoffee_Product_Feed_Sync_Export
 		if(!$this->rerun_id){
 		$file_details = Webtoffee_Product_Feed_Sync_History::get_filename_items();
 		foreach ($file_details as $key => $value) {
-			$file_names[] = str_replace(array('.csv', '.xml', '.tsv', '.txt', '.xlsx'), array( '', '', '', '', ''), $value['file_name']);
+			$file_names[] = preg_replace( '/\.(' . implode( '|', self::get_allowed_file_exts() ) . ')$/i', '', $value['file_name'] );
 		}
 		}
 
@@ -797,8 +791,32 @@ class Webtoffee_Product_Feed_Sync_Export
 			$offset=0;
 		}else
 		{
-			//taking file name from export data
-			$file_name=(isset($export_data['file_name']) ? $export_data['file_name'] : $generated_file_name);		
+			// Validate the stored file_name without re-sanitising — running sanitize_file_name() again
+			// could rewrite a legitimately created name under a different filter context (another plugin
+			// hooking sanitize_file_name, WP update, admin vs cron), which would change the public feed
+			// URL and leave the old file behind. Only reject names that are tampered, and when we fall
+			// back use get_unique_feed_file_name() so the fallback cannot collide with an existing feed
+			// (checks both history rows and disk).
+			$raw_name = isset( $export_data['file_name'] ) ? $export_data['file_name'] : $generated_file_name;
+			$raw_ext  = strtolower( pathinfo( $raw_name, PATHINFO_EXTENSION ) );
+			if ( '' !== $raw_name
+				&& wp_basename( $raw_name ) === $raw_name
+				&& 0 === validate_file( $raw_name )
+				&& in_array( $raw_ext, self::get_allowed_file_exts(), true )
+				// Reject URL-breaking / shell-unsafe chars that sanitize_file_name() would have stripped.
+				&& ! preg_match( '/[\\\\\/:*?"<>|#%&{}$!\'`;=+\s\x00-\x1f]/', $raw_name )
+				// Reject executable extensions anywhere in the name — `.php.` in the middle still executes
+				// under Apache AddHandler setups, and sanitize_file_name() would have neutralised them.
+				&& ! preg_match( '/\.(php\d*|phtml|phar|pht|phps|cgi|pl|py|asp|aspx|jsp|shtml|htaccess)(\.|$)/i', $raw_name ) ) {
+				$file_name = $raw_name;
+			} else {
+				$file_name = self::get_unique_feed_file_name( $generated_file_name );
+				Webtoffee_Product_Feed_Sync_History::update_history_entry(
+					$export_id,
+					array( 'file_name' => $file_name ),
+					array( '%s' )
+				);
+			}
 			$total_records=(isset($export_data['total']) ? $export_data['total'] : 0);
 		}
 
@@ -1003,6 +1021,51 @@ class Webtoffee_Product_Feed_Sync_Export
 		return $out;
 	}
 
+	/**
+	 * Returns the allowed export file types as an extension => translated label map.
+	 * Single source of truth for both the allow-list and the UI dropdown.
+	 *
+	 * @return array<string,string>
+	 */
+	public static function get_allowed_file_types() {
+		return array(
+			'xml'  => __( 'XML', 'webtoffee-product-feed' ),
+			'csv'  => __( 'CSV', 'webtoffee-product-feed' ),
+			'xlsx' => __( 'XLSX', 'webtoffee-product-feed' ),
+			'tsv'  => __( 'TSV', 'webtoffee-product-feed' ),
+			'txt'  => __( 'TXT', 'webtoffee-product-feed' ),
+		);
+	}
+
+	/**
+	 * Returns the allowed export file extensions.
+	 * Used by duplicate, delete, resume, and rerun paths.
+	 *
+	 * @return string[]
+	 */
+	public static function get_allowed_file_exts() {
+		return array_keys( self::get_allowed_file_types() );
+	}
+
+	/**
+	 * Returns a feed file name that is unique against both the history table and the export dir.
+	 * wp_unique_filename() alone only checks disk, which misses history rows whose file has not
+	 * been written yet (fresh duplicates, Pro remote feeds whose local file was deleted after upload).
+	 * Comparison is case-insensitive to cover case-insensitive filesystems (e.g. macOS default).
+	 *
+	 * @param string $file_name Desired file name, already sanitised.
+	 * @return string Unique file name.
+	 */
+	public static function get_unique_feed_file_name( $file_name ) {
+		$taken     = array_map( 'strtolower', wp_list_pluck( Webtoffee_Product_Feed_Sync_History::get_filename_items(), 'file_name' ) );
+		$ext       = pathinfo( $file_name, PATHINFO_EXTENSION );
+		$base      = pathinfo( $file_name, PATHINFO_FILENAME );
+		$candidate = $file_name;
+		for ( $i = 1; in_array( strtolower( $candidate ), $taken, true ) || file_exists( self::$export_dir . '/' . $candidate ); $i++ ) {
+			$candidate = $base . '-' . $i . '.' . $ext;
+		}
+		return $candidate;
+	}
 
 	public static function get_file_path($file_name)
 	{
@@ -1033,7 +1096,11 @@ class Webtoffee_Product_Feed_Sync_Export
 		        } 
             }
         }
-        return self::$export_dir.'/'.$file_name;
+        $safe_name = wp_basename( $file_name );
+        if ( '' === $safe_name ) {
+            return false;
+        }
+        return self::$export_dir . '/' . $safe_name;
 	}
 
 	/**
@@ -1046,13 +1113,7 @@ class Webtoffee_Product_Feed_Sync_Export
 			// Initialize allowed_export_file_type if not already set
 			if(empty($this->allowed_export_file_type))
 			{
-				$this->allowed_export_file_type=array(
-					'xml'=>__('XML', 'webtoffee-product-feed'),
-					'csv'=>__('CSV', 'webtoffee-product-feed'),
-					'xlsx'=>__('XLSX', 'webtoffee-product-feed'),
-					'tsv'=>__('TSV', 'webtoffee-product-feed'),
-					'txt'=>__('TXT', 'webtoffee-product-feed')
-				);
+				$this->allowed_export_file_type = self::get_allowed_file_types();
 			}
 
 			// phpcs:ignore Nonce and user role check handled by check_write_access method.

@@ -209,8 +209,14 @@ class Webtoffee_Product_Feed_Sync_Export_Ajax
 			
 			if($this->rerun_id > 0){
 			/* updating finished status */
+				// Validate $file_as against the allow-list before persisting to the history row, so a tampered
+				// wt_pf_file_as=php never reaches the DB and the History screen URL matches the real file.
 				$file_as=(isset($form_data['advanced_form_data']['wt_pf_file_as']) ? $form_data['advanced_form_data']['wt_pf_file_as'] : 'csv');
-				$file_name= sanitize_file_name($form_data['post_type_form_data']['item_filename'].'.'.$file_as);
+				if ( ! in_array( $file_as, Webtoffee_Product_Feed_Sync_Export::get_allowed_file_exts(), true ) ) {
+					$file_as = 'csv';
+				}
+				$item_filename = isset( $form_data['post_type_form_data']['item_filename'] ) ? $form_data['post_type_form_data']['item_filename'] : '';
+				$file_name= sanitize_file_name($item_filename.'.'.$file_as);
 				$update_data = array(
 						'file_name' => $file_name, //export file name
 						'created_at' => time(), //craeted time

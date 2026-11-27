@@ -160,21 +160,34 @@ class Webtoffee_Product_Feed_Sync_Cron
 		// The process is based on history_id
 		$cron_id = (isset($_POST['cron_id']) ? absint($_POST['cron_id']) : 0);//phpcs:ignore
 		if ($cron_id > 0) {
-			// phpcs:ignore Nonce and user role check handled by check_write_access method. 
+			// Safe default — if check_write_access is ever called with silent=true the handler still returns valid JSON.
+			$out = array( 'status' => 0, 'msg' => __( 'Unable to duplicate feed', 'webtoffee-product-feed' ) );
+			// phpcs:ignore Nonce and user role check handled by check_write_access method.
 			if(Wt_Pf_Sh::check_write_access(WEBTOFFEE_PRODUCT_FEED_ID)){
 
 				$history_row = Webtoffee_Product_Feed_Sync_History::get_history_entry_by_id($cron_id);
-				
-				$form_data = Webtoffee_Product_Feed_Sync_Common_Helper::wt_decode_data( $history_row['data'] );
-				
-				$file_name = $form_data['post_type_form_data']['item_filename'].'-copy.'.$form_data['advanced_form_data']['wt_pf_file_as'];
-				$action = $history_row['template_type'];
-				$to_process = $history_row['item_type'];                       
-				
-				$form_data['post_type_form_data']['item_filename'] = $form_data['post_type_form_data']['item_filename'].'-copy';
-										
+				if ( ! $history_row ) {
+					echo json_encode( array( 'status' => 0, 'msg' => __( 'Feed not found', 'webtoffee-product-feed' ) ) );
+					exit();
+				}
+
+				$form_data   = Webtoffee_Product_Feed_Sync_Common_Helper::wt_decode_data( $history_row['data'] );
+				$raw_base    = isset( $form_data['post_type_form_data']['item_filename'] ) ? $form_data['post_type_form_data']['item_filename'] : '';
+
+				$allowed_ext = Webtoffee_Product_Feed_Sync_Export::get_allowed_file_exts();
+				$raw_ext     = isset( $form_data['advanced_form_data']['wt_pf_file_as'] ) ? $form_data['advanced_form_data']['wt_pf_file_as'] : 'csv';
+				$file_ext    = in_array( $raw_ext, $allowed_ext, true ) ? $raw_ext : 'csv';
+				// Unique filename that checks both history rows and disk — duplicating twice must not create
+				// two rows sharing one `-copy` file (wp_unique_filename() misses rows whose file isn't on disk yet).
+				$file_name   = Webtoffee_Product_Feed_Sync_Export::get_unique_feed_file_name( sanitize_file_name( $raw_base . '-copy.' . $file_ext ) );
+				$action      = $history_row['template_type'];
+				$to_process  = $history_row['item_type'];
+
+				// Keep item_filename in step with the unique file_name (without the extension).
+				$form_data['post_type_form_data']['item_filename'] = preg_replace( '/\.' . preg_quote( $file_ext, '/' ) . '$/i', '', $file_name );
+
 				Webtoffee_Product_Feed_Sync_History::create_history_entry($file_name, $form_data, $to_process, $action);
-				
+
 				$out = array(
 					'status' => 1,
 					'msg' => __('Feed duplicated', 'webtoffee-product-feed'),

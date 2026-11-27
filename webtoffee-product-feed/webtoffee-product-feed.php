@@ -16,7 +16,7 @@
  * Plugin Name:       WebToffee WooCommerce Product Feeds - Google Shopping, Pinterest, TikTok Ads, & More
  * Plugin URI:        https://wordpress.org/plugins/webtoffee-product-feed
  * Description:       Integrate your WooCommerce store with popular sale channels including Google Merchant Center, Facebook/Instagram ads&shops, TikTok ads and much more.
- * Version:           2.4.4
+ * Version:           2.4.5
  * Author:            WebToffee
  * Author URI:        https://www.webtoffee.com
  * License:           GPL-3.0+
@@ -37,7 +37,7 @@ if ( !defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'WEBTOFFEE_PRODUCT_FEED_SYNC_VERSION', '2.4.4' );
+define( 'WEBTOFFEE_PRODUCT_FEED_SYNC_VERSION', '2.4.5' );
 define( 'WEBTOFFEE_PRODUCT_FEED_ID', 'webtoffee_product_feed' );
 define( 'WT_PRODUCT_FEED_PLUGIN_URL', plugin_dir_url(__FILE__));
 define( 'WT_PRODUCT_FEED_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
